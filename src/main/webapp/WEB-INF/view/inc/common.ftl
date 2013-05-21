@@ -1,0 +1,232 @@
+<#macro display str args=[]>
+    <#assign strreplace=str />
+    <#assign pos=-1 />
+    <#list args as arg>
+        <#assign pos=args?seq_index_of(arg,pos+1) />    
+        <#assign strreplace=strreplace?replace("{"+pos+"}",arg) />
+    </#list>${strreplace?trim}</#macro>
+    
+<#function replace str args=[]>
+	<#assign strreplace=str />
+	<#list args as arg>
+		<#assign strreplace = strreplace?replace("{"+args?seq_index_of(arg)+"}",arg) />
+	</#list>
+	<#return strreplace />
+</#function>
+
+<#macro lang strEn strFr><#if language == "en">${strEn}<#else>${strFr}</#if></#macro>
+
+<#function prefixFrenchRank rank>
+    <#assign str=rank >
+    <#-- in french, use d' instead of de if rank name starts with a vowel (Ordre, Espece) -->
+    <#if language == "fr">
+        <#if rank?lower_case?matches("^[aeiou](.*)")>
+            <#assign str="d'" + rank >
+        <#else>
+            <#assign str="de " + rank >
+        </#if>
+    </#if>
+    <#return str>
+</#function>
+
+<#macro vernacularLabel status lang capitalize=false colon=false strong=false>
+	<#assign label="" />
+	<#if language=="fr">
+		<#assign label="nom ">
+		<#if strong == true>
+			<#assign label= label + "<strong>vernaculaire ">
+		<#else>
+			<#assign label=label + "vernaculaire ">
+		</#if>
+		<#if lang=="fr">
+			<#assign label=label + "fran&ccedil;ais " />
+		<#else>
+			<#assign label=label + "anglais " />
+		</#if>
+		<#if status=="accepted">
+			<#assign label=label + "accept&eacute; " />
+		<#else>
+			<#assign label=label + "synonyme " />
+		</#if>
+		<#if strong == true>
+			<#assign label= label + "</strong> ">
+		</#if>
+		<#assign label= label + "pour ">
+	<#else>
+		<#assign label="">
+		<#if status=="accepted">
+			<#assign label="accepted "/>
+		<#else>
+			<#assign label="synonym " />
+		</#if>	
+		
+		<#if lang=="fr">
+			<#assign label=label + "french "/>
+		<#else>
+			<#assign label=label+ "english "/>
+		</#if>
+		<#if strong == true>
+			<#assign label= "<strong>" + label + "vernacular</strong> name ">
+		<#else>
+			<#assign label=label + "vernacular name ">
+		</#if>
+		<#assign label=label + "for">
+	</#if>
+	<#if capitalize==true>
+		<#assign label=label?cap_first>
+	</#if>
+	<#if colon==true>
+		<#assign label=label+": ">
+	</#if>
+	${label}
+</#macro>
+
+<#function refBuilder link ref refshort parenthesis=false sensu=false accordingTo=false>
+	<#assign reference = "">
+    <#assign return_reference = "" >
+    <#assign referenceTitle = "">
+    <#assign finalLink="">
+    <#if refshort?has_content == true && ref?has_content == true>
+        <#assign reference=refshort>
+        <#assign referenceTitle=ref>
+    <#elseif refshort?has_content == false && ref?has_content == true>
+        <#assign reference=ref>
+        <#assign referenceTitle=ref>
+    <#elseif refshort?has_content == true && ref?has_content == false>
+        <#assign reference=refshort>
+        <#assign referenceTitle=refshort>
+    </#if>
+    <#if reference?has_content>
+        <#if sensu == true>
+            <#assign return_reference = return_reference + " sensu "> 
+        <#elseif accordingTo = true>
+            <#if language == "fr">
+                <#assign return_reference = return_reference + "selon "> 
+            <#else>
+                <#assign return_reference = return_reference + "according to ">
+            </#if>
+        </#if>
+        <#if link?has_content == true>
+        	<#assign reference = "<a href=\"" + link + "\">" + reference + "</a>">
+        </#if>
+        <#if parenthesis == true>            
+            <#assign reference = "(" + reference + ")">
+        </#if>
+    	<#assign return_reference = return_reference + "<span class=\"reference\" title =\"" + referenceTitle + "\">" + reference + "</span>">
+    </#if>
+    <#return return_reference>    
+</#function>
+<#macro languageSwitcher>
+	<#if language == "fr">
+		<a href="javascript:document.location.href=new Uri(document.location.href).deleteQueryParam('lang');">English</a>
+	<#else>
+		<a href="javascript:document.location.href=new Uri(document.location.href).replaceQueryParam('lang','fr');">Fran&ccedil;ais</a>
+	</#if>
+</#macro>
+
+<#macro assignTitle str args=[]>
+	<#assign strreplace=str />
+	<#list args as arg>
+		<#assign strreplace=strreplace?replace("{"+args?seq_index_of(arg)+"}",arg) />
+	</#list>
+	<#global title=strreplace />
+</#macro>
+
+
+
+
+
+<#macro taxonContent>
+	<#nested>
+						<#if data.isHybridConcept>
+							<h2><@display str=locale.taxon_h2_hybrids/></h2>
+							<#list data.hybridParents as hybridParent>
+							 <p class="redirect_${hybridParent.status?lower_case}" />
+								 <a href="taxon/${hybridParent.taxonId}<@display str=locale.url_language/>">${hybridParent.fullScientificName}</a>.
+							 </p>
+							</#list>
+						</#if>
+						<h2><@display str=locale.taxon_h2_vernaculars/></h2>
+						<ul class="custom_list">
+						<#list data.vernacularNames as vernacular>
+							<#if vernacular.language == "fr">
+								<li class="${vernacular.status?lower_case}">
+									<a href="vernacular/${vernacular.vernacularId}<@display str=locale.url_language/>">${vernacular.name}</a>
+									<span class="right">${refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,false,false,false)}</span> 
+								</li>
+							</#if> 
+						</#list>
+						</ul>
+						<ul class="custom_list">
+						<#list data.vernacularNames as vernacular> 
+							<#if vernacular.language == "en">
+								<li class="${vernacular.status?lower_case}">
+									<a href="vernacular/${vernacular.vernacularId}<@display str=locale.url_language/>">${vernacular.name}</a>
+									<span class="right">${refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,false,false,false)}</span>
+								</li>
+							</#if> 
+						</#list>
+						</ul>
+						
+						<h2><@display str=locale.taxon_h2_synonyms/></h2>
+						<ul class="custom_list">
+						<#list data.synonyms as synonym>
+							<li class="synonym">
+								<a href="taxon/${synonym.taxonId}<@display str=locale.url_language/>">${synonym.fullScientificName}</a>
+								<span class="right">${refBuilder(synonym.link,synonym.reference,synonym.referenceShort,false,false,false)}</span>
+							</li>
+						</#list>
+						</ul>
+						
+						<h2><@display str=locale.taxon_h2_distribution/></h2>			   
+						<ul class="buttons">
+							<li><a onclick="$('#map_result').show(350);$('#list_result').hide(350);$('ul.buttons a').toggleClass('selected');" class="selected"><@display str=locale.taxon_button1/></a></li>
+							<li><a onclick="$('#list_result').show(350);$('#map_result').hide(350);$('ul.buttons a').toggleClass('selected');"><@display str=locale.taxon_button2/></a></li>
+						</ul>
+
+						<ul class="distribution_legend custom_list">
+							<li class="distribution_native"><@display str=locale.distribution_native/></li>
+							<li class="distribution_introduced"><@display str=locale.distribution_introduced/></li> 
+							<li class="distribution_ephemeral"><@display str=locale.distribution_ephemeral/></li>
+							<li class="distribution_excluded"><@display str=locale.distribution_excluded/></li>
+							<li class="distribution_extirpated"><@display str=locale.distribution_extirpated/></li> 
+							<li class="distribution_doubtful"><@display str=locale.distribution_doubtful/></li>
+							<li class="distribution_absent"><@display str=locale.distribution_absent/></li>
+						</ul>
+
+						<div id="map_result">
+							<img src="${data.png}" width="400" height="400" alt="Distribution: ${data.pageTitle}" name="png" id="png" />
+							<p><@display str=locale.taxon_msg1 args=[data.pngDownload,data.svgDownload]/></p>
+						</div>
+						<div id="list_result" style="display:none;">
+							<#if data.computedDistribution == true>
+								<p><@display str=locale.taxon_msg2/></p>
+							</#if>
+							<ul class="custom_list">
+							
+							<#list data.distributions as distribution> 
+								<li class="distribution_${distribution.status?lower_case}">
+									<@display str=("locale.province_" + distribution.province?replace("-","_"))?eval/>
+									<span class="right">${refBuilder(distribution.link,distribution.reference,distribution.referenceShort,false,false,false)}</span>
+								</li>
+								<#if distribution.excluded?has_content == true>
+								<li class="redirect">
+									<@display str=("locale.excluded_" + distribution.excluded?lower_case)?eval/>
+								</li>
+								</#if>
+							</#list>
+							</ul>
+						</div>
+						<h2><@display str=locale.taxon_h2_classification/></h2>
+						<table class="custom_table">
+							<tbody>
+							<#list data.tree as node>
+								<#assign indent = node.rankId - 1>				 
+								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}"><@display str=("locale.rank_" + node.rank?lower_case)?eval/></td><td class="name"><a href="taxon/${node.taxonId}<@display str=locale.url_language/>">${node.fullScientificName}</a></td></tr>
+							</#list>
+							</tbody>
+						</table>
+						
+						<h2><@display str=locale.taxon_h2_habitus/></h2>
+						<p><#list data.habituses as habitus><#assign str = (("locale.habitus_"+habitus.habitus?lower_case)?eval)?cap_first/><#if habitus_has_next><#assign str=str+", "/></#if>${str}</#list></p>
+</#macro>
