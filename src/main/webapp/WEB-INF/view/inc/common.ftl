@@ -19,7 +19,7 @@
 <#function prefixFrenchRank rank>
     <#assign str=rank >
     <#-- in french, use d' instead of de if rank name starts with a vowel (Ordre, Espece) -->
-    <#if language == "fr">
+    <#if rc.getLocale().getLanguage() == "fr">
         <#if rank?lower_case?matches("^[aeiou](.*)")>
             <#assign str="d'" + rank >
         <#else>

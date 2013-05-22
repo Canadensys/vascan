@@ -12,13 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PagesController {
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
 
 	@RequestMapping(value={"/about"}, method={RequestMethod.GET})
 	public ModelAndView handleAboutPage(){
 		
 		Map<String,String> model = new HashMap<String,String>();
-		model.put("currentDate", sdf.format(Calendar.getInstance().getTime()));
+		model.put("currentDate", SDF.format(Calendar.getInstance().getTime()));
 		return new ModelAndView("about", model);
 	}
 

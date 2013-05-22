@@ -8,13 +8,13 @@
 		<p id="ie"><@display str=locale.browser_msg1/></p>
 		<![endif]-->
 		</#if>
-	
-		<div id="side_bar"> 
+		
+		<div id="side_bar">
 			<ul class="side_menu custom_list round">
-				<li><a href="search${rc.getMessage("url_language")}">${rc.getMessage("namesearch_title1")}</a></li>
-				<li><a href="checklist${rc.getMessage("url_language")}">${rc.getMessage("checklist_title1")}</a></li>
-				<li><a href="about${rc.getMessage("url_language")}">${rc.getMessage("about_title1")}</a></li>
-				<li><a href="${rc.getMessage("url_language")}">${rc.getMessage("dataset_title1")}</a></li>
+				<li><a href="${rc.getContextUrl("/search"+rc.getMessage("url_language"))}">${rc.getMessage("namesearch_title1")}</a></li>
+				<li><a href="${rc.getContextUrl("/checklist"+rc.getMessage("url_language"))}">${rc.getMessage("checklist_title1")}</a></li>
+				<li><a href="${rc.getContextUrl("/about"+rc.getMessage("url_language"))}">${rc.getMessage("about_title1")}</a></li>
+				<li><a href="${rc.getMessage("url_dataset")}">${rc.getMessage("dataset_title1")}</a></li>
 			</ul>
 	
 		<#if currentPage == "name" && page.isDisambiguation != true>
@@ -33,7 +33,7 @@
 				<p><a class="round big_button multi_line" id="csv_file" href="download?format=txt&${pageQuery}"><@display str=locale.page_button3/></a></p>
 		</#if>
 		<#if currentPage == "name" || currentPage == "taxon" || currentPage == "vernacular" || currentPage="checklist">
-				<p><a class="round big_button" id="print_page" href="javascript:window.print();"><@display str=locale.page_button6/></a></p>
+				<p><a class="round big_button" id="print_page" href="javascript:window.print();">${rc.getMessage("page_button6")}</a></p>
 		</#if>
 		</div>
 		
