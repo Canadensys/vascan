@@ -27,7 +27,7 @@
 				<p><a class="round big_button multi_line" id="see_taxon" href="taxon/${data.id}<@display str=locale.url_language/>"><@display str=locale.page_button4/></a></p>
 			</#if>
 		<#elseif currentPage == "taxon" && data.status == "accepted">
-				<p><a class="round big_button multi_line" id="create_checklist" href="checklist?taxon=${data.taxonId}<@display str=locale.url_language_amp/>"><@display str=locale.page_button1/></a></p>
+				<p><a class="round big_button multi_line" id="create_checklist" href="checklist?taxon=${data.taxonId}${rc.getMessage("url_language_amp")}">${rc.getMessage("page_button1")}</a></p>
 		<#elseif currentPage == "checklist">
 				<p><a class="round big_button multi_line" id="dwc_archive" href="download?format=dwc&${pageQuery}"><@display str=locale.page_button2/></a></p>
 				<p><a class="round big_button multi_line" id="csv_file" href="download?format=txt&${pageQuery}"><@display str=locale.page_button3/></a></p>

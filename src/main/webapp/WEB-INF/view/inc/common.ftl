@@ -139,19 +139,19 @@
 <#macro taxonContent>
 	<#nested>
 						<#if data.isHybridConcept>
-							<h2><@display str=locale.taxon_h2_hybrids/></h2>
+							<h2>${rc.getMessage("taxon_h2_hybrids")}</h2>
 							<#list data.hybridParents as hybridParent>
 							 <p class="redirect_${hybridParent.status?lower_case}" />
-								 <a href="taxon/${hybridParent.taxonId}<@display str=locale.url_language/>">${hybridParent.fullScientificName}</a>.
+								 <a href="taxon/${hybridParent.taxonId}${rc.getMessage("url_language")}>${hybridParent.fullScientificName}</a>.
 							 </p>
 							</#list>
 						</#if>
-						<h2><@display str=locale.taxon_h2_vernaculars/></h2>
+						<h2>${rc.getMessage("taxon_h2_vernaculars")}</h2>
 						<ul class="custom_list">
 						<#list data.vernacularNames as vernacular>
 							<#if vernacular.language == "fr">
 								<li class="${vernacular.status?lower_case}">
-									<a href="vernacular/${vernacular.vernacularId}<@display str=locale.url_language/>">${vernacular.name}</a>
+									<a href="vernacular/${vernacular.vernacularId}${rc.getMessage("url_language")}">${vernacular.name}</a>
 									<span class="right">${refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,false,false,false)}</span> 
 								</li>
 							</#if> 
@@ -161,72 +161,72 @@
 						<#list data.vernacularNames as vernacular> 
 							<#if vernacular.language == "en">
 								<li class="${vernacular.status?lower_case}">
-									<a href="vernacular/${vernacular.vernacularId}<@display str=locale.url_language/>">${vernacular.name}</a>
+									<a href="vernacular/${vernacular.vernacularId}${rc.getMessage("url_language")}">${vernacular.name}</a>
 									<span class="right">${refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,false,false,false)}</span>
 								</li>
 							</#if> 
 						</#list>
 						</ul>
 						
-						<h2><@display str=locale.taxon_h2_synonyms/></h2>
+						<h2>${rc.getMessage("taxon_h2_synonyms")}</h2>
 						<ul class="custom_list">
 						<#list data.synonyms as synonym>
 							<li class="synonym">
-								<a href="taxon/${synonym.taxonId}<@display str=locale.url_language/>">${synonym.fullScientificName}</a>
+								<a href="taxon/${synonym.taxonId}${rc.getMessage("url_language")}">${synonym.fullScientificName}</a>
 								<span class="right">${refBuilder(synonym.link,synonym.reference,synonym.referenceShort,false,false,false)}</span>
 							</li>
 						</#list>
 						</ul>
 						
-						<h2><@display str=locale.taxon_h2_distribution/></h2>			   
+						<h2>${rc.getMessage("taxon_h2_distribution")}</h2>			   
 						<ul class="buttons">
-							<li><a onclick="$('#map_result').show(350);$('#list_result').hide(350);$('ul.buttons a').toggleClass('selected');" class="selected"><@display str=locale.taxon_button1/></a></li>
-							<li><a onclick="$('#list_result').show(350);$('#map_result').hide(350);$('ul.buttons a').toggleClass('selected');"><@display str=locale.taxon_button2/></a></li>
+							<li><a onclick="$('#map_result').show(350);$('#list_result').hide(350);$('ul.buttons a').toggleClass('selected');" class="selected">${rc.getMessage("taxon_button1")}</a></li>
+							<li><a onclick="$('#list_result').show(350);$('#map_result').hide(350);$('ul.buttons a').toggleClass('selected');">${rc.getMessage("taxon_button2")}</a></li>
 						</ul>
 
 						<ul class="distribution_legend custom_list">
-							<li class="distribution_native"><@display str=locale.distribution_native/></li>
-							<li class="distribution_introduced"><@display str=locale.distribution_introduced/></li> 
-							<li class="distribution_ephemeral"><@display str=locale.distribution_ephemeral/></li>
-							<li class="distribution_excluded"><@display str=locale.distribution_excluded/></li>
-							<li class="distribution_extirpated"><@display str=locale.distribution_extirpated/></li> 
-							<li class="distribution_doubtful"><@display str=locale.distribution_doubtful/></li>
-							<li class="distribution_absent"><@display str=locale.distribution_absent/></li>
+							<li class="distribution_native">${rc.getMessage("distribution_native")}</li>
+							<li class="distribution_introduced">${rc.getMessage("distribution_introduced")}</li> 
+							<li class="distribution_ephemeral">${rc.getMessage("distribution_ephemeral")}</li>
+							<li class="distribution_excluded">${rc.getMessage("distribution_excluded")}</li>
+							<li class="distribution_extirpated">${rc.getMessage("distribution_extirpated")}</li> 
+							<li class="distribution_doubtful">${rc.getMessage("distribution_doubtful")}</li>
+							<li class="distribution_absent">${rc.getMessage("distribution_absent")}</li>
 						</ul>
 
 						<div id="map_result">
 							<img src="${data.png}" width="400" height="400" alt="Distribution: ${data.pageTitle}" name="png" id="png" />
-							<p><@display str=locale.taxon_msg1 args=[data.pngDownload,data.svgDownload]/></p>
+							<p>${rc.getMessage("taxon_msg1",[data.pngDownload,data.svgDownload])}</p>
 						</div>
 						<div id="list_result" style="display:none;">
 							<#if data.computedDistribution == true>
-								<p><@display str=locale.taxon_msg2/></p>
+								<p>${rc.getMessage("taxon_msg2")}</p>
 							</#if>
 							<ul class="custom_list">
 							
 							<#list data.distributions as distribution> 
 								<li class="distribution_${distribution.status?lower_case}">
-									<@display str=("locale.province_" + distribution.province?replace("-","_"))?eval/>
+									${rc.getMessage("province_" + distribution.province?replace("-","_"))}
 									<span class="right">${refBuilder(distribution.link,distribution.reference,distribution.referenceShort,false,false,false)}</span>
 								</li>
 								<#if distribution.excluded?has_content == true>
 								<li class="redirect">
-									<@display str=("locale.excluded_" + distribution.excluded?lower_case)?eval/>
+									${rc.getMessage("excluded_" + distribution.excluded?lower_case)}
 								</li>
 								</#if>
 							</#list>
 							</ul>
 						</div>
-						<h2><@display str=locale.taxon_h2_classification/></h2>
+						<h2>${rc.getMessage("taxon_h2_classification")}</h2>
 						<table class="custom_table">
 							<tbody>
 							<#list data.tree as node>
 								<#assign indent = node.rankId - 1>				 
-								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}"><@display str=("locale.rank_" + node.rank?lower_case)?eval/></td><td class="name"><a href="taxon/${node.taxonId}<@display str=locale.url_language/>">${node.fullScientificName}</a></td></tr>
+								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}">${rc.getMessage("rank_" + node.rank?lower_case)}</td><td class="name"><a href="taxon/${node.taxonId}${rc.getMessage("url_language")}">${node.fullScientificName}</a></td></tr>
 							</#list>
 							</tbody>
 						</table>
 						
-						<h2><@display str=locale.taxon_h2_habitus/></h2>
-						<p><#list data.habituses as habitus><#assign str = (("locale.habitus_"+habitus.habitus?lower_case)?eval)?cap_first/><#if habitus_has_next><#assign str=str+", "/></#if>${str}</#list></p>
+						<h2>${rc.getMessage("taxon_h2_habitus")}</h2>
+						<p><#list data.habituses as habitus><#assign str = (rc.getMessage("habitus_"+habitus.habitus?lower_case))?cap_first/><#if habitus_has_next><#assign str=str+", "/></#if>${str}</#list></p>
 </#macro>
