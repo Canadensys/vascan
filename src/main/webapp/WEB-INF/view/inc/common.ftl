@@ -142,7 +142,7 @@
 							<h2>${rc.getMessage("taxon_h2_hybrids")}</h2>
 							<#list data.hybridParents as hybridParent>
 							 <p class="redirect_${hybridParent.status?lower_case}" />
-								 <a href="taxon/${hybridParent.taxonId}${rc.getMessage("url_language")}>${hybridParent.fullScientificName}</a>.
+								 <a href="${rc.getContextUrl("/taxon/"+hybridParent.taxonId+rc.getMessage("url_language"))}">${hybridParent.fullScientificName}</a>.
 							 </p>
 							</#list>
 						</#if>
@@ -222,7 +222,7 @@
 							<tbody>
 							<#list data.tree as node>
 								<#assign indent = node.rankId - 1>				 
-								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}">${rc.getMessage("rank_" + node.rank?lower_case)}</td><td class="name"><a href="taxon/${node.taxonId}${rc.getMessage("url_language")}">${node.fullScientificName}</a></td></tr>
+								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}">${rc.getMessage("rank_" + node.rank?lower_case)}</td><td class="name"><a href="${rc.getContextUrl("/taxon/"+node.taxonId+rc.getMessage("url_language"))}">${node.fullScientificName}</a></td></tr>
 							</#list>
 							</tbody>
 						</table>

@@ -27,5 +27,6 @@
 	</p>
 	<@taxonContent />
 </#if>
-
+	</div><#-- content -->
+</div>
 <#include "inc/footer.ftl">
