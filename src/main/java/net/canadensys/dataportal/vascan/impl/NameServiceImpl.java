@@ -35,7 +35,7 @@ public class NameServiceImpl implements NameService{
 	
 	@Transactional(readOnly=true)
 	@Override
-	public Map<String,Object> retrieveNameData(String name, String redirect){
+	public Map<String,Object> retrieveNameData(String name, String redirect, Map<String,Object> extra){
 	    /* 
 	     * Name hub ;
 	     * This page will display all available information for a taxon OR for a
@@ -428,12 +428,11 @@ public class NameServiceImpl implements NameService{
 	    //data.put("computedDistribution",computedDistribution);
 	    //data.put("distributions",taxonDistributions);
 
-
 	    // add extra data to page global hashmap
-	    //_page.put("rank",LabelMappings.getRankLabel(rankid));
-	    //_page.put("isDisambiguation",requiresDisambiguation);
-	   // _page.put("isVernacular",isVernacularName);
-	   // _page.put("isSynonym",isSynonym);
+	    extra.put("rank",rank.toLowerCase());
+	    extra.put("isDisambiguation",requiresDisambiguation);
+	    extra.put("isVernacular",isVernacularName);
+	    extra.put("isSynonym",isSynonym);
 	    
 	    return data;
 	    

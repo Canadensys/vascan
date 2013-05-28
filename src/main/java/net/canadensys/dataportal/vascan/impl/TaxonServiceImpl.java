@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import net.canadensys.dataportal.vascan.VascanService;
+import net.canadensys.dataportal.vascan.TaxonService;
 import net.canadensys.dataportal.vascan.constant.Distribution;
 import net.canadensys.dataportal.vascan.constant.Region;
 import net.canadensys.dataportal.vascan.constant.Status;
@@ -37,14 +37,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @author canadensys
  *
  */
-@Service("vascanService")
-public class VascanServiceImpl implements VascanService {
+@Service("taxonService")
+public class TaxonServiceImpl implements TaxonService {
 
 	//get log4j handler
-	private static final Logger LOGGER = Logger.getLogger(VascanServiceImpl.class);
-		
-	@Autowired
-	private VernacularNameDAO vernacularNameDAO;
+	private static final Logger LOGGER = Logger.getLogger(TaxonServiceImpl.class);
 	
 	@Autowired
 	private TaxonDAO taxonDAO;
@@ -189,11 +186,7 @@ public class VascanServiceImpl implements VascanService {
 	    return data;
 	}
 	
-	@Transactional(readOnly=true)
-	@Override
-	public VernacularNameModel loadVernacularNameModel(Integer vernacularNameId) {
-		return vernacularNameDAO.loadVernacularName(vernacularNameId);
-	}
+
 	
 	@Transactional(readOnly=true)
 	@Override

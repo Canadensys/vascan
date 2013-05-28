@@ -6,18 +6,11 @@ import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 
 /**
- * Vascan Service layer interface to access Vascan related data. This interface handles only high-level methods.
+ * Vascan Service layer interface to access taxon related data. This interface handles only high-level methods.
  * @author canadensys
  *
  */
-public interface VascanService {
-	
-	/**
-	 * Load a VernacularNameModel from an id
-	 * @param id
-	 * @return
-	 */
-	public VernacularNameModel loadVernacularNameModel(Integer id);
+public interface TaxonService {
 	
 	/**
 	 * Load a TaxonModel from an id
