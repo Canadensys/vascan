@@ -222,7 +222,7 @@
 							<tbody>
 							<#list data.tree as node>
 								<#assign indent = node.rankId - 1>				 
-								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}">${rc.getMessage("rank_" + node.rank?lower_case)}</td><td class="name"><a href="${rc.getContextUrl("/taxon/"+node.taxonId+rc.getMessage("url_language"))}">${node.fullScientificName}</a></td></tr>
+								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}">${rc.getMessage("rank_" + node.rank?lower_case)}</td><td class="name"><a href="${rc.getContextUrl("/taxon/"+node.taxonId?c+rc.getMessage("url_language"))}">${node.fullScientificName}</a></td></tr>
 							</#list>
 							</tbody>
 						</table>

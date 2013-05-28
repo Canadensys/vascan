@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface NameService {
 	
-	public Map<String,Object> retrieveNameData(String name, String redirect);
+	public Map<String,Object> retrieveNameData(String name, String redirect,Map<String,Object> extra);
 
 }
