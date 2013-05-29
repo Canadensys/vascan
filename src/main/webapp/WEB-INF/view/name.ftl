@@ -14,7 +14,7 @@
 <#if data.isVernacularName == true>
 	<#list data.disambiguationVernaculars as vernacular>
 		<p class="${vernacular.status?lower_case}">
-		    ${rc.getMessage("vernacular_" + vernacular.status?lower_case + "_msg1",[vernacular.vernacularid,vernacular.name,refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,true,false,false),rc.getMessage("language_"+language)])}
+		    ${rc.getMessage("vernacular_" + vernacular.status?lower_case + "_msg1",[vernacular.vernacularid,vernacular.name,refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,true,false,false),rc.getMessage("language_"+rc.getLocale().getLanguage())])}
 		</p>								
 		<p class="redirect_${vernacular.taxon.status?lower_case}">
             ${rc.getMessage("taxon_" + vernacular.taxon.status?lower_case + "_no_strong_msg1",[vernacular.taxon.taxonId,vernacular.taxon.fullScientificName,prefixFrenchRank(rc.getMessage("rank_"+vernacular.taxon.rank?lower_case))?lower_case,refBuilder(vernacular.taxon.link,vernacular.taxon.reference,vernacular.taxon.referenceShort,false,true,false)])}
@@ -29,12 +29,12 @@
 			</p>
                               <#list taxon.parents as parent>
                                   <p class="redirect_${parent.status?lower_case}">
-                                      <@display str=locale.taxon_accepted_no_strong_msg1 args=[parent.taxonId,parent.fullScientificName,prefixFrenchRank(("locale.rank_"+parent.rank?lower_case)?eval)?lower_case,refBuilder(parent.link,parent.reference,parent.referenceShort,false,true,false)]/>
+                                      ${rc.getMessage("taxon_accepted_no_strong_msg1",[parent.taxonId,parent.fullScientificName,prefixFrenchRank(rc.getMessage("rank_"+parent.rank?lower_case))?lower_case,refBuilder(parent.link,parent.reference,parent.referenceShort,false,true,false)])}
                                   </p>
                               </#list>    
                           <#else>
                               <p class="accepted">
-                                 <@display str=locale.taxon_accepted_msg1 args=[taxon.taxonId,taxon.fullScientificName,prefixFrenchRank(("locale.rank_"+taxon.rank?lower_case)?eval)?lower_case,refBuilder(taxon.link,taxon.reference,taxon.referenceShort,false,true,false)]/>
+                                 ${rc.getMessage("taxon_accepted_msg1",[taxon.taxonId,taxon.fullScientificName,prefixFrenchRank(rc.getMessage("rank_"+taxon.rank?lower_case))?lower_case,refBuilder(taxon.link,taxon.reference,taxon.referenceShort,false,true,false)])}
                               </p>
                           </#if>							
 	</#list>
