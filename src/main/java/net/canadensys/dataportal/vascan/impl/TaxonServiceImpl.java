@@ -50,7 +50,9 @@ public class TaxonServiceImpl implements TaxonService {
 	private TaxonomyDAO taxonomyDAO;
 	
 	private TaxonManager taxonManager= new TaxonManager();
-	private PropertyMapHelper propertyMapHelper = new PropertyMapHelper();
+	
+	@Autowired
+	private PropertyMapHelper propertyMapHelper;
 	
 	@Transactional(readOnly=true)
 	@Override
@@ -103,6 +105,8 @@ public class TaxonServiceImpl implements TaxonService {
 		propertyMapHelper.fillVernacularNames(taxon.getVernacularnames(), data);
 
 		propertyMapHelper.fillSynonyms(taxon.getChildren(), data);
+		
+		propertyMapHelper.fillTaxonDistribution(taxon.getDistribution(),taxon,data);
 
 	    
 	    // habitus (using the calculated habit from lookup)
