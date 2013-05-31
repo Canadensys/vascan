@@ -63,6 +63,11 @@ public class TaxonPageIntegrationTest extends AbstractIntegrationTest {
 		
 		assertEquals("div",footerDiv.getTagName());		
 	}
+	
+	@Test
+	public void testHybridPage(){
+		//http://data.canadensys.net/vascan/taxon/5482
+	}
 	 
 	@After
 	public void tearDown() {

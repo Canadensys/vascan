@@ -18,6 +18,15 @@
 	http://www.springframework.org/schema/task
 	http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
+	<!-- Application configuration -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/vascan-config.properties</value>
+			</list>
+		</property>
+	</bean>
+	
 	<import resource="vascan-data-source.xml" />
 	
 	<context:component-scan base-package="net.canadensys.dataportal.vascan"/>
@@ -34,14 +43,7 @@
 	<mvc:resources mapping="/download/**" location="/download/" />
 	<mvc:resources mapping="/error.html" location="/error.html" />
 	
-	<!-- Application configuration -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>/WEB-INF/vascan-config.properties</value>
-			</list>
-		</property>
-	</bean>
+
 	
 	<!-- Locale/language configuration -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">

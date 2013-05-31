@@ -8,7 +8,7 @@
 		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${database.driver}" />
         <property name="jdbcUrl" value="${database.url}" />
-        <property name="user" value="${database.user}" />
+		<property name="user" value="${database.user}" />
         <property name="password" value="${database.password}" />
         <property name="idleConnectionTestPeriod" value="${database.idleConnectionTestPeriod}"/>
 	</bean>
