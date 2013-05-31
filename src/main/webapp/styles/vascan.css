@@ -106,6 +106,24 @@ tr.selected { font-weight: bold; }
 	background: yellow;
 	position: relative;
 }
+
+/* Typeahead */
+.tt-dropdown-menu {
+	background-color: white;
+	border: 1px solid #a8a7a5;
+	box-shadow: 1px 1px 2px #a8a7a5;
+	left: 0;
+	margin: 0;
+	overflow: visible!important;
+	position: absolute;
+	top: -1em;
+	z-index: 1;	
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  background-color: #d3d3d3;
+}
+
 .dropdown {
 	background-color: white;
 	border: 1px solid #a8a7a5;
