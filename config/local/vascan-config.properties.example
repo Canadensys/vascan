@@ -1,0 +1,14 @@
+googleanalytics.siteVerification=A
+googleanalytics.account=B
+
+database.driver=com.mysql.jdbc.Driver
+database.url=jdbc:mysql://127.0.0.1:3306/vascan?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8
+database.user=root
+database.password=
+database.idleConnectionTestPeriod=60
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.show_sql=true
+hibernate.jdbc.fetch_size=1000
+
+elasticsearch.host=carex.irbv.umontreal.ca
+elasticsearch.port=9300

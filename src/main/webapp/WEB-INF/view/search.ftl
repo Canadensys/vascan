@@ -1,9 +1,8 @@
 <#include "inc/common.ftl">
 
 <#assign page={"title":rc.getMessage("namesearch_title1")+ " - " + rc.getMessage("site_title"),"cssList":[rc.getContextUrl("/styles/vascan.css")],"javaScriptIncludeList":
-["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
-"js/typeahead.min.js","js/autocomplete.js","http://data.canadensys.net/common/js/sorttable.js"],
-"jQueryJavaScriptSetupCallList":["autocomplete.setup()"]}>
+["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js", "../js/typeahead.min.js", "../js/application.js", "../js/autocomplete.js", "http://data.canadensys.net/common/js/sorttable.js"],
+"jQueryJavaScriptSetupCallList":[]}>
 
 <#if search.term?has_content>
 	<#assign page = page + {"title": rc.getMessage("namesearch_title2",[search.term])+ " - " + rc.getMessage("site_title")}>
@@ -45,7 +44,7 @@
 </tbody>
  </table>
  <#else>
- <p><img src="images/accepted_species_per_genus.png" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
+ <p><img src="../images/accepted_species_per_genus.png" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
  </#if>
 	</div><#-- content -->
 </div>

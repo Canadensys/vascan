@@ -1,22 +1,29 @@
-var autocomplete  = (function($){
-	// Setup map component
-	function setup() {
-		$('.typeahead').typeahead([
-		{
-			name: 'vernacular',
-			remote: 'search.json?q=%QUERY&t=vernacular',
-			header: '<h3 class="type-name">Vernacular Names</h3>'
+VASCAN.autocomplete = (function(){
+	var _private = {
+		init: function(){
+			this.typeahead();
 		},
-		{
-			name: 'nhl-teams',
-			remote: 'search.json?q=%QUERY&t=taxon',
-			header: '<h3 class="type-name">Scientific Names</h3>'
+		typeahead: function(){
+			$('.typeahead').typeahead([
+				{
+					name: 'scientific',
+					remote: '../search.json?q=%QUERY&t=taxon',
+					header: '<h3 class="taxontype-name">Scientific Names</h3>'
+				},
+				{
+					name: 'vernacular',
+					remote: '../search.json?q=%QUERY&t=vernacular',
+					header: '<h3 class="taxontype-name">Vernacular Names</h3>'
+				}
+				]).on('typeahead:selected', this.dropdown_selected);
+		},
+		dropdown_selected: function(){
+			//TODO: capture language in session and redirect to proper i18n version of result page
+			window.location.href = '/vascan/name/'+$(this).val().replace(/\s/g,"+");
 		}
-		]);
-	}
-	
-//Public methods
-  return {
-	  setup : setup
 	};
-}(jQuery));
+	return {
+		params: {},
+		init: _private.init()
+	};
+}());

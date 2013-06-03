@@ -108,22 +108,43 @@ tr.selected { font-weight: bold; }
 }
 
 /* Typeahead */
+
 .tt-dropdown-menu {
-	background-color: white;
-	border: 1px solid #a8a7a5;
-	box-shadow: 1px 1px 2px #a8a7a5;
-	left: 0;
-	margin: 0;
-	overflow: visible!important;
 	position: absolute;
 	top: -1em;
-	z-index: 1;	
+	left: 0;
+	border: 1px solid #a8a7a5;
+	border-radius: 5px;
+	box-shadow: 1px 1px 2px #a8a7a5;
+	overflow: visible!important;
+	z-index: 1;
+	margin-top:5px;
+	padding: 8px 0;
+	background-color: #fff;
+}
+
+.taxontype-name {
+	margin: 0 10px 5px 10px;
+	padding: 3px 0;
+	border-bottom: 1px solid #a8a7a5;
+}
+
+.tt-suggestion {
+	padding: 2px 15px;
+}
+
+.tt-suggestion p{
+	padding:0px;
+	margin:0px;
 }
 
 .tt-suggestion.tt-is-under-cursor {
-  background-color: #d3d3d3;
+	background: #a82400;
+	color: white;
+	cursor: pointer;
 }
 
+/*
 .dropdown {
 	background-color: white;
 	border: 1px solid #a8a7a5;
@@ -149,7 +170,7 @@ tr.selected { font-weight: bold; }
 .dropdown_continue_search {
 	background-color: #e7e7e7;
 	border-top: 1px solid #a8a7a5;
-/*	cursor: pointer; */	
+	cursor: pointer;
 	text-align: right;
 }
 .dropdown li.selected {
@@ -158,11 +179,11 @@ tr.selected { font-weight: bold; }
 	cursor: pointer;
 }
 .dropdown li.selected a { color: white!important; }
-
+*/
 
 /* Search page */
 
-#search_box input[type=text] { width: 480px; }
+#search_box input[type=text], .tt-dropdown-menu { width: 480px; }
 #search_box .dropdown { width: 482px; }
 #search_results tbody a { display: block; }
 #search_results tbody tr:hover { background: #d3d3d3; } /* Doesn't work for cells with icons in IE 7 */

@@ -61,11 +61,11 @@ $(document).ready(function(){
     for(var region in regions){
     	checks=true;
         for(var province = 0; province < regions[region].length; province++){
-            if($("#"+regions[region][province]).attr("checked") != true){
+            if(!$("#"+regions[region][province]).prop("checked")){
                 checks=false;
             }
             else{
-               $("#"+regions[region][province]).attr("checked","checked");
+               $("#"+regions[region][province]).prop("checked",true);
                $("#"+regions[region][province]).trigger("change",[false]);
             }
         }
