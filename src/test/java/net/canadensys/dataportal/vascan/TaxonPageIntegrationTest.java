@@ -39,7 +39,7 @@ public class TaxonPageIntegrationTest extends AbstractIntegrationTest {
 		//bind the WebElement to the current page
 		PageFactory.initElements(browser, this);
 		assertEquals("Equisetopsida C. Aghard",contentDiv.findElement(By.cssSelector("h1")).getText());
-		assertEquals("accepted",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
+		assertEquals("sprite-accepted",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
 		
 		
 		WebElement firstClassificationRow = classificationTable.findElement(By.cssSelector("tbody tr"));
@@ -57,9 +57,9 @@ public class TaxonPageIntegrationTest extends AbstractIntegrationTest {
 		PageFactory.initElements(browser, this);
 		
 		assertEquals("Carex abdita Bicknell", contentDiv.findElement(By.cssSelector("h1")).getText());
-		assertEquals("synonym",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
+		assertEquals("sprite-synonym",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
 		
-		assertEquals("Carex umbellata Schkuhr ex Willdenow", contentDiv.findElement(By.cssSelector("p.redirect_accepted a")).getText());
+		assertEquals("Carex umbellata Schkuhr ex Willdenow", contentDiv.findElement(By.cssSelector("p.sprite-redirect_accepted a")).getText());
 		
 		assertEquals("div",footerDiv.getTagName());		
 	}
