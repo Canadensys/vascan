@@ -6,7 +6,7 @@
 *.ear
 
 # Misc files
-*.DS_Strore
+*.DS_Store
 *.gradle
 
 build/*
