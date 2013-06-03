@@ -40,7 +40,7 @@ public class VernacularPageIntegrationTest extends AbstractIntegrationTest{
 		assertEquals("if du Canada",contentDiv.findElement(By.cssSelector("h1")).getText());
 		assertEquals("sprite sprite-accepted",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
 		
-		assertEquals("Taxus canadensis Marshall", contentDiv.findElement(By.cssSelector("p.redirect_accepted a")).getText());
+		assertEquals("Taxus canadensis Marshall", contentDiv.findElement(By.cssSelector("p.sprite-redirect_accepted a")).getText());
 		assertEquals("div",footerDiv.getTagName());
 	}
 	
@@ -54,7 +54,7 @@ public class VernacularPageIntegrationTest extends AbstractIntegrationTest{
 		assertEquals("buis", contentDiv.findElement(By.cssSelector("h1")).getText());
 		assertEquals("sprite sprite-synonym",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
 		
-		assertEquals("Taxus canadensis Marshall", contentDiv.findElement(By.cssSelector("p.redirect_accepted a")).getText());
+		assertEquals("Taxus canadensis Marshall", contentDiv.findElement(By.cssSelector("p.sprite-redirect_accepted a")).getText());
 		
 		assertEquals("div",footerDiv.getTagName());		
 	}
