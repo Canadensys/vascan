@@ -4,3 +4,11 @@
 *.jar
 *.war
 *.ear
+
+# Misc files
+*.DS_Strore
+*.gradle
+
+build/*
+build.gradle
+config/local/vascan-config.properties
