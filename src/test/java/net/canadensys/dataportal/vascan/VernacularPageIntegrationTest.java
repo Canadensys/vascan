@@ -38,7 +38,7 @@ public class VernacularPageIntegrationTest extends AbstractIntegrationTest{
 		//bind the WebElement to the current page
 		PageFactory.initElements(browser, this);
 		assertEquals("if du Canada",contentDiv.findElement(By.cssSelector("h1")).getText());
-		assertEquals("sprite-accepted",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
+		assertEquals("sprite sprite-accepted",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
 		
 		assertEquals("Taxus canadensis Marshall", contentDiv.findElement(By.cssSelector("p.redirect_accepted a")).getText());
 		assertEquals("div",footerDiv.getTagName());
@@ -52,7 +52,7 @@ public class VernacularPageIntegrationTest extends AbstractIntegrationTest{
 		PageFactory.initElements(browser, this);
 		
 		assertEquals("buis", contentDiv.findElement(By.cssSelector("h1")).getText());
-		assertEquals("sprite-synonym",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
+		assertEquals("sprite sprite-synonym",contentDiv.findElement(By.cssSelector("h1 + p")).getAttribute("class"));
 		
 		assertEquals("Taxus canadensis Marshall", contentDiv.findElement(By.cssSelector("p.redirect_accepted a")).getText());
 		

@@ -14,7 +14,7 @@
 	<#list data.disambiguationVernaculars as vernacular>
 		<p class="sprite sprite-${vernacular.status?lower_case}">
 		    ${rc.getMessage("vernacular_" + vernacular.status?lower_case + "_msg1",[vernacular.vernacularid?c,vernacular.name,refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,true,false,false),rc.getMessage("language_"+rc.getLocale().getLanguage())])}
-		</p>								
+		</p>
 		<p class="sprite sprite-redirect_${vernacular.taxon.status?lower_case}">
             ${rc.getMessage("taxon_" + vernacular.taxon.status?lower_case + "_no_strong_msg1",[vernacular.taxon.taxonId?c,vernacular.taxon.fullScientificName,prefixFrenchRank(rc.getMessage("rank_"+vernacular.taxon.rank?lower_case))?lower_case,refBuilder(vernacular.taxon.link,vernacular.taxon.reference,vernacular.taxon.referenceShort,false,true,false)])}
 		</p>

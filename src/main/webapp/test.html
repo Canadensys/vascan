@@ -1,0 +1,82 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<title>Name search - Database of Vascular Plants of Canada (VASCAN)</title>
+	<link rel="stylesheet" href="http://data.canadensys.net/common/styles/common.css" media="screen"/>
+	<link rel="stylesheet" href="styles/vascan.css" media="screen"/>
+	<link rel="shortcut icon" href="http://data.canadensys.net/common/images/favicon.png"/>
+</head>
+<body>	<div id="feedback_bar"><a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Data%20issue" target="_blank" title="Report a problem">&nbsp;</a></div>
+<div id="header">
+	<div id="header_content">
+		<div id="nav_top"><a href="http://localhost:9966/vascan/search/?lang=fr">Français</a></div>
+		<div id="nav_title" class="png"><a href="http://data.canadensys.net/">Canadensys</a></div>
+		<div id="nav_portal"><span class="selected">Data</span> | <a href="http://www.canadensys.net/">Community</a></div>
+	</div>
+	<div id="menu">
+		<ul>
+			<li class="menu_first">&nbsp;</li>
+			<li><a href="http://data.canadensys.net/explorer/">Explorer</a></li>	
+			<li><a href="http://data.canadensys.net/ipt/">Repository</a></li>
+			<li><a href="http://data.canadensys.net/tools/">Tools</a></li>
+			<li class="page_item current_page_item"><a href="http://data.canadensys.net/vascan/">Vascan</a></li>
+			<li class="menu_last">&nbsp;</li>
+		</ul>  
+	</div>
+</div>	<div id="body" class="fullscreen">
+		<!--[if lte IE 7]>
+		<p id="ie">You are using an outdated browser, we can't guarantee this site will work. You will enjoy more of the web with a <a href="http://www.whatbrowser.org/">better browser</a>.</p>
+		<![endif]-->
+		<div id="side_bar">
+			<ul class="side_menu custom_list round">
+				<li><a href="/vascan/search">Name search</a></li>
+				<li><a href="/vascan/checklist">Checklist builder</a></li>
+				<li><a href="/vascan/about">About</a></li>
+				<li><a href="http://data.canadensys.net/ipt/resource.do?r=vascan&request_locale=en">Download</a></li>
+			</ul>
+	
+		</div>
+		
+		<div id="content" class="clear_fix">
+<h1>Name search</h1>		 
+<form id="search_box" class="round custom_form" method="get" onkeypress="return event.keyCode != 13;">
+	<p><input class="typeahead" type="text" name="q" id="search_term" value="" autocomplete="off"/> <input type="button" onclick="document.forms[0].submit()" value="Search"/></p>
+
+	<p>Welcome to the <strong>Database of Vascular Plants of Canada (VASCAN)</strong>. Search for any <strong>scientific</strong> or <strong>vernacular</strong> name. A search on "<a href="search/?q=arte">arte</a>" will return "<a href="name/Artemisia"><strong>Arte</strong>misia</a>", but not "<a href="name/two-parted%20sedge">Two-p<strong>arte</strong>d sedge</a>". Use "<a href="search/?q=Achnella">Achnella</a>" to search for hybrids like "<a href="name/×Achnella">×Achnella</a>". Want to search by <strong>distribution</strong> instead? Use the <a href="checklist">checklist builder</a>.</p>
+</form>
+
+ <p><img src="images/accepted_species_per_genus.png" width="100%" alt="Word cloud image" title="Word cloud of Canadian genera, created with www.wordle.net. The font size is relative to the number of accepted Canadian species per genus."/></p>
+	</div>
+</div>
+<div id="footer">
+	<div id="footer_content">
+		<div class="footer_section left">
+			<a id="cc0" class="cc_logo" href="http://creativecommons.org/publicdomain/zero/1.0/" title="CC0 1.0 Universal Public Domain Dedication">&nbsp;</a>
+			<p>Most Canadensys participants have dedicated their data to the <a href="http://creativecommons.org/publicdomain/zero/1.0/">public domain</a>.</p>
+			<ul>
+				<li><a href="http://www.canadensys.net/norms">Data usage norms</a></li>
+				<li><a href="http://data.canadensys.net/ipt/?request_locale=en">Explore the datasets</a></li>
+			</ul>
+		</div>
+		<div class="footer_section right">
+			<a rel="license" id="cc_by" class="cc_logo" href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons Attribution 3.0 Unported">&nbsp;</a>
+			<p>All other content on this website is licensed under <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a>, except for the copyrighted <a href="http://www.canadensys.net/documents">Canadensys logo</a>.</p>
+			<ul>
+				<li><a href="http://www.canadensys.net/about">About Canadensys</a></li>
+				<li><a href="http://www.canadensys.net/contact">Contact us</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/typeahead.min.js"></script>
+<script type="text/javascript" src="js/vascan.js"></script>
+<script type="text/javascript" src="js/vascan/autocomplete.js"></script>
+
+</body>
+</html>

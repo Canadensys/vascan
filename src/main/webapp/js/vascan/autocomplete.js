@@ -19,11 +19,12 @@ VASCAN.autocomplete = (function(){
 		},
 		dropdown_selected: function(){
 			//TODO: capture language in session and redirect to proper i18n version of result page
-			window.location.href = '/vascan/name/'+$(this).val().replace(/\s/g,"+");
+			window.location.href = VASCAN.common.baseURL+'/name/'+$(this).val().replace(/\s/g,"+");
 		}
 	};
 	return {
-		params: {},
-		init: _private.init()
+		init: function() {
+			_private.init();
+		}
 	};
 }());
