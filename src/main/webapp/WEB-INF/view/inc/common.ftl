@@ -1,11 +1,3 @@
-<#macro display str args=[]>
-    <#assign strreplace=str />
-    <#assign pos=-1 />
-    <#list args as arg>
-        <#assign pos=args?seq_index_of(arg,pos+1) />    
-        <#assign strreplace=strreplace?replace("{"+pos+"}",arg) />
-    </#list>${strreplace?trim}</#macro>
-    
 <#function replace str args=[]>
 	<#assign strreplace=str />
 	<#list args as arg>
@@ -123,18 +115,6 @@
 		<a href="javascript:document.location.href=new Uri(document.location.href).replaceQueryParam('lang','fr');">Fran&ccedil;ais</a>
 	</#if>
 </#macro>
-
-<#macro assignTitle str args=[]>
-	<#assign strreplace=str />
-	<#list args as arg>
-		<#assign strreplace=strreplace?replace("{"+args?seq_index_of(arg)+"}",arg) />
-	</#list>
-	<#global title=strreplace />
-</#macro>
-
-
-
-
 
 <#macro taxonContent>
 	<#nested>
