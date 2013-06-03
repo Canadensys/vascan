@@ -121,8 +121,8 @@
 						<#if data.isHybridConcept>
 							<h2>${rc.getMessage("taxon_h2_hybrids")}</h2>
 							<#list data.hybridParents as hybridParent>
-							 <p class="redirect_${hybridParent.status?lower_case}" />
-								 <a href="${rc.getContextUrl("/taxon/"+hybridParent.taxonId+rc.getMessage("url_language"))}">${hybridParent.fullScientificName}</a>.
+							 <p class="sprite sprite-redirect_${hybridParent.status?lower_case}" />
+								 <a href="${rc.getContextUrl('/taxon/'+hybridParent.taxonId?c+rc.getMessage('url_language'))}">${hybridParent.fullScientificName}</a>.
 							 </p>
 							</#list>
 						</#if>
@@ -130,8 +130,8 @@
 						<ul class="custom_list">
 						<#list data.vernacularNames as vernacular>
 							<#if vernacular.language == "fr">
-								<li class="${vernacular.status?lower_case}">
-									<a href="vernacular/${vernacular.vernacularId}${rc.getMessage("url_language")}">${vernacular.name}</a>
+								<li class="sprite sprite-${vernacular.status?lower_case}">
+									<a href="${rc.getContextUrl('/vernacular/'+vernacular.vernacularId?c+rc.getMessage('url_language'))}">${vernacular.name}</a>
 									<span class="right">${refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,false,false,false)}</span> 
 								</li>
 							</#if> 
@@ -140,8 +140,8 @@
 						<ul class="custom_list">
 						<#list data.vernacularNames as vernacular> 
 							<#if vernacular.language == "en">
-								<li class="${vernacular.status?lower_case}">
-									<a href="vernacular/${vernacular.vernacularId}${rc.getMessage("url_language")}">${vernacular.name}</a>
+								<li class="sprite sprite-${vernacular.status?lower_case}">
+									<a href="${rc.getContextUrl('/vernacular/'+vernacular.vernacularId?c+rc.getMessage('url_language'))}">${vernacular.name}</a>
 									<span class="right">${refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,false,false,false)}</span>
 								</li>
 							</#if> 
@@ -151,27 +151,27 @@
 						<h2>${rc.getMessage("taxon_h2_synonyms")}</h2>
 						<ul class="custom_list">
 						<#list data.synonyms as synonym>
-							<li class="synonym">
-								<a href="taxon/${synonym.taxonId}${rc.getMessage("url_language")}">${synonym.fullScientificName}</a>
+							<li class="sprite sprite-synonym">
+								<a href="${rc.getContextUrl('/taxon/'+synonym.taxonId?c+rc.getMessage('url_language'))}">${synonym.fullScientificName}</a>
 								<span class="right">${refBuilder(synonym.link,synonym.reference,synonym.referenceShort,false,false,false)}</span>
 							</li>
 						</#list>
 						</ul>
 						
-						<h2>${rc.getMessage("taxon_h2_distribution")}</h2>			   
+						<h2>${rc.getMessage("taxon_h2_distribution")}</h2>
 						<ul class="buttons">
 							<li><a onclick="$('#map_result').show(350);$('#list_result').hide(350);$('ul.buttons a').toggleClass('selected');" class="selected">${rc.getMessage("taxon_button1")}</a></li>
 							<li><a onclick="$('#list_result').show(350);$('#map_result').hide(350);$('ul.buttons a').toggleClass('selected');">${rc.getMessage("taxon_button2")}</a></li>
 						</ul>
 
 						<ul class="distribution_legend custom_list">
-							<li class="distribution_native">${rc.getMessage("distribution_native")}</li>
-							<li class="distribution_introduced">${rc.getMessage("distribution_introduced")}</li> 
-							<li class="distribution_ephemeral">${rc.getMessage("distribution_ephemeral")}</li>
-							<li class="distribution_excluded">${rc.getMessage("distribution_excluded")}</li>
-							<li class="distribution_extirpated">${rc.getMessage("distribution_extirpated")}</li> 
-							<li class="distribution_doubtful">${rc.getMessage("distribution_doubtful")}</li>
-							<li class="distribution_absent">${rc.getMessage("distribution_absent")}</li>
+							<li class="sprite sprite-native">${rc.getMessage("distribution_native")}</li>
+							<li class="sprite sprite-introduced">${rc.getMessage("distribution_introduced")}</li> 
+							<li class="sprite sprite-ephemeral">${rc.getMessage("distribution_ephemeral")}</li>
+							<li class="sprite sprite-excluded">${rc.getMessage("distribution_excluded")}</li>
+							<li class="sprite sprite-extirpated">${rc.getMessage("distribution_extirpated")}</li> 
+							<li class="sprite sprite-doubtful">${rc.getMessage("distribution_doubtful")}</li>
+							<li class="sprite sprite-absent">${rc.getMessage("distribution_absent")}</li>
 						</ul>
 
 						<div id="map_result">
@@ -185,12 +185,12 @@
 							<ul class="custom_list">
 							
 							<#list data.distributions as distribution> 
-								<li class="distribution_${distribution.status?lower_case}">
+								<li class="sprite sprite-${distribution.status?lower_case}">
 									${rc.getMessage("province_" + distribution.province?replace("-","_"))}
 									<span class="right">${refBuilder(distribution.link,distribution.reference,distribution.referenceShort,false,false,false)}</span>
 								</li>
 								<#if distribution.excluded?has_content == true>
-								<li class="redirect">
+								<li class="sprite sprite-redirect">
 									${rc.getMessage("excluded_" + distribution.excluded?lower_case)}
 								</li>
 								</#if>
@@ -202,7 +202,7 @@
 							<tbody>
 							<#list data.tree as node>
 								<#assign indent = node.rankId - 1>				 
-								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}">${rc.getMessage("rank_" + node.rank?lower_case)}</td><td class="name"><a href="${rc.getContextUrl("/taxon/"+node.taxonId?c+rc.getMessage("url_language"))}">${node.fullScientificName}</a></td></tr>
+								<tr<#if node.taxonId == data.taxonId> class="selected"</#if>><td class="indent_${indent}">${rc.getMessage("rank_" + node.rank?lower_case)}</td><td class="name"><a href="${rc.getContextUrl('/taxon/'+node.taxonId?c+rc.getMessage('url_language'))}">${node.fullScientificName}</a></td></tr>
 							</#list>
 							</tbody>
 						</table>

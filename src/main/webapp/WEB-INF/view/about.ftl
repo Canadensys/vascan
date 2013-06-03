@@ -1,5 +1,5 @@
 <#include "inc/common.ftl">
-<#assign page={"title":rc.getMessage("about_title1"),"cssList":["${(root.rootURL)?if_exists}styles/vascan.css"]}/>
+<#assign page={"title":rc.getMessage("about_title1"),"cssList":[rc.getContextUrl("/styles/vascan.css")]}/>
 
 <#assign currentPage="about"/>
 
@@ -99,13 +99,13 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 <a name="distribution"></a><h2>Distribution status codes</h2>
 <p>We use the following codes and colours for the distribution status:</p>
 <ul class="custom_list">
-	<li class="distribution_native"><strong>Native</strong> - Taxon present as a result of natural processes only, without human agency.</li>
-	<li class="distribution_introduced"><strong>Introduced</strong> - Taxon established (naturalized) in a region outside of its original range, as a result of human activity, either deliberate or accidental. Taxa are considered introduced in Canada when they became established after European colonization.</li>
-	<li class="distribution_ephemeral"><strong>Ephemeral</strong> - Taxon not established permanently in the region, but recurring in the wild on a near-annual basis, usually from cultivation (e.g. <a href="name/wheat">wheat</a>, <a href="name/tomato">tomato</a>, etc.).</li>
-	<li class="distribution_excluded"><strong>Excluded</strong> - Taxon reported from the region, but not established or erroneously determined.</li>
-	<li class="distribution_extirpated"><strong>Extirpated</strong> - Taxon native to the region, but currently considered eradicated. This status is only given after active search, and is usually determined by a conservation agency.</li>
-	<li class="distribution_doubtful"><strong>Doubtful</strong> - Taxon reported from the region by a source, but information not yet validated.</li>
-	<li class="distribution_absent"><strong>Absent</strong> - Taxon not reported from the region.</li>
+	<li class="sprite sprite-native"><strong>Native</strong> - Taxon present as a result of natural processes only, without human agency.</li>
+	<li class="sprite sprite-introduced"><strong>Introduced</strong> - Taxon established (naturalized) in a region outside of its original range, as a result of human activity, either deliberate or accidental. Taxa are considered introduced in Canada when they became established after European colonization.</li>
+	<li class="sprite sprite-ephemeral"><strong>Ephemeral</strong> - Taxon not established permanently in the region, but recurring in the wild on a near-annual basis, usually from cultivation (e.g. <a href="name/wheat">wheat</a>, <a href="name/tomato">tomato</a>, etc.).</li>
+	<li class="sprite sprite-excluded"><strong>Excluded</strong> - Taxon reported from the region, but not established or erroneously determined.</li>
+	<li class="sprite sprite-extirpated"><strong>Extirpated</strong> - Taxon native to the region, but currently considered eradicated. This status is only given after active search, and is usually determined by a conservation agency.</li>
+	<li class="sprite sprite-doubtful"><strong>Doubtful</strong> - Taxon reported from the region by a source, but information not yet validated.</li>
+	<li class="sprite sprite-absent"><strong>Absent</strong> - Taxon not reported from the region.</li>
 </ul>
 <#elseif rc.getLocale().getLanguage()=="fr">
 <ul class="index">
@@ -200,13 +200,13 @@ Brouillet et al. 2010+. érable à sucre in VASCAN, la Base de données des plan
 <a name="distribution"></a><h2>Légende des états de répartition</h2>
 <p>Nous utilisons les codes et couleurs suivants pour indiquer l'état de répartition de chaque taxon :</p>
 <ul class="custom_list">
-	<li class="distribution_native"><strong>Indigène</strong> - Taxon présent uniquement en raison de processus naturels, sans intervention humaine.</li>
-	<li class="distribution_introduced"><strong>Introduit</strong> - Taxon établi (naturalisé) dans une région autre que son aire d'origine, après y avoir été introduit délibérément ou accidentellement dans le cadre d'activités humaines. Le taxon est jugé introduit au Canada s'il s'y est établi après la colonisation européenne.</li>
-	<li class="distribution_ephemeral"><strong>Éphémère</strong> - Taxon non établi de façon permanente dans une région, mais présent de manière récurrente dans la nature, quasi annuellement, généralement à partir de cultures (<a href="name/blé?lang=fr">blé</a>, <a href="name/tomate?lang=fr">tomate</a>, etc.).</li>
-	<li class="distribution_excluded"><strong>Exclus</strong> - Taxon qui a déjà été signalé dans une région, mais ne s'y est pas établi ou avait été identifié de façon erronée.</li>
-	<li class="distribution_extirpated"><strong>Disparu</strong> - Taxon indigène à une région, mais actuellement considéré comme n'y étant plus présent. Le taxon n'est déclaré disparu qu'après des recherches actives, et cet état est généralement déterminé par un organisme de conservation.</li>
-	<li class="distribution_doubtful"><strong>Douteux</strong> - Taxon signalé dans une région par une source quelconque, sans que l'information ait été validée.</li>
-	<li class="distribution_absent"><strong>Absent</strong> - Taxon inconnu dans la région.</li>
+	<li class="sprite sprite-native"><strong>Indigène</strong> - Taxon présent uniquement en raison de processus naturels, sans intervention humaine.</li>
+	<li class="sprite sprite-introduced"><strong>Introduit</strong> - Taxon établi (naturalisé) dans une région autre que son aire d'origine, après y avoir été introduit délibérément ou accidentellement dans le cadre d'activités humaines. Le taxon est jugé introduit au Canada s'il s'y est établi après la colonisation européenne.</li>
+	<li class="sprite sprite-ephemeral"><strong>Éphémère</strong> - Taxon non établi de façon permanente dans une région, mais présent de manière récurrente dans la nature, quasi annuellement, généralement à partir de cultures (<a href="name/blé?lang=fr">blé</a>, <a href="name/tomate?lang=fr">tomate</a>, etc.).</li>
+	<li class="sprite sprite-excluded"><strong>Exclus</strong> - Taxon qui a déjà été signalé dans une région, mais ne s'y est pas établi ou avait été identifié de façon erronée.</li>
+	<li class="sprite sprite-extirpated"><strong>Disparu</strong> - Taxon indigène à une région, mais actuellement considéré comme n'y étant plus présent. Le taxon n'est déclaré disparu qu'après des recherches actives, et cet état est généralement déterminé par un organisme de conservation.</li>
+	<li class="sprite sprite-doubtful"><strong>Douteux</strong> - Taxon signalé dans une région par une source quelconque, sans que l'information ait été validée.</li>
+	<li class="sprite sprite-absent"><strong>Absent</strong> - Taxon inconnu dans la région.</li>
 </ul>
 </#if>
 	</div><#-- content -->

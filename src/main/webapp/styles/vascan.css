@@ -2,63 +2,34 @@
 /* Stylesheet for http://data.canadensys.net/vascan */
 
 /* Vascan icons */
+.sprite{background: url("../images/sprite.png") no-repeat top left;padding-left:36px;}
+.sprite-absent{background-position: 0 0;} 
+.sprite-accepted{background-position: 0 -66px;} 
+.sprite-alternative{background-position: 0 -132px;}
+.sprite-cronquist{background-position: 0 -198px;}
+.sprite-doubtful{background-position: 0 -264px;}
+.sprite-ephemeral{background-position: 0 -330px;}
+.sprite-excluded{background-position: 0 -396px;}
+.sprite-extirpated{background-position: 0 -462px;}
+.sprite-introduced{background-position: 0 -528px;}
+.sprite-marie_victorin{background-position: 0 -594px;}
+.sprite-native{background-position: 0 -660px;}
+.sprite-present{background-position: 0 -726px;}
+.sprite-questionable{background-position: 0 -792px;}
+.sprite-scoggan{background-position: 0 -1130px;}
+.sprite-synonym{background-position: 0 -1196px;}
+.sprite-redirect{background-position: 0 -858px; padding-left:72px;}
+.sprite-redirect_accepted{background-position: 0 -928px; padding-left: 72px;}
+.sprite-redirect_arrow{background-position: 0 -994px; padding-left:72px;}
+.sprite-redirect_synonym{background-position: 0 -1064px; padding-left: 72px;}
 
-.accepted {
-	background: url("../images/accepted.png") top left no-repeat;
-	padding-left: 36px;
-}
-.synonym {
-	background: url("../images/synonym.png") top left no-repeat;
-	padding-left: 36px;
-}
-.redirect {
-	background: url("../images/redirect.png") top left no-repeat;
-	padding-left: 72px;
-}
-.redirect_synonym {
-	background: url("../images/redirect_synonym.png") top left no-repeat;
-	padding-left: 72px;
-}
-.redirect_accepted {
-	background: url("../images/redirect_accepted.png") top left no-repeat;
-	padding-left: 72px;
-}
-.distribution_native {
-	background: url("../images/native.png") top left no-repeat;
-	padding-left: 36px;
-}
-.distribution_introduced {
-	background: url("../images/introduced.png") top left no-repeat;
-	padding-left: 36px;
-}
-.distribution_ephemeral {
-	background: url("../images/ephemere.png") top left no-repeat;
-	padding-left: 36px;
-}
-.distribution_extirpated {
-	background: url("../images/extirpated.png") top left no-repeat;
-	padding-left: 36px;
-}
-.distribution_excluded {
-	background: url("../images/excluded.png") top left no-repeat;
-	padding-left: 36px;
-}
-.distribution_absent {
-	background: url("../images/absent.png") top left no-repeat;
-	padding-left: 36px;
-}
-.distribution_doubtful {
-	background: url("../images/doubtful.png") top left no-repeat;
-	padding-left: 36px;
-}
-#see_taxon { background: url("../images/button-arrow.png") top right no-repeat; }
-#create_checklist { background: url("../images/button-checklist.png") top right no-repeat; }
+#see_taxon {background: url("../images/button-arrow.png") top right no-repeat; }
+#create_checklist {background: url("../images/button-checklist.png") top right no-repeat; }
 
 .right .reference {
 	display: inline-block;
 	margin-left: 3px;
 }
-
 
 /* Vascan distribution */
 
@@ -67,8 +38,7 @@
 	text-transform: uppercase;
 }
 .distribution_legend li {
-	background-position: 0 -5px;
-	display: inline;
+	display: inline-block;
 	height: 20px;
 	padding-right: 9px;
 }
@@ -144,50 +114,13 @@ tr.selected { font-weight: bold; }
 	cursor: pointer;
 }
 
-/*
-.dropdown {
-	background-color: white;
-	border: 1px solid #a8a7a5;
-	box-shadow: 1px 1px 2px #a8a7a5;
-	left: 0;
-	margin: 0;
-	overflow: visible!important;
-	position: absolute;
-	top: -1em;
-	z-index: 1;
-}
-.dropdown li { padding: 1px 3px; }
-.dropdown li a, .dropdown li a:visited {
-	color: #22241e!important;
-	text-decoration: none;
-}
-.dropdown_header {
-	background-color: #e7e7e7;
-	border-bottom: 1px solid #a8a7a5;
-	border-top: 1px solid #a8a7a5;
-	font-weight: bold;
-}
-.dropdown_continue_search {
-	background-color: #e7e7e7;
-	border-top: 1px solid #a8a7a5;
-	cursor: pointer;
-	text-align: right;
-}
-.dropdown li.selected {
-	background: #a82400;
-	color: white;
-	cursor: pointer;
-}
-.dropdown li.selected a { color: white!important; }
-*/
-
 /* Search page */
 
 #search_box input[type=text], .tt-dropdown-menu { width: 480px; }
 #search_box .dropdown { width: 482px; }
 #search_results tbody a { display: block; }
-#search_results tbody tr:hover { background: #d3d3d3; } /* Doesn't work for cells with icons in IE 7 */
-*#search_results tbody tr:hover { background: white!important; } /* IE 7 */
+#search_results tbody tr:hover {background: #d3d3d3; } /* Doesn't work for cells with icons in IE 7 */
+*#search_results tbody tr:hover {background: white!important; } /* IE 7 */
 
 
 /* Checklist builder */
@@ -259,12 +192,12 @@ tr.selected { font-weight: bold; }
 	top: 0;
 }
 
-.canada   { background-color: #e7e7e7; }
-.pacific  { background-color: #e1e1e1; }
-.prairies { background-color: #c3c3c3; }
-.central  { background-color: #a5a5a5; }
-.atlantic { background-color: #878787; }
-.arctic   { background-color: white; }
+.canada   {background-color: #e7e7e7; }
+.pacific  {background-color: #e1e1e1; }
+.prairies {background-color: #c3c3c3; }
+.central  {background-color: #a5a5a5; }
+.atlantic {background-color: #878787; }
+.arctic   {background-color: white; }
 
 #checklist_ranks ul {
 	float: left;

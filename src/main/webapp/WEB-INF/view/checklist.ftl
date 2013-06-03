@@ -2,7 +2,7 @@
 
 <#assign page={"title":rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"),"cssList":[rc.getContextUrl("/styles/vascan.css")],"javaScriptIncludeList":
 ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js",
-"js/checklist.js"],
+rc.getContextUrl("/js/checklist.js")],
 "jQueryJavaScriptSetupCallList":[]}>
 
 <#assign currentPage="checklist"/>

@@ -7,12 +7,12 @@ VASCAN.autocomplete = (function(){
 			$('.typeahead').typeahead([
 				{
 					name: 'scientific',
-					remote: '../search.json?q=%QUERY&t=taxon',
+					remote: VASCAN.common.baseURL+'/search.json?q=%QUERY&t=taxon',
 					header: '<h3 class="taxontype-name">Scientific Names</h3>'
 				},
 				{
 					name: 'vernacular',
-					remote: '../search.json?q=%QUERY&t=vernacular',
+					remote: VASCAN.common.baseURL+'/search.json?q=%QUERY&t=vernacular',
 					header: '<h3 class="taxontype-name">Vernacular Names</h3>'
 				}
 				]).on('typeahead:selected', this.dropdown_selected);

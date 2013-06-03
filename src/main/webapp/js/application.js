@@ -1,5 +1,9 @@
 ;(function(vc, $, window, document, undefined) {
 
+	vc.common = {
+		baseURL: "/vascan"
+	};
+
 /* DESIGN TEMPLATE FOR MODULES IN VASCAN */
 /*
 	VASCAN.myModule = (function() {
