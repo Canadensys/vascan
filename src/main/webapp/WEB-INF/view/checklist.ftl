@@ -1,7 +1,7 @@
 <#include "inc/common.ftl">
 
 <#assign page={"title":rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"),"cssList":[rc.getContextUrl("/styles/vascan.css")],"javaScriptIncludeList":
-["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContexttUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js"),
+["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js")],
 "jQueryJavaScriptSetupCallList":[]}>
 
 <#assign currentPage="checklist"/>
@@ -153,9 +153,9 @@
 		  ${rc.getMessage("checklist_h2_results")}: ${data.numResults}
 		  <span id="results_info" style="float:right;font-size:10px;">
 			<#if data.numResults gt 200 && data.limitResults.display != "">
-				${rc.getMessage("checklist_msg18")}
+				${rc.getMessage("checklist_msg18")} <a href="#" onclick="$('#limitResults').attr('checked','');$('#checklist_box').submit();">${rc.getMessage("checklist_show_all")}</a>
 			<#elseif data.numResults gte 200>
-				${rc.getMessage("checklist_msg19")}
+			${rc.getMessage("checklist_msg19")} <a href="#" onclick="$('#limitResults').attr('checked','checked=checked');$('#checklist_box').submit();">${rc.getMessage("checklist_show_partial")}</a>
 			</#if>
 		  </span>
 	</h2>		   
