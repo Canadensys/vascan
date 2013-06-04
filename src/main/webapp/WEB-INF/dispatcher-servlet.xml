@@ -82,6 +82,11 @@
           <entry key="URLHelper" value-ref="URLHelper"/>
         </map>
 		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="number_format">computer</prop>
+			</props>
+		</property>
 	</bean>
 		
 	<!-- Warning, those 2 ViewResolver are based on UrlBasedViewResolver. That means that the

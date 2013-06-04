@@ -12,10 +12,10 @@
 <h1>${vernacularName.name}</h1>
 
 <p class="sprite sprite-${vernacularName.status?lower_case}">
-	${rc.getMessage("vernacular_" + vernacularName.status?lower_case + "_msg1",[vernacularName.vernacularId?c,vernacularName.name,refBuilder(vernacularName.link,vernacularName.reference,vernacularName.referenceShort,true,false,false),rc.getMessage("language_"+vernacularName.language)])}
+	<a href="${rc.getContextUrl('/vernacular/'+vernacularName.vernacularId)}">${vernacularName.name}</a>  ${rc.getMessage("vernacular_" + vernacularName.status?lower_case + "_msg1",[refBuilder(vernacularName.link,vernacularName.reference,vernacularName.referenceShort,true,false,false),rc.getMessage("language_"+vernacularName.language)])}
 </p>                                
 <p class="sprite sprite-redirect_${vernacularName.taxon.status?lower_case}">
-	${rc.getMessage("taxon_" + vernacularName.taxon.status?lower_case + "_no_strong_msg1",[vernacularName.taxon.taxonId?c,vernacularName.taxon.fullScientificName,prefixFrenchRank(rc.getMessage("rank_"+vernacularName.taxon.rank?lower_case))?lower_case,refBuilder(vernacularName.taxon.link,vernacularName.taxon.reference,vernacularName.taxon.referenceShort,false,true,false)])}
+	<a href="${rc.getContextUrl('/taxon/'+vernacularName.taxon.taxonId)}">${vernacularName.taxon.fullScientificName}</a> ${rc.getMessage("taxon_" + vernacularName.taxon.status?lower_case + "_no_strong_msg1",[prefixFrenchRank(rc.getMessage("rank_"+vernacularName.taxon.rank?lower_case))?lower_case,refBuilder(vernacularName.taxon.link,vernacularName.taxon.reference,vernacularName.taxon.referenceShort,false,true,false)])}
 </p>
 	</div><#-- content -->
 </div>
