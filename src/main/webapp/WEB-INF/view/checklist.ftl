@@ -1,8 +1,7 @@
 <#include "inc/common.ftl">
 
 <#assign page={"title":rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"),"cssList":[rc.getContextUrl("/styles/vascan.css")],"javaScriptIncludeList":
-["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js")],
-"jQueryJavaScriptSetupCallList":[]}>
+["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js")]}>
 
 <#assign currentPage="checklist"/>
 
@@ -12,8 +11,8 @@
 <h1>${rc.getMessage("checklist_title1")}</h1>
 <form id="checklist_box" class="round custom_form" method="get">
 	<ul class="custom_list" id="checklist_header">
-		<li class="round big_button selected" id="selection_button" onclick="toggleDisplay('selection_criteria')">${rc.getMessage("checklist_msg1")}</li>
-		<li class="round big_button" id="display_button" onclick="toggleDisplay('display_criteria')">${rc.getMessage("checklist_msg2")}</li>
+		<li class="round big_button selected" id="selection_button">${rc.getMessage("checklist_msg1")}</li>
+		<li class="round big_button" id="display_button">${rc.getMessage("checklist_msg2")}</li>
 	</ul>
 
 	<div id="selection_criteria" class="checklist_content">
@@ -53,45 +52,45 @@
 				<li><span>${rc.getMessage("region_canada")}</span><input <#attempt>${data.territory.CANADA}<#recover></#attempt> type="checkbox" id="canada" /></li>
 			</ul>
 			<ul class="custom_list round pacific">
-				<li><span><input type="checkbox" id="pacific"/>${rc.getMessage("region_pacific")}</span>${rc.getMessage("province_BC")}<input <#attempt>${data.territory.BC}<#recover></#attempt> type="checkbox" name="province" id="BC" value="BC" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_pacific")}</span>${rc.getMessage("province_BC")}<input <#attempt>${data.territory.BC}<#recover></#attempt> type="checkbox" name="province" class="province" value="BC" /></li>
 			</ul>
 			<ul class="custom_list round prairies">
-				<li><span><input type="checkbox" id="prairies"/>${rc.getMessage("region_prairies")}</span>${rc.getMessage("province_AB")}<input <#attempt>${data.territory.AB}<#recover></#attempt> type="checkbox" name="province" id="AB" value="AB" /></li>
-				<li><span></span>${rc.getMessage("province_SK")}<input <#attempt>${data.territory.SK}<#recover></#attempt> type="checkbox" name="province" id="SK" value="SK" /></li>
-				<li><span></span>${rc.getMessage("province_MB")}<input <#attempt>${data.territory.MB}<#recover></#attempt> type="checkbox" name="province" id="MB" value="MB" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_prairies")}</span>${rc.getMessage("province_AB")}<input <#attempt>${data.territory.AB}<#recover></#attempt> type="checkbox" name="province" class="province" value="AB" /></li>
+				<li><span></span>${rc.getMessage("province_SK")}<input <#attempt>${data.territory.SK}<#recover></#attempt> type="checkbox" name="province" class="province" value="SK" /></li>
+				<li><span></span>${rc.getMessage("province_MB")}<input <#attempt>${data.territory.MB}<#recover></#attempt> type="checkbox" name="province" class="province" value="MB" /></li>
 			</ul>
 			<ul class="custom_list round central">
-				<li><span><input type="checkbox" id="central"/>${rc.getMessage("region_central")}</span>${rc.getMessage("province_ON")}<input <#attempt>${territory.ON}<#recover></#attempt> type="checkbox" name="province" id="ON" value="ON" /></li>
-				<li><span></span>${rc.getMessage("province_QC")}<input <#attempt>${data.territory.QC}<#recover></#attempt> type="checkbox" name="province" id="QC" value="QC" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_central")}</span>${rc.getMessage("province_ON")}<input <#attempt>${territory.ON}<#recover></#attempt> type="checkbox" name="province" class="province" value="ON" /></li>
+				<li><span></span>${rc.getMessage("province_QC")}<input <#attempt>${data.territory.QC}<#recover></#attempt> type="checkbox" name="province" class="province" value="QC" /></li>
 			</ul>
 			<ul class="custom_list round atlantic">
-				<li><span><input type="checkbox" id="atlantic"/>${rc.getMessage("region_atlantic")}</span>${rc.getMessage("province_NB")}<input <#attempt>${territory.NB}<#recover></#attempt> type="checkbox" name="province" id="NB" value="NB" /></li>
-				<li><span></span>${rc.getMessage("province_PE")}<input <#attempt>${data.territory.PE}<#recover></#attempt> type="checkbox" name="province" id="PE" value="PE" /></li>
-				<li><span></span>${rc.getMessage("province_NS")}<input <#attempt>${data.territory.NS}<#recover></#attempt> type="checkbox" name="province" id="NS" value="NS" /></li>
-				<li><span></span>${rc.getMessage("province_NL_N")}<input <#attempt>${data.territory.NL_N}<#recover></#attempt> type="checkbox" name="province" id="NL_N" value="NL_N" /></li>
-				<li><span></span>${rc.getMessage("province_NL_L")}<input <#attempt>${data.territory.NL_L}<#recover></#attempt> type="checkbox" name="province" id="NL_L" value="NL_L" /></li>
-				<li><span></span>${rc.getMessage("province_PM")}<input <#attempt>${data.territory.PM}<#recover></#attempt> type="checkbox" name="province" id="PM" value="PM"/></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_atlantic")}</span>${rc.getMessage("province_NB")}<input <#attempt>${territory.NB}<#recover></#attempt> type="checkbox" name="province" class="province" value="NB" /></li>
+				<li><span></span>${rc.getMessage("province_PE")}<input <#attempt>${data.territory.PE}<#recover></#attempt> type="checkbox" name="province" class="province" value="PE" /></li>
+				<li><span></span>${rc.getMessage("province_NS")}<input <#attempt>${data.territory.NS}<#recover></#attempt> type="checkbox" name="province" class="province" value="NS" /></li>
+				<li><span></span>${rc.getMessage("province_NL_N")}<input <#attempt>${data.territory.NL_N}<#recover></#attempt> type="checkbox" name="province" class="province" value="NL_N" /></li>
+				<li><span></span>${rc.getMessage("province_NL_L")}<input <#attempt>${data.territory.NL_L}<#recover></#attempt> type="checkbox" name="province" class="province" value="NL_L" /></li>
+				<li><span></span>${rc.getMessage("province_PM")}<input <#attempt>${data.territory.PM}<#recover></#attempt> type="checkbox" name="province" class="province" value="PM"/></li>
 			</ul>
 			<ul class="custom_list round arctic">
-				<li><span><input type="checkbox" id="arctic">${rc.getMessage("region_arctic")}</span>${rc.getMessage("province_YT")}<input <#attempt>${territory.YT}<#recover></#attempt> type="checkbox" name="province" id="YT" value="YT"/></li>
-				<li><span></span>${rc.getMessage("province_NT")}<input <#attempt>${data.territory.NT}<#recover></#attempt> type="checkbox" name="province" id="NT" value="NT"/></li>
-				<li><span></span>${rc.getMessage("province_NU")}<input <#attempt>${data.territory.NU}<#recover></#attempt> type="checkbox" name="province" id="NU" value="NU"/></li>
-				<li><span></span>${rc.getMessage("province_GL")}<input <#attempt>${data.territory.GL}<#recover></#attempt> type="checkbox" name="province" id="GL" value="GL"/></li>
+				<li><span><input type="checkbox" class="region">${rc.getMessage("region_arctic")}</span>${rc.getMessage("province_YT")}<input <#attempt>${territory.YT}<#recover></#attempt> type="checkbox" name="province" class="province" value="YT"/></li>
+				<li><span></span>${rc.getMessage("province_NT")}<input <#attempt>${data.territory.NT}<#recover></#attempt> type="checkbox" name="province" class="province" value="NT"/></li>
+				<li><span></span>${rc.getMessage("province_NU")}<input <#attempt>${data.territory.NU}<#recover></#attempt> type="checkbox" name="province" class="province" value="NU"/></li>
+				<li><span></span>${rc.getMessage("province_GL")}<input <#attempt>${data.territory.GL}<#recover></#attempt> type="checkbox" name="province" class="province" value="GL"/></li>
 			</ul>
 		
 			<!-- map -->
 			<div class="map">
-				  <object id="map" width="410" height="410" data="images/distribution_checklist.svg" type="image/svg+xml">${rc.getMessage("checklist_msg7")}</object>
+				  <object id="map" width="410" height="410" data="${rc.getContextUrl("/images/distribution_checklist.svg")}" type="image/svg+xml">${rc.getMessage("checklist_msg7")}</object>
 			</div>
 		</div>
 		<p>${rc.getMessage("checklist_msg8")}</p>
 		<ul class="distribution_legend custom_list">
-			<li class="distribution_native">${rc.getMessage("distribution_native")} <input <#attempt>${data.status.native}<#recover></#attempt> type="checkbox" name="status" id="native" value="native"/></li>
-			<li class="distribution_introduced">${rc.getMessage("distribution_introduced")} <input <#attempt>${data.status.introduced}<#recover></#attempt> type="checkbox" name="status" id="introduced" value="introduced"/></li> 
-			<li class="distribution_ephemeral">${rc.getMessage("distribution_ephemeral")} <input <#attempt>${data.status.ephemeral}<#recover></#attempt> type="checkbox" name="status" id="ephemeral" value="ephemeral"/></li>
-			<li class="distribution_excluded">${rc.getMessage("distribution_excluded")} <input <#attempt>${data.status.excluded}<#recover></#attempt> type="checkbox" name="status" id="excluded" value="excluded"/></li>
-			<li class="distribution_extirpated">${rc.getMessage("distribution_extirpated")} <input <#attempt>${data.status.extirpated}<#recover></#attempt> type="checkbox" name="status" id="extirpated" value="extirpated"/></li> 
-			<li class="distribution_doubtful">${rc.getMessage("distribution_doubtful")} <input <#attempt>${data.status.doubtful}<#recover></#attempt> type="checkbox" name="status" id="doubtful" value="doubtful"/></li>
+			<li class="sprite sprite-native">${rc.getMessage("distribution_native")} <input <#attempt>${data.status.native}<#recover></#attempt> type="checkbox" name="status" id="native" value="native"/></li>
+			<li class="sprite sprite-introduced">${rc.getMessage("distribution_introduced")} <input <#attempt>${data.status.introduced}<#recover></#attempt> type="checkbox" name="status" id="introduced" value="introduced"/></li> 
+			<li class="sprite sprite-ephemeral">${rc.getMessage("distribution_ephemeral")} <input <#attempt>${data.status.ephemeral}<#recover></#attempt> type="checkbox" name="status" id="ephemeral" value="ephemeral"/></li>
+			<li class="sprite sprite-excluded">${rc.getMessage("distribution_excluded")} <input <#attempt>${data.status.excluded}<#recover></#attempt> type="checkbox" name="status" id="excluded" value="excluded"/></li>
+			<li class="sprite sprite-extirpated">${rc.getMessage("distribution_extirpated")} <input <#attempt>${data.status.extirpated}<#recover></#attempt> type="checkbox" name="status" id="extirpated" value="extirpated"/></li> 
+			<li class="sprite sprite-doubtful">${rc.getMessage("distribution_doubtful")} <input <#attempt>${data.status.doubtful}<#recover></#attempt> type="checkbox" name="status" id="doubtful" value="doubtful"/></li>
 		</ul>
 	</div>
 	
@@ -153,13 +152,13 @@
 		  ${rc.getMessage("checklist_h2_results")}: ${data.numResults}
 		  <span id="results_info" style="float:right;font-size:10px;">
 			<#if data.numResults gt 200 && data.limitResults.display != "">
-				${rc.getMessage("checklist_msg18")} <a href="#" onclick="$('#limitResults').attr('checked','');$('#checklist_box').submit();">${rc.getMessage("checklist_show_all")}</a>
+				${rc.getMessage("checklist_msg18")} <a href="#" onclick="$('#limitResults').prop('checked', false);$('#checklist_box').submit();return false;">${rc.getMessage("checklist_show_all")}</a>
 			<#elseif data.numResults gte 200>
-			${rc.getMessage("checklist_msg19")} <a href="#" onclick="$('#limitResults').attr('checked','checked=checked');$('#checklist_box').submit();">${rc.getMessage("checklist_show_partial")}</a>
+			${rc.getMessage("checklist_msg19")} <a href="#" onclick="$('#limitResults').prop('checked', true);$('#checklist_box').submit();return false;">${rc.getMessage("checklist_show_partial")}</a>
 			</#if>
 		  </span>
 	</h2>		   
-	<#if data.distributions?has_content == true>					 
+	<#if data.distributions?has_content == true>
 	<table class="custom_results_table">
 	<thead>
 		<tr>
@@ -189,7 +188,7 @@
 		<#list data.distributions as distribution>
 		<tr class="background_center">
 			<td>${rc.getMessage("rank_"+distribution.rank?lower_case)}</td>
-			<td><a href="${rc.getContextUrl("taxon/"+distribution.taxonId?c+rc.getMessage("url_language"))}">${distribution.fullScientificName}</a></td>
+			<td><a href="${rc.getContextUrl("/taxon/"+distribution.taxonId?c+rc.getMessage("url_language"))}">${distribution.fullScientificName}</a></td>
 			<td><#list distribution.habit as habitus><#assign str = rc.getMessage("habitus_"+habitus.habit?lower_case)/><#if habitus_has_next><#assign str=str+", "/></#if>${str}</#list></td>
 			<td class="distribution_${distribution.BC}"></td>
 			<td class="distribution_${distribution.AB}"></td>
@@ -215,9 +214,9 @@
 <#else>
 <h2>${rc.getMessage("checklist_h2_examples")}</h2>
 <ul>
-	<li><a href="${rc.getContextUrl("checklist?taxon=0&habit=tree&combination=anyof&province=PM&status=native&status=introduced&status=ephemeral&status=excluded&status=extirpated&status=doubtful")}">${rc.getMessage("checklist_msg13")}</a></li>
-	<li><a href="${rc.getContextUrl("checklist?taxon=193&combination=allof&province=YT&province=NT&province=NU&province=GL&status=native")}">${rc.getMessage("checklist_msg14")}</a></li>
-	<li><a href="${rc.getContextUrl("checklist?taxon=0&combination=only&province=AB&province=SK&province=MB&status=introduced")}">${rc.getMessage("checklist_msg15")}</a></li>
+	<li><a href="${rc.getContextUrl("/checklist?taxon=0&habit=tree&combination=anyof&province=PM&status=native&status=introduced&status=ephemeral&status=excluded&status=extirpated&status=doubtful")}">${rc.getMessage("checklist_msg13")}</a></li>
+	<li><a href="${rc.getContextUrl("/checklist?taxon=193&combination=allof&province=YT&province=NT&province=NU&province=GL&status=native")}">${rc.getMessage("checklist_msg14")}</a></li>
+	<li><a href="${rc.getContextUrl("/checklist?taxon=0&combination=only&province=AB&province=SK&province=MB&status=introduced")}">${rc.getMessage("checklist_msg15")}</a></li>
 </ul>
 </#if>
 	</div><#-- content -->
