@@ -17,14 +17,14 @@
 		<#if currentPage == "name" && extra.isDisambiguation != true>
 		<//Link to taxon page>
 			<#if data.isRedirect != true && extra.isSynonym == true>
-				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("taxon/"+data.synonymWarningId+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>
+				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/taxon/"+data.synonymWarningId+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>
 			<#elseif data.isRedirect != true && extra.isVernacular == true>
-				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("vernacular/"+data.vernacularNameWarningId+rc.getMessage("url_language"))}">${rc.getMessage("page_button5")}</a></p>
+				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/vernacular/"+data.vernacularNameWarningId+rc.getMessage("url_language"))}">${rc.getMessage("page_button5")}</a></p>
 			<#else>
-				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("taxon/"+data.id+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>
+				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/taxon/"+data.id+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>
 			</#if>
 		<#elseif currentPage == "taxon" && data.status == "accepted">
-				<p><a class="round big_button multi_line" id="create_checklist" href="${rc.getContextUrl("checklist?taxon="+data.taxonId+rc.getMessage("url_language"))}">${rc.getMessage("page_button1")}</a></p>
+				<p><a class="round big_button multi_line" id="create_checklist" href="${rc.getContextUrl("/checklist?taxon="+data.taxonId+rc.getMessage("url_language"))}">${rc.getMessage("page_button1")}</a></p>
 		<#elseif currentPage == "checklist">
 				<p><a class="round big_button multi_line" id="dwc_archive" href="${rc.getContextUrl("download?format=dwc&"+pageQuery)}">${rc.getMessage("page_button2")}</a></p>
 				<p><a class="round big_button multi_line" id="csv_file" href="${rc.getContextUrl("download?format=txt&"+pageQuery)}">${rc.getMessage("page_button3")}</a></p>
