@@ -1,6 +1,8 @@
 package net.canadensys.dataportal.vascan;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,9 +24,14 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 	@FindBy(css = "div#content")
 	private WebElement contentDiv;
 	
-	//make sure we find the footer since this is the last processed element
 	@FindBy(css = "div#footer")
 	private WebElement footerDiv;
+
+	@FindBy(css = "input#search_term")
+	private WebElement searchInput;
+	
+	@FindBy(css = "span.tt-dropdown-menu")
+	private WebElement searchDropdown;
 		
 	@Before
 	public void setup() {
@@ -40,8 +47,13 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		PageFactory.initElements(browser, this);
 		
 		assertEquals("Name search",contentDiv.findElement(By.cssSelector("h1")).getText());
-		
 		assertEquals("div",footerDiv.getTagName());
+		
+		searchInput.sendKeys("carex");
+//		assertTrue(searchDropdown.getText(), containsString("Scientific Names"));
+//		assertTrue(searchDropdown.getText(), containsString("Vernacular Names"));
+//		assertTrue(searchDropdown.getText(), containsString("Carex feta"));
+//		assertTrue(searchDropdown.getText(), containsString("carex noir"));
 	}
 	
 	@After
