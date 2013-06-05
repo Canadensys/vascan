@@ -23,9 +23,6 @@
 .sprite-redirect_arrow{background-position: 0 -994px; padding-left:72px;}
 .sprite-redirect_synonym{background-position: 0 -1064px; padding-left: 72px;}
 
-#see_taxon {background: url("../images/button-arrow.png") top right no-repeat; }
-#create_checklist {background: url("../images/button-checklist.png") top right no-repeat; }
-
 .right .reference {
 	display: inline-block;
 	margin-left: 3px;
