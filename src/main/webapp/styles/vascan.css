@@ -23,6 +23,8 @@
 .sprite-redirect_arrow{background-position: 0 -994px; padding-left:72px;}
 .sprite-redirect_synonym{background-position: 0 -1064px; padding-left: 72px;}
 
+#see_taxon { background: url("../images/button-arrow.png") top right no-repeat; }
+
 .right .reference {
 	display: inline-block;
 	margin-left: 3px;
@@ -66,14 +68,6 @@ td.indent_19 { padding-left:117px; width:  72px; }
 td.indent_20 { padding-left:123px; width:  66px; }
 tr.selected { font-weight: bold; }
 
-
-/* Dropdown */
-
-.dropdown_container {
-	background: yellow;
-	position: relative;
-}
-
 /* Typeahead */
 
 .tt-dropdown-menu {
@@ -114,11 +108,15 @@ tr.selected { font-weight: bold; }
 /* Search page */
 
 #search_box input[type=text], .tt-dropdown-menu { width: 480px; }
-#search_box .dropdown { width: 482px; }
-#search_results tbody a { display: block; }
-#search_results tbody tr:hover {background: #d3d3d3; } /* Doesn't work for cells with icons in IE 7 */
-*#search_results tbody tr:hover {background: white!important; } /* IE 7 */
 
+#search_list {
+  list-style-type:none;
+  padding:0px;
+}
+
+#search_list li {
+  margin:1em 0;
+}
 
 /* Checklist builder */
 

@@ -96,7 +96,7 @@ public class VascanController {
 
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
-	    model.put("data",nameService.retrieveNameData(name, redirect,extra)); 
+	    model.put("data",nameService.retrieveNameData(name, redirect,extra));
 	    model.put("extra",extra);
 	    
 		return new ModelAndView("name", model);

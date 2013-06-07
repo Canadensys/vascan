@@ -1,50 +1,21 @@
 /* Vascan icons */
 
-.sprite {
-  background:none;
-}
+.sprite {background:none;padding-left:36px;}
+.sprite-absent:before{content:"ABS";}
+.sprite-accepted:before{content:"ACC";}
+.sprite-alternative:before{content:"ALT";}
+.sprite-doubtful:before{content:"? ";}
+.sprite-ephemeral:before{content:"EPH ";}
+.sprite-excluded:before{content:"EXC ";}
+.sprite-extirpated:before{content:"EXT ";}
+.sprite-introduced:before{content:"INT ";}
+.sprite-native:before {content:"NAT ";}
+.sprite-synonym:before{content:"SYN";}
+.sprite-redirect:before{content:"&rarr;";padding-left: 72px;}
+.sprite-redirect_accepted:before{content:"&rarr;";padding-left: 72px;}
+.sprite-redirect_synonym:before{content:"&rarr;";padding-left: 72px;}
 
-.sprite-accepted:before {
-    padding-left: 36px;
-    content:"ACC";     
-}
-.sprite-synonym:before {
-    padding-left: 36px;
-    content:"SYN";
-}
-.sprite-redirect:before {
-    padding-left: 72px;
-    content:"&rarr;";
-}
-.sprite-redirect_synonym:before {
-    padding-left: 72px;
-    content:"&rarr;";
-}
-.sprite-redirect_accepted:before {
-    padding-left: 72px;
-    content:"&rarr;";
-}
-
-.sprite-native:before {
-    content:"NAT "; 
-}
-
-.sprite-introduced:before {
-    content:"INT ";
-}
-.sprite-ephemeral:before {
-    content:"EPH ";
-}
-.sprite-extirpated:before {
-    content:"EXT ";
-}
-.sprite-excluded:before {
-    content:"EXC ";
-}
-
-.sprite-doubtful:before {
-    content:"? ";
-}
+#see_taxon { background: url("../images/button-arrow.png") top right no-repeat; }
 
 /* Vascan distribution */
 
@@ -97,12 +68,7 @@ tr.selected {
 
 
 /* Search page */
-
 #search_box input[type=text] { width: 480px; }
-#search_box .dropdown { width: 482px; }
-#search_results tbody a { display: block; }
-#search_results tbody tr:hover { background: #d3d3d3; }
-
 
 /* Checklist builder */
 #checklist_box{

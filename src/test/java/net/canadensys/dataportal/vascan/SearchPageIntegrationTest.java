@@ -12,6 +12,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Integration tests of the rendered name page
@@ -19,8 +21,7 @@ import org.openqa.selenium.support.PageFactory;
  *
  */
 public class SearchPageIntegrationTest extends AbstractIntegrationTest{
-	
-	
+
 	@FindBy(css = "div#content")
 	private WebElement contentDiv;
 	
@@ -29,9 +30,6 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 
 	@FindBy(css = "input#search_term")
 	private WebElement searchInput;
-	
-	@FindBy(css = "span.tt-dropdown-menu")
-	private WebElement searchDropdown;
 		
 	@Before
 	public void setup() {
@@ -50,10 +48,11 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		assertEquals("div",footerDiv.getTagName());
 		
 		searchInput.sendKeys("carex");
-//		assertTrue(searchDropdown.getText(), containsString("Scientific Names"));
-//		assertTrue(searchDropdown.getText(), containsString("Vernacular Names"));
-//		assertTrue(searchDropdown.getText(), containsString("Carex feta"));
-//		assertTrue(searchDropdown.getText(), containsString("carex noir"));
+		WebElement searchDropdown = new WebDriverWait(browser, 10).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.tt-dropdown-menu")));
+		assertTrue(searchDropdown.getText().contains("Scientific Names"));
+		assertTrue(searchDropdown.getText().contains("Vernacular Names"));
+		assertTrue(searchDropdown.getText().contains("Carex feta"));
+		assertTrue(searchDropdown.getText().contains("carex noir"));
 	}
 	
 	@After

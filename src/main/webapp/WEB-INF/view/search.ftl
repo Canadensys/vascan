@@ -11,9 +11,12 @@
 <#include "inc/header.ftl">
 <#include "inc/menu.ftl">
 
-<h1>${rc.getMessage("namesearch_title1")}</h1>		 
-<form id="search_box" class="round custom_form" method="get" onkeypress="return event.keyCode != 13;">
-	<p><input class="typeahead" type="text" name="q" id="search_term" value="${search.term?html}" autocomplete="off"/> <input type="button" onclick="document.forms[0].submit()" value="${rc.getMessage("namesearch_button1")}"/></p>
+<h1>${rc.getMessage("namesearch_title1")}</h1>
+<form id="search_box" class="round custom_form" method="get">
+	<p>
+	  <input class="typeahead" type="text" name="q" id="search_term" value="${search.term?html}" placeholder="${rc.getMessage("namesearch_placeholder")}"/>
+	  <input type="submit" id="search_button" value="${rc.getMessage("namesearch_button1")}" />
+	</p>
 
 	<#if rc.getLocale().getLanguage() == "fr">
 		<input type="hidden" name="lang" id="search_lang" class="" value="fr" autocomplete="off"/>
@@ -23,24 +26,15 @@
 
 <#if search.term?has_content>
 <h2>${rc.getMessage("namesearch_h2_results",[search.total])}</h2>
-<table class="sortable custom_results_table" id="search_results">
-<thead>	
-	<tr>
-		<th>${rc.getMessage("namesearch_th1")}</th>
-	</tr>
-</thead>
-<tbody>
+<ul id="search_list">
 <#list results as result>
-	<tr>
-		<#if result.type = "taxon">
-			<td class="sprite sprite-${result.status}"><a href="${rc.getContextUrl('/taxon/'+result.id)}">${result.name}</a></td>
-		<#elseif result.type = "vernacular">
-			<td><a href="${rc.getContextUrl('/vernacular/'+result.id)}">${result.name}</a></td>
-		</#if>
-	</tr>
+	<#if result.type = "taxon">
+		<li class="sprite sprite-${result.status}"><a href="${rc.getContextUrl('/taxon/'+result.id)}">${result.name}</a></li>
+	<#elseif result.type = "vernacular">
+		<li><a href="${rc.getContextUrl('/vernacular/'+result.id)}">${result.name}</a></li>
+	</#if>
 </#list>
-</tbody>
- </table>
+</ul>
  <#else>
  <p><img src="${rc.getContextUrl("/images/accepted_species_per_genus.png")}" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
  </#if>
