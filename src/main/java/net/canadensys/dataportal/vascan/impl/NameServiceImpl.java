@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.canadensys.dataportal.vascan.NameService;
+import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.VernacularNameDAO;
@@ -224,8 +225,7 @@ public class NameServiceImpl implements NameService{
 
 	    // raise error if name param is not a taxon and not a vernacular name 
 	    if(!isTaxon && !isVernacularName){
-	    	//notFound(response);
-	    	//TODO throw exception
+	    	return null;
 	    }
 	    else if(requiresDisambiguation){
 	        if(isVernacularName){
@@ -344,7 +344,7 @@ public class NameServiceImpl implements NameService{
 	                }
 	            }
 	        }
-
+	        
 	        propertyMapHelper.fillTaxonClassification(taxonManager.getClassification(taxon), data);
 	        
 	        propertyMapHelper.fillVernacularNames(taxon.getVernacularnames(), data);
@@ -435,7 +435,36 @@ public class NameServiceImpl implements NameService{
 	    extra.put("isSynonym",isSynonym);
 	    
 	    return data;
-	    
 	}
+	
 
+	/**
+	 * WIP, for future use
+	 * @param rankValue
+	 * @return
+	 */
+	public static String[] getNextRankLabel(int rankValue){
+		switch(rankValue){
+			case Rank.CLASS :
+			case Rank.SUBCLASS :
+			case Rank.SUPERORDER : return new String[]{Rank.SUBCLASS_LABEL, Rank.SUPERORDER_LABEL, Rank.ORDER_LABEL};
+			
+			case Rank.ORDER : return new String[]{Rank.FAMILY_LABEL};
+			
+			case Rank.FAMILY :
+			case Rank.SUBFAMILY:
+			case Rank.TRIBE:
+				
+			case Rank.SUBTRIBE: return new String[]{Rank.SUBFAMILY_LABEL,Rank.TRIBE_LABEL,Rank.SUBTRIBE_LABEL,Rank.GENUS_LABEL};
+			case Rank.GENUS : 
+			case Rank.SUBGENUS:
+			case Rank.SECTION:
+			case Rank.SUBSECTION:
+			case Rank.SERIES : return new String[]{Rank.SUBGENUS_LABEL,Rank.SECTION_LABEL,Rank.SUBSECTION_LABEL,Rank.SPECIES_LABEL};
+				
+			case Rank.SPECIES:
+			case Rank.SUBSPECIES:return new String[]{Rank.SUBSPECIES_LABEL,Rank.VARIETY_LABEL};
+		}
+		return null;
+	}
 }

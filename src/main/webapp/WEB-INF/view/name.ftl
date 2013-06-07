@@ -1,6 +1,6 @@
 <#include "inc/common.ftl">
 
-<#assign page={"title": data.pageTitle+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "javaScriptIncludeList": 
+<#assign page={"title": data.pageTitle+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": 
 ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", "http://data.canadensys.net/common/js/jquery.tooltip.min.js"]}>
 
 <#assign currentPage="name"/>

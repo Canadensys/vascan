@@ -98,6 +98,7 @@ public class VascanController {
 
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
+
 	    Object data = nameService.retrieveNameData(name, redirect,extra);
 	    if( data == null){
 	    	throw new ResourceNotFoundException();

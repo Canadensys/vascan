@@ -1,0 +1,165 @@
+/* Vascan icons */
+
+.sprite {background:none;padding-left:36px;}
+.sprite-absent:before{content:"ABS";}
+.sprite-accepted:before{content:"ACC";}
+.sprite-alternative:before{content:"ALT";}
+.sprite-doubtful:before{content:"? ";}
+.sprite-ephemeral:before{content:"EPH ";}
+.sprite-excluded:before{content:"EXC ";}
+.sprite-extirpated:before{content:"EXT ";}
+.sprite-introduced:before{content:"INT ";}
+.sprite-native:before {content:"NAT ";}
+.sprite-synonym:before{content:"SYN";}
+.sprite-redirect:before{content:"&rarr;";padding-left: 72px;}
+.sprite-redirect_accepted:before{content:"&rarr;";padding-left: 72px;}
+.sprite-redirect_synonym:before{content:"&rarr;";padding-left: 72px;}
+
+#see_taxon { background: url("../images/button-arrow.png") top right no-repeat; }
+
+/* Vascan distribution */
+
+.distribution_legend {
+    font-size: 9px; 
+    text-transform: uppercase;
+}
+.distribution_legend li {
+    background-position: 0 -5px;
+    display: inline;
+    height: 20px;
+    padding-right: 9px;
+}
+
+/* Vascan classification table */
+
+td.indent_1  { padding-left:  9px; width: 180px; }
+td.indent_2  { padding-left: 15px; width: 174px; }
+td.indent_3  { padding-left: 21px; width: 168px; }
+td.indent_4  { padding-left: 27px; width: 162px; }
+td.indent_5  { padding-left: 33px; width: 156px; }
+td.indent_6  { padding-left: 39px; width: 150px; }
+td.indent_7  { padding-left: 45px; width: 144px; }
+td.indent_8  { padding-left: 51px; width: 138px; }
+td.indent_9  { padding-left: 57px; width: 132px; }
+td.indent_10 { padding-left: 63px; width: 126px; }
+td.indent_11 { padding-left: 69px; width: 120px; }
+td.indent_12 { padding-left: 75px; width: 114px; }
+td.indent_13 { padding-left: 81px; width: 108px; }
+td.indent_14 { padding-left: 87px; width: 102px; }
+td.indent_15 { padding-left: 93px; width:  96px; }
+td.indent_16 { padding-left: 99px; width:  90px; }
+td.indent_17 { padding-left:105px; width:  84px; }
+td.indent_18 { padding-left:111px; width:  78px; }
+td.indent_19 { padding-left:117px; width:  72px; }
+td.indent_20 { padding-left:123px; width:  66px; }
+tr.selected {
+    font-weight: bold;
+}
+
+.shadow { /* http://robertnyman.com/2010/03/16/drop-shadow-with-css-for-all-web-browsers/ */
+    -moz-box-shadow: 3px 3px 3px #8c8c89;
+    -webkit-box-shadow: 3px 3px 3px #8c8c89;
+    box-shadow: 3px 3px 3px #8c8c89;
+    /* For IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#8c8c89')";
+    /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#8c8c89');
+}
+
+
+/* Search page */
+#search_box input[type=text] { width: 480px; }
+
+/* Checklist builder */
+#checklist_box{
+	display:none;
+}
+#checklist_box input[type=text] { width: 340px; }
+
+#checklist_header {
+    position: relative;
+    height: 48px;
+}
+#selection_criteria {
+    position: absolute;
+    left: 0;
+}   
+#display_criteria {
+    position: absolute;
+    right: 0;
+}
+#selection_criteria.selected:after, #display_criteria.selected:after {
+    content: "\00a0"; /* Non braking space */
+    display: block;
+    position: absolute;
+    border-width: 12px 12px; /* Angle of arrow */
+    border-style: solid;
+    border-color: transparent transparent #22241e;
+    bottom: -15px; /* Height of arrow + padding */
+    left: 48%;
+    width: 0;
+    height: 0;
+}
+
+#checklist_content {
+    background-color: #22241e;  
+    color: #ffffff;
+    padding: 9px 36px;
+    margin: 0 -36px;
+}
+#checklist_footer {
+    text-align: right;
+}
+#checklist_distribution {
+    position: relative;
+}
+#checklist_distribution ul {
+    width: 330px;
+    color: #000000;
+    position: relative;
+    z-index: 1;
+    border: none!important;
+}
+#checklist_distribution li { /* Provinces */
+    position: relative;
+}
+#checklist_distribution span { /* Regions */
+    display: inline-block;
+    font-weight: bold;
+    width: 90px;
+    padding-left: 18px;
+}
+#checklist_distribution input[type=checkbox] {
+    position: absolute;
+    top: 3px;
+    right: 0;
+}
+#checklist_distribution span input[type=checkbox] {
+    left: 0;
+}
+#checklist_distribution .map {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#results_info{display:none;}
+
+#map_result {
+    display:none;
+}
+
+#list_result {
+    display:block!important;
+}
+
+.distribution_toggle{
+	display:none;
+	}
+
+.canada   { background-color: #e7e7e7; }
+.pacific  { background-color: #e1e1e1; }
+.prairies { background-color: #c3c3c3; }
+.central  { background-color: #a5a5a5; }
+.atlantic { background-color: #878787; }
+.arctic   { background-color: #ffffff; }

@@ -67,6 +67,7 @@ VASCAN.checklist = (function(){
 			
 			$.each(checkboxes, function() {
 				var checkbox_value = $(this).val();
+				//TODO: check if this works in Chrome
 				try {
 					paths = svg.getElementById(checkbox_value).getElementsByTagName("path");
 					if($(this).prop("checked")) {
