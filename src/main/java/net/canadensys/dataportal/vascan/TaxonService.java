@@ -3,7 +3,6 @@ package net.canadensys.dataportal.vascan;
 import java.util.Map;
 
 import net.canadensys.dataportal.vascan.model.TaxonModel;
-import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 
 /**
  * Vascan Service layer interface to access taxon related data. This interface handles only high-level methods.

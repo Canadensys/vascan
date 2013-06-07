@@ -236,13 +236,13 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    //if(combination != null && habitus != null && taxon != 0 && status != null && province != null){
 	    	searchOccured = true;
 	        int limitResultsTo = 0;
-	        totalResults = taxonDAO.countTaxonLookup(combination, habit, taxon, province, status, rank, hybrids, sort);
+	        totalResults = taxonDAO.countTaxonLookup(habit, taxon,combination, province, status, rank, hybrids);
 			
 	        if(limitResults.equals("true")){
 	        	limitResultsTo = 200;
 	        }
 	        
-	        Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(limitResultsTo, combination, habit, taxon, province, status, rank, hybrids, sort);
+	        Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(limitResultsTo, habit, taxon, combination, province, status, rank, hybrids, sort);
 	        if(it !=null){
 	            while(it.hasNext()){
 	                   HashMap<String,Object> distributionData = new HashMap<String,Object>();

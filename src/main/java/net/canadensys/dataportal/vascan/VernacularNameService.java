@@ -1,5 +1,7 @@
 package net.canadensys.dataportal.vascan;
 
+import java.util.Map;
+
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 
 public interface VernacularNameService {
@@ -9,6 +11,6 @@ public interface VernacularNameService {
 	 * @param id
 	 * @return
 	 */
-	public VernacularNameModel loadVernacularNameModel(Integer id);
+	public Map<String,Object> loadVernacularNameModel(Integer id);
 
 }

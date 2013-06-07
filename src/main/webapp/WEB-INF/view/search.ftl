@@ -26,17 +26,17 @@
 <table class="sortable custom_results_table" id="search_results">
 <thead>	
 	<tr>
-		<th><@display str=locale.namesearch_th1/></th>
-		<th><@display str=locale.namesearch_th2/></th>
-		<th><@display str=locale.namesearch_th3/></th>
+		<th>${rc.getMessage("namesearch_th1")}</th>
 	</tr>
 </thead>
 <tbody>
 <#list results as result>
 	<tr>
-		<td class="${result.fullScientificNameStatus}"><a href="taxon/${result.taxonId}<@display str=locale.url_language/>">${result.fullScientificNameHtml}</a></td>
-		<td class="${result.frenchVernacularNameStatus}">${result.frenchVernacularNameHtml}</td>
-		<td class="${result.englishVernacularNameStatus}">${result.englishVernacularNameHtml}</td>
+		<#if result.type = "taxon">
+			<td class="sprite sprite-${result.status}"><a href="${rc.getContextUrl('/taxon/'+result.id)}">${result.name}</a></td>
+		<#elseif result.type = "vernacular">
+			<td><a href="${rc.getContextUrl('/vernacular/'+result.id)}">${result.name}</a></td>
+		</#if>
 	</tr>
 </#list>
 </tbody>

@@ -1,6 +1,7 @@
 package net.canadensys.dataportal.vascan.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,6 @@ import net.canadensys.dataportal.vascan.VernacularNameService;
 import net.canadensys.dataportal.vascan.model.NameConceptModelIF;
 import net.canadensys.dataportal.vascan.model.NameConceptTaxonModel;
 import net.canadensys.dataportal.vascan.model.NameConceptVernacularNameModel;
-import net.canadensys.dataportal.vascan.model.TaxonModel;
-import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -56,75 +54,59 @@ public class VascanController {
 	@Autowired
 	private SearchService searchService;
 	
+	/**
+	 * Render taxon view for a given taxonId
+	 * @param taxonId
+	 * @return
+	 */
 	@RequestMapping(value={"/taxon/{taxonId}"}, method={RequestMethod.GET})
 	public ModelAndView handleTaxon(@PathVariable Integer taxonId){
 
-	    
 	    Map<String,Object> model = new HashMap<String,Object>();
-	    // attach data to document root
 	    model.put("data",taxonService.retrieveTaxonData(taxonId));
-	    
-	    // add extra data to page global hashmap
-//	    _page.put("rank",LabelMappings.getRankLabel(rankid));
-//	    _page.put("isSynonym",isSynonymConcept);
 	    
 		return new ModelAndView("taxon", model);
 	}
 	
-	@RequestMapping(value={"/vernacular/{id}"}, method={RequestMethod.GET})
-	public ModelAndView handleVernacular(@PathVariable Integer id){
+	/**
+	 * Render a vernacular name view for a given vernacularNameId
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value={"/vernacular/{vernacularNameId}"}, method={RequestMethod.GET})
+	public ModelAndView handleVernacular(@PathVariable Integer vernacularNameId){
 		
-	    VernacularNameModel vernacularName = vernacularNameService.loadVernacularNameModel(id);
-	
-	    //denormalize data related to this vernacular name
-	    Map<String,Object> data = new HashMap<String,Object>();
-	    data.put("vernacularId",vernacularName.getId());
-	    data.put("name",vernacularName.getName());
-	    data.put("reference",vernacularName.getReference().getReference());
-	    data.put("referenceShort",vernacularName.getReference().getReferenceshort());
-	    data.put("link",vernacularName.getReference().getUrl());
-	    data.put("language",vernacularName.getLanguage());
-	    data.put("status",vernacularName.getStatus().getStatus());
+		Map<String,Object> model = new HashMap<String,Object>();
+	    model.put("vernacularName",vernacularNameService.loadVernacularNameModel(vernacularNameId));
 	    
-	    //denormalize data related the related taxon
-	    TaxonModel relatedTaxon = vernacularName.getTaxon();
-	    HashMap<String,Object> t = new HashMap<String,Object>();
-	    t.put("taxonId",relatedTaxon.getId());
-	    t.put("fullScientificName",relatedTaxon.getLookup().getCalnamehtmlauthor());
-	    t.put("fullScientificNameUrl",relatedTaxon.getLookup().getCalname());
-	    t.put("reference",relatedTaxon.getReference().getReference());
-	    t.put("referenceShort",relatedTaxon.getReference().getReferenceshort());
-	    t.put("link",relatedTaxon.getReference().getUrl());
-	    t.put("status",relatedTaxon.getStatus().getStatus());
-	    t.put("rank",relatedTaxon.getRank().getRank());
-	    data.put("taxon",t);
-	    
-	    Map<String,Object> model = new HashMap<String,Object>();
-	    model.put("vernacularName",data);
-	    
-	    // add extra data to page global hashmap
-	    //_page.put("isVernacular",true);
-	    
+	    Map<String,Object> extra = new HashMap<String,Object>();
+	    extra.put("isVernacular",true);
+	    model.put("extra",extra);
 	    return new ModelAndView("vernacular",model);
 	}
 	
+	/**
+	 * Render a name view for a given name string
+	 * @param name
+	 * @param redirect
+	 * @return
+	 */
 	@RequestMapping(value={"/name/{name}"}, method={RequestMethod.GET})
 	public ModelAndView handleName(@PathVariable String name, @RequestParam(required=false) String redirect){
 
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
-	    // attach data to document root
-	    model.put("data",nameService.retrieveNameData(name, redirect,extra));
-	    
+	    model.put("data",nameService.retrieveNameData(name, redirect,extra)); 
 	    model.put("extra",extra);
-	    
-	    // add extra data to page global hashmap
-//	    _page.put("rank",LabelMappings.getRankLabel(rankid));
-//	    _page.put("isSynonym",isSynonymConcept);
 	    
 		return new ModelAndView("name", model);
 	}
 	
+	/**
+	 * Render a checklist view for the given query parameters
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value={"/checklist"}, method={RequestMethod.GET})
 	public ModelAndView handleChecklist(HttpServletRequest request){
 		
@@ -137,24 +119,33 @@ public class VascanController {
 		return new ModelAndView("checklist", model);
 	}
 	
+	/**
+	 * Render a search page
+	 * @param q
+	 * @return
+	 */
 	@RequestMapping(value={"/search"}, method={RequestMethod.GET})
 	public ModelAndView handleSearch(@RequestParam(required=false) String q){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 	    HashMap<String,Object> search = new HashMap<String,Object>();
 	    search.put("term", "");
+	    search.put("total",10000);
 
+	    List<Map<String,String>> searchResult = new ArrayList<Map<String,String>>();
 	    if(StringUtils.isNotBlank(q)){
+	    	search.put("term", q);
 		    List<NameConceptModelIF> nameConceptModelList = searchService.searchName(q);
-		    
+		    List<Map<String,String>> searchResults = new ArrayList<Map<String,String>>();
 		    Map<String,String> searchRow = null;
 		    for(NameConceptModelIF currNameConceptModel : nameConceptModelList){
 		    	if(currNameConceptModel.getClass().equals(NameConceptTaxonModel.class)){
-		    		searchRow = new HashMap<String, String>();
+		    		searchRow = new HashMap<String,String>();
 		    		searchRow.put("type","taxon");
 		    		searchRow.put("name", currNameConceptModel.getName());
 		    		searchRow.put("id", Integer.toString(currNameConceptModel.getTaxonId()));
 		    		searchRow.put("status", currNameConceptModel.getStatus());
+		    		searchResult.add(searchRow);
 		    	}
 		    	else if(currNameConceptModel.getClass().equals(NameConceptVernacularNameModel.class)){
 		    		searchRow = new HashMap<String, String>();
@@ -163,15 +154,18 @@ public class VascanController {
 		    		searchRow.put("id", Integer.toString(currNameConceptModel.getTaxonId()));
 		    		searchRow.put("status", currNameConceptModel.getStatus());
 		    		searchRow.put("lang",((NameConceptVernacularNameModel)currNameConceptModel).getLang());
+		    		searchResult.add(searchRow);
 		    	}
 		    	else{
 		    		//logger
+		    		searchRow = null;
 		    	}
+		    	searchResults.add(searchRow);
 		    }
+		    model.put("results",searchResults);
 	    }
 	    
 	    model.put("search",search);
-	    
 	    return new ModelAndView("search", model);
 	}
 	
@@ -197,7 +191,6 @@ public class VascanController {
 		try {
 			response.getWriter().print(responseJson.toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
