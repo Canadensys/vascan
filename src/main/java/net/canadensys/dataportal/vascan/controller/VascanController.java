@@ -17,6 +17,8 @@ import net.canadensys.dataportal.vascan.VernacularNameService;
 import net.canadensys.dataportal.vascan.model.NameConceptModelIF;
 import net.canadensys.dataportal.vascan.model.NameConceptTaxonModel;
 import net.canadensys.dataportal.vascan.model.NameConceptVernacularNameModel;
+import net.canadensys.exception.web.ResourceNotFoundException;
+import net.canadensys.query.LimitedResult;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -96,6 +98,10 @@ public class VascanController {
 
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
+	    Object data = nameService.retrieveNameData(name, redirect,extra);
+	    if( data == null){
+	    	throw new ResourceNotFoundException();
+	    }
 	    model.put("data",nameService.retrieveNameData(name, redirect,extra)); 
 	    model.put("extra",extra);
 	    
@@ -130,15 +136,16 @@ public class VascanController {
 		
 	    HashMap<String,Object> search = new HashMap<String,Object>();
 	    search.put("term", "");
-	    search.put("total",10000);
+	    search.put("total",0);
 
 	    List<Map<String,String>> searchResult = new ArrayList<Map<String,String>>();
 	    if(StringUtils.isNotBlank(q)){
 	    	search.put("term", q);
-		    List<NameConceptModelIF> nameConceptModelList = searchService.searchName(q);
+		    LimitedResult<List<NameConceptModelIF>> nameConceptModelList = searchService.searchName(q);
+		    search.put("total",nameConceptModelList.getTotal_rows());
 		    List<Map<String,String>> searchResults = new ArrayList<Map<String,String>>();
 		    Map<String,String> searchRow = null;
-		    for(NameConceptModelIF currNameConceptModel : nameConceptModelList){
+		    for(NameConceptModelIF currNameConceptModel : nameConceptModelList.getRows()){
 		    	if(currNameConceptModel.getClass().equals(NameConceptTaxonModel.class)){
 		    		searchRow = new HashMap<String,String>();
 		    		searchRow.put("type","taxon");

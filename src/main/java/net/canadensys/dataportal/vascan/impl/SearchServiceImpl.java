@@ -5,6 +5,7 @@ import java.util.List;
 import net.canadensys.dataportal.vascan.SearchService;
 import net.canadensys.dataportal.vascan.dao.NameDAO;
 import net.canadensys.dataportal.vascan.model.NameConceptModelIF;
+import net.canadensys.query.LimitedResult;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class SearchServiceImpl implements SearchService{
 	private NameDAO nameDAO;
 
 	@Override
-	public List<NameConceptModelIF> searchName(String text) {
+	public LimitedResult<List<NameConceptModelIF>> searchName(String text) {
 		return nameDAO.search(text);
 	}
 
