@@ -1,3 +1,7 @@
+/****************************
+Copyright (c) 2013 Canadensys
+Script to handle checklist creation
+****************************/
 VASCAN.checklist = (function(){
 	var _private = {
 		region_color: {},
@@ -13,20 +17,25 @@ VASCAN.checklist = (function(){
 			return this.region_color[region];
 		},
 		toggle_display_criteria: function() {
+			var self = this;
+
 			$("#selection_button").click(function() {
-				$(this).addClass('selected');
-				$("#display_button").removeClass('selected');
-				$("#display_criteria").slideUp(500);
-				$("#selection_criteria").slideDown(500);
-				$("#checklist_box").attr("action","checklist");
+				self.show_criteria_panel("selection");
 			});
 			$('#display_button').click(function() {
-				$(this).addClass('selected');
-				$("#selection_button").removeClass('selected');
-				$("#selection_criteria").slideUp(500);
-				$("#display_criteria").slideDown(500);
-				$("#checklist_box").attr("action","checklist#");
+				self.show_criteria_panel("display");
 			});
+		},
+		show_criteria_panel: function(selected) {
+			var opposite = "selection";
+
+			if(!selected) { return false; }
+			$('#'+selected+'_button').addClass('selected');
+			$("#"+selected+"_criteria").slideDown(500);
+			if(selected === "selection") { opposite = "display"; }
+			$("#"+opposite+"_button").removeClass('selected');
+			$("#"+opposite+"_criteria").slideUp(500);
+			$("#criteria_panel").val(selected);
 		},
 		bind_region_checkboxes: function() {
 			var self = this;
@@ -64,12 +73,12 @@ VASCAN.checklist = (function(){
 					svg = $('#map')[0].getSVGDocument(),
 					checkboxes = $('input[type="checkbox"]', '#checklist_distribution'),
 					paths = [];
-			
+
 			$.each(checkboxes, function() {
 				var checkbox_value = $(this).val();
-				//TODO: check if this works in Chrome
-				try {
-					paths = svg.getElementById(checkbox_value).getElementsByTagName("path");
+				paths = svg.getElementById(checkbox_value);
+				if($(paths).length > 0) {
+					paths = paths.getElementsByTagName("path");
 					if($(this).prop("checked")) {
 						$.each(paths, function() {
 							this.setAttributeNS(null, 'fill', 'rgb(168,36,0)');
@@ -79,7 +88,7 @@ VASCAN.checklist = (function(){
 							this.setAttributeNS(null, 'fill', self.get_region_color(checkbox_value));
 						});
 					}
-				} catch(e) {}
+				}
 			});
 		},
 		bind_rank_checkboxes: function() {
@@ -94,12 +103,10 @@ VASCAN.checklist = (function(){
 			});
 		},
 		set_default_display: function() {
-			if(document.location.href.indexOf("#") != -1){
-				$("#display_button").addClass('selected');
-				$("#selection_button").removeClass('selected');
-				$("#display_criteria").show();
-				$("#selection_criteria").hide();
-			}
+			var panel = VASCAN.common.getParameterByName("criteria_panel");
+			this.process_map();
+			//$('body').scrollTo($('#custom_results_table'));
+			this.show_criteria_panel(panel);
 		},
 		init: function() {
 			_private.set_region_colors();

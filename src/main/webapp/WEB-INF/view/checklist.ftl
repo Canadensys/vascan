@@ -1,6 +1,6 @@
 <#include "inc/common.ftl">
 
-<#assign page={"title": rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js")]}>
+<#assign page={"title": rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/jquery.scrollTo.js"), rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js")]}>
 
 <#assign currentPage="checklist"/>
 
@@ -143,6 +143,7 @@
 	</div>
 
 	<p id="checklist_footer">
+		<input type="hidden" id="criteria_panel" name="criteria_panel"/>
 		<input type="submit" value="${rc.getMessage("checklist_button1")}"/>
 	</p>
 </form>	 
@@ -185,26 +186,26 @@
 	
 	<tbody>
 		<#list data.distributions as distribution>
-		<tr class="background_center">
+		<tr>
 			<td>${rc.getMessage("rank_"+distribution.rank?lower_case)}</td>
 			<td><a href="${rc.getContextUrl("/taxon/"+distribution.taxonId?c+rc.getMessage("url_language"))}">${distribution.fullScientificName}</a></td>
 			<td><#list distribution.habit as habitus><#assign str = rc.getMessage("habitus_"+habitus.habit?lower_case)/><#if habitus_has_next><#assign str=str+", "/></#if>${str}</#list></td>
-			<td class="distribution_${distribution.BC}"></td>
-			<td class="distribution_${distribution.AB}"></td>
-			<td class="distribution_${distribution.SK}"></td>
-			<td class="distribution_${distribution.MB}"></td>
-			<td class="distribution_${distribution.ON}"></td>
-			<td class="distribution_${distribution.QC}"></td>
-			<td class="distribution_${distribution.NB}"></td>
-			<td class="distribution_${distribution.PE}"></td>
-			<td class="distribution_${distribution.NS}"></td>
-			<td class="distribution_${distribution.NL_N}"></td>
-			<td class="distribution_${distribution.NL_L}"></td>
-			<td class="distribution_${distribution.PM}"></td>
-			<td class="distribution_${distribution.YT}"></td>
-			<td class="distribution_${distribution.NT}"></td>
-			<td class="distribution_${distribution.NU}"></td>
-			<td class="distribution_${distribution.GL}"></td>
+			<td class="sprite sprite-${distribution.BC}"></td>
+			<td class="sprite sprite-${distribution.AB}"></td>
+			<td class="sprite sprite-${distribution.SK}"></td>
+			<td class="sprite sprite-${distribution.MB}"></td>
+			<td class="sprite sprite-${distribution.ON}"></td>
+			<td class="sprite sprite-${distribution.QC}"></td>
+			<td class="sprite sprite-${distribution.NB}"></td>
+			<td class="sprite sprite-${distribution.PE}"></td>
+			<td class="sprite sprite-${distribution.NS}"></td>
+			<td class="sprite sprite-${distribution.NL_N}"></td>
+			<td class="sprite sprite-${distribution.NL_L}"></td>
+			<td class="sprite sprite-${distribution.PM}"></td>
+			<td class="sprite sprite-${distribution.YT}"></td>
+			<td class="sprite sprite-${distribution.NT}"></td>
+			<td class="sprite sprite-${distribution.NU}"></td>
+			<td class="sprite sprite-${distribution.GL}"></td>
 		</tr>
 		</#list>
 	</tbody>

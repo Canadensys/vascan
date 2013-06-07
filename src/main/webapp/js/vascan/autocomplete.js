@@ -1,3 +1,7 @@
+/****************************
+Copyright (c) 2013 Canadensys
+Script to handle autocomplete
+****************************/
 VASCAN.autocomplete = (function(){
 	var _private = {
 		init: function(){
