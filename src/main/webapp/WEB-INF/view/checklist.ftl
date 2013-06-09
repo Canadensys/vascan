@@ -159,7 +159,7 @@
 		  </span>
 	</h2>		   
 	<#if data.distributions?has_content == true>
-	<table class="custom_results_table">
+	<table id="custom_results_table">
 	<thead>
 		<tr>
 			<th>${rc.getMessage("rank")}</th>

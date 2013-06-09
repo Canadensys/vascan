@@ -55,13 +55,16 @@ VASCAN.checklist = (function(){
 				self.process_map();
 			});
 			$('.province').change(function() {
-				var region = $(this).closest("ul");
-				if(!$(this).prop("checked")) { $(".region", region).prop("checked", false); }
-				if($('.province:checked', region).length === $('.province', region).length) {
-					$(".region", region).prop("checked", true);
-				}
+				self.set_checked_regions(this);
 				self.process_map();
 			});
+		},
+		set_checked_regions: function(province) {
+			var region = $(province).closest("ul");
+			if(!$(province).prop("checked")) { $(".region", region).prop("checked", false); }
+			if($('.province:checked', region).length === $('.province', region).length) {
+				$(".region", region).prop("checked", true);
+			}
 		},
 		uncheck_outside_canada: function() {
 			$.each(["GL", "PM"], function() {
@@ -103,10 +106,15 @@ VASCAN.checklist = (function(){
 			});
 		},
 		set_default_display: function() {
-			var panel = VASCAN.common.getParameterByName("criteria_panel");
+			var self = this, panel = VASCAN.common.getParameterByName("criteria_panel"), results_table = $('#custom_results_table');
+			$.each($('.province'), function() {
+				self.set_checked_regions(this);
+			});
 			this.process_map();
-			//$('body').scrollTo($('#custom_results_table'));
 			this.show_criteria_panel(panel);
+			if(results_table.length > 0) {
+				$('html,body').scrollTo(results_table);
+			}
 		},
 		init: function() {
 			_private.set_region_colors();
