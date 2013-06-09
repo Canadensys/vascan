@@ -2,7 +2,11 @@
 Copyright (c) 2013 Canadensys
 Script to handle checklist creation
 ****************************/
+/*global VASCAN, $*/
 VASCAN.checklist = (function(){
+
+	'use strict';
+
 	var _private = {
 		region_color: {},
 		set_region_colors: function() {
@@ -10,7 +14,7 @@ VASCAN.checklist = (function(){
 			$.each(["AB", "SK", "MB"], function() { color[this] = "rgb(195,195,195)"; });
 			$.each(["ON", "QC"], function() { color[this] = "rgb(165,165,165)"; });
 			$.each(["NB", "PE", "NS", "NL_N", "NL_L", "PM"], function() { color[this] = "rgb(135,135,135)"; });
-			$.each(["BC"], function() { color[this] = "rgb(225, 225, 225)"; })
+			$.each(["BC"], function() { color[this] = "rgb(225, 225, 225)"; });
 			$.each(["YT", "NU", "NT", "GL"], function() { color[this] = "rgb(255,255,255)";});
 		},
 		get_region_color: function(region) {
@@ -51,7 +55,11 @@ VASCAN.checklist = (function(){
 			});
 			$('.region').change(function() {
 				var checkboxes = $('input[type="checkbox"]', $(this).closest("ul"));
-				($(this).prop("checked")) ? checkboxes.prop("checked", true) : checkboxes.prop("checked", false);
+				if($(this).prop("checked")) {
+					checkboxes.prop("checked", true);
+				} else {
+					checkboxes.prop("checked", false);
+				}
 				self.process_map();
 			});
 			$('.province').change(function() {
@@ -98,10 +106,18 @@ VASCAN.checklist = (function(){
 			$.each(["main_rank", "sub_rank"], function() {
 				var self = this;
 				$('.'+this).click(function() {
-					($('.'+self+':checked').length === $('.'+self).length) ? $('#'+self).prop("checked", true) : $('#'+self).prop("checked", false);
+					if($('.'+self+':checked').length === $('.'+self).length) {
+						$('#'+self).prop("checked", true);
+					} else {
+						$('#'+self).prop("checked", false);
+					}
 				});
 				$('#'+this).click(function() {
-					($(this).prop("checked")) ? $('.'+self).prop("checked", true) : $('.'+self).prop("checked", false);
+					if($(this).prop("checked")) {
+						$('.'+self).prop("checked", true);
+					} else {
+						('.'+self).prop("checked", false);
+					}
 				});
 			});
 		},
