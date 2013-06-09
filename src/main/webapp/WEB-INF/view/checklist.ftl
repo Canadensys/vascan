@@ -59,11 +59,11 @@
 				<li><span></span>${rc.getMessage("province_MB")}<input <#attempt>${data.territory.MB}<#recover></#attempt> type="checkbox" name="province" class="province" value="MB" /></li>
 			</ul>
 			<ul class="custom_list round central">
-				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_central")}</span>${rc.getMessage("province_ON")}<input <#attempt>${territory.ON}<#recover></#attempt> type="checkbox" name="province" class="province" value="ON" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_central")}</span>${rc.getMessage("province_ON")}<input <#attempt>${data.territory.ON}<#recover></#attempt> type="checkbox" name="province" class="province" value="ON" /></li>
 				<li><span></span>${rc.getMessage("province_QC")}<input <#attempt>${data.territory.QC}<#recover></#attempt> type="checkbox" name="province" class="province" value="QC" /></li>
 			</ul>
 			<ul class="custom_list round atlantic">
-				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_atlantic")}</span>${rc.getMessage("province_NB")}<input <#attempt>${territory.NB}<#recover></#attempt> type="checkbox" name="province" class="province" value="NB" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_atlantic")}</span>${rc.getMessage("province_NB")}<input <#attempt>${data.territory.NB}<#recover></#attempt> type="checkbox" name="province" class="province" value="NB" /></li>
 				<li><span></span>${rc.getMessage("province_PE")}<input <#attempt>${data.territory.PE}<#recover></#attempt> type="checkbox" name="province" class="province" value="PE" /></li>
 				<li><span></span>${rc.getMessage("province_NS")}<input <#attempt>${data.territory.NS}<#recover></#attempt> type="checkbox" name="province" class="province" value="NS" /></li>
 				<li><span></span>${rc.getMessage("province_NL_N")}<input <#attempt>${data.territory.NL_N}<#recover></#attempt> type="checkbox" name="province" class="province" value="NL_N" /></li>
@@ -71,7 +71,7 @@
 				<li><span></span>${rc.getMessage("province_PM")}<input <#attempt>${data.territory.PM}<#recover></#attempt> type="checkbox" name="province" class="province" value="PM"/></li>
 			</ul>
 			<ul class="custom_list round arctic">
-				<li><span><input type="checkbox" class="region">${rc.getMessage("region_arctic")}</span>${rc.getMessage("province_YT")}<input <#attempt>${territory.YT}<#recover></#attempt> type="checkbox" name="province" class="province" value="YT"/></li>
+				<li><span><input type="checkbox" class="region">${rc.getMessage("region_arctic")}</span>${rc.getMessage("province_YT")}<input <#attempt>${data.territory.YT}<#recover></#attempt> type="checkbox" name="province" class="province" value="YT"/></li>
 				<li><span></span>${rc.getMessage("province_NT")}<input <#attempt>${data.territory.NT}<#recover></#attempt> type="checkbox" name="province" class="province" value="NT"/></li>
 				<li><span></span>${rc.getMessage("province_NU")}<input <#attempt>${data.territory.NU}<#recover></#attempt> type="checkbox" name="province" class="province" value="NU"/></li>
 				<li><span></span>${rc.getMessage("province_GL")}<input <#attempt>${data.territory.GL}<#recover></#attempt> type="checkbox" name="province" class="province" value="GL"/></li>
