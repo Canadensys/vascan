@@ -35,6 +35,9 @@
 	</#if>
 </#list>
 </ul>
+<#if search.pageIndex?has_content>
+	Page ${search.pageIndex+1} / ${(search.total/search.pageSize)?ceiling}
+</#if>
  <#else>
  <p><img src="${rc.getContextUrl("/images/accepted_species_per_genus.png")}" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
  </#if>

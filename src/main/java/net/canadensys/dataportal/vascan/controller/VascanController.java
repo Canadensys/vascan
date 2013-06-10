@@ -128,11 +128,12 @@ public class VascanController {
 	
 	/**
 	 * Render a search page
-	 * @param q
+	 * @param q name to search for
+	 * @param page page index, starting at 0
 	 * @return
 	 */
 	@RequestMapping(value={"/search"}, method={RequestMethod.GET})
-	public ModelAndView handleSearch(@RequestParam(required=false) String q){
+	public ModelAndView handleSearch(@RequestParam(required=false) String q, @RequestParam(required=false) Integer page){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 	    HashMap<String,Object> search = new HashMap<String,Object>();
@@ -142,7 +143,16 @@ public class VascanController {
 	    List<Map<String,String>> searchResult = new ArrayList<Map<String,String>>();
 	    if(StringUtils.isNotBlank(q)){
 	    	search.put("term", q);
-		    LimitedResult<List<NameConceptModelIF>> nameConceptModelList = searchService.searchName(q);
+	    	LimitedResult<List<NameConceptModelIF>> nameConceptModelList = null;
+	    	if(page != null){
+	    		search.put("pageIndex", page);
+	    		search.put("pageSize", searchService.getPageSize());
+	    		nameConceptModelList = searchService.searchName(q,page);
+	    	}
+	    	else{
+	    		nameConceptModelList = searchService.searchName(q);
+	    	}
+
 		    search.put("total",nameConceptModelList.getTotal_rows());
 		    List<Map<String,String>> searchResults = new ArrayList<Map<String,String>>();
 		    Map<String,String> searchRow = null;

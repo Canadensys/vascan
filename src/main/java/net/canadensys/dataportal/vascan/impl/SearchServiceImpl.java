@@ -20,6 +20,10 @@ public class SearchServiceImpl implements SearchService{
 	public LimitedResult<List<NameConceptModelIF>> searchName(String text) {
 		return nameDAO.search(text);
 	}
+	@Override
+	public LimitedResult<List<NameConceptModelIF>> searchName(String text, int page) {
+		return nameDAO.search(text,page);
+	}
 
 	@Override
 	public List<NameConceptModelIF> searchTaxon(String text) {
@@ -29,6 +33,11 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public List<NameConceptModelIF> searchVernacularName(String text) {
 		return nameDAO.searchVernacular(text);
+	}
+	
+	@Override
+	public int getPageSize() {
+		return nameDAO.getPageSize();
 	}
 
 }
