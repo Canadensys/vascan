@@ -2,7 +2,11 @@
 Copyright (c) 2013 Canadensys
 Script to handle autocomplete
 ****************************/
+/*global VASCAN, $, window*/
 VASCAN.autocomplete = (function(){
+
+	'use strict';
+
 	var _private = {
 		init: function(){
 			this.typeahead();
@@ -23,7 +27,7 @@ VASCAN.autocomplete = (function(){
 		},
 		dropdown_selected: function(){
 			//TODO: capture language in session and redirect to proper i18n version of result page
-			window.location.href = VASCAN.common.baseURL+'/name/'+$(this).val().replace(/\s/g,"+");
+			window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val());
 		}
 	};
 	return {
