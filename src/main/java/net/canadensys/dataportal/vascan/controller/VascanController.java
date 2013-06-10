@@ -153,13 +153,15 @@ public class VascanController {
 		    		searchRow.put("name", currNameConceptModel.getName());
 		    		searchRow.put("id", Integer.toString(currNameConceptModel.getTaxonId()));
 		    		searchRow.put("status", currNameConceptModel.getStatus());
+		    		searchRow.put("namehtml",((NameConceptTaxonModel)currNameConceptModel).getNamehtml());
+		    		searchRow.put("namehtmlauthor",((NameConceptTaxonModel)currNameConceptModel).getNamehtmlauthor());
 		    		searchResult.add(searchRow);
 		    	}
 		    	else if(currNameConceptModel.getClass().equals(NameConceptVernacularNameModel.class)){
 		    		searchRow = new HashMap<String, String>();
 		    		searchRow.put("type","vernacular");
 		    		searchRow.put("name", currNameConceptModel.getName());
-		    		searchRow.put("id", Integer.toString(currNameConceptModel.getTaxonId()));
+		    		searchRow.put("id", Integer.toString(((NameConceptVernacularNameModel)currNameConceptModel).getId()));
 		    		searchRow.put("status", currNameConceptModel.getStatus());
 		    		searchRow.put("lang",((NameConceptVernacularNameModel)currNameConceptModel).getLang());
 		    		searchResult.add(searchRow);
