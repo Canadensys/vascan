@@ -175,7 +175,7 @@
 						</ul>
 
 						<div id="map_result">
-							<img src="${data.png}" width="400" height="400" alt="Distribution: ${data.pageTitle}" name="png" id="png" />
+							<img src="${rc.getContextUrl('/images/distribution/'+data.taxonId+'.png')}" width="400" height="400" alt="Distribution: ${data.pageTitle}" name="png" id="png" />
 							<p>${rc.getMessage("taxon_msg1",[data.pngDownload,data.svgDownload])}</p>
 						</div>
 						<div id="list_result" style="display:none;">

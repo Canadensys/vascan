@@ -1,31 +1,21 @@
 package net.canadensys.dataportal.vascan.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import net.canadensys.dataportal.vascan.TaxonService;
-import net.canadensys.dataportal.vascan.constant.Distribution;
-import net.canadensys.dataportal.vascan.constant.Region;
 import net.canadensys.dataportal.vascan.constant.Status;
-import net.canadensys.dataportal.vascan.dao.DistributionDAO;
-import net.canadensys.dataportal.vascan.dao.RegionDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
-import net.canadensys.dataportal.vascan.dao.VernacularNameDAO;
-import net.canadensys.dataportal.vascan.manager.IsSynonymPredicate;
+import net.canadensys.dataportal.vascan.image.DistributionImageGenerator;
+import net.canadensys.dataportal.vascan.image.ImageGeneratorConfig;
 import net.canadensys.dataportal.vascan.manager.TaxonManager;
-import net.canadensys.dataportal.vascan.model.DistributionModel;
-import net.canadensys.dataportal.vascan.model.DistributionStatusModel;
-import net.canadensys.dataportal.vascan.model.RegionModel;
-import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
-import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 
-import org.apache.commons.collections.iterators.FilterIterator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +44,9 @@ public class TaxonServiceImpl implements TaxonService {
 	@Autowired
 	private PropertyMapHelper propertyMapHelper;
 	
+	@Autowired
+	private ImageGeneratorConfig config;
+	
 	@Transactional(readOnly=true)
 	@Override
 	public Map<String,Object> retrieveTaxonData(Integer taxonId){
@@ -67,6 +60,9 @@ public class TaxonServiceImpl implements TaxonService {
 	    TaxonModel taxon = loadTaxonModel(taxonId);
 	    if(taxon != null){
 	        data.put("taxonId",taxon.getId());
+	    }
+	    else{
+	    	return null;
 	    }
 	    
 		// is the taxon concept a synonym
@@ -166,12 +162,8 @@ public class TaxonServiceImpl implements TaxonService {
 	    String png = "";
 	    String svg = "";
 	    if(!isSynonymConcept){
-	        //TODO: verify image, generate it if necessary
-	        //write SVG file
-	        //TaxonManager.writeDistributionSvg(taxon);
-
-	        svg = "";//ApplicationConfig.getGeneratedImageURL() + ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + ApplicationConfig.SVG_FILE_EXT;
-	        png = "";//ApplicationConfig.getGeneratedImageURL() + ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + ApplicationConfig.PNG_FILE_EXT;
+	        //svg = ApplicationConfig.getGeneratedImageURL() + ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + DistributionImageGenerator.PNG_FILE_EXT;
+	        //png = ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + ApplicationConfig.PNG_FILE_EXT;
 	    }
 //	    
 	    data.put("png",png);

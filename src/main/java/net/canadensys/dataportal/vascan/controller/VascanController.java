@@ -65,7 +65,11 @@ public class VascanController {
 	public ModelAndView handleTaxon(@PathVariable Integer taxonId){
 
 	    Map<String,Object> model = new HashMap<String,Object>();
-	    model.put("data",taxonService.retrieveTaxonData(taxonId));
+	    Object data = taxonService.retrieveTaxonData(taxonId);
+	    if(data == null){
+	    	throw new ResourceNotFoundException();
+	    }
+	    model.put("data",data);
 	    
 		return new ModelAndView("taxon", model);
 	}
@@ -79,8 +83,12 @@ public class VascanController {
 	public ModelAndView handleVernacular(@PathVariable Integer vernacularNameId){
 		
 		Map<String,Object> model = new HashMap<String,Object>();
-	    model.put("vernacularName",vernacularNameService.loadVernacularNameModel(vernacularNameId));
-	    
+		Object vernacularNameData = vernacularNameService.loadVernacularNameModel(vernacularNameId);
+		
+	    if(vernacularNameData == null){
+	    	throw new ResourceNotFoundException();
+	    }
+	    model.put("vernacularName",vernacularNameData);
 	    Map<String,Object> extra = new HashMap<String,Object>();
 	    extra.put("isVernacular",true);
 	    model.put("extra",extra);
@@ -95,7 +103,7 @@ public class VascanController {
 	 */
 	@RequestMapping(value={"/name/{name}"}, method={RequestMethod.GET})
 	public ModelAndView handleName(@PathVariable String name, @RequestParam(required=false) String redirect){
-
+		
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
 
@@ -103,7 +111,7 @@ public class VascanController {
 	    if( data == null){
 	    	throw new ResourceNotFoundException();
 	    }
-	    model.put("data",nameService.retrieveNameData(name, redirect,extra)); 
+	    model.put("data",data); 
 	    model.put("extra",extra);
 	    
 		return new ModelAndView("name", model);

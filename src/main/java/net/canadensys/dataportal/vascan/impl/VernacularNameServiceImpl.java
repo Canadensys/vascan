@@ -22,6 +22,9 @@ public class VernacularNameServiceImpl implements VernacularNameService {
 	@Override
 	public Map<String,Object> loadVernacularNameModel(Integer vernacularNameId) {
 		VernacularNameModel vernacularName = vernacularNameDAO.loadVernacularName(vernacularNameId);
+		if(vernacularName == null){
+			return null;
+		}
 		//denormalize data related to this vernacular name
 	    Map<String,Object> data = new HashMap<String,Object>();
 	    data.put("vernacularId",vernacularName.getId());

@@ -23,7 +23,7 @@ public interface TaxonService {
 	 * or only base (name, rank, status, authority...) information in 
 	 * case of an synonym taxon. 
 	 * @param taxonId
-	 * @return
+	 * @return the filled data map or null if the taxon was not found
 	 */
 	public Map<String,Object> retrieveTaxonData(Integer taxonId);
 
