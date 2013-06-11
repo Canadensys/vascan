@@ -79,24 +79,23 @@ VASCAN.checklist = (function(){
 				$('input[type="checkbox"][value="'+this+'"]').prop("checked", false).closest("ul").find(".region").prop("checked", false);
 			});
 		},
-		process_map: function() {
+		process_map: function(map) {
 			var	self = this,
-					svg = $('#map')[0].getSVGDocument(),
+					svg = $('#map_selector').svg('get'),
 					checkboxes = $('input[type="checkbox"]', '#checklist_distribution'),
-					paths = [];
+					paths = {};
 
 			$.each(checkboxes, function() {
 				var checkbox_value = $(this).val();
-				paths = svg.getElementById(checkbox_value);
+				paths = $('#'+checkbox_value, svg.root());
 				if($(paths).length > 0) {
-					paths = paths.getElementsByTagName("path");
 					if($(this).prop("checked")) {
 						$.each(paths, function() {
-							this.setAttributeNS(null, 'fill', 'rgb(168,36,0)');
+							$(this).css("fill", "rgb(168,36,0)");
 						});
 					} else {
 						$.each(paths, function() {
-							this.setAttributeNS(null, 'fill', self.get_region_color(checkbox_value));
+							$(this).css("fill", self.get_region_color(checkbox_value));
 						});
 					}
 				}
@@ -121,23 +120,30 @@ VASCAN.checklist = (function(){
 				});
 			});
 		},
-		set_default_display: function() {
+		set_default_options: function() {
 			var self = this, panel = VASCAN.common.getParameterByName("criteria_panel"), results_table = $('#custom_results_table');
 			$.each($('.province'), function() {
 				self.set_checked_regions(this);
 			});
-			this.process_map();
 			this.show_criteria_panel(panel);
 			if(results_table.length > 0) {
 				$('html,body').scrollTo(results_table);
 			}
+		},
+		load_map: function() {
+			var self = this;
+			$('#map_selector').svg({
+				loadURL: VASCAN.common.baseURL + "/images/distribution_checklist.svg",
+				onLoad: function() { self.process_map(); }
+			});
 		},
 		init: function() {
 			_private.set_region_colors();
 			_private.toggle_display_criteria();
 			_private.bind_region_checkboxes();
 			_private.bind_rank_checkboxes();
-			_private.set_default_display();
+			_private.set_default_options();
+			_private.load_map();
 		}
 	};
 	return {

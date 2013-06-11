@@ -1,7 +1,7 @@
 <#include "inc/common.ftl">
 
 <#assign page={"title": data.pageTitle+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssListPrint": [rc.getContextUrl("/styles/print.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": 
-["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", "http://data.canadensys.net/common/js/jquery.tooltip.min.js"]}>
+["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", "http://data.canadensys.net/common/js/jquery.tooltip.min.js", rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/taxon.js")]}>
 
 <#assign currentPage="taxon"/>
 

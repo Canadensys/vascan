@@ -181,10 +181,12 @@ tr.selected { font-weight: bold; }
 	top: 3px;
 }
 #checklist_distribution span input[type=checkbox] { left: 0; }
-#checklist_distribution .map {
-	position: absolute;
-	right: 0;
-	top: 0;
+#map_selector {
+  width:410px;
+  height:410px;
+  position:absolute;
+  top:0px;
+  right:0px;
 }
 
 .canada   {background-color: #e7e7e7; }

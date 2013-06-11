@@ -54,7 +54,7 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		assertTrue(searchDropdown.getText().contains("Vernacular Names"));
 		assertTrue(searchDropdown.getText().contains("Carex feta"));
 		assertTrue(searchDropdown.getText().contains("carex noir"));
-		
+
 		searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(4)")).click();
 		PageFactory.initElements(browser, this);
 		assertEquals("Carex alma",contentDiv.findElement(By.cssSelector("h1")).getText());

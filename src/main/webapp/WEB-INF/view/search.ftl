@@ -1,6 +1,6 @@
 <#include "inc/common.ftl">
 
-<#assign page={"title": rc.getMessage("namesearch_title1")+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js", rc.getContextUrl("/js/typeahead.min.js"), rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/autocomplete.js")]}>
+<#assign page={"title": rc.getMessage("namesearch_title1")+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js", rc.getContextUrl("/js/typeahead.min.js"), rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/search.js")]}>
 
 <#if search.term?has_content>
 	<#assign page = page + {"title": rc.getMessage("namesearch_title2",[search.term])+ " - " + rc.getMessage("site_title")}>

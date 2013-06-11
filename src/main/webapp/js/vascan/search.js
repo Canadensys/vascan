@@ -3,7 +3,7 @@ Copyright (c) 2013 Canadensys
 Script to handle autocomplete
 ****************************/
 /*global VASCAN, $, window*/
-VASCAN.autocomplete = (function(){
+VASCAN.search = (function(){
 
 	'use strict';
 
@@ -26,8 +26,8 @@ VASCAN.autocomplete = (function(){
 				]).on('typeahead:selected', this.dropdown_selected);
 		},
 		dropdown_selected: function(){
-			//TODO: capture language in session and redirect to proper i18n version of result page
-			window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val());
+			var lang = VASCAN.common.getParameterByName("lang"), param = (lang) ? "?lang=" + lang : "";
+			window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val())+param;
 		}
 	};
 	return {

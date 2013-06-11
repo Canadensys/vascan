@@ -5,6 +5,7 @@ Boostrapper for modules
 DESIGN TEMPLATE FOR MODULES IN VASCAN
 
 	VASCAN.myModule = (function() {
+		"use strict";
 		var _private = {
 			init: function() {
 		 	//do stuff
