@@ -18,5 +18,4 @@
 	</div><#-- content -->
 </div>
 
-<#assign page = page + {"jQueryJavaScriptSetupCallList": page.jQueryJavaScriptSetupCallList + ["$('.reference').tooltip({showURL: false})"]}>
 <#include "inc/footer.ftl">
