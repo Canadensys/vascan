@@ -118,6 +118,51 @@ tr.selected { font-weight: bold; }
   margin:1em 0;
 }
 
+/* Pagination */
+.pagination {
+	margin:1.5em 0;
+	cursor: default;
+	/* self-clearing method: */
+}
+.pagination a, .pagination span, .pagination em {
+	padding: 0.25em 0.75em;
+	display: block;
+	float: left;
+	margin-right: 5px;
+}
+.pagination .disabled {
+	color: #999999;
+	border: 1px solid #EEE;
+}
+.pagination .current {
+	font-style: normal;
+	font-weight: bold;
+	background-color: #E7E7E7;
+	border: 1px solid #A8A7A5;
+}
+.pagination a {
+	text-decoration: none;
+	border: 1px solid #A8A7A5;
+}
+.pagination a:hover, .pagination a:focus {
+	background-color: #A8A7A5;
+	color:#FFF !important;
+	border-color: #A8A7A5;
+}
+.pagination:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+* html .pagination {
+	height: 1%;
+}
+*:first-child + html .pagination {
+	overflow: hidden;
+}
+
 /* Checklist builder */
 
 #checklist_box input[type=text] { width: 340px; }

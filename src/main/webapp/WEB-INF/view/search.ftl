@@ -25,22 +25,28 @@
 </form>
 
 <#if search.term?has_content>
-<h2>${rc.getMessage("namesearch_h2_results",[search.total])}</h2>
-<ul id="search_list">
-<#list results as result>
-	<#if result.type = "taxon">
-		<li class="sprite sprite-${result.status}"><a href="${rc.getContextUrl('/taxon/'+result.id)}">${result.name}</a></li>
-	<#elseif result.type = "vernacular">
-		<li><a href="${rc.getContextUrl('/vernacular/'+result.id)}">${result.name}</a></li>
+	<h2>${rc.getMessage("namesearch_h2_results",[search.pageNumber!1, search.total])}</h2>
+	<ul id="search_list">
+	<#if !results?has_content>
+		<p><em>${rc.getMessage("namesearch_notfound")}</em></p>
 	</#if>
-</#list>
-</ul>
-<#if search.pageNumber?has_content>
-	Page ${search.pageNumber} / ${(search.total/search.pageSize)?ceiling}
-</#if>
- <#else>
+	<#list results as result>
+		<#if result.type = "taxon">
+			<li class="sprite sprite-${result.status}"><a href="${rc.getContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a></li>
+		<#elseif result.type = "vernacular">
+			<li><a href="${rc.getContextUrl('/vernacular/'+result.id)}">${result.name}</a></li>
+		</#if>
+	</#list>
+	
+	</ul>
+
+	<#if (search.term?has_content && search.total >= search.pageSize!20?number)>
+		<@pages 1..(search.total/search.pageSize!20?number)?ceiling search.pageNumber!1 />
+	</#if>
+<#else>
  <p><img src="${rc.getContextUrl("/images/accepted_species_per_genus.png")}" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
- </#if>
+</#if>
+
 	</div><#-- content -->
 </div>
 <#include "inc/footer.ftl">
