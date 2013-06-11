@@ -17,21 +17,38 @@ DESIGN TEMPLATE FOR MODULES IN VASCAN
 		};
 	}());
 ****************************/
+/*global window*/
 ;(function(vc, $, window, document, undefined) {
+	
+	"use strict";
 
 	vc.common = {
 
 		baseURL: "/vascan",
 
-		getParameterByName: function(name) {
-	    var cname   = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]"),
-	        regexS  = "[\\?&]" + cname + "=([^&#]*)",
-	        regex   = new RegExp(regexS),
-	        results = regex.exec(window.location.href);
+		languageResources: {},
+		
+		setLanguageResources: function(resources) {
+			if(typeof resources !== 'object') { return false; }
+			$.extend(true, this.languageResources, resources);
+		},
+		
+		getLanguageResource: function(resource) {
+			if(this.languageResources.hasOwnProperty(resource)) {
+				return this.languageResources[resource];
+			}
+			return null;
+		},
 
-	    if(results === null) { return ""; }
-	    return decodeURIComponent(results[1].replace(/\+/g, " "));
-	  }
+		getParameterByName: function(name) {
+			var cname		= name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]"),
+					regexS	= "[\\?&]" + cname + "=([^&#]*)",
+					regex		= new RegExp(regexS),
+					results = regex.exec(window.location.href);
+
+			if(results === null) { return ""; }
+			return decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
 	};
 
   //global initializer
