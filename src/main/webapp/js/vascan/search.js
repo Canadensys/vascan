@@ -16,12 +16,12 @@ VASCAN.search = (function(){
 				{
 					name: 'scientific',
 					remote: VASCAN.common.baseURL+'/search.json?q=%QUERY&t=taxon',
-					header: '<h3 class="taxontype-name">Scientific Names</h3>'
+					header: '<h3 class="taxontype-name">'+VASCAN.common.getLanguageResource("autocomplete_title1")+'</h3>'
 				},
 				{
 					name: 'vernacular',
 					remote: VASCAN.common.baseURL+'/search.json?q=%QUERY&t=vernacular',
-					header: '<h3 class="taxontype-name">Vernacular Names</h3>'
+					header: '<h3 class="taxontype-name">'+VASCAN.common.getLanguageResource("autocomplete_title2")+'</h3>'
 				}
 				]).on('typeahead:selected', this.dropdown_selected);
 		},
