@@ -137,7 +137,7 @@ public class VascanController {
 	/**
 	 * Render a search page
 	 * @param q name to search for
-	 * @param page page index, starting at 0
+	 * @param pageNumber, starting at 1
 	 * @return
 	 */
 	@RequestMapping(value={"/search"}, method={RequestMethod.GET})
@@ -153,9 +153,11 @@ public class VascanController {
 	    	search.put("term", q);
 	    	LimitedResult<List<NameConceptModelIF>> nameConceptModelList = null;
 	    	if(page != null){
-	    		search.put("pageIndex", page);
+	    		int pageIndex = (page <= 0)?0:(page-1);
+	    		//use page index +1 to avoid returning a bad page number
+	    		search.put("pageNumber", (pageIndex+1));
 	    		search.put("pageSize", searchService.getPageSize());
-	    		nameConceptModelList = searchService.searchName(q,page);
+	    		nameConceptModelList = searchService.searchName(q,pageIndex);
 	    	}
 	    	else{
 	    		nameConceptModelList = searchService.searchName(q);
