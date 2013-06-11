@@ -153,6 +153,12 @@ public class DistributionImageGenerator {
 	private void writeDistributionSvg(File file, String AB,String BC,String GL,String MB,String NB,String NLL,String NLN,
 			String NT,String NS,String NU,String ON,String PE,String QC,String PM,String SK,String YT){
 		try {
+			
+			//make sure the folder exists
+			if(!file.getParentFile().exists()){
+				file.getParentFile().mkdirs();
+			}
+			
 			PrintWriter pw = new PrintWriter(file);
 			pw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
 			pw.write("<!-- Created with Inkscape (http://www.inkscape.org/) and manually edited for www.canadensys.net -->\n");

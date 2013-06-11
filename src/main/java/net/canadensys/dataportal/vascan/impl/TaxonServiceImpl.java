@@ -155,34 +155,12 @@ public class TaxonServiceImpl implements TaxonService {
 	    // reference link
 	    String link = taxon.getReference().getUrl();
 	    data.put("link",link);
-	    
-//	    // is taxon is an accepted concept, verify if it's distribution image exists
-//	    // if not, create the svg & png file. Never create a distribution image file
-//	    // for a synonym
-	    String png = "";
-	    String svg = "";
-	    if(!isSynonymConcept){
-	        //svg = ApplicationConfig.getGeneratedImageURL() + ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + DistributionImageGenerator.PNG_FILE_EXT;
-	        //png = ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + ApplicationConfig.PNG_FILE_EXT;
-	    }
-//	    
-	    data.put("png",png);
-	    data.put("svg",svg);
-	    
-	    //Those URL will allow to open the 'Save as' dialog automaticly (client side)
-//	    data.put("pngDownload",png+ApplicationConfig.DOWNLOAD_GENERATED_IMG_URL);
-//	    data.put("svgDownload",svg+ApplicationConfig.DOWNLOAD_GENERATED_IMG_URL);
-	    
-	    data.put("pngDownload","");
-	    data.put("svgDownload","");
 
 	    // boolean synonym concept
 	    data.put("isSynonymConcept",isSynonymConcept);
 	    
 	    return data;
 	}
-	
-
 	
 	@Transactional(readOnly=true)
 	@Override
