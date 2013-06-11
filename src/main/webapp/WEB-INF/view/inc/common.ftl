@@ -160,8 +160,8 @@
 						
 						<h2>${rc.getMessage("taxon_h2_distribution")}</h2>
 						<ul class="buttons">
-							<li><a onclick="$('#map_result').show(350);$('#list_result').hide(350);$('ul.buttons a').toggleClass('selected');" class="selected">${rc.getMessage("taxon_button1")}</a></li>
-							<li><a onclick="$('#list_result').show(350);$('#map_result').hide(350);$('ul.buttons a').toggleClass('selected');">${rc.getMessage("taxon_button2")}</a></li>
+							<li><a href="#" class="selected">${rc.getMessage("taxon_button1")}</a></li>
+							<li><a href="#">${rc.getMessage("taxon_button2")}</a></li>
 						</ul>
 
 						<ul class="distribution_legend custom_list">

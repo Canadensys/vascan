@@ -35,7 +35,7 @@
                               <p class="sprite sprite-accepted">
                               <a href="${rc.getContextUrl('/taxon/'+taxon.taxonId)}">${taxon.fullScientificName}</a> ${rc.getMessage("taxon_accepted_msg1",[prefixFrenchRank(rc.getMessage("rank_"+taxon.rank?lower_case))?lower_case,refBuilder(taxon.link,taxon.reference,taxon.referenceShort,false,true,false)])}
                               </p>
-                          </#if>							
+                          </#if>
 	</#list>
 </#if>
 <#else>
