@@ -101,7 +101,7 @@
         <#if link?has_content == true>
         	<#assign reference = "<a href=\"" + link + "\">" + reference + "</a>">
         </#if>
-        <#if parenthesis == true>            
+        <#if parenthesis == true>
             <#assign reference = "(" + reference + ")">
         </#if>
     	<#assign return_reference = return_reference + "<span class=\"reference\" title =\"" + referenceTitle + "\">" + reference + "</span>">
@@ -228,11 +228,7 @@
 		<div class="pagination">
 
 		<#assign size = totalPages?size>
-		<#assign lang_param = "">
-		<#if rc.getLocale().getLanguage() == "fr">
-			<#assign lang_param = "&lang=fr">
-		</#if>
-		<#assign url = rc.getContextUrl("/search/?q="+search.term+lang_param+"&page=")>
+		<#assign url = getI18nContextUrl("/search/?q="+search.term?url("UTF-8"))>
 		<#if (p<=5)>
 				<#assign interval = 1..(min(5,size))>
 		<#elseif ((size-p)<5)>
@@ -243,25 +239,25 @@
 		<#if (p <= 1)>
 			<span class="previous_page disabled">«</span>
 		<#else>
-			<a class="previous_page" href="${url+(p-1)}" rel="prev">«</a>
+			<a class="previous_page" href="${url+"&page="+(p-1)}" rel="prev">«</a>
 		</#if>
 		<#if !(interval?seq_contains(1))>
-		 <a href="${url+1}">1</a><span class="gap">...</span><#rt>
+		 <a href="${url+"&page=1"}">1</a><span class="gap">...</span><#rt>
 		</#if>
 		<#list interval as page>
 				<#if page=p>
 				 <em class="current">${page}</em> <#t>
 				<#else>
-				 <a href="${url+page}">${page}</a> <#t>
+				 <a href="${url+"&page="+page}">${page}</a> <#t>
 				</#if>
 		</#list>
 		<#if !(interval?seq_contains(size))>
-		 <span class="gap">...</span><a href="${url+size}">${size}</a><#lt>
+		 <span class="gap">...</span><a href="${url+"&page="+size}">${size}</a><#lt>
 		</#if>
 		<#if (p == size)>
 			<span class="next_page disabled">»</span>
 		<#else>
-			<a class="next_page" href="${url+(p+1)}" rel="next">»</a>
+			<a class="next_page" href="${url+"&page="+(p+1)}" rel="next">»</a>
 		</#if>
 
 		</div>

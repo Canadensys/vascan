@@ -25,7 +25,14 @@
 </form>
 
 <#if search.term?has_content>
-	<h2>${rc.getMessage("namesearch_h2_results",[search.pageNumber!1, search.total])}</h2>
+	<#assign totalPages=(search.total/search.pageSize)?ceiling/>
+	<h2>
+	<#if (search.pageNumber > 1)>
+		${rc.getMessage("namesearch_h2_results_paging",[search.total, search.pageNumber, totalPages])}
+	<#else>
+		${rc.getMessage("namesearch_h2_results",[search.total])}
+	</#if>
+	</h2>
 	<ul id="search_list">
 	<#if !results?has_content>
 		<p><em>${rc.getMessage("namesearch_notfound")}</em></p>
@@ -41,7 +48,7 @@
 	</ul>
 
 	<#if (search.total >= search.pageSize)>
-		<@pages 1..(search.total/search.pageSize)?ceiling search.pageNumber/>
+		<@pages 1..totalPages search.pageNumber/>
 	</#if>
 <#else>
  <p><img src="${rc.getContextUrl("/images/accepted_species_per_genus.png")}" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>

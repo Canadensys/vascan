@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
+import java.util.regex.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Integration tests of the rendered name page
+ * Integration tests of the rendered search page
  * @author canadensys
  *
  */
@@ -30,6 +31,12 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 
 	@FindBy(css = "input#search_term")
 	private WebElement searchInput;
+	
+	@FindBy(xpath = "//div[@id='content']/h2[1]")
+	private WebElement searchHeader;
+	
+	@FindBy(css = "ul#search_list")
+	private WebElement searchResults;
 		
 	@Before
 	public void setup() {
@@ -58,6 +65,32 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(4)")).click();
 		PageFactory.initElements(browser, this);
 		assertEquals("Carex alma",contentDiv.findElement(By.cssSelector("h1")).getText());
+	}
+
+	@Test
+	public void testSearchResults() {
+
+		browser.get(TESTING_SERVER_URL + "search/?q=carex");
+		
+		//bind the WebElement to the current page
+		PageFactory.initElements(browser, this);
+
+//		Pattern p = Pattern.compile(".*\\d.*");
+//		Matcher m = p.matcher(searchHeader.getText().replaceAll(",", ""));
+		
+//		assertTrue(m.find());
+//		assertTrue(Integer.parseInt(m.group(1)) > 1000);
+
+		assertEquals("Carex Linnaeus", searchResults.findElement(By.cssSelector("li:first-child")).getText());
+		
+		//test nothing found
+		browser.get(TESTING_SERVER_URL + "search/?q=blablabla");
+		
+		//bind the WebElement to the current page
+		PageFactory.initElements(browser, this);
+		
+		assertEquals("0 Results", contentDiv.findElement(By.cssSelector("h2")).getText());
+		assertEquals("Nothing found.", searchResults.getText());
 	}
 	
 	@After
