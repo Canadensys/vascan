@@ -219,6 +219,7 @@
 		<#if (x<y)><#return x><#else><#return y></#if>
 </#function>
 
+<#-- From http://stackoverflow.com/questions/6391668/freemarker-pagination-or-just-general-algorithm-for-clicking-through-pages -->
 <#macro pages totalPages p>
 		<div class="pagination">
 

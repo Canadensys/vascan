@@ -40,8 +40,8 @@
 	
 	</ul>
 
-	<#if (search.term?has_content && search.total >= search.pageSize!20?number)>
-		<@pages 1..(search.total/search.pageSize!20?number)?ceiling search.pageNumber!1 />
+	<#if (search.total >= search.pageSize)>
+		<@pages 1..(search.total/search.pageSize)?ceiling search.pageNumber/>
 	</#if>
 <#else>
  <p><img src="${rc.getContextUrl("/images/accepted_species_per_genus.png")}" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>

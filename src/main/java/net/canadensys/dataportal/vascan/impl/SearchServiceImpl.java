@@ -20,6 +20,7 @@ public class SearchServiceImpl implements SearchService{
 	public LimitedResult<List<NameConceptModelIF>> searchName(String text) {
 		return nameDAO.search(text);
 	}
+	
 	@Override
 	public LimitedResult<List<NameConceptModelIF>> searchName(String text, int page) {
 		return nameDAO.search(text,page);

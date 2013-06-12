@@ -137,11 +137,11 @@ public class VascanController {
 	/**
 	 * Render a search page
 	 * @param q name to search for
-	 * @param pageNumber, starting at 1
+	 * @param page page number starting at 1
 	 * @return
 	 */
 	@RequestMapping(value={"/search"}, method={RequestMethod.GET})
-	public ModelAndView handleSearch(@RequestParam(required=false) String q, @RequestParam(required=false) Integer page){
+	public ModelAndView handleSearch(@RequestParam(required=false) String q, @RequestParam(required=false,defaultValue="1") Integer page){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 	    HashMap<String,Object> search = new HashMap<String,Object>();
@@ -152,11 +152,12 @@ public class VascanController {
 	    if(StringUtils.isNotBlank(q)){
 	    	search.put("term", q);
 	    	LimitedResult<List<NameConceptModelIF>> nameConceptModelList = null;
-	    	if(page != null){
-	    		int pageIndex = (page <= 0)?0:(page-1);
-	    		//use page index +1 to avoid returning a bad page number
-	    		search.put("pageNumber", (pageIndex+1));
-	    		search.put("pageSize", searchService.getPageSize());
+	    	int pageIndex = (page <= 0)?0:(page-1);
+	    	//use page index +1 to avoid returning a bad page number
+    		search.put("pageNumber", (pageIndex+1));
+    		search.put("pageSize", searchService.getPageSize());
+    		//check if we want another page than the first one
+	    	if(pageIndex > 0){
 	    		nameConceptModelList = searchService.searchName(q,pageIndex);
 	    	}
 	    	else{
@@ -202,7 +203,7 @@ public class VascanController {
 	@RequestMapping(value={"/search.json"}, method={RequestMethod.GET})
 	public void handleSearchJson(@RequestParam String q,@RequestParam String t, HttpServletResponse response){
 		
-		//make sure the answer is set as UTF-8
+		//make sure the response is set as UTF-8
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType(JSON_CONTENT_TYPE);
 		
