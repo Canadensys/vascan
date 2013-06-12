@@ -30,16 +30,23 @@ VASCAN.checklist = (function(){
 				self.show_criteria_panel("display");
 			});
 		},
-		show_criteria_panel: function(selected) {
-			var opposite = "selection";
+		show_criteria_panel: function(selected, scroll) {
+			var self = this, opposite = "selection";
 
 			if(!selected) { return false; }
 			$('#'+selected+'_button').addClass('selected');
 			$("#"+selected+"_criteria").slideDown(500);
 			if(selected === "selection") { opposite = "display"; }
 			$("#"+opposite+"_button").removeClass('selected');
-			$("#"+opposite+"_criteria").slideUp(500);
+			$("#"+opposite+"_criteria").slideUp(500, function() {
+				if(scroll) { self.scroll_results(); }
+			});
 			$("#criteria_panel").val(selected);
+		},
+		scroll_results: function() {
+			$('html, body').animate({
+				scrollTop: $('#custom_results_table').prev().offset().top
+			}, 2000);
 		},
 		bind_region_checkboxes: function() {
 			var self = this;
@@ -121,14 +128,12 @@ VASCAN.checklist = (function(){
 			});
 		},
 		set_default_options: function() {
-			var self = this, panel = VASCAN.common.getParameterByName("criteria_panel"), results_table = $('#custom_results_table');
+			var self = this, panel = VASCAN.common.getParameterByName("criteria_panel") || "selection", scroll = false;
 			$.each($('.province'), function() {
 				self.set_checked_regions(this);
 			});
-			this.show_criteria_panel(panel);
-			if(results_table.length > 0) {
-				$('html,body').scrollTo(results_table);
-			}
+			if($('#custom_results_table').length > 0) { scroll = true; }
+			this.show_criteria_panel(panel, scroll);
 		},
 		load_map: function() {
 			var self = this;

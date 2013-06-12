@@ -1,6 +1,6 @@
 <#include "inc/common.ftl">
 
-<#assign page={"title": rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/jquery.scrollTo.js"), rc.getContextUrl("/js/jquery.svg.min.js"), rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js")]}>
+<#assign page={"title": rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/jquery.svg.min.js"), rc.getContextUrl("/js/vascan.js"), rc.getContextUrl("/js/vascan/checklist.js")]}>
 
 <#assign currentPage="checklist"/>
 
