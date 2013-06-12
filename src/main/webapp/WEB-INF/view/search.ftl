@@ -32,9 +32,9 @@
 	</#if>
 	<#list results as result>
 		<#if result.type = "taxon">
-			<li class="sprite sprite-${result.status}"><a href="${rc.getContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a></li>
+			<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a></li>
 		<#elseif result.type = "vernacular">
-			<li><a href="${rc.getContextUrl('/vernacular/'+result.id)}">${result.name}</a></li>
+			<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a></li>
 		</#if>
 	</#list>
 	

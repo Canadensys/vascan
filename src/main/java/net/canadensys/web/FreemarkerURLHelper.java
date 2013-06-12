@@ -15,6 +15,8 @@ import freemarker.ext.servlet.HttpRequestHashModel;
  */
 public class FreemarkerURLHelper {
 	
+	public static final String LANG_PARAM = "lang";
+	
 	/**
 	 * Get absolute URL from HttpRequestHashModel and add or change a query string parameter.
 	 * @param hr HttpRequestHashModel from Freemarker template
@@ -25,6 +27,23 @@ public class FreemarkerURLHelper {
 	public static String getURL(HttpRequestHashModel hr, String name, String value){
 		UriComponentsBuilder bldr = ServletUriComponentsBuilder.fromRequest(hr.getRequest());
 		bldr.replaceQueryParam(name,value);
+		return bldr.build().toUriString();
+	}
+	
+	/**
+	 * Get an URI with a provided language as query parameter.
+	 * Then parameter will be added or replaced.
+	 * e.g. 
+	 * -getUriWithLanguage("/search?q=cal","fr") will produce /search?q=cal&lang=fr
+	 * -getUriWithLanguage("/search?q=cal&lang=en","fr") will produce /search?q=cal&lang=fr
+	 * 
+	 * @param uri
+	 * @param lang
+	 * @return
+	 */
+	public static String getUriWithLanguage(String uri, String lang){
+		UriComponentsBuilder bldr = UriComponentsBuilder.fromUriString(uri);
+		bldr.replaceQueryParam("lang",lang);
 		return bldr.build().toUriString();
 	}
 }

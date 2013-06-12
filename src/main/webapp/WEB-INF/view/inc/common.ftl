@@ -211,6 +211,10 @@
 						<p><#list data.habituses as habitus><#assign str = (rc.getMessage("habitus_"+habitus.habitus?lower_case))?cap_first/><#if habitus_has_next><#assign str=str+", "/></#if>${str}</#list></p>
 </#macro>
 
+<#function getI18nContextUrl uri>
+	<#return rc.getContextUrl(URLHelper.getUriWithLanguage(uri,rc.getLocale().getLanguage()))>
+</#function>
+
 <#function max x y>
 		<#if (x<y)><#return y><#else><#return x></#if>
 </#function>
