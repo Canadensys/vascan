@@ -62,7 +62,7 @@
 	<li>Vernon Harms, <a href="http://www.usask.ca/">University of Saskatchewan</a></li>
 	<li>Stuart Hay, <a href="http://www.biodiversite.ca/">Université de Montréal Biodiversity Centre</a></li>
 	<li>Jacques Labrecque, <a href="http://www.cdpnq.gouv.qc.ca/">Centre de données sur le patrimoine naturel du Québec</a></li>
-	<li>John Maunders, <a href="http://therooms.ca/museum/">The Rooms Provincial Museum</a></li>
+	<li>John Maunder, <a href="http://therooms.ca/museum/">The Rooms Provincial Museum</a></li>
 	<li>Marian Munro, <a href="http://museum.gov.ns.ca/mnhnew/en/home/whattoseedo/collections/botany.aspx">Nova Scotia Museum</a></li>
 	<li>Mike Oldham, <a href="http://nhic.mnr.gov.on.ca/">Ontario Natural Heritage Information Centre</a></li>
 	<li>Elizabeth Punter, <a href="http://umanitoba.ca/">University of Manitoba</a></li>
@@ -163,7 +163,7 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 	<li>Vernon Harms, <a href="http://www.usask.ca/">University of Saskatchewan</a></li>
 	<li>Stuart Hay, <a href="http://www.biodiversite.ca/">Centre sur la biodiversité</a></li>
 	<li>Jacques Labrecque, <a href="http://www.cdpnq.gouv.qc.ca/">Centre de données sur le patrimoine naturel du Québec</a></li>
-	<li>John Maunders, <a href="http://therooms.ca/museum/">The Rooms Provincial Museum</a></li>
+	<li>John Maunder, <a href="http://therooms.ca/museum/">The Rooms Provincial Museum</a></li>
 	<li>Marian Munro, <a href="http://museum.gov.ns.ca/mnhnew/en/home/whattoseedo/collections/botany.aspx">Nova Scotia Museum</a></li>
 	<li>Mike Oldham, <a href="http://nhic.mnr.gov.on.ca/">Centre d'information sur le patrimoine naturel de l'Ontario</a></li>
 	<li>Elizabeth Punter, <a href="http://umanitoba.ca/">University of Manitoba</a></li>
