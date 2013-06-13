@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import net.canadensys.dataportal.vascan.DistributionService;
+import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.manager.IsSynonymPredicate;
 import net.canadensys.dataportal.vascan.model.DistributionModel;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
@@ -51,24 +52,22 @@ public class PropertyMapHelper {
 	    }
 	    data.put("isHybridConcept",isHybridConcept);
 	    data.put("hybridParents",taxonHybridParents);
-	    
 	}
 	
-	public void fillTaxonClassification(List<TaxonModel> classification, Map<String,Object> data){        
+	public void fillTaxonClassification(List<TaxonLookupModel> classification, Map<String,Object> data){  
 		// classification for taxon ; get all the hierarchy of taxon above, and possibly
 		// below of taxon, and save to hashmap and add to vector. Vector is available
 		// as a sequence in .ftl
 		List<Map<String,Object>> taxonClassification = new ArrayList<Map<String,Object>>();
-		//List<TaxonModel> classification = taxonManager.getClassification(taxon);
 	    if(classification != null){
-	        for(TaxonModel node : classification){
+	        for(TaxonLookupModel node : classification){
 	            Map<String,Object> nodeInfo = new HashMap<String,Object>();
 	            try{
-	            	nodeInfo.put("taxonId",node.getId());
-	                nodeInfo.put("fullScientificName",node.getLookup().getCalnamehtml());
-	                nodeInfo.put("fullScientificNameUrl",node.getLookup().getCalname());
-	                nodeInfo.put("rank",node.getRank().getRank());
-	                nodeInfo.put("rankId",node.getRank().getId());
+	            	nodeInfo.put("taxonId",node.getTaxonId());
+	                nodeInfo.put("fullScientificName",node.getCalnamehtml());
+	                nodeInfo.put("fullScientificNameUrl",node.getCalname());
+	                nodeInfo.put("rank",node.getRank());
+	                nodeInfo.put("rankId",Rank.getIdFromLabel(node.getRank()));
 	                taxonClassification.add(nodeInfo);
 	            }
 	            catch(NullPointerException e){
@@ -170,6 +169,39 @@ public class PropertyMapHelper {
 
 	    data.put("computedDistribution",computedDistribution);
 	    data.put("distributions",taxonDistributions);
+	}
+	
+	
+
+	/**
+	 * Returns the range of rank label we want to return for a specific rank.
+	 * This is used to avoid returning the whole hierarchy for a taxon.
+	 * @param rankValue
+	 * @return
+	 */
+	public static String[] getRankLabelRange(int rankValue){
+		switch(rankValue){
+			case Rank.CLASS :
+			case Rank.SUBCLASS :
+			case Rank.SUPERORDER : return new String[]{Rank.SUBCLASS_LABEL, Rank.SUPERORDER_LABEL, Rank.ORDER_LABEL};
+			
+			case Rank.ORDER : return new String[]{Rank.FAMILY_LABEL};
+			
+			case Rank.FAMILY :
+			case Rank.SUBFAMILY:
+			case Rank.TRIBE:
+				
+			case Rank.SUBTRIBE: return new String[]{Rank.SUBFAMILY_LABEL,Rank.TRIBE_LABEL,Rank.SUBTRIBE_LABEL,Rank.GENUS_LABEL};
+			case Rank.GENUS : 
+			case Rank.SUBGENUS:
+			case Rank.SECTION:
+			case Rank.SUBSECTION:
+			case Rank.SERIES : return new String[]{Rank.SUBGENUS_LABEL,Rank.SECTION_LABEL,Rank.SUBSECTION_LABEL,Rank.SPECIES_LABEL};
+				
+			case Rank.SPECIES:
+			case Rank.SUBSPECIES:return new String[]{Rank.SUBSPECIES_LABEL,Rank.VARIETY_LABEL};
+		}
+		return null;
 	}
 
 }

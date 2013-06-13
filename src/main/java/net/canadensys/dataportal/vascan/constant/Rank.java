@@ -44,4 +44,56 @@ public class Rank {
 	public static final String SUBSPECIES_LABEL = "subspecies";
 	public static final String VARIETY_LABEL = "variety";
 	public static final String UNDEFINED_LABEL = "undefined";
+	
+	public static int getIdFromLabel(String label){
+		if(CLASS_LABEL.equalsIgnoreCase(label)){
+			return CLASS;
+		}
+		else if(SUBCLASS_LABEL.equalsIgnoreCase(label)){
+			return SUBCLASS;
+		}
+		else if(SUPERORDER_LABEL.equalsIgnoreCase(label)){
+			return SUPERORDER;
+		}
+		else if(ORDER_LABEL.equalsIgnoreCase(label)){
+			return ORDER;
+		}
+		else if(FAMILY_LABEL.equalsIgnoreCase(label)){
+			return FAMILY;
+		}
+		else if(SUBFAMILY_LABEL.equalsIgnoreCase(label)){
+			return SUBFAMILY;
+		}
+		else if(TRIBE_LABEL.equalsIgnoreCase(label)){
+			return TRIBE;
+		}
+		else if(SUBTRIBE_LABEL.equalsIgnoreCase(label)){
+			return SUBTRIBE;
+		}
+		else if(GENUS_LABEL.equalsIgnoreCase(label)){
+			return GENUS;
+		}
+		else if(SUBGENUS_LABEL.equalsIgnoreCase(label)){
+			return SUBGENUS;
+		}
+		else if(SECTION_LABEL.equalsIgnoreCase(label)){
+			return SECTION;
+		}
+		else if(SUBSECTION_LABEL.equalsIgnoreCase(label)){
+			return SUBSECTION;
+		}
+		else if(SERIES_LABEL.equalsIgnoreCase(label)){
+			return SERIES;
+		}
+		else if(SPECIES_LABEL.equalsIgnoreCase(label)){
+			return SPECIES;
+		}
+		else if(SUBSPECIES_LABEL.equalsIgnoreCase(label)){
+			return SUBSPECIES;
+		}
+		else if(VARIETY_LABEL.equalsIgnoreCase(label)){
+			return VARIETY;
+		}
+		return UNDEFINED;
+	}
 }

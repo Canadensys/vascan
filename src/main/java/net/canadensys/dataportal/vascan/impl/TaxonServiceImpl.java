@@ -1,6 +1,5 @@
 package net.canadensys.dataportal.vascan.impl;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +10,10 @@ import net.canadensys.dataportal.vascan.TaxonService;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
-import net.canadensys.dataportal.vascan.image.DistributionImageGenerator;
+import net.canadensys.dataportal.vascan.dao.impl.HibernateTaxonomyDAO;
 import net.canadensys.dataportal.vascan.image.ImageGeneratorConfig;
 import net.canadensys.dataportal.vascan.manager.TaxonManager;
+import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 
 import org.apache.log4j.Logger;
@@ -95,8 +95,13 @@ public class TaxonServiceImpl implements TaxonService {
 	        }
 	    }
 	    data.put("parents",taxonParents);
-	    		
-		propertyMapHelper.fillTaxonClassification(taxonManager.getClassification(taxon), data);
+	    
+        //Generate classification
+        List<TaxonLookupModel> classificationList = new ArrayList<TaxonLookupModel>();
+        taxonManager.getParentClassification(taxon,classificationList);
+        classificationList.add(taxon.getLookup());
+        classificationList.addAll(taxonomyDAO.getAcceptedChildrenIdListFromNestedSets(taxon.getId(), PropertyMapHelper.getRankLabelRange(taxon.getRank().getId())));
+        propertyMapHelper.fillTaxonClassification(classificationList, data);
 		
 		propertyMapHelper.fillVernacularNames(taxon.getVernacularnames(), data);
 
@@ -166,6 +171,19 @@ public class TaxonServiceImpl implements TaxonService {
 	@Override
 	public TaxonModel loadTaxonModel(Integer id){
 		return taxonDAO.loadTaxon(id);
+	}
+	
+	@Transactional
+	public boolean generateNestedSets(){
+		
+		//make sure we do not overide it
+		TaxonLookupModel tlm = taxonDAO.loadTaxonLookup(73);
+		if(tlm.get_left() != null || tlm.get_right() != null){
+			return false;
+		}
+		
+		((HibernateTaxonomyDAO)taxonomyDAO).buildNestedSets(73);
+		return true;
 	}
 	
 	

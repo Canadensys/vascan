@@ -2,9 +2,7 @@ package net.canadensys.dataportal.vascan;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.matchers.JUnitMatchers.containsString;
 
-import java.util.regex.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,15 +78,15 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		
 //		assertTrue(m.find());
 //		assertTrue(Integer.parseInt(m.group(1)) > 1000);
+		
+		//This is how you do this, use 1 not 1000 since the embedded database will not have 1000 carex
+		assertTrue(Integer.parseInt(searchHeader.getText().replaceAll("[^\\d.]", "")) > 1);
 
 		assertEquals("Carex Linnaeus", searchResults.findElement(By.cssSelector("li:first-child")).getText());
 		
 		//test nothing found
 		browser.get(TESTING_SERVER_URL + "search/?q=blablabla");
-		
-		//bind the WebElement to the current page
-		PageFactory.initElements(browser, this);
-		
+				
 		assertEquals("0 Results", contentDiv.findElement(By.cssSelector("h2")).getText());
 		assertEquals("Nothing found.", searchResults.getText());
 	}

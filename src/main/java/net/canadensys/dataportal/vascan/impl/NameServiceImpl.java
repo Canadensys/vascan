@@ -9,9 +9,11 @@ import net.canadensys.dataportal.vascan.NameService;
 import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
+import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
 import net.canadensys.dataportal.vascan.dao.VernacularNameDAO;
 import net.canadensys.dataportal.vascan.manager.TaxonManager;
 import net.canadensys.dataportal.vascan.model.HabitModel;
+import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 
@@ -28,6 +30,9 @@ public class NameServiceImpl implements NameService{
 	
 	@Autowired
 	private TaxonDAO taxonDAO;
+	
+	@Autowired
+	private TaxonomyDAO taxonomyDAO;
 	
 	private TaxonManager taxonManager= new TaxonManager();
 	
@@ -129,12 +134,6 @@ public class NameServiceImpl implements NameService{
 	    
 	    // reference link
 	    String link = "";
-	     
-	    // is taxon is an accepted concept, verify if it's distribution image exists
-	    // if not, create the svg & png file. Never create a distribution image file
-	    // for a synonym
-	    String png = "";
-	    String svg = "";
 	    
 	    // data hashmap that will be passed on to root document for display in .ftl
 	    Map<String,Object> data = new HashMap<String,Object>();
@@ -345,7 +344,13 @@ public class NameServiceImpl implements NameService{
 	            }
 	        }
 	        
-	        propertyMapHelper.fillTaxonClassification(taxonManager.getClassification(taxon), data);
+	        //Generate classification
+	        List<TaxonLookupModel> classificationList = new ArrayList<TaxonLookupModel>();
+	        taxonManager.getParentClassification(taxon,classificationList);
+	        classificationList.add(taxon.getLookup());
+	        classificationList.addAll(taxonomyDAO.getAcceptedChildrenIdListFromNestedSets(taxon.getId(), PropertyMapHelper.getRankLabelRange(taxon.getRank().getId())));
+	        propertyMapHelper.fillTaxonClassification(classificationList, data);
+	        
 	        
 	        propertyMapHelper.fillVernacularNames(taxon.getVernacularnames(), data);
 	        
@@ -367,12 +372,7 @@ public class NameServiceImpl implements NameService{
 	                    //drop on error
 	                }
 	            }
-	        }
-	        
-	        //if(!isSynonym){
-		        svg = "";//ApplicationConfig.getGeneratedImageURL() + ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + ApplicationConfig.SVG_FILE_EXT;
-		        png = "";//ApplicationConfig.getGeneratedImageURL() + ApplicationConfig.SVG_FILE_PREFIX + taxon.getId() + ApplicationConfig.PNG_FILE_EXT;
-	        //}           
+	        }         
 	    }
 	    
 	    data.put("taxonId",id);
@@ -409,13 +409,6 @@ public class NameServiceImpl implements NameService{
 	    data.put("link",link);
 	    data.put("rank",rank);
 	    data.put("rankId",rankid);
-	    data.put("png",png);
-	    data.put("svg",svg);
-	    //data.put("pngDownload",png+ApplicationConfig.DOWNLOAD_GENERATED_IMG_URL);
-	    //data.put("svgDownload",svg+ApplicationConfig.DOWNLOAD_GENERATED_IMG_URL);
-	    //FIXME
-	    data.put("pngDownload",png);
-	    data.put("svgDownload",svg);
 	    
 	    data.put("disambiguationVernaculars",disambiguationVernaculars);
 	    data.put("disambiguationTaxons",disambiguationTaxons);
@@ -435,36 +428,5 @@ public class NameServiceImpl implements NameService{
 	    extra.put("isSynonym",isSynonym);
 	    
 	    return data;
-	}
-	
-
-	/**
-	 * WIP, for future use
-	 * @param rankValue
-	 * @return
-	 */
-	public static String[] getNextRankLabel(int rankValue){
-		switch(rankValue){
-			case Rank.CLASS :
-			case Rank.SUBCLASS :
-			case Rank.SUPERORDER : return new String[]{Rank.SUBCLASS_LABEL, Rank.SUPERORDER_LABEL, Rank.ORDER_LABEL};
-			
-			case Rank.ORDER : return new String[]{Rank.FAMILY_LABEL};
-			
-			case Rank.FAMILY :
-			case Rank.SUBFAMILY:
-			case Rank.TRIBE:
-				
-			case Rank.SUBTRIBE: return new String[]{Rank.SUBFAMILY_LABEL,Rank.TRIBE_LABEL,Rank.SUBTRIBE_LABEL,Rank.GENUS_LABEL};
-			case Rank.GENUS : 
-			case Rank.SUBGENUS:
-			case Rank.SECTION:
-			case Rank.SUBSECTION:
-			case Rank.SERIES : return new String[]{Rank.SUBGENUS_LABEL,Rank.SECTION_LABEL,Rank.SUBSECTION_LABEL,Rank.SPECIES_LABEL};
-				
-			case Rank.SPECIES:
-			case Rank.SUBSPECIES:return new String[]{Rank.SUBSPECIES_LABEL,Rank.VARIETY_LABEL};
-		}
-		return null;
 	}
 }

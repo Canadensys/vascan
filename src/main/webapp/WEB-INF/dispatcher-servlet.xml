@@ -43,8 +43,6 @@
 	<mvc:resources mapping="/download/**" location="/download/" />
 	<mvc:resources mapping="/error.html" location="/error.html" />
 	
-
-	
 	<!-- Locale/language configuration -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
@@ -86,9 +84,11 @@
           <entry key="URLHelper" value-ref="URLHelper"/>
         </map>
 		</property>
+		<!--http://freemarker.sourceforge.net/docs/ref_directive_setting.html-->
 		<property name="freemarkerSettings">
 			<props>
 				<prop key="number_format">computer</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
 			</props>
 		</property>
 	</bean>

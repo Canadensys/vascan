@@ -7,6 +7,7 @@ import java.util.Map;
 import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.model.DistributionModel;
+import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 
 /**
@@ -60,6 +61,23 @@ public class TaxonManager {
 			if(parent.getStatus().getId() == Status.ACCEPTED){
 				parentList.add(0,parent);
 				recursiveClassificationParent(parent,parentList);
+			}
+		}
+		return parentList;
+	}
+	
+	/**
+	 * Get all accepted parent taxa. 
+	 * @param currTaxon
+	 * @param parentList
+	 * @return
+	 */
+	public List<TaxonLookupModel> getParentClassification(TaxonModel currTaxon, List<TaxonLookupModel> parentList){
+		List<TaxonModel> parents = currTaxon.getParents();
+		for(TaxonModel parent : parents){
+			if(parent.getStatus().getId() == Status.ACCEPTED){
+				parentList.add(0,parent.getLookup());
+				getParentClassification(parent,parentList);
 			}
 		}
 		return parentList;
