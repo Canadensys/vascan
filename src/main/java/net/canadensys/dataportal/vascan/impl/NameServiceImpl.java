@@ -348,7 +348,7 @@ public class NameServiceImpl implements NameService{
 	        List<TaxonLookupModel> classificationList = new ArrayList<TaxonLookupModel>();
 	        taxonManager.getParentClassification(taxon,classificationList);
 	        classificationList.add(taxon.getLookup());
-	        classificationList.addAll(taxonomyDAO.getAcceptedChildrenIdListFromNestedSets(taxon.getId(), PropertyMapHelper.getRankLabelRange(taxon.getRank().getId())));
+	        classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId(), PropertyMapHelper.getRankLabelRange(taxon.getRank().getId())));
 	        propertyMapHelper.fillTaxonClassification(classificationList, data);
 	        
 	        
