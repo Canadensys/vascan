@@ -33,7 +33,7 @@
 	<li>F. Coursol, <a href="http://www2.ville.montreal.qc.ca/jardin/">Montréal Botanical Garden</a> - Compilation of taxonomic and distribution data</li>
 	<li>Susan Meades, <a href="http://www.northernontarioflora.ca/">Northern Ontario Plant Database</a> - Compilation of taxonomic data</li>
 	<li>Marc Favreau, <a href="http://www.btb.gc.ca/">Translation Bureau</a> - Compilation of French vernacular names</li>
-	<li>Marilyn Anions, <a href="http://www.natureserve-canada.ca/">NatureServe Canada</a> - Compilation of English vernacular names</li>
+	<li>Marilyn Anions, Botanist - Compilation of English vernacular names</li>
 </ul>
 
 <h3>Development</h3>
@@ -73,7 +73,6 @@
 <ul>
 	<li><a href="http://www.pc.gc.ca/">Parks Canada</a></li>
 	<li><a href="http://www.cbif.gc.ca/home_e.php">Canadian Biodiversity Information Facility (CBIF)</a></li>
-	<li><a href="http://www.natureserve-canada.ca/">NatureServe Canada</a></li>
 </ul>
 
 <a name="rights"></a><h2>Citation, rights and disclaimer</h2>
@@ -134,7 +133,7 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 	<li>F. Coursol, <a href="http://www2.ville.montreal.qc.ca/jardin/">Jardin botanique de Montréal</a> - Compilation des données de taxonomie et de répartition</li>
 	<li>Susan Meades, <a href="http://www.northernontarioflora.ca/">Northern Ontario Plant Database</a> - Compilation des données de taxonomie</li>
 	<li>Marc Favreau, <a href="http://www.btb.gc.ca/">Bureau de la traduction</a> - Compilation des noms vernaculaires français</li>
-	<li>Marilyn Anions, <a href="http://www.natureserve-canada.ca/">NatureServe Canada</a> - Compilation des noms vernaculaires anglais</li>
+	<li>Marilyn Anions, botanique - Compilation des noms vernaculaires anglais</li>
 </ul>
 
 <h3>Développement</h3>
@@ -174,7 +173,6 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 <ul>
 	<li><a href="http://www.pc.gc.ca/">Parcs Canada</a></li>
 	<li><a href="http://www.cbif.gc.ca/home_e.php">Système canadien d'information sur la biodiversité (CBIF)</a></li>
-	<li><a href="http://www.natureserve-canada.ca/">NatureServe Canada</a></li>
 </ul>
 
 <a name="rights"></a><h2>Citation, droits et avis de non-responsabilité</h2>

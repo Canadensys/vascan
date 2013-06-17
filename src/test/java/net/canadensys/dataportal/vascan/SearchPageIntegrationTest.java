@@ -72,12 +72,6 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		
 		//bind the WebElement to the current page
 		PageFactory.initElements(browser, this);
-
-//		Pattern p = Pattern.compile(".*\\d.*");
-//		Matcher m = p.matcher(searchHeader.getText().replaceAll(",", ""));
-		
-//		assertTrue(m.find());
-//		assertTrue(Integer.parseInt(m.group(1)) > 1000);
 		
 		//This is how you do this, use 1 not 1000 since the embedded database will not have 1000 carex
 		assertTrue(Integer.parseInt(searchHeader.getText().replaceAll("[^\\d.]", "")) > 1);
