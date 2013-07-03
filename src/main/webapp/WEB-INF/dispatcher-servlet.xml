@@ -60,8 +60,11 @@
 	    <property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 	
-	<bean id="imageGeneratorConfig" class="net.canadensys.dataportal.vascan.image.ImageGeneratorConfig">
+	<bean id="imageGeneratorConfig" class="net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig">
 		<property name="imageFolder" value="${generatedContent.imageFolder}" />
+		<property name="generatedFilesFolder" value="${generatedContent.generatedFilesFolder}" />
+		<property name="taxonUrl" value="${generatedContent.taxonUrl}" />
+		<property name="publicDownloadUrl" value="${generatedContent.publicDownloadUrl}" />
 	</bean>
 	
 	<!-- Wrap the URLHelper -->

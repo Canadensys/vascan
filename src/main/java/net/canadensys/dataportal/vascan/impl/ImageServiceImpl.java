@@ -6,8 +6,8 @@ import java.util.List;
 import net.canadensys.dataportal.vascan.ImageService;
 import net.canadensys.dataportal.vascan.dao.DistributionDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
-import net.canadensys.dataportal.vascan.image.DistributionImageGenerator;
-import net.canadensys.dataportal.vascan.image.ImageGeneratorConfig;
+import net.canadensys.dataportal.vascan.generatedcontent.DistributionImageGenerator;
+import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.model.DistributionModel;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ImageServiceImpl implements ImageService {
 	
 	@Autowired
-	private ImageGeneratorConfig config;
+	private GeneratedContentConfig config;
 	
 	@Autowired
 	private DistributionImageGenerator distributionImageGenerator;

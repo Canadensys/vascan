@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.canadensys.dataportal.vascan.NameService;
-import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;

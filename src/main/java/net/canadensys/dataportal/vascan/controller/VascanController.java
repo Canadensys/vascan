@@ -126,7 +126,6 @@ public class VascanController {
 	public ModelAndView handleChecklist(HttpServletRequest request){
 		
 		Map<String,Object> model = new HashMap<String,Object>();
-		request.getParameterMap();
 		
 		model.put("data", checklistService.retrieveChecklistData(request.getParameterMap()));
 		model.put("pageQuery",StringUtils.defaultString(request.getQueryString()));

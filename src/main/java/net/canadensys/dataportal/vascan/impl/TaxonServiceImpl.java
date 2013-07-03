@@ -11,7 +11,7 @@ import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
 import net.canadensys.dataportal.vascan.dao.impl.HibernateTaxonomyDAO;
-import net.canadensys.dataportal.vascan.image.ImageGeneratorConfig;
+import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.manager.TaxonManager;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
@@ -45,7 +45,7 @@ public class TaxonServiceImpl implements TaxonService {
 	private PropertyMapHelper propertyMapHelper;
 	
 	@Autowired
-	private ImageGeneratorConfig config;
+	private GeneratedContentConfig config;
 	
 	@Transactional(readOnly=true)
 	@Override

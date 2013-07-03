@@ -1,4 +1,4 @@
-package net.canadensys.dataportal.vascan.image;
+package net.canadensys.dataportal.vascan.generatedcontent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,7 +33,7 @@ public class DistributionImageGenerator {
 	private static final Logger LOGGER = Logger.getLogger(DistributionImageGenerator.class);
 	
 	@Autowired
-	private ImageGeneratorConfig config;
+	private GeneratedContentConfig config;
 	
 	public static final String SVG_FILE_EXT = ".svg";
 	public static final String PNG_FILE_EXT = ".png";
