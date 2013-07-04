@@ -99,10 +99,21 @@ public class GeneratedContentController implements MessageSourceAware {
 	}
 	
 	@RequestMapping(value="/generate",method={RequestMethod.GET})
-	public void handleGenerateFile(@ModelAttribute("filename") String filename, @RequestParam String format, HttpServletRequest request, HttpServletResponse response){	    
-		downloadService.generateTextFile(request.getParameterMap(), filename, new MessageSourceResourceBundle(messageSource,RequestContextUtils.getLocale(request)));
+	public void handleGenerateFile(@ModelAttribute("filename") String filename, @RequestParam String format, HttpServletRequest request, HttpServletResponse response){
+		boolean success = false;
+		if("txt".equals(format)){
+			success=downloadService.generateTextFile(request.getParameterMap(), filename, new MessageSourceResourceBundle(messageSource,RequestContextUtils.getLocale(request)));
+		}
+		else{
+			success=downloadService.generateDwcAFile(request.getParameterMap(), filename, new MessageSourceResourceBundle(messageSource,RequestContextUtils.getLocale(request)));
+		}
 		//maybe we should send a JSON response
-		response.setStatus(HttpServletResponse.SC_OK);
+		if(success){
+			response.setStatus(HttpServletResponse.SC_OK);
+		}
+		else{
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
 	}
 	
     @Override

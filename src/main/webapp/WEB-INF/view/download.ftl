@@ -1,6 +1,5 @@
 <#-- Copyright 2010-2013 Canadensys -->
 <#include "inc/common.ftl">
-
 <#assign page={"title": rc.getMessage("download_title1") + " - " + rc.getMessage("site_title"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")], "javaScriptIncludeList": 
 ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/vascan.js"),rc.getContextUrl("/js/vascan/download.js")]}>
 
@@ -10,7 +9,7 @@
 <#include "inc/menu.ftl">
 
 <div class="busy">
-	<h1>${rc.getMessage("download_title2")} <img src="images/ajax-loader.gif"/></h1>
+	<h1>${rc.getMessage("download_title2")} <img src="${rc.getContextUrl('/images/ajax-loader.gif')}"/></h1>
 	<p>${rc.getMessage("download_msg1")}</p>
 	<#if filename?has_content == true>
 	<blockquote><a href="${downloadURL}" onclick="_gaq.push(['_trackEvent', '<#if format == "txt">Text<#else>Archive</#if>', 'Pre-Download', 'Checklist builder']);">${filename}</a></blockquote>

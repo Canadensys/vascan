@@ -31,6 +31,9 @@
 	
 	<context:component-scan base-package="net.canadensys.dataportal.vascan"/>
 	
+	<task:scheduler id="taskScheduler" pool-size="1"/>
+    <task:annotation-driven scheduler="taskScheduler" />
+	
 	<!-- use to return JSON -->
 	<mvc:annotation-driven/>
 	
@@ -40,7 +43,6 @@
 	<mvc:resources mapping="/js/**" location="/js/" />
 	<mvc:resources mapping="/styles/**" location="/styles/" />
 	<mvc:resources mapping="/images/**" location="/images/" />
-	<mvc:resources mapping="/download/**" location="/download/" />
 	<mvc:resources mapping="/error.html" location="/error.html" />
 	
 	<!-- Locale/language configuration -->
@@ -85,6 +87,8 @@
           <entry key="gaSiteVerification" value="${googleanalytics.siteVerification:}"/>
           <entry key="gaAccount" value="${googleanalytics.account:}"/>
           <entry key="URLHelper" value-ref="URLHelper"/>
+          <entry key="userMessageKey" value="beta_version_message"/>
+          <entry key="footerAdditionalInfoKey" value="footer_last_publication_date"/>
         </map>
 		</property>
 		<!--http://freemarker.sourceforge.net/docs/ref_directive_setting.html-->

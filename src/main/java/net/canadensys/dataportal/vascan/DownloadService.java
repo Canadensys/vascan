@@ -33,6 +33,13 @@ public interface DownloadService {
 	 */
 	public boolean generateTextFile(Map<String,String[]> params, String filename, ResourceBundle bundle);
 	
-	public void downloadDwcAFile();
+	/**
+	 * Generate a DarwinCore archive file for the provided params
+	 * @param params from the original request
+	 * @param filename unique filename
+	 * @param bundle ResourceBundle used to fill the headers row
+	 * @return
+	 */
+	public boolean generateDwcAFile(Map<String,String[]> params, String filename, ResourceBundle bundle);
 
 }
