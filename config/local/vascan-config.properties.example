@@ -1,7 +1,11 @@
 googleanalytics.siteVerification=A
 googleanalytics.account=B
 
+#this publicDownloadUrl will not work locally unless your setup something with Apache
+generatedContent.publicDownloadUrl=http://localhost:9966/vascan/download/
 generatedContent.imageFolder=/tmp/vascan/
+generatedContent.generatedFilesFolder=/tmp/vascan/
+generatedContent.taxonUrl=http://data.canadensys.net/taxon/
 
 database.driver=com.mysql.jdbc.Driver
 database.url=jdbc:mysql://127.0.0.1:3306/vascan?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8
