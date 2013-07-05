@@ -39,9 +39,17 @@
 	</#if>
 	<#list results as result>
 		<#if result.type = "taxon">
-			<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a></li>
-		<#elseif result.type = "vernacular">
-			<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a></li>
+			<#if result.status = "accepted">
+				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a> ${rc.getMessage("taxon_accepted_msg_noref",[result.rankname])}</li>
+			<#elseif result.status = "synonym">
+				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a> ${rc.getMessage("taxon_synonym_msg_noref")} <a href="${getI18nContextUrl('/taxon/'+result.parentid)}">${result.parentnamehtml}</a></li>
+			</#if>
+		<#elseif result.type = "vernacular"> 
+			<#if result.status = "accepted">
+				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a> ${rc.getMessage("vernacular_accepted_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></li>
+			<#elseif result.status = "synonym">
+				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a> ${rc.getMessage("vernacular_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></li>
+			</#if>
 		</#if>
 	</#list>
 	

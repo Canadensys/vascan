@@ -166,15 +166,19 @@ public class VascanController {
 		    search.put("total",nameConceptModelList.getTotal_rows());
 		    List<Map<String,String>> searchResults = new ArrayList<Map<String,String>>();
 		    Map<String,String> searchRow = null;
+		    //TODO use objects directly instead of map
 		    for(NameConceptModelIF currNameConceptModel : nameConceptModelList.getRows()){
 		    	if(currNameConceptModel.getClass().equals(NameConceptTaxonModel.class)){
 		    		searchRow = new HashMap<String,String>();
 		    		searchRow.put("type","taxon");
 		    		searchRow.put("name", currNameConceptModel.getName());
-		    		searchRow.put("id", Integer.toString(currNameConceptModel.getTaxonId()));
+		    		searchRow.put("id", currNameConceptModel.getTaxonId().toString());
 		    		searchRow.put("status", currNameConceptModel.getStatus());
 		    		searchRow.put("namehtml",((NameConceptTaxonModel)currNameConceptModel).getNamehtml());
 		    		searchRow.put("namehtmlauthor",((NameConceptTaxonModel)currNameConceptModel).getNamehtmlauthor());
+		    		searchRow.put("rankname",((NameConceptTaxonModel)currNameConceptModel).getRankname());
+		    		searchRow.put("parentid",((NameConceptTaxonModel)currNameConceptModel).getParentid().toString());
+		    		searchRow.put("parentnamehtml",((NameConceptTaxonModel)currNameConceptModel).getParentnamehtml());
 		    		searchResult.add(searchRow);
 		    	}
 		    	else if(currNameConceptModel.getClass().equals(NameConceptVernacularNameModel.class)){
@@ -184,6 +188,8 @@ public class VascanController {
 		    		searchRow.put("id", Integer.toString(((NameConceptVernacularNameModel)currNameConceptModel).getId()));
 		    		searchRow.put("status", currNameConceptModel.getStatus());
 		    		searchRow.put("lang",((NameConceptVernacularNameModel)currNameConceptModel).getLang());
+		    		searchRow.put("taxonid",currNameConceptModel.getTaxonId().toString());
+		    		searchRow.put("taxonnamehtml",((NameConceptVernacularNameModel)currNameConceptModel).getTaxonnamehtml());
 		    		searchResult.add(searchRow);
 		    	}
 		    	else{
