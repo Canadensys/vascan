@@ -115,7 +115,18 @@ tr.selected { font-weight: bold; }
 }
 
 #search_list li {
-  margin:1em 0;
+  margin:1em 0 1.5em;
+}
+
+#search_list li span {
+  display:block;
+  margin-left:1em;
+  font-size:0.9em;
+  color:#666;
+}
+
+#search_list li span a, #search_list li span a:hover {
+  color:#666;
 }
 
 /* Pagination */

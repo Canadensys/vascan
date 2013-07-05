@@ -40,15 +40,19 @@
 	<#list results as result>
 		<#if result.type = "taxon">
 			<#if result.status = "accepted">
-				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a> ${rc.getMessage("taxon_accepted_msg_noref",[result.rankname])}</li>
+				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a>
+				<span>${rc.getMessage("taxon_accepted_msg_noref",[result.rankname])}</span></li>
 			<#elseif result.status = "synonym">
-				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a> ${rc.getMessage("taxon_synonym_msg_noref")} <a href="${getI18nContextUrl('/taxon/'+result.parentid)}">${result.parentnamehtml}</a></li>
+				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a>
+				<span>${rc.getMessage("taxon_synonym_msg_noref")} <a href="${getI18nContextUrl('/taxon/'+result.parentid)}">${result.parentnamehtml}</a></span></li>
 			</#if>
 		<#elseif result.type = "vernacular"> 
 			<#if result.status = "accepted">
-				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a> ${rc.getMessage("vernacular_accepted_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></li>
+				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a>
+				<span>${rc.getMessage("vernacular_accepted_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></span></li>
 			<#elseif result.status = "synonym">
-				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a> ${rc.getMessage("vernacular_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></li>
+				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a>
+				<span>${rc.getMessage("vernacular_synonym_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></span></li>
 			</#if>
 		</#if>
 	</#list>
