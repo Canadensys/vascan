@@ -10,13 +10,13 @@ VASCAN.taxon = (function(){
 	var _private = {
 		init: function(){
 			$('.reference').tooltip({showURL: false});
-			$('ul.buttons a:first').click(function(e) {
+			$('ul.buttons a:first').on('click', function(e) {
 				e.preventDefault();
 				$('#map_result').show(350);
 				$('#list_result').hide(350);
 				$('ul.buttons a').toggleClass('selected');
 			});
-			$('ul.buttons a:last').click(function(e) {
+			$('ul.buttons a:last').on('click', function(e) {
 				e.preventDefault();
 				$('#map_result').hide(350);
 				$('#list_result').show(350);
