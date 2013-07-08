@@ -12,5 +12,6 @@
 build/*
 build.gradle
 config/local/vascan-config.properties
+gradle.properties
 
 tomcat.log
