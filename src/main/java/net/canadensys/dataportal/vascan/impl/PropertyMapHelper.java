@@ -18,6 +18,11 @@ import org.apache.commons.collections.iterators.FilterIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * The PropertyMapHelper is used to transform a List of models into a property Map.
+ * @author canadensys
+ *
+ */
 @Component
 public class PropertyMapHelper {
 	

@@ -303,35 +303,23 @@ public class ChecklistServiceImpl implements ChecklistService{
 		List<Map<String,Object>> results = new ArrayList<Map<String,Object>>();
 		List<Object[]> taxons = taxonDAO.getAcceptedTaxon(Rank.GENUS);
 		if(taxons != null){
+			HashMap<String,Object> t;
 			for(Object[] taxon : taxons){
 				int id = (Integer)taxon[0];
 				String calname = (String)taxon[1];
 				String rank = (String)taxon[2];
-				String selected = "";
-				HashMap<String,Object> t = new HashMap<String,Object>();
+				t = new HashMap<String,Object>();
 				
-				if(id == selectedTaxonId)
-					selected = "selected=\"selected\"";
-				t.put("selected", selected);
+				if(id == selectedTaxonId){
+					t.put("selected", "selected=\"selected\"");
+				}
 				t.put("id",id);
 				t.put("calname", calname);
 				t.put("rank", rank);
 				results.add(t);
 			}
+			taxons.clear();
 		}
 		return results;
 	}
-	
-//	private static boolean checkHabitusClause(String habitus){
-//		String clause = "1";
-//		ArrayList<String> validSqlHabitus = new ArrayList<String>();
-//		validSqlHabitus.add(ApplicationConfig.LABEL_HABITUS_HERB);
-//		validSqlHabitus.add(ApplicationConfig.LABEL_HABITUS_TREE);
-//		validSqlHabitus.add(ApplicationConfig.LABEL_HABITUS_SHRUB);
-//		validSqlHabitus.add(ApplicationConfig.LABEL_HABITUS_VINE);
-//		if(validSqlHabitus.contains(habitus))
-//			clause = "lookup.calhabit like '%" + habitus + "%'";
-//		return clause;
-//	}
-
 }

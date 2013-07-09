@@ -31,7 +31,7 @@
 			<select name="taxon" id="search_term">
 				<option name="0" value="0">- ${rc.getMessage("checklist_msg9")} -</option>
 			<#list data.taxons as taxon>
-				<option ${taxon.selected} name="${taxon.id?c}" value="${taxon.id?c}">${taxon.calname} (${rc.getMessage("rank_"+taxon.rank?lower_case)})</option>
+				<option ${taxon.selected!""} name="${taxon.id?c}" value="${taxon.id?c}">${taxon.calname} (${rc.getMessage("rank_"+taxon.rank?lower_case)})</option>
 			</#list>
 			</select>
 		<p>

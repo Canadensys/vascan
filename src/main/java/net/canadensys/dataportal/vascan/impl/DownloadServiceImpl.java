@@ -277,8 +277,14 @@ public class DownloadServiceImpl implements DownloadService {
                 csv.append(_bundle.getObject("distribution_"+currTlm.getGL()));
             }
         }
-    
+	    
 	    File file = new File(destinationFilePath);
+	    
+        //make sure the destination folder exists
+        if(!file.getParentFile().exists()){
+        	LOGGER.info("Creating folder structure : " + file.getParentFile().getAbsolutePath());
+        	file.getParentFile().mkdirs();
+        }
 	    BufferedWriter bw = null;
 	    try{
 		    FileOutputStream fos = new FileOutputStream(file);

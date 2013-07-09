@@ -5,6 +5,11 @@ import java.util.List;
 import net.canadensys.dataportal.vascan.model.NameConceptModelIF;
 import net.canadensys.query.LimitedResult;
 
+/**
+ * Vascan Service layer interface to search Vascan data.
+ * @author canadensys
+ *
+ */
 public interface SearchService {
 	
 	public LimitedResult<List<NameConceptModelIF>> searchName(String name);
