@@ -115,7 +115,8 @@ tr.selected { font-weight: bold; }
 }
 
 #search_list li {
-  margin:1em 0 1.5em;
+  margin:1em 0 1em;
+  line-height:1.25em;
 }
 
 #search_list li span {
@@ -260,3 +261,6 @@ tr.selected { font-weight: bold; }
 #checklist_ranks ul.all { width: 10%; }
 #checklist_ranks ul li:first-child { border-bottom: 1px solid white; }
 #checklist_ranks ul li { padding: 3px 9px; }
+
+#custom_results_table th.stateprovince {padding-left:5px;}
+#custom_results_table td.sprite {padding-left:30px;}

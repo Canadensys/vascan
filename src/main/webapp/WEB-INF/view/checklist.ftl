@@ -164,22 +164,22 @@
 			<th>${rc.getMessage("rank")}</th>
 			<th>${rc.getMessage("scientific_name")}</th>
 			<th>${rc.getMessage("habitus")}</th>
-			<th class="align_center" title="${rc.getMessage("province_BC")}">${rc.getMessage("province_BC_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_AB")}">${rc.getMessage("province_AB_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_SK")}">${rc.getMessage("province_SK_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_MB")}">${rc.getMessage("province_MB_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_ON")}">${rc.getMessage("province_ON_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_QC")}">${rc.getMessage("province_QC_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_NB")}">${rc.getMessage("province_NB_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_PE")}">${rc.getMessage("province_PE_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_NS")}">${rc.getMessage("province_NS_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_NL_N")}">${rc.getMessage("province_NL_N_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_NL_L")}">${rc.getMessage("province_NL_L_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_PM")}">${rc.getMessage("province_PM_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_YT")}">${rc.getMessage("province_YT_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_NT")}">${rc.getMessage("province_NT_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_NU")}">${rc.getMessage("province_NU_code")}</th>
-			<th class="align_center" title="${rc.getMessage("province_GL")}">${rc.getMessage("province_GL_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_BC")}">${rc.getMessage("province_BC_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_AB")}">${rc.getMessage("province_AB_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_SK")}">${rc.getMessage("province_SK_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_MB")}">${rc.getMessage("province_MB_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_ON")}">${rc.getMessage("province_ON_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_QC")}">${rc.getMessage("province_QC_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_NB")}">${rc.getMessage("province_NB_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_PE")}">${rc.getMessage("province_PE_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_NS")}">${rc.getMessage("province_NS_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_NL_N")}">${rc.getMessage("province_NL_N_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_NL_L")}">${rc.getMessage("province_NL_L_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_PM")}">${rc.getMessage("province_PM_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_YT")}">${rc.getMessage("province_YT_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_NT")}">${rc.getMessage("province_NT_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_NU")}">${rc.getMessage("province_NU_code")}</th>
+			<th class="stateprovince" title="${rc.getMessage("province_GL")}">${rc.getMessage("province_GL_code")}</th>
 		</tr>
 	</thead>
 	

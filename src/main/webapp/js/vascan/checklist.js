@@ -23,10 +23,10 @@ VASCAN.checklist = (function(){
 		toggle_display_criteria: function() {
 			var self = this;
 
-			$("#selection_button").click(function() {
+			$("#selection_button").on('click', function() {
 				self.show_criteria_panel("selection");
 			});
-			$('#display_button').click(function() {
+			$('#display_button').on('click', function() {
 				self.show_criteria_panel("display");
 			});
 		},
@@ -50,7 +50,7 @@ VASCAN.checklist = (function(){
 		},
 		bind_region_checkboxes: function() {
 			var self = this;
-			$('#canada').change(function() {
+			$('#canada').on('change', function() {
 				var checkboxes = $('input[type="checkbox"]:not([value="GL"],[value="PM"])', '#checklist_distribution');
 				if($(this).prop("checked")) {
 					checkboxes.prop("checked", true);
@@ -60,7 +60,7 @@ VASCAN.checklist = (function(){
 				} 
 				self.process_map();
 			});
-			$('.region').change(function() {
+			$('.region').on('change', function() {
 				var checkboxes = $('input[type="checkbox"]', $(this).closest("ul"));
 				if($(this).prop("checked")) {
 					checkboxes.prop("checked", true);
@@ -69,7 +69,7 @@ VASCAN.checklist = (function(){
 				}
 				self.process_map();
 			});
-			$('.province').change(function() {
+			$('.province').on('change', function() {
 				self.set_checked_regions(this);
 				self.process_map();
 			});
@@ -111,14 +111,14 @@ VASCAN.checklist = (function(){
 		bind_rank_checkboxes: function() {
 			$.each(["main_rank", "sub_rank"], function() {
 				var self = this;
-				$('.'+this).click(function() {
+				$('.'+this).on('click', function() {
 					if($('.'+self+':checked').length === $('.'+self).length) {
 						$('#'+self).prop("checked", true);
 					} else {
 						$('#'+self).prop("checked", false);
 					}
 				});
-				$('#'+this).click(function() {
+				$('#'+this).on('click', function() {
 					if($(this).prop("checked")) {
 						$('.'+self).prop("checked", true);
 					} else {
