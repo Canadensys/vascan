@@ -62,6 +62,19 @@ public class NamePageIntegrationTest extends AbstractIntegrationTest{
 		assertEquals("div",footerDiv.getTagName());
 	}
 	
+	/**
+	 * This test also ensure the name pathVariable is interpreted correctly
+	 */
+	@Test
+	public void testNameSynonymWarningPage(){
+		browser.get(TESTING_SERVER_URL + "name/Carex arctata var. faxoni");
+		//bind the WebElement to the current page
+		PageFactory.initElements(browser, this);
+		
+		assertEquals("warning round",contentDiv.findElement(By.cssSelector("h4")).getAttribute("class"));
+		assertEquals("div",footerDiv.getTagName());
+	}
+	
 	@After
 	public void tearDown() {
 		browser.close();

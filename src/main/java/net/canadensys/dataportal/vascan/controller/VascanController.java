@@ -23,12 +23,14 @@ import net.canadensys.query.LimitedResult;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Vascan controller.
@@ -55,6 +57,20 @@ public class VascanController {
 	
 	@Autowired
 	private SearchService searchService;
+	
+	
+	/**
+	 * Redirect the root to the search page
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public ModelAndView handleRoot(HttpServletRequest request){
+		RedirectView rv = new RedirectView("/search",true);
+		rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+		ModelAndView mv = new ModelAndView(rv);
+		return mv;
+	}
 	
 	/**
 	 * Render taxon view for a given taxonId
@@ -96,12 +112,14 @@ public class VascanController {
 	}
 	
 	/**
-	 * Render a name view for a given name string
+	 * Render a name view for a given name string.
+	 * We use regex(.+) in the PathVariable to make sure we get the whole string and not only the part before the 'extension'.
+	 * Otherwise, a name like Carex arctata var. faxoni would be truncated to Carex arctata var and ". faxoni" would be interpreted as an extension.
 	 * @param name
 	 * @param redirect
 	 * @return
 	 */
-	@RequestMapping(value={"/name/{name}"}, method={RequestMethod.GET})
+	@RequestMapping(value={"/name/{name:.+}"}, method={RequestMethod.GET})
 	public ModelAndView handleName(@PathVariable String name, @RequestParam(required=false) String redirect){
 		
 	    Map<String,Object> model = new HashMap<String,Object>();
