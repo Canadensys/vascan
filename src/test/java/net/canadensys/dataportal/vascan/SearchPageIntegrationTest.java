@@ -73,16 +73,23 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		//bind the WebElement to the current page
 		PageFactory.initElements(browser, this);
 		
-		//This is how you do this, use 1 not 1000 since the embedded database will not have 1000 carex
+		//Make sure we have at least one result
 		assertTrue(Integer.parseInt(searchHeader.getText().replaceAll("[^\\d.]", "")) > 1);
 
-		assertEquals("Carex Linnaeus", searchResults.findElement(By.cssSelector("li:first-child")).getText());
+		assertTrue(searchResults.findElement(By.cssSelector("li:first-child")).getText().startsWith("Carex Linnaeus"));
+		//make sure footer is there
+		assertEquals("div",footerDiv.getTagName());
 		
 		//test nothing found
 		browser.get(TESTING_SERVER_URL + "search/?q=blablabla");
+		//bind the WebElement to the current page
+		PageFactory.initElements(browser, this);
 				
 		assertEquals("0 Results", contentDiv.findElement(By.cssSelector("h2")).getText());
 		assertEquals("Nothing found.", searchResults.getText());
+		
+		//make sure footer is there
+		assertEquals("div",footerDiv.getTagName());
 	}
 	
 	@After
