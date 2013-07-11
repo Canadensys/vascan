@@ -14,7 +14,7 @@
 <h1>${rc.getMessage("namesearch_title1")}</h1>
 <form id="search_box" class="round custom_form" method="get">
 	<p>
-	  <input class="typeahead" type="text" name="q" id="search_term" value="${search.term?html}" placeholder="${rc.getMessage("namesearch_placeholder")}"/>
+	  <input class="typeahead" type="text" name="q" id="search_term" value="${search.term?html}" placeholder="${rc.getMessage("namesearch_placeholder")}" autofocus="autofocus" />
 	  <input type="submit" id="search_button" value="${rc.getMessage("namesearch_button1")}" />
 	</p>
 

@@ -10,6 +10,7 @@ VASCAN.search = (function(){
 	var _private = {
 		init: function(){
 			this.typeahead();
+			this.autofocus();
 		},
 		typeahead: function(){
 			$('.typeahead').typeahead([
@@ -28,6 +29,9 @@ VASCAN.search = (function(){
 		dropdown_selected: function(){
 			var lang = VASCAN.common.getParameterByName("lang"), param = (lang) ? "?lang=" + lang : "";
 			window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val())+param;
+		},
+		autofocus: function(){
+		  $('#search_term').focus();
 		}
 	};
 	return {
