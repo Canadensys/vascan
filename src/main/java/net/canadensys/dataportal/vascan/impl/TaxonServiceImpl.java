@@ -100,7 +100,14 @@ public class TaxonServiceImpl implements TaxonService {
         List<TaxonLookupModel> classificationList = new ArrayList<TaxonLookupModel>();
         taxonManager.getParentClassification(taxon,classificationList);
         classificationList.add(taxon.getLookup());
-        classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId(), PropertyMapHelper.getRankLabelRange(taxon.getRank().getId())));
+        String[] rankLabelRange = PropertyMapHelper.getRankLabelRange(taxon.getRank().getId());
+        //make sure we find a range, something like variety will not return any ranks
+        if(rankLabelRange != null){
+        	classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId(),rankLabelRange));
+        }
+        else{
+        	classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId()));
+        }
         propertyMapHelper.fillTaxonClassification(classificationList, data);
 		
 		propertyMapHelper.fillVernacularNames(taxon.getVernacularnames(), data);
