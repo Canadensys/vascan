@@ -15,3 +15,4 @@ config/local/vascan-config.properties
 gradle.properties
 
 tomcat.log
+tomcat.log.lck
