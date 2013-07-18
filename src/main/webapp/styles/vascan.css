@@ -109,6 +109,10 @@ tr.selected { font-weight: bold; }
 
 #search_box input[type=text], .tt-dropdown-menu { width: 480px; }
 
+#search_box p.inputs{height:25px;line-height:25px;}
+
+#search_button{vertical-align:middle !important;}
+
 #search_list {
   list-style-type:none;
   padding:0px;
