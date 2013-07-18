@@ -182,7 +182,7 @@ public class PropertyMapHelper {
 	 * Returns the range of rank label we want to return for a specific rank.
 	 * This is used to avoid returning the whole hierarchy for a taxon.
 	 * @param rankValue
-	 * @return
+	 * @return range of values or empty if nothing was found(e.g. variety)
 	 */
 	public static String[] getRankLabelRange(int rankValue){
 		switch(rankValue){

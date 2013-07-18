@@ -57,12 +57,12 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		WebElement searchDropdown = new WebDriverWait(browser, 10).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.tt-dropdown-menu")));
 		assertTrue(searchDropdown.getText().contains("Scientific Names"));
 		assertTrue(searchDropdown.getText().contains("Vernacular Names"));
-		assertTrue(searchDropdown.getText().contains("Carex feta"));
-		assertTrue(searchDropdown.getText().contains("carex noir"));
+		
+		assertTrue(searchDropdown.getText().contains("Carex abbreviata"));
 
-		searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(4)")).click();
+		searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(3)")).click();
 		PageFactory.initElements(browser, this);
-		assertEquals("Carex alma",contentDiv.findElement(By.cssSelector("h1")).getText());
+		assertEquals("Carex umbellata",contentDiv.findElement(By.cssSelector("h1")).getText());
 	}
 
 	@Test
