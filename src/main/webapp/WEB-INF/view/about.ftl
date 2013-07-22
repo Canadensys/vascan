@@ -133,7 +133,7 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 	<li>F. Coursol, <a href="http://www2.ville.montreal.qc.ca/jardin/">Jardin botanique de Montréal</a> - Compilation des données de taxonomie et de répartition</li>
 	<li>Susan Meades, <a href="http://www.northernontarioflora.ca/">Northern Ontario Plant Database</a> - Compilation des données de taxonomie</li>
 	<li>Marc Favreau, <a href="http://www.btb.gc.ca/">Bureau de la traduction</a> - Compilation des noms vernaculaires français</li>
-	<li>Marilyn Anions, botanique - Compilation des noms vernaculaires anglais</li>
+	<li>Marilyn Anions, botaniste - Compilation des noms vernaculaires anglais</li>
 </ul>
 
 <h3>Développement</h3>

@@ -1,5 +1,5 @@
 /****************************
-Copyright (c) 2011 Canadensys
+Copyright (c) 2013 Canadensys
 Boostrapper for modules
 
 DESIGN TEMPLATE FOR MODULES IN VASCAN

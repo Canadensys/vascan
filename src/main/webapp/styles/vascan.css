@@ -193,6 +193,8 @@ tr.selected { font-weight: bold; }
 
 /* Checklist builder */
 
+#checklist_box {min-width:300px;}
+
 #checklist_box input[type=text] { width: 340px; }
 
 #checklist_header {
