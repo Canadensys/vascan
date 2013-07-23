@@ -48,10 +48,10 @@
 			</#if>
 		<#elseif result.type = "vernacular"> 
 			<#if result.status = "accepted">
-				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a>
+				<li class="sprite"><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a>
 				<span>${rc.getMessage("vernacular_accepted_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></span></li>
 			<#elseif result.status = "synonym">
-				<li><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a>
+				<li class="sprite"><a href="${getI18nContextUrl('/vernacular/'+result.id)}">${result.name}</a>
 				<span>${rc.getMessage("vernacular_synonym_msg2",[rc.getMessage("language_"+result.lang)])} <a href="${getI18nContextUrl('/taxon/'+result.taxonid)}">${result.taxonnamehtml}</a></span></li>
 			</#if>
 		</#if>
