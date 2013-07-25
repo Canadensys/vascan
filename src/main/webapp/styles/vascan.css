@@ -22,6 +22,7 @@
 .sprite-redirect_accepted{background-position: 0 -928px; padding-left: 72px;}
 .sprite-redirect_arrow{background-position: 0 -994px; padding-left:72px;}
 .sprite-redirect_synonym{background-position: 0 -1064px; padding-left: 72px;}
+.sprite-vernacular{background-image: none;}
 
 #see_taxon { background: url("../images/button-arrow.png") top right no-repeat; }
 
@@ -130,7 +131,6 @@ tr.selected { font-weight: bold; }
 
 #search_list li:hover{
   background-color:#E7E7E7;
-  border-radius:5px;
 }
 
 #search_list li a{

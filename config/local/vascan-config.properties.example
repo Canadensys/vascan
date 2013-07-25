@@ -1,6 +1,8 @@
 googleanalytics.siteVerification=A
 googleanalytics.account=B
 
+lastPublicationDateFilePath=/tmp/toto.txt
+
 #this publicDownloadUrl will not work locally unless your setup something with Apache
 generatedContent.publicDownloadUrl=http://localhost:9966/vascan/download/
 generatedContent.imageFolder=/tmp/vascan/
