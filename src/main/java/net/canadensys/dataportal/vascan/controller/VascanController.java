@@ -1,5 +1,6 @@
 package net.canadensys.dataportal.vascan.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +21,14 @@ import net.canadensys.dataportal.vascan.model.NameConceptVernacularNameModel;
 import net.canadensys.exception.web.ResourceNotFoundException;
 import net.canadensys.query.LimitedResult;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import freemarker.template.TemplateModelException;
 
 /**
  * Vascan controller.
@@ -40,8 +48,15 @@ import org.springframework.web.servlet.view.RedirectView;
  */
 @Controller
 public class VascanController {
+	//get log4j handler
+	private static final Logger LOGGER = Logger.getLogger(VascanController.class);
 	
 	public static final String JSON_CONTENT_TYPE = "application/json";
+	
+	@Autowired
+	private ControllerConfig controllerConfig;
+	@Autowired
+	private FreeMarkerConfigurer freemarkerConfig;
 	
 	@Autowired
 	private TaxonService taxonService;
@@ -246,6 +261,23 @@ public class VascanController {
 			response.getWriter().print(responseJson.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Scheduled task to check the last publication date of Vascan.
+	 */
+	@Scheduled(fixedDelay=DateUtils.MILLIS_PER_HOUR)
+	protected void checkLastPublicationDate(){
+		try {
+			String lpd = FileUtils.readFileToString(new File(controllerConfig.getLastPublicationDateFilePath()));
+			try {
+				freemarkerConfig.getConfiguration().setSharedVariable("lastPublicationDate", lpd);
+			} catch (TemplateModelException e) {
+				LOGGER.fatal("Could not set Vascan lastPublicationDate", e);
+			}
+		} catch (IOException e) {
+			LOGGER.fatal("Could not read Vascan lastPublicationDate", e);
 		}
 	}
 
