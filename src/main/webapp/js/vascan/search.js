@@ -32,7 +32,11 @@ VASCAN.search = (function(){
       window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val())+param;
     },
     autofocus: function(){
-      $('#search_term').focus();
+      $('#search_term').focusout(function() {
+        setTimeout(function() {
+          $(this).focus().select();
+        }, 0);
+      }).focus().select();
     },
     clickable_results: function() {
       $('#search_list').on('click', 'li', function() {
