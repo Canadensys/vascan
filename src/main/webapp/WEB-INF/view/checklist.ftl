@@ -18,11 +18,11 @@
 		<p class="alignright">${rc.getMessage("checklist_msg4")}
 		<input type="hidden" name="lang" value="${rc.getLocale().getLanguage()}" />
 		<select name="habit">
-			<option <#attempt>${habit.all}<#recover></#attempt> value="all">${rc.getMessage("checklist_option5")}</option>
-			<option <#attempt>${habit.tree}<#recover></#attempt> value="tree">${rc.getMessage("habitus_tree")}</option>
-			<option <#attempt>${habit.shrub}<#recover></#attempt> value="shrub">${rc.getMessage("habitus_shrub")}</option>
-			<option <#attempt>${habit.herb}<#recover></#attempt> value="herb">${rc.getMessage("habitus_herb")}</option>
-			<option <#attempt>${habit.vine}<#recover></#attempt> value="vine">${rc.getMessage("habitus_vine")}</option>
+			<option ${data.habit.all!} value="all">${rc.getMessage("checklist_option5")}</option>
+			<option ${data.habit.tree!} value="tree">${rc.getMessage("habitus_tree")}</option>
+			<option ${data.habit.shrub!} value="shrub">${rc.getMessage("habitus_shrub")}</option>
+			<option ${data.habit.herb!} value="herb">${rc.getMessage("habitus_herb")}</option>
+			<option ${data.habit.vine!} value="vine">${rc.getMessage("habitus_vine")}</option>
 		</select>
 		</p>
 
@@ -38,43 +38,42 @@
 		
 		<p>${rc.getMessage("checklist_msg5")}
 		<select name="combination">
-			<option <#attempt>${combination.anyof}<#recover></#attempt> value="anyof">${rc.getMessage("checklist_option2")}</option>
-			<option <#attempt>${combination.allof}<#recover></#attempt> value="allof">${rc.getMessage("checklist_option1")}</option>
-			<option <#attempt>${combination.only}<#recover></#attempt> value="only">${rc.getMessage("checklist_option3")}</option>
-			<option <#attempt>${combination.only_ca}<#recover></#attempt>value="only_ca">${rc.getMessage("checklist_option4")}</option>
+			<option ${(data.combination.anyof)!} value="anyof">${rc.getMessage("checklist_option2")}</option>
+			<option ${(data.combination.allof)!} value="allof">${rc.getMessage("checklist_option1")}</option>
+			<option ${(data.combination.only)!} value="only">${rc.getMessage("checklist_option3")}</option>
+			<option ${(data.combination.only_ca)!} value="only_ca">${rc.getMessage("checklist_option4")}</option>
 		</select>
 		${rc.getMessage("checklist_msg6")}</p>
-		
 		<!-- regions -->
 		<div id="checklist_distribution">
 			<ul class="custom_list round canada">
-				<li><span>${rc.getMessage("region_canada")}</span><input <#attempt>${data.territory.CANADA}<#recover></#attempt> type="checkbox" id="canada" /></li>
+				<li><span>${rc.getMessage("region_canada")}</span><input ${data.territory.CANADA!} type="checkbox" id="canada" /></li>
 			</ul>
 			<ul class="custom_list round pacific">
-				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_pacific")}</span>${rc.getMessage("province_BC")}<input <#attempt>${data.territory.BC}<#recover></#attempt> type="checkbox" name="province" class="province" value="BC" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_pacific")}</span>${rc.getMessage("province_BC")}<input ${data.territory.BC!} type="checkbox" name="province" class="province" value="BC" /></li>
 			</ul>
 			<ul class="custom_list round prairies">
-				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_prairies")}</span>${rc.getMessage("province_AB")}<input <#attempt>${data.territory.AB}<#recover></#attempt> type="checkbox" name="province" class="province" value="AB" /></li>
-				<li><span></span>${rc.getMessage("province_SK")}<input <#attempt>${data.territory.SK}<#recover></#attempt> type="checkbox" name="province" class="province" value="SK" /></li>
-				<li><span></span>${rc.getMessage("province_MB")}<input <#attempt>${data.territory.MB}<#recover></#attempt> type="checkbox" name="province" class="province" value="MB" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_prairies")}</span>${rc.getMessage("province_AB")}<input ${data.territory.AB!} type="checkbox" name="province" class="province" value="AB" /></li>
+				<li><span></span>${rc.getMessage("province_SK")}<input ${data.territory.SK!} type="checkbox" name="province" class="province" value="SK" /></li>
+				<li><span></span>${rc.getMessage("province_MB")}<input ${data.territory.MB!} type="checkbox" name="province" class="province" value="MB" /></li>
 			</ul>
 			<ul class="custom_list round central">
-				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_central")}</span>${rc.getMessage("province_ON")}<input <#attempt>${data.territory.ON}<#recover></#attempt> type="checkbox" name="province" class="province" value="ON" /></li>
-				<li><span></span>${rc.getMessage("province_QC")}<input <#attempt>${data.territory.QC}<#recover></#attempt> type="checkbox" name="province" class="province" value="QC" /></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_central")}</span>${rc.getMessage("province_ON")}<input ${data.territory.ON!} type="checkbox" name="province" class="province" value="ON" /></li>
+				<li><span></span>${rc.getMessage("province_QC")}<input ${data.territory.QC!} type="checkbox" name="province" class="province" value="QC" /></li>
 			</ul>
 			<ul class="custom_list round atlantic">
-				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_atlantic")}</span>${rc.getMessage("province_NB")}<input <#attempt>${data.territory.NB}<#recover></#attempt> type="checkbox" name="province" class="province" value="NB" /></li>
-				<li><span></span>${rc.getMessage("province_PE")}<input <#attempt>${data.territory.PE}<#recover></#attempt> type="checkbox" name="province" class="province" value="PE" /></li>
-				<li><span></span>${rc.getMessage("province_NS")}<input <#attempt>${data.territory.NS}<#recover></#attempt> type="checkbox" name="province" class="province" value="NS" /></li>
-				<li><span></span>${rc.getMessage("province_NL_N")}<input <#attempt>${data.territory.NL_N}<#recover></#attempt> type="checkbox" name="province" class="province" value="NL_N" /></li>
-				<li><span></span>${rc.getMessage("province_NL_L")}<input <#attempt>${data.territory.NL_L}<#recover></#attempt> type="checkbox" name="province" class="province" value="NL_L" /></li>
-				<li><span></span>${rc.getMessage("province_PM")}<input <#attempt>${data.territory.PM}<#recover></#attempt> type="checkbox" name="province" class="province" value="PM"/></li>
+				<li><span><input type="checkbox" class="region"/>${rc.getMessage("region_atlantic")}</span>${rc.getMessage("province_NB")}<input ${data.territory.NB!} type="checkbox" name="province" class="province" value="NB" /></li>
+				<li><span></span>${rc.getMessage("province_PE")}<input ${data.territory.PE!} type="checkbox" name="province" class="province" value="PE" /></li>
+				<li><span></span>${rc.getMessage("province_NS")}<input ${data.territory.NS!} type="checkbox" name="province" class="province" value="NS" /></li>
+				<li><span></span>${rc.getMessage("province_NL_N")}<input ${data.territory.NL_N!} type="checkbox" name="province" class="province" value="NL_N" /></li>
+				<li><span></span>${rc.getMessage("province_NL_L")}<input ${data.territory.NL_L!} type="checkbox" name="province" class="province" value="NL_L" /></li>
+				<li><span></span>${rc.getMessage("province_PM")}<input ${data.territory.PM!} type="checkbox" name="province" class="province" value="PM"/></li>
 			</ul>
 			<ul class="custom_list round arctic">
-				<li><span><input type="checkbox" class="region">${rc.getMessage("region_arctic")}</span>${rc.getMessage("province_YT")}<input <#attempt>${data.territory.YT}<#recover></#attempt> type="checkbox" name="province" class="province" value="YT"/></li>
-				<li><span></span>${rc.getMessage("province_NT")}<input <#attempt>${data.territory.NT}<#recover></#attempt> type="checkbox" name="province" class="province" value="NT"/></li>
-				<li><span></span>${rc.getMessage("province_NU")}<input <#attempt>${data.territory.NU}<#recover></#attempt> type="checkbox" name="province" class="province" value="NU"/></li>
-				<li><span></span>${rc.getMessage("province_GL")}<input <#attempt>${data.territory.GL}<#recover></#attempt> type="checkbox" name="province" class="province" value="GL"/></li>
+				<li><span><input type="checkbox" class="region">${rc.getMessage("region_arctic")}</span>${rc.getMessage("province_YT")}<input ${data.territory.YT!} type="checkbox" name="province" class="province" value="YT"/></li>
+				<li><span></span>${rc.getMessage("province_NT")}<input ${data.territory.NT!} type="checkbox" name="province" class="province" value="NT"/></li>
+				<li><span></span>${rc.getMessage("province_NU")}<input ${data.territory.NU!} type="checkbox" name="province" class="province" value="NU"/></li>
+				<li><span></span>${rc.getMessage("province_GL")}<input ${data.territory.GL!} type="checkbox" name="province" class="province" value="GL"/></li>
 			</ul>
 		
 			<!-- map -->
@@ -96,8 +95,8 @@
 		<p>${rc.getMessage("checklist_msg10")}</p>
 		<div id="checklist_ranks">
 			<ul class="custom_list all">
-				<li><input <#attempt>${data.rank.main_rank}<#recover></#attempt>type="checkbox" id="main_rank"> ${rc.getMessage("checklist_msg16")}</li>
-				<li><input <#attempt>${data.rank.sub_rank}<#recover></#attempt>type="checkbox" id="sub_rank"> ${rc.getMessage("checklist_msg16")}</li>
+				<li><input <#attempt>${data.rank.main_rank}<#recover></#attempt> type="checkbox" id="main_rank"> ${rc.getMessage("checklist_msg16")}</li>
+				<li><input <#attempt>${data.rank.sub_rank}<#recover></#attempt> type="checkbox" id="sub_rank"> ${rc.getMessage("checklist_msg16")}</li>
 			</ul>
 			<ul class="custom_list">
 				<li><input <#attempt>${data.rank.class}<#recover></#attempt> type="checkbox" class="main_rank" name="rank" id="rank_class" value="class"/> ${rc.getMessage("rank_class")}
