@@ -63,7 +63,7 @@
 	</bean>
 	
 	<bean id="controllerConfig" class="net.canadensys.dataportal.vascan.controller.ControllerConfig">
-		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath}" />
+		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}" />
 	</bean>
 	
 	<bean id="imageGeneratorConfig" class="net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig">

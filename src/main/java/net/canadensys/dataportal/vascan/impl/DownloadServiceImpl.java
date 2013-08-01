@@ -296,7 +296,7 @@ public class DownloadServiceImpl implements DownloadService {
 	    }
 	    catch (IOException e) {
 	    	success = false;
-			e.printStackTrace();
+	    	LOGGER.fatal("Can't write Vascan TSV file", e);
 		}
 		finally{
 			if(bw != null){
