@@ -134,8 +134,8 @@
 		</p>
 		<p>${rc.getMessage("checklist_msg12")}
 		<select name="sort" id="sort">
-			<option <#attempt>${data.sort.taxonomically}<#recover></#attempt> name="taxonomically" value="taxonomically">${rc.getMessage("checklist_option6")}</option>
-			<option <#attempt>${data.sort.alphabetically}<#recover></#attempt> name="alphabetically" value="alphabetically">${rc.getMessage("checklist_option7")}</option>
+			<option ${data.sort.taxonomically!} name="taxonomically" value="taxonomically">${rc.getMessage("checklist_option6")}</option>
+			<option ${data.sort.alphabetically!} name="alphabetically" value="alphabetically">${rc.getMessage("checklist_option7")}</option>
 		</select>
 		</p>
 	</div>

@@ -11,6 +11,7 @@ import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +36,9 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    
 	    /* combination */
 	    String combination = null;
-	    if(parameters.get("combination") != null)
-	        combination = parameters.get("combination")[0];  
+	    if(parameters.get("combination") != null){
+	        combination = parameters.get("combination")[0];
+	    }
 	    
 	    /* habitus */
 	    String habit = null;
@@ -230,10 +232,9 @@ public class ChecklistServiceImpl implements ChecklistService{
 
 	    /* */  
 	    boolean searchOccured = false;
-	    int totalResults = 0;
+	    Integer totalResults = 0;
 	    List<Map<String,Object>> taxonDistributions = new ArrayList<Map<String,Object>>();
 	    if(taxon != -1){
-	    //if(combination != null && habitus != null && taxon != 0 && status != null && province != null){
 	    	searchOccured = true;
 	        int limitResultsTo = 0;
 	        totalResults = taxonDAO.countTaxonLookup(habit, taxon,combination, province, status, rank, hybrids);
@@ -278,9 +279,6 @@ public class ChecklistServiceImpl implements ChecklistService{
 	                   distributionData.put("YT",currTlm.getYT());
 	                   taxonDistributions.add(distributionData);
 	            }
-	            
-	            if(!limitResults.equals("true"))
-	                totalResults = taxonDistributions.size();
 	        }
 	    }
 	    data.put("distributions",taxonDistributions);
@@ -294,7 +292,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    data.put("territory",territoryChecked);
 	    data.put("taxons",getChecklistTaxons(taxon));
 	    data.put("isSearch",searchOccured);
-	    data.put("numResults",totalResults);
+	    data.put("numResults",ObjectUtils.defaultIfNull(totalResults,0).intValue());
 	    
 	    return data;
 	}
