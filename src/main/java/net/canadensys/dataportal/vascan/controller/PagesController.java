@@ -1,12 +1,9 @@
 package net.canadensys.dataportal.vascan.controller;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import net.canadensys.dataportal.vascan.TaxonService;
 
@@ -30,21 +27,4 @@ public class PagesController {
 		model.put("currentDate", SDF.format(Calendar.getInstance().getTime()));
 		return new ModelAndView("about", model);
 	}
-	
-	//TODO remove me after development phase
-    @RequestMapping(value="/generateNestedSets", method=RequestMethod.GET)
-    public void generateNestedSets(HttpServletResponse response) {
-    	try {
-	    	if(taxonService.generateNestedSets()){
-	    		response.getWriter().print("Nested sets generated");
-	    	}
-	    	else{
-	    		response.getWriter().print("Can NOT generate Nested sets on the current database");
-	    	}
-	    	response.flushBuffer();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    }
-
 }

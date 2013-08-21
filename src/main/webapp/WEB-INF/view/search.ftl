@@ -41,7 +41,7 @@
 		<#if result.type = "taxon">
 			<#if result.status = "accepted">
 				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a>
-				<span>${rc.getMessage("taxon_accepted_msg_noref",[result.rankname])}</span></li>
+				<span>${rc.getMessage("taxon_accepted_msg_noref",[prefixFrenchRank(rc.getMessage("rank_"+result.rankname?lower_case))?lower_case])}</span></li>
 			<#elseif result.status = "synonym">
 				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a>
 				<span>${rc.getMessage("taxon_synonym_msg_noref")} <a href="${getI18nContextUrl('/taxon/'+result.parentid)}">${result.parentnamehtml}</a></span></li>
