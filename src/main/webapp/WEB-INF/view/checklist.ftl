@@ -82,12 +82,12 @@
 		</div>
 		<p>${rc.getMessage("checklist_msg8")}</p>
 		<ul class="distribution_legend custom_list">
-			<li class="sprite sprite-native">${rc.getMessage("distribution_native")} <input <#attempt>${data.status.native}<#recover></#attempt> type="checkbox" name="status" id="native" value="native"/></li>
-			<li class="sprite sprite-introduced">${rc.getMessage("distribution_introduced")} <input <#attempt>${data.status.introduced}<#recover></#attempt> type="checkbox" name="status" id="introduced" value="introduced"/></li> 
-			<li class="sprite sprite-ephemeral">${rc.getMessage("distribution_ephemeral")} <input <#attempt>${data.status.ephemeral}<#recover></#attempt> type="checkbox" name="status" id="ephemeral" value="ephemeral"/></li>
-			<li class="sprite sprite-excluded">${rc.getMessage("distribution_excluded")} <input <#attempt>${data.status.excluded}<#recover></#attempt> type="checkbox" name="status" id="excluded" value="excluded"/></li>
-			<li class="sprite sprite-extirpated">${rc.getMessage("distribution_extirpated")} <input <#attempt>${data.status.extirpated}<#recover></#attempt> type="checkbox" name="status" id="extirpated" value="extirpated"/></li> 
-			<li class="sprite sprite-doubtful">${rc.getMessage("distribution_doubtful")} <input <#attempt>${data.status.doubtful}<#recover></#attempt> type="checkbox" name="status" id="doubtful" value="doubtful"/></li>
+			<li class="sprite sprite-native">${rc.getMessage("distribution_native")} <input ${data.status.native!} type="checkbox" name="status" id="native" value="native"/></li>
+			<li class="sprite sprite-introduced">${rc.getMessage("distribution_introduced")} <input ${data.status.introduced!} type="checkbox" name="status" id="introduced" value="introduced"/></li> 
+			<li class="sprite sprite-ephemeral">${rc.getMessage("distribution_ephemeral")} <input ${data.status.ephemeral!} type="checkbox" name="status" id="ephemeral" value="ephemeral"/></li>
+			<li class="sprite sprite-excluded">${rc.getMessage("distribution_excluded")} <input ${data.status.excluded!} type="checkbox" name="status" id="excluded" value="excluded"/></li>
+			<li class="sprite sprite-extirpated">${rc.getMessage("distribution_extirpated")} <input ${data.status.extirpated!} type="checkbox" name="status" id="extirpated" value="extirpated"/></li> 
+			<li class="sprite sprite-doubtful">${rc.getMessage("distribution_doubtful")} <input ${data.status.doubtful!} type="checkbox" name="status" id="doubtful" value="doubtful"/></li>
 		</ul>
 	</div>
 	

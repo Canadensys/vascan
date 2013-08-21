@@ -91,7 +91,7 @@
           <entry key="gaSiteVerification" value="${googleanalytics.siteVerification:}"/>
           <entry key="gaAccount" value="${googleanalytics.account:}"/>
           <entry key="URLHelper" value-ref="URLHelper"/>
-          <entry key="userMessageKey" value="beta_version_message"/>
+<!--           <entry key="userMessageKey" value="beta_version_message"/> -->
           <entry key="footerAdditionalInfoKey" value="footer_last_publication_date"/>
           <entry key="footerAdditionalInfoParamKey" value="lastPublicationDate"/>
         </map>

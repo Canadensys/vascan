@@ -16,3 +16,4 @@ gradle.properties
 
 tomcat.log
 tomcat.log.lck
+/bin
