@@ -23,6 +23,7 @@
 		<property name="locations">
 			<list>
 				<value>/WEB-INF/vascan-config.properties</value>
+				<value>/WEB-INF/version.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -62,8 +63,9 @@
 	    <property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 	
-	<bean id="controllerConfig" class="net.canadensys.dataportal.vascan.controller.ControllerConfig">
-		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}" />
+	<bean id="vascanConfig" class="net.canadensys.dataportal.vascan.config.VascanConfig">
+		<property name="currentVersion" value="${version.current:}"/>
+		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}"/>
 	</bean>
 	
 	<bean id="imageGeneratorConfig" class="net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig">
@@ -88,12 +90,17 @@
   		<property name="templateLoaderPath" value="/WEB-INF/view/"/>
   		<property name="freemarkerVariables">
         <map>
-          <entry key="gaSiteVerification" value="${googleanalytics.siteVerification:}"/>
-          <entry key="gaAccount" value="${googleanalytics.account:}"/>
-          <entry key="URLHelper" value-ref="URLHelper"/>
+        	<entry>
+        		<key><value>useMinified</value></key>
+        		<value type="java.lang.Boolean">${url.useMinified}</value>
+        	</entry>
+			<entry key="gaSiteVerification" value="${googleanalytics.siteVerification:}"/>
+			<entry key="gaAccount" value="${googleanalytics.account:}"/>
+			<entry key="URLHelper" value-ref="URLHelper"/>
 <!--           <entry key="userMessageKey" value="beta_version_message"/> -->
-          <entry key="footerAdditionalInfoKey" value="footer_last_publication_date"/>
-          <entry key="footerAdditionalInfoParamKey" value="lastPublicationDate"/>
+			<entry key="footerAdditionalInfoKey" value="footer_last_publication_date"/>
+			<entry key="footerAdditionalInfoParamKey" value="lastPublicationDate"/>
+			<entry key="currentVersion" value="${version.current:}" />
         </map>
 		</property>
 		<!--http://freemarker.sourceforge.net/docs/ref_directive_setting.html-->

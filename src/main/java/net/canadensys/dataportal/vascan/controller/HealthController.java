@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.canadensys.dataportal.vascan.config.VascanConfig;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HealthController {
+	
+	@Autowired
+	private VascanConfig vascanConfig;
 	
 	/**
 	 * Response to HEAD request with a HTTP_OK and no content, as defined by the standard.
@@ -35,6 +41,7 @@ public class HealthController {
     public void healthCheckGet(HttpServletResponse response) {
         try {
 			response.getWriter().println("OK");
+			response.getWriter().println("Version : " + vascanConfig.getCurrentVersion());
 			response.getWriter().close();
 		} catch (IOException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

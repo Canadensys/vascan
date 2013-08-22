@@ -15,6 +15,7 @@ import net.canadensys.dataportal.vascan.NameService;
 import net.canadensys.dataportal.vascan.SearchService;
 import net.canadensys.dataportal.vascan.TaxonService;
 import net.canadensys.dataportal.vascan.VernacularNameService;
+import net.canadensys.dataportal.vascan.config.VascanConfig;
 import net.canadensys.dataportal.vascan.model.NameConceptModelIF;
 import net.canadensys.dataportal.vascan.model.NameConceptTaxonModel;
 import net.canadensys.dataportal.vascan.model.NameConceptVernacularNameModel;
@@ -54,7 +55,8 @@ public class VascanController {
 	public static final String JSON_CONTENT_TYPE = "application/json";
 	
 	@Autowired
-	private ControllerConfig controllerConfig;
+	private VascanConfig vascanConfig;
+	
 	@Autowired
 	private FreeMarkerConfigurer freemarkerConfig;
 	
@@ -270,7 +272,7 @@ public class VascanController {
 	@Scheduled(fixedDelay=DateUtils.MILLIS_PER_HOUR)
 	protected void checkLastPublicationDate(){
 		try {
-			String lpd = FileUtils.readFileToString(new File(controllerConfig.getLastPublicationDateFilePath()));
+			String lpd = FileUtils.readFileToString(new File(vascanConfig.getLastPublicationDateFilePath()));
 			try {
 				freemarkerConfig.getConfiguration().setSharedVariable("lastPublicationDate", lpd);
 			} catch (TemplateModelException e) {
