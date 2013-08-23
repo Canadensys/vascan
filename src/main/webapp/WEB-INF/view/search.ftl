@@ -2,8 +2,7 @@
 <#include "inc/global-functions.ftl">
 
 <#assign page={"title": rc.getMessage("namesearch_title1")+ " - " + rc.getMessage("site_title"), 
-"cssList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))],"cssPrintList": [rc.getContextUrl("/styles/print.css")],
-"javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",rc.getContextUrl("/js/typeahead.min.js"),rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")),rc.getContextUrl("/js/vascan/"+formatFileInclude("search",currentVersion!,useMinified,".js"))],
+"cssList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",rc.getContextUrl("/js/typeahead.min.js"),rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")),rc.getContextUrl("/js/vascan/"+formatFileInclude("search",currentVersion!,useMinified,".js"))],
 "javaScriptSetupCallList" : ['VASCAN.common.setLanguageResources({autocomplete_title1: "${rc.getMessage("autocomplete_title1")}", autocomplete_title2: "${rc.getMessage("autocomplete_title2")}"})']}>
 
 <#if search.term?has_content>
