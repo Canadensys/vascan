@@ -48,7 +48,15 @@
 				<span>${rc.getMessage("taxon_accepted_msg_noref",[prefixFrenchRank(rc.getMessage("rank_"+result.rankname?lower_case))?lower_case])}</span></li>
 			<#elseif result.status = "synonym">
 				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a>
+				<#if result.hassingleparrent>
 				<span>${rc.getMessage("taxon_synonym_msg_noref")} <a href="${getI18nContextUrl('/taxon/'+result.parentid)}">${result.parentnamehtml}</a></span></li>
+				<#else>
+				<span>${rc.getMessage("taxon_synonym_msg_noref")} 
+				<#list 0..result.parentidlist?size as i>
+					<a href="${getI18nContextUrl('/taxon/'+result.parentidlist[i])}">${result.parentnamehtmllist[i]}<#if i<result.parentidlist?size-1>,</#if></a>
+				</#list>
+				</span></li>
+				</#if>
 			</#if>
 		<#elseif result.type = "vernacular"> 
 			<#if result.status = "accepted">
