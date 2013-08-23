@@ -22,7 +22,7 @@ VASCAN.namepage = (function(){
         $('#list_result').show(350);
         $('ul.buttons a').toggleClass('selected');
       });
-    },
+    }
   };
   return {
     init: function() {

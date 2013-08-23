@@ -22,7 +22,7 @@ VASCAN.taxon = (function(){
         $('#list_result').show(350);
         $('ul.buttons').find('a').toggleClass('selected');
       });
-    },
+    }
   };
   return {
     init: function() {

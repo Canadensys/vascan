@@ -184,6 +184,8 @@ public class VascanController {
 
 	    List<Map<String,String>> searchResult = new ArrayList<Map<String,String>>();
 	    if(StringUtils.isNotBlank(q)){
+		    //trim the user input
+		    q = q.trim();
 	    	search.put("term", q);
 	    	LimitedResult<List<NameConceptModelIF>> nameConceptModelList = null;
 	    	int pageIndex = (page <= 0)?0:(page-1);
@@ -248,6 +250,7 @@ public class VascanController {
 		response.setContentType(JSON_CONTENT_TYPE);
 		
 		List<NameConceptModelIF> nameConceptModelList = null;
+		//should we trim user input?
 		if("taxon".equalsIgnoreCase(t)){
 			nameConceptModelList = searchService.searchTaxon(q);
 		}

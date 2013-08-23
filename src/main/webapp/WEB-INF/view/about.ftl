@@ -1,6 +1,7 @@
 <#include "inc/common.ftl">
-
-<#assign page={"title": rc.getMessage("about_title1"), "cssList": [rc.getContextUrl("/styles/vascan.css")], "cssPrintList": [rc.getContextUrl("/styles/print.css")]}>
+<#include "inc/global-functions.ftl">
+<#assign page={"title": rc.getMessage("about_title1"),
+"cssList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "cssPrintList": [rc.getContextUrl("/styles/print.css")]}>
 
 <#assign currentPage="about"/>
 

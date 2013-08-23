@@ -21,11 +21,10 @@ VASCAN.download = (function(){
     generate: function(url){
       $.ajax({url:url,cache:false,data:document.location.search.substr(1),success:_private.on_success,error:_private.on_error});
     },
-
     init: function(){
       setTimeout(function(){_private.generate(VASCAN.common.baseURL + "/generate")},1000);
-    },
-  }
+    }
+  };
   return {
     init: function() {
       _private.init();

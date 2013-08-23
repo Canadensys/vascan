@@ -10,7 +10,7 @@ VASCAN.vernacular = (function(){
   var _private = {
     init: function(){
       $('.reference').tooltip({showURL: false});
-    },
+    }
   };
   return {
     init: function() {

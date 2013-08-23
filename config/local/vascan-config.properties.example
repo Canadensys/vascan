@@ -1,6 +1,8 @@
 googleanalytics.siteVerification=A
 googleanalytics.account=B
 
+url.useMinified=true
+
 lastPublicationDateFilePath=/tmp/vascanlastpublicationdatefile.txt
 
 #this publicDownloadUrl will not work locally unless your setup something with Apache
