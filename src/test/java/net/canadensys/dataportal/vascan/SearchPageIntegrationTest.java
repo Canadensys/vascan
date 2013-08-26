@@ -80,6 +80,13 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		//make sure footer is there
 		assertEquals("div",footerDiv.getTagName());
 		
+		//test synonyms with 2 parents
+		browser.get(TESTING_SERVER_URL + "search/?q=Amaranthus graecizans");
+		//bind the WebElement to the current page
+		PageFactory.initElements(browser, this);
+		assertTrue(searchResults.findElement(By.cssSelector("li:first-child span")).getText().contains("Amaranthus albus"));
+		assertTrue(searchResults.findElement(By.cssSelector("li:first-child span")).getText().contains("Amaranthus blitoides"));
+		
 		//test nothing found
 		browser.get(TESTING_SERVER_URL + "search/?q=blablabla");
 		//bind the WebElement to the current page
