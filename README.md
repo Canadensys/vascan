@@ -15,5 +15,6 @@ Dependencies
 * [Freemarker 2.3.18](http://freemarker.sourceforge.net/)
 * [H2 Database 1.3.172](http://www.h2database.com) (for unit testing only)
 * [Selenium Client 2.33](http://docs.seleniumhq.org/download/) (for integration testing)
+
 ### Project
 * [canadensys-view-includes](https://github.com/Canadensys/canadensys-view-includes)
