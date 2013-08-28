@@ -24,7 +24,7 @@
 				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/taxon/"+data.id+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>
 			</#if>
 		<#elseif currentPage == "taxon" && data.status == "accepted">
-				<p><a class="round big_button multi_line" id="create_checklist" href="${rc.getContextUrl("/checklist?taxon="+data.taxonId+rc.getMessage("url_language"))}">${rc.getMessage("page_button1")}</a></p>
+				<p><a class="round big_button multi_line" id="create_checklist" href="${getI18nContextUrl("/checklist?taxon="+data.taxonId)}">${rc.getMessage("page_button1")}</a></p>
 		<#elseif currentPage == "checklist">
 			<#if (data.isSearch)?? && data.isSearch>
 				<p><a class="round big_button multi_line" id="dwc_archive" href="${rc.getContextUrl("/download?format=dwc&"+pageQuery)}">${rc.getMessage("page_button2")}</a></p>
