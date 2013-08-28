@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DarwinCoreGenerator {
 	
-	private String	DELIMITER = "\t";
-	private String	NEWLINE = "\n";
+	private static String	DELIMITER = "\t";
+	private static String	NEWLINE = "\n";
 	
 	private static SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
 	
