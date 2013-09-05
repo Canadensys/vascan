@@ -10,7 +10,6 @@ VASCAN.search = (function(){
   var _private = {
     init: function(){
       this.typeahead();
-      this.clickable_results();
     },
     typeahead: function(){
       $('.typeahead').typeahead([
@@ -29,11 +28,6 @@ VASCAN.search = (function(){
     dropdown_selected: function(){
       var lang = VASCAN.common.getParameterByName("lang"), param = (lang) ? "?lang=" + lang : "";
       window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val())+param;
-    },
-    clickable_results: function() {
-      $('#search_list').on('click', 'li', function() {
-        window.location.href = $(this).find('a').slice(0,1).attr('href');
-      });
     }
   };
   return {

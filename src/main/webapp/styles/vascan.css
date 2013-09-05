@@ -128,15 +128,6 @@
     line-height:1.25em;
     padding-top:3px;
     padding-bottom:3px;
-    cursor:pointer;
-  }
-
-  #search_list li:hover{
-    background-color:#E7E7E7;
-  }
-
-  #search_list li a{
-    text-decoration:none;
   }
 
   #search_list li span {
