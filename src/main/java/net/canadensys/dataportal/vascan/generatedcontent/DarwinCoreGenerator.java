@@ -307,7 +307,7 @@ public class DarwinCoreGenerator {
 				
 				/* locationID */
 				if(locationID != null && !locationID.equals(""))
-					dwc.append("ISO3166-2:").append(locationID).append(DELIMITER);
+					dwc.append("ISO 3166-2:").append(locationID).append(DELIMITER);
 				else
 					dwc.append("").append(locationID).append(DELIMITER);
 				
