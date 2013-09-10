@@ -2,8 +2,7 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
 <#assign page={"title": rc.getMessage("download_title1") + " - " + rc.getMessage("site_title"),
-"cssList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))],"cssPrintList": [rc.getContextUrl("/styles/print.css")],
-"javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")),rc.getContextUrl("/js/vascan/"+formatFileInclude("download",currentVersion!,useMinified,".js"))]}>
+"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")),rc.getContextUrl("/js/vascan/"+formatFileInclude("download",currentVersion!,useMinified,".js"))]}>
 
 <#assign currentPage="download"/>
 

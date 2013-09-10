@@ -182,7 +182,7 @@ public class VascanController {
 	    search.put("term", "");
 	    search.put("total",0);
 
-	    List<Map<String,String>> searchResult = new ArrayList<Map<String,String>>();
+	    List<Map<String,Object>> searchResult = new ArrayList<Map<String,Object>>();
 	    if(StringUtils.isNotBlank(q)){
 		    //trim the user input
 		    q = q.trim();
@@ -201,12 +201,12 @@ public class VascanController {
 	    	}
 
 		    search.put("total",nameConceptModelList.getTotal_rows());
-		    List<Map<String,String>> searchResults = new ArrayList<Map<String,String>>();
-		    Map<String,String> searchRow = null;
+		    List<Map<String,Object>> searchResults = new ArrayList<Map<String,Object>>();
+		    Map<String,Object> searchRow = null;
 		    //TODO use objects directly instead of map
 		    for(NameConceptModelIF currNameConceptModel : nameConceptModelList.getRows()){
 		    	if(currNameConceptModel.getClass().equals(NameConceptTaxonModel.class)){
-		    		searchRow = new HashMap<String,String>();
+		    		searchRow = new HashMap<String,Object>();
 		    		searchRow.put("type","taxon");
 		    		searchRow.put("name", currNameConceptModel.getName());
 		    		searchRow.put("id", currNameConceptModel.getTaxonId().toString());
@@ -214,12 +214,19 @@ public class VascanController {
 		    		searchRow.put("namehtml",((NameConceptTaxonModel)currNameConceptModel).getNamehtml());
 		    		searchRow.put("namehtmlauthor",((NameConceptTaxonModel)currNameConceptModel).getNamehtmlauthor());
 		    		searchRow.put("rankname",((NameConceptTaxonModel)currNameConceptModel).getRankname());
-		    		searchRow.put("parentid",((NameConceptTaxonModel)currNameConceptModel).getParentid().toString());
-		    		searchRow.put("parentnamehtml",((NameConceptTaxonModel)currNameConceptModel).getParentnamehtml());
+		    		if(((NameConceptTaxonModel)currNameConceptModel).hasSingleParent()){
+		    			searchRow.put("parentid",((NameConceptTaxonModel)currNameConceptModel).getParentid().toString());
+			    		searchRow.put("parentnamehtml",((NameConceptTaxonModel)currNameConceptModel).getParentnamehtml());
+		    		}
+		    		else{
+		    			searchRow.put("parentidlist",((NameConceptTaxonModel)currNameConceptModel).getParentidlist());
+			    		searchRow.put("parentnamehtmllist",((NameConceptTaxonModel)currNameConceptModel).getParentnamehtmllist());
+		    		}
+		    		searchRow.put("hassingleparrent",((NameConceptTaxonModel)currNameConceptModel).hasSingleParent());
 		    		searchResult.add(searchRow);
 		    	}
 		    	else if(currNameConceptModel.getClass().equals(NameConceptVernacularNameModel.class)){
-		    		searchRow = new HashMap<String, String>();
+		    		searchRow = new HashMap<String, Object>();
 		    		searchRow.put("type","vernacular");
 		    		searchRow.put("name", currNameConceptModel.getName());
 		    		searchRow.put("id", Integer.toString(((NameConceptVernacularNameModel)currNameConceptModel).getId()));
