@@ -50,7 +50,7 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		PageFactory.initElements(browser, this);
 		
 		assertEquals("Name search",contentDiv.findElement(By.cssSelector("h1")).getText());
-		assertEquals("div",footerDiv.getTagName());
+		assertEquals("div",footerDiv.getTagName().toLowerCase());
 		
 		searchInput.click();
 		searchInput.sendKeys("carex");
@@ -78,7 +78,7 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 
 		assertTrue(searchResults.findElement(By.cssSelector("li:first-child")).getText().startsWith("Carex Linnaeus"));
 		//make sure footer is there
-		assertEquals("div",footerDiv.getTagName());
+		assertEquals("div",footerDiv.getTagName().toLowerCase());
 		
 		//test synonyms with 2 parents
 		browser.get(TESTING_SERVER_URL + "search/?q=Amaranthus graecizans");
@@ -96,7 +96,7 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		assertEquals("Nothing found.", searchResults.getText());
 		
 		//make sure footer is there
-		assertEquals("div",footerDiv.getTagName());
+		assertEquals("div",footerDiv.getTagName().toLowerCase());
 	}
 	
 	@After

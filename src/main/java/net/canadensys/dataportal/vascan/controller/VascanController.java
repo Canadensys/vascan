@@ -286,10 +286,10 @@ public class VascanController {
 			try {
 				freemarkerConfig.getConfiguration().setSharedVariable("lastPublicationDate", lpd);
 			} catch (TemplateModelException e) {
-				LOGGER.fatal("Could not set Vascan lastPublicationDate", e);
+				LOGGER.fatal("Could not set Vascan lastPublicationDate:"+ e.getMessage());
 			}
 		} catch (IOException e) {
-			LOGGER.fatal("Could not read Vascan lastPublicationDate", e);
+			LOGGER.fatal("Could not read Vascan lastPublicationDate"+ e.getMessage());
 		}
 	}
 

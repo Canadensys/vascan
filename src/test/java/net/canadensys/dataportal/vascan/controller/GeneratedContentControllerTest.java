@@ -178,5 +178,4 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		assertEquals("2096",taxonData[DWCA_IDX_PARENT_NAME_USAGE_ID]);
 		assertEquals("accepted", taxonData[DWCA_IDX_TAXONOMIC_STATUS]);
     }
-
 }
