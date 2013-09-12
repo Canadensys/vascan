@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DarwinCoreGenerator {
 	
-	private static String	DELIMITER = "\t";
-	private static String	NEWLINE = "\n";
+	public static String	DELIMITER = "\t";
+	public static String	NEWLINE = "\n";
 	
 	private static SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -174,7 +174,7 @@ public class DarwinCoreGenerator {
 				
 				// for a synonym, empty parentNameUsageId and parentNameUsage 
 				// and rely solely on accepteNameUsageId and acceptedName
-				if(taxonomicStatus.equals(Status.SYNONYM)){
+				if(taxonomicStatus.equals(Status.SYNONYM_LABEL)){
 					acceptedNameUsageID = parentNameUsageID;
 					acceptedNameUsage = parentNameUsage;
 					parentNameUsageID = "";
@@ -307,7 +307,7 @@ public class DarwinCoreGenerator {
 				
 				/* locationID */
 				if(locationID != null && !locationID.equals(""))
-					dwc.append("ISO 3166-2:").append(locationID).append(DELIMITER);
+					dwc.append("ISO3166-2:").append(locationID).append(DELIMITER);
 				else
 					dwc.append("").append(locationID).append(DELIMITER);
 				
