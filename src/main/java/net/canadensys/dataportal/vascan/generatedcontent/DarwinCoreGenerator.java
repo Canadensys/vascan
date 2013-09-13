@@ -15,16 +15,16 @@ import org.springframework.stereotype.Component;
 
 /**
  * Class responsible for generating a Darwin Core content.
- * ToDo : This class relies on index in List<Object[]> parameters, we should use a key/value instead.
- * ToDo : For scaling reason, we should write into a buffer instead of returning a StringBuffer.
+ * TODO : This class relies on index in List<Object[]> parameters, we should use a key/value instead.
+ * TODO : We should GBIF DwcA writer instead of this code.
  * @author canadensys
  *
  */
 @Component
 public class DarwinCoreGenerator {
 	
-	private String	DELIMITER = "\t";
-	private String	NEWLINE = "\n";
+	public static String	DELIMITER = "\t";
+	public static String	NEWLINE = "\n";
 	
 	private static SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -174,7 +174,7 @@ public class DarwinCoreGenerator {
 				
 				// for a synonym, empty parentNameUsageId and parentNameUsage 
 				// and rely solely on accepteNameUsageId and acceptedName
-				if(taxonomicStatus.equals(Status.SYNONYM)){
+				if(taxonomicStatus.equals(Status.SYNONYM_LABEL)){
 					acceptedNameUsageID = parentNameUsageID;
 					acceptedNameUsage = parentNameUsage;
 					parentNameUsageID = "";
@@ -307,7 +307,7 @@ public class DarwinCoreGenerator {
 				
 				/* locationID */
 				if(locationID != null && !locationID.equals(""))
-					dwc.append("ISO3166-2:").append(locationID).append(DELIMITER);
+					dwc.append("ISO 3166-2:").append(locationID).append(DELIMITER);
 				else
 					dwc.append("").append(locationID).append(DELIMITER);
 				

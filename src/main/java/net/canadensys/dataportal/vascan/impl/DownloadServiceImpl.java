@@ -334,6 +334,7 @@ public class DownloadServiceImpl implements DownloadService {
 			meta = new File(this.getClass().getResource("/"+VASCAN_META).toURI());
 		} catch (URISyntaxException e) {
 			LOGGER.fatal("Can't read Vascan meta.xml", e);
+			return false;
 		}
 	    
 	    Set<Integer> synonyms = new HashSet<Integer>();

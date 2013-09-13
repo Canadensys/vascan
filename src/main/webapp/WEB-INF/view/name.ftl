@@ -2,8 +2,7 @@
 <#include "inc/global-functions.ftl">
 
 <#assign page={"title": data.pageTitle+ " - " + rc.getMessage("site_title"),
-"cssList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))],"cssPrintList": [rc.getContextUrl("/styles/print.css")],
-"javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js","http://data.canadensys.net/common/js/jquery.tooltip.min.js", rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")), rc.getContextUrl("/js/vascan/"+formatFileInclude("name",currentVersion!,useMinified,".js"))]}>
+"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js","http://data.canadensys.net/common/js/jquery.tooltip.min.js", rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")), rc.getContextUrl("/js/vascan/"+formatFileInclude("name",currentVersion!,useMinified,".js"))]}>
 
 <#assign currentPage="name"/>
 

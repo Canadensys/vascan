@@ -11,7 +11,9 @@
 
 build/*
 build.gradle
-config/local/vascan-config.properties
+canadensys_web_build.gradle
+config/local/*.properties
+config/production/*
 gradle.properties
 
 tomcat.log

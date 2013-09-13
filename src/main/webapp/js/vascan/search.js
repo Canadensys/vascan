@@ -8,12 +8,13 @@ VASCAN.search = (function(){
   'use strict';
 
   var _private = {
-    init: function(){
+    tt_input: $('.typeahead'),
+    init: function() {
       this.typeahead();
-      this.clickable_results();
+      this.trackSearch();
     },
     typeahead: function(){
-      $('.typeahead').typeahead([
+      this.tt_input.typeahead([
         {
           name: 'scientific',
           remote: VASCAN.common.baseURL+'/search.json?q=%QUERY&t=taxon',
@@ -30,10 +31,13 @@ VASCAN.search = (function(){
       var lang = VASCAN.common.getParameterByName("lang"), param = (lang) ? "?lang=" + lang : "";
       window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val())+param;
     },
-    clickable_results: function() {
-      $('#search_list').on('click', 'li', function() {
-        window.location.href = $(this).find('a').slice(0,1).attr('href');
-      });
+    trackSearch: function() {
+      var self = this;
+      if(typeof _gaq !== 'undefined') {
+        $('#search_button').on('click', function() {
+          _gaq.push(['_trackEvent', 'Search', 'Submitted', self.tt_input.val()]);
+        });
+      }
     }
   };
   return {

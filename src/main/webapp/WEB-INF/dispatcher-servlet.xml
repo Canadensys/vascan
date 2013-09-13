@@ -108,6 +108,7 @@
 			<props>
 				<prop key="number_format">computer</prop>
 				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="template_exception_handler">ignore</prop>
 			</props>
 		</property>
 	</bean>
