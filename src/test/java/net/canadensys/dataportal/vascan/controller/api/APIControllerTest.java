@@ -39,6 +39,25 @@ public class APIControllerTest {
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
+    
+    @Test
+   	public void testWrongAPIVersion() throws Exception{
+    	//test GET with a synonym with 2 parents
+        this.mockMvc.perform(get("/api/wrongversion/search.json").param("q","Amaranthus graecizans"))
+        	.andExpect(status().isNotFound())
+        	.andExpect(content().encoding("UTF-8"))
+        	.andExpect(content().contentType("application/json;charset=UTF-8"));
+    }
+    
+    @Test
+   	public void testNoParam() throws Exception{
+    	//test GET with a synonym with 2 parents
+        this.mockMvc.perform(get("/api/0.1/search.json"))
+        	.andExpect(status().isBadRequest())
+        	//.andExpect(content().encoding("UTF-8"))
+        	//.andExpect(content().contentType("application/json;charset=UTF-8"))
+        	.andDo(print());
+    }
 	
     @Test
 	public void testApiGet() throws Exception{
@@ -73,6 +92,20 @@ public class APIControllerTest {
         	.andExpect(jsonPath("$.results[0].taxonID").value(73));
     }
     
+    /**
+     * Make sure we do not use autocompletion in the API.
+     * @throws Exception
+     */
+    @Test
+  	public void testNoAutocompletion() throws Exception{
+    	//test GET with a synonym with 2 parents
+        this.mockMvc.perform(get("/api/0.1/search.json").param("q","ca"))
+        	.andExpect(status().isOk())
+        	.andExpect(content().encoding("UTF-8"))
+        	.andExpect(content().contentType("application/json;charset=UTF-8")) //this is a bug in Spring 3.2, charset should be avoided  .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        	.andExpect(jsonPath("$.numResults").value(0));
+    }
+    
     @Test
 	public void testApiPostWithLocalId() throws Exception{
     	//test GET with a synonym with 2 parents
@@ -86,14 +119,13 @@ public class APIControllerTest {
         	.andExpect(jsonPath("$[1].localIdentifier").value("9"));
     }
     
-    //@Test we should not accept unknown extension
+    @Test //we should not accept unknown extension
 	public void testWrongResourceExt() throws Exception{
     	//test GET with a synonym with 2 parents
         this.mockMvc.perform(get("/api/0.1/search.jason").param("q","8|Acer circinatum"))
         	.andExpect(status().isOk())
         	.andExpect(content().encoding("UTF-8"))
-        	.andExpect(content().contentType("application/json;charset=UTF-8"))
-        	.andDo(print());
+        	.andExpect(content().contentType("application/json;charset=UTF-8"));
     }
     
     @Test

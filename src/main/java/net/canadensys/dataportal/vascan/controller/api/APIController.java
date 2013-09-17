@@ -8,16 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.canadensys.dataportal.vascan.APIService;
+import net.canadensys.dataportal.vascan.model.api.APIErrorResult;
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,9 +41,15 @@ public class APIController {
 	//Own Jackson Object Mapper to add JSONP support
 	public static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
 	
+	private static final APIErrorResult NOT_FOUND_RESULT = new APIErrorResult("not found");
+	private static final APIErrorResult BAD_REQUEST_RESULT = new APIErrorResult("bad request");
+	
 	@RequestMapping(value="/api/{version}/search",method={RequestMethod.GET})
-	public @ResponseBody Object handleGetSearch(@RequestParam String q, @PathVariable String version){
-		//apiService.getAPIVersion();
+	public @ResponseBody Object handleGetSearch(@RequestParam String q, @PathVariable String version, HttpServletResponse response){
+		if(!apiService.getAPIVersion().equals(version)){
+			return onNotFound(response);
+		}
+		
 		String[] dataParts = q.split(APIControllerHelper.DATA_SEPARATOR,2);
 		
 		if(dataParts.length == 1){
@@ -53,9 +64,18 @@ public class APIController {
 		}
 	}
 	
+	 @ExceptionHandler(value=MissingServletRequestParameterException.class)
+	 @ResponseStatus(HttpStatus.BAD_REQUEST)
+	 @ResponseBody
+	 public APIErrorResult handleException(MissingServletRequestParameterException ex) {
+		 return BAD_REQUEST_RESULT;
+	 }
+	
 	@RequestMapping(value="/api/{version}/search",method={RequestMethod.POST})
-	public @ResponseBody Object handlePostSearch(@RequestParam String q, @PathVariable String version){
-		//apiService.getAPIVersion();
+	public @ResponseBody Object handlePostSearch(@RequestParam String q, @PathVariable String version, HttpServletResponse response){
+		if(!apiService.getAPIVersion().equals(version)){
+			return onNotFound(response);
+		}
 		List<String> dataList = new ArrayList<String>();
 		List<String> idList = new ArrayList<String>();
 		APIControllerHelper.splitIdAndData(q, dataList, idList);
@@ -80,6 +100,7 @@ public class APIController {
 		if(APIControllerHelper.JSONP_ACCEPTED_CHAR_PATTERN.matcher(callback).matches()){
 			//JSONP handling
 			VascanAPIResponse apiResponse;
+			
 			String json = "";
 			String[] dataParts = q.split(APIControllerHelper.DATA_SEPARATOR,2);
 			
@@ -113,5 +134,15 @@ public class APIController {
 		else{
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param response used to set the 404 status
+	 * @return NOT_FOUND_RESULT
+	 */
+	private APIErrorResult onNotFound(HttpServletResponse response){
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		return NOT_FOUND_RESULT;
 	}
 }

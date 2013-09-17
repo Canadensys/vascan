@@ -1,0 +1,20 @@
+package net.canadensys.dataportal.vascan.model.api;
+
+public class APIErrorResult {
+	
+	private String error;
+	
+	public APIErrorResult(){}
+	public APIErrorResult(String error){
+		this.error = error;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+}
