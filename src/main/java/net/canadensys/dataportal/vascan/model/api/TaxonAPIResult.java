@@ -3,11 +3,15 @@ package net.canadensys.dataportal.vascan.model.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * Using DarwinCore terms as key when possible.
  * @author canadensys
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class TaxonAPIResult {
 	
 	private String scientificName;
@@ -18,13 +22,13 @@ public class TaxonAPIResult {
 	private Integer taxonID;
 	private String taxonomicStatus;
 	private String taxonRank;
-	private String parentNameUsageID; //not for synonyms
+	private Integer parentNameUsageID; //not for synonyms
 	private String acceptedNameUsage;
-	private String acceptedNameUsageID; //for synonyms, this will link to the accepted taxon
+	private Integer acceptedNameUsageID; //for synonyms, this will link to the accepted taxon
 	private String higherClassification; //not for synonyms
 	
 	private List<VernacularNameAPIResult> vernacularNames;//not for synonyms
-	private List<DistributionAPIResult> distributions; //not for synonyms
+	private List<DistributionAPIResult> distribution; //not for synonyms
 
 	private String habit;
     //modified : "2013-03-08 00:00:0"
@@ -92,14 +96,12 @@ public class TaxonAPIResult {
 		this.taxonRank = taxonRank;
 	}
 
-	public String getParentNameUsageID() {
+	public Integer getParentNameUsageID() {
 		return parentNameUsageID;
 	}
-
-	public void setParentNameUsageID(String parentNameUsageID) {
+	public void setParentNameUsageID(Integer parentNameUsageID) {
 		this.parentNameUsageID = parentNameUsageID;
 	}
-
 	public String getAcceptedNameUsage() {
 		return acceptedNameUsage;
 	}
@@ -108,11 +110,10 @@ public class TaxonAPIResult {
 		this.acceptedNameUsage = acceptedNameUsage;
 	}
 
-	public String getAcceptedNameUsageID() {
+	public Integer getAcceptedNameUsageID() {
 		return acceptedNameUsageID;
 	}
-
-	public void setAcceptedNameUsageID(String acceptedNameUsageID) {
+	public void setAcceptedNameUsageID(Integer acceptedNameUsageID) {
 		this.acceptedNameUsageID = acceptedNameUsageID;
 	}
 
@@ -137,17 +138,17 @@ public class TaxonAPIResult {
 		vernacularNames.add(vernacularName);
 	}
 
-	public List<DistributionAPIResult> getDistributions() {
-		return distributions;
+	public List<DistributionAPIResult> getDistribution() {
+		return distribution;
 	}
 	public void setDistributions(List<DistributionAPIResult> distribution) {
-		this.distributions = distribution;
+		this.distribution = distribution;
 	}
-	public void addDistribution(DistributionAPIResult distribution){
-		if(distributions == null){
-			distributions = new ArrayList<DistributionAPIResult>();
+	public void addDistribution(DistributionAPIResult _distribution){
+		if(distribution == null){
+			distribution = new ArrayList<DistributionAPIResult>();
 		}
-		distributions.add(distribution);
+		distribution.add(_distribution);
 	}
 
 	public String getHabit() {

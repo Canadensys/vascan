@@ -1,5 +1,9 @@
 package net.canadensys.dataportal.vascan.model.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class DistributionAPIResult {
 	
 	private String locationID; // : “CA-BC”,

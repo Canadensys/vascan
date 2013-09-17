@@ -1,11 +1,15 @@
 package net.canadensys.dataportal.vascan.model.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * Could we merge this with VernacularNameModel? 
  * VernacularNameModel is heavier (hibernate based) but needed to be loaded anyway
  * @author cgendreau
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class VernacularNameAPIResult {
     private String vernacularName;
     private String language;

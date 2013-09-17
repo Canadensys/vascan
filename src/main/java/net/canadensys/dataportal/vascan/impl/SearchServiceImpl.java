@@ -19,12 +19,12 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public LimitedResult<List<NameConceptModelIF>> searchName(String text) {
 		//catch org.elasticsearch.client.transport.NoNodeAvailableException
-		return nameDAO.search(text);
+		return nameDAO.search(text,true);
 	}
 	
 	@Override
 	public LimitedResult<List<NameConceptModelIF>> searchName(String text, int page) {
-		return nameDAO.search(text,page);
+		return nameDAO.search(text,true,page);
 	}
 
 	@Override
