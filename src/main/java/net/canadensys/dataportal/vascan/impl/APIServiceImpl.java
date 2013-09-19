@@ -19,7 +19,6 @@ import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
 import net.canadensys.dataportal.vascan.model.api.VernacularNameAPIResult;
 import net.canadensys.query.LimitedResult;
 
-import org.apache.commons.lang3.StringUtils;
 import org.gbif.api.model.checklistbank.ParsedName;
 import org.gbif.api.vocabulary.NameType;
 import org.gbif.nameparser.NameParser;
