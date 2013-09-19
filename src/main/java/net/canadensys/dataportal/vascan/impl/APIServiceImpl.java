@@ -19,12 +19,18 @@ import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
 import net.canadensys.dataportal.vascan.model.api.VernacularNameAPIResult;
 import net.canadensys.query.LimitedResult;
 
+import org.apache.commons.lang3.StringUtils;
+import org.gbif.api.model.checklistbank.ParsedName;
+import org.gbif.api.vocabulary.NameType;
+import org.gbif.nameparser.NameParser;
+import org.gbif.nameparser.UnparsableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class APIServiceImpl implements APIService{
+	private static NameParser GBIF_NAME_PARSER = new NameParser();
 	
 	public static String API_VERSION = "0.1";
 
@@ -82,12 +88,14 @@ public class APIServiceImpl implements APIService{
 	}
 	
 	/**
+	 * Main search function.
 	 * Search for a single term.
 	 * @param searchTerm
 	 * @return VascanAPIResponse object, never null
 	 */
 	private VascanAPIResponse search(String searchTerm) {
-		LimitedResult<List<NameConceptModelIF>> searchResult = nameDAO.search(searchTerm,false);
+		String pSearchTerm = parseScientificName(searchTerm);
+		LimitedResult<List<NameConceptModelIF>> searchResult = nameDAO.search(pSearchTerm,false);
 		
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
@@ -179,5 +187,22 @@ public class APIServiceImpl implements APIService{
 		}
 		return tar;
 	}
-
+	
+	/**
+	 * Try to parse the provided name with GBIF name parser. We want to remove the authorship and date if provided.
+	 * @param rawScientificName
+	 * @return parsed scientific name or the name provided if we can't parse it.
+	 */
+	private static String parseScientificName(String rawScientificName){
+		ParsedName parsedName = null;
+		try{
+			parsedName = GBIF_NAME_PARSER.parse(rawScientificName);
+			if (NameType.WELLFORMED.equals(parsedName.getType())
+					|| NameType.SCINAME.equals(parsedName.getType())) {
+				return parsedName.canonicalNameWithMarker();
+			}
+		}
+		catch(UnparsableException uEx){} //ignore
+		return rawScientificName;
+	}
 }

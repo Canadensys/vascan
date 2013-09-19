@@ -3,14 +3,14 @@ package net.canadensys.dataportal.vascan.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import net.canadensys.dataportal.vascan.VernacularNameService;
 import net.canadensys.dataportal.vascan.dao.VernacularNameDAO;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("vernacularNameService")
 public class VernacularNameServiceImpl implements VernacularNameService {

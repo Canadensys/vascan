@@ -12,6 +12,7 @@ import net.canadensys.dataportal.vascan.model.api.APIErrorResult;
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.gbif.nameparser.NameParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

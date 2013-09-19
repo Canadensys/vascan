@@ -1,12 +1,12 @@
 package net.canadensys.dataportal.vascan.controller.api;
 
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,15 +53,11 @@ public class APIControllerTest {
    	public void testNoParam() throws Exception{
     	//test GET with a synonym with 2 parents
         this.mockMvc.perform(get("/api/0.1/search.json"))
-        	.andExpect(status().isBadRequest())
-        	//.andExpect(content().encoding("UTF-8"))
-        	//.andExpect(content().contentType("application/json;charset=UTF-8"))
-        	.andDo(print());
+        	.andExpect(status().isBadRequest());
     }
 	
     @Test
 	public void testApiGet() throws Exception{
-		
     	//test GET with a synonym with 2 parents
         this.mockMvc.perform(get("/api/0.1/search.json").param("q","Amaranthus graecizans"))
         	.andExpect(status().isOk())
@@ -69,6 +65,16 @@ public class APIControllerTest {
         	.andExpect(content().contentType("application/json;charset=UTF-8")) //this is a bug in Spring 3.2, charset should be avoided  .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         	.andExpect(jsonPath("$.results[0].taxonID").value(9946))
         	.andExpect(jsonPath("$.results[1].taxonID").value(9946));
+    }
+    
+    @Test
+	public void testApiGetSciNameWithAuthors() throws Exception{
+    	//test GET with a synonym with 2 parents
+        this.mockMvc.perform(get("/api/0.1/search.json").param("q","Carex macloviana subsp. haydeniana (Olney) Taylor & MacBryde"))
+        	.andExpect(status().isOk())
+        	.andExpect(content().encoding("UTF-8"))
+        	.andExpect(content().contentType("application/json;charset=UTF-8")) //this is a bug in Spring 3.2, charset should be avoided  .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        	.andExpect(jsonPath("$.results[0].taxonID").value(15148));
     }
     
     @Test
