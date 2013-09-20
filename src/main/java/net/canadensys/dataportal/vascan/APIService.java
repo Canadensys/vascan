@@ -4,6 +4,11 @@ import java.util.List;
 
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
 
+/**
+ * Vascan API service layer interface.
+ * @author canadensys
+ *
+ */
 public interface APIService {
 	
 	public String getAPIVersion();

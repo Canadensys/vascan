@@ -109,7 +109,9 @@ public class APIController {
 				if(possibleTaxonID == -1){
 					apiResponse = apiService.search(null,dataParts[0]);
 				}
-				apiResponse = apiService.search(possibleTaxonID);
+				else{
+					apiResponse = apiService.search(possibleTaxonID);
+				}
 			}
 			else{
 				apiResponse = apiService.search(dataParts[0],dataParts[1]);

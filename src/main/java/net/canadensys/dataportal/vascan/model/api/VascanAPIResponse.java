@@ -3,16 +3,19 @@ package net.canadensys.dataportal.vascan.model.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
- * 
+ * API response object. The API can return a single VascanAPIResponse or a list of them.
  * 
  * @author canadensys
  *
  */
 @JsonInclude(Include.NON_NULL)
+@XmlRootElement
 public class VascanAPIResponse {
 	
 	private String searchedTerm;

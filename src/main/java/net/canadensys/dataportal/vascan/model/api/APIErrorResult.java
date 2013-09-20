@@ -1,5 +1,13 @@
 package net.canadensys.dataportal.vascan.model.api;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * Used to report an API error.
+ * @author canadensys
+ *
+ */
+@XmlRootElement
 public class APIErrorResult {
 	
 	private String error;

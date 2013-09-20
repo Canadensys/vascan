@@ -27,6 +27,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author canadensys
+ *
+ */
 @Service
 public class APIServiceImpl implements APIService{
 	private static NameParser GBIF_NAME_PARSER = new NameParser();

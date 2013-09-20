@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
- * Could we merge this with VernacularNameModel? 
- * VernacularNameModel is heavier (hibernate based) but needed to be loaded anyway
- * @author cgendreau
+ *
+ * @author canadensys
  *
  */
 @JsonInclude(Include.NON_NULL)
@@ -40,6 +39,4 @@ public class VernacularNameAPIResult {
 	public void setPreferredName(boolean isPreferredName) {
 		this.isPreferredName = isPreferredName;
 	}
-
-
 }
