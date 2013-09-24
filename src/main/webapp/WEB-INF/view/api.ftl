@@ -10,24 +10,62 @@
 
 <h1>${rc.getMessage("api_title2")}</h1>
 
-<#if rc.getLocale().getLanguage()=="en">
 <h2>${rc.getMessage("api_title3")}</h2>
-<p>The VASCAN API accepts GET and POST requests. The path contains an explicit version and the search resource accepts a parameter <strong>q</strong>. The value for <strong>q</strong> can be a scientific name, a vernacular name or a VASCAN taxon identifier (<em>e.g.</em> 861). It may have a single value for GET requests or multiple values for POST requests, each separated by line breaks, \n. Scientific or vernacular names may optionally be preceded by your local identifier followed by a pipe, |. GET requests for JSON-based URIs may have an additional callback parameter for JSONP responses.</p>
-<p class="api-path round">
-  http://data.canadensys.net/vascan/api/0.1/search.json
-  <span class="separator">${rc.getMessage("api_uri_separator")}</span>
-  http://data.canadensys.net/vascan/api/0.1/search.xml
-</p>
+<p>${rc.getMessage("api_description")}</p>
 
-<#elseif rc.getLocale().getLanguage()=="fr">
-<h2>${rc.getMessage("api_title3")}</h2>
-<p></p>
+<h3>${rc.getMessage("api_title4")}</h3>
 <p class="api-path round">
   http://data.canadensys.net/vascan/api/0.1/search.json
   <span class="separator">${rc.getMessage("api_uri_separator")}</span>
   http://data.canadensys.net/vascan/api/0.1/search.xml
 </p>
-</#if>
+<h3>${rc.getMessage("api_title5")}</h3>
+<dl>
+  <dt>q</dt>
+  <dd>${rc.getMessage("api_parameter_q_definition")}
+    <span><em>e.g.</em> ?q=Amaranthus+graecizans</span>
+    <span><em>e.g.</em> ?q=1004232|V.+angustifolium</span>
+    <span><em>e.g.</em> ?q=5031
+  </dd>
+</dl>
+<h3>${rc.getMessage("api_title6")}</h3>
+<pre>
+{
+  apiVersion: "0.1",
+  results: [
+    {
+      searchedTerm: "Amaranthus graecizans",
+      localIdentifier: "3",
+      numMatches: 1,
+      matches: [
+        {
+          taxonID: 9946,
+          scientificName: "Amaranthus graecizans auct. non Linnaeus p.p.",
+          scientificNameAuthorship: "auct. non Linnaeus p.p.",
+          canonicalName: "Amaranthus graecizans",
+          taxonRank: "species",
+          taxonomicAssertions: [
+            {
+              acceptedNameUsage: "Amaranthus albus Linnaeus",
+              acceptedNameUsageID: 2498,
+              nameAccordingTo: "FNA Editorial Committee. 2003. Flora of North America...etc.",
+              nameAccordingToID: "http://www.efloras.org/volume_page.aspx?volume_id=1004&flora_id=1",
+              taxonomicStatus: "synonym"
+            },
+            {
+              acceptedNameUsage: "Amaranthus blitoides S. Watson",
+              acceptedNameUsageID: 2499,
+              nameAccordingTo: "FNA Editorial Committee. 2003. Flora of North America...etc.",
+              nameAccordingToID: "http://www.efloras.org/volume_page.aspx?volume_id=1004&flora_id=1",
+              taxonomicStatus: "synonym"
+             }
+           ]
+         }
+       ]
+     }
+  ]
+}
+</pre>
 
 	</div><#-- content -->
 </div>

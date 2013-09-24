@@ -1,6 +1,6 @@
 	<div id="feedback_bar"><a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Data%20issue" target="_blank" title="${rc.getMessage("feedback_msg1")}">&nbsp;</a></div>
 	<#include "canadensys-header.ftl">
-	<div id="body"<#if currentPage == "checklist" || currentPage == "darwincore" || currentPage == "dwc" || currentPage == "search"> class="fullscreen"</#if>>
+	<div id="body"<#if currentPage == "checklist" || currentPage == "darwincore" || currentPage == "dwc" || currentPage == "search" || currentPage == "api"> class="fullscreen"</#if>>
 		<#if currentPage == "search">
 		<!--[if lte IE 7]>
 		<p id="ie">${rc.getMessage("browser_msg1")}</p>

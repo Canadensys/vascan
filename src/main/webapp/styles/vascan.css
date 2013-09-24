@@ -282,6 +282,12 @@
   .api-uri{padding:0.7em;font-size:1.5em;}
   .api-path{padding:0.5em;font-size:1.2em;}
   .separator{display:block;margin:1em 0em;font-style:italic;}
+  
+  dl { margin-left:1em; }
+  dt { float:left;font-weight:bold; }
+  dd span { display:block;font-weight:bold; }
+  
+  pre{ font-family: "Lucida Grande",Arial,Sans-Serif; }
 
 }
 
