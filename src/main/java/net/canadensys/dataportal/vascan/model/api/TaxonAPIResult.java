@@ -3,36 +3,46 @@ package net.canadensys.dataportal.vascan.model.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
+ * API response for taxon related data.
  * Using DarwinCore terms as key when possible.
  * @author canadensys
  *
  */
 @JsonInclude(Include.NON_NULL)
 public class TaxonAPIResult {
+	private float score;
+	private Integer taxonID;
 	
 	private String scientificName;
-	private String canonicalName;
 	private String scientificNameAuthorship;
-	private String nameAccordingTo; //not for synonyms
-	private String nameAccordingToID; //url, //not for synonyms
-	private Integer taxonID;
-	private String taxonomicStatus;
-	private String taxonRank;
-	private Integer parentNameUsageID; //not for synonyms
-	private String acceptedNameUsage;
-	private Integer acceptedNameUsageID; //for synonyms, this will link to the accepted taxon
-	private String higherClassification; //not for synonyms
 	
-	private List<VernacularNameAPIResult> vernacularNames;//not for synonyms
-	private List<DistributionAPIResult> distribution; //not for synonyms
+	private String canonicalName;
+
+	private String taxonRank;
+
+	@XmlElementWrapper(name="taxonomicAssertions")
+	@XmlElement(name="taxonomicAssertion")
+	private List<TaxonomicAssertionAPIResult> taxonomicAssertions;
+	
+	private List<VernacularNameAPIResult> vernacularNames;
+	private List<DistributionAPIResult> distribution;
 
 	private String habit;
     //modified : "2013-03-08 00:00:0"
 
+	public float getScore() {
+		return score;
+	}
+	public void setScore(float score) {
+		this.score = score;
+	}
 	public String getScientificName() {
 		return scientificName;
 	}
@@ -56,36 +66,12 @@ public class TaxonAPIResult {
 		this.scientificNameAuthorship = scientificNameAuthorship;
 	}
 
-	public String getNameAccordingTo() {
-		return nameAccordingTo;
-	}
-
-	public void setNameAccordingTo(String nameAccordingTo) {
-		this.nameAccordingTo = nameAccordingTo;
-	}
-
-	public String getNameAccordingToID() {
-		return nameAccordingToID;
-	}
-
-	public void setNameAccordingToID(String nameAccordingToID) {
-		this.nameAccordingToID = nameAccordingToID;
-	}
 
 	public Integer getTaxonID() {
 		return taxonID;
 	}
-
 	public void setTaxonID(Integer taxonID) {
 		this.taxonID = taxonID;
-	}
-
-	public String getTaxonomicStatus() {
-		return taxonomicStatus;
-	}
-
-	public void setTaxonomicStatus(String taxonomicStatus) {
-		this.taxonomicStatus = taxonomicStatus;
 	}
 
 	public String getTaxonRank() {
@@ -94,35 +80,6 @@ public class TaxonAPIResult {
 
 	public void setTaxonRank(String taxonRank) {
 		this.taxonRank = taxonRank;
-	}
-
-	public Integer getParentNameUsageID() {
-		return parentNameUsageID;
-	}
-	public void setParentNameUsageID(Integer parentNameUsageID) {
-		this.parentNameUsageID = parentNameUsageID;
-	}
-	public String getAcceptedNameUsage() {
-		return acceptedNameUsage;
-	}
-
-	public void setAcceptedNameUsage(String acceptedNameUsage) {
-		this.acceptedNameUsage = acceptedNameUsage;
-	}
-
-	public Integer getAcceptedNameUsageID() {
-		return acceptedNameUsageID;
-	}
-	public void setAcceptedNameUsageID(Integer acceptedNameUsageID) {
-		this.acceptedNameUsageID = acceptedNameUsageID;
-	}
-
-	public String getHigherClassification() {
-		return higherClassification;
-	}
-
-	public void setHigherClassification(String higherClassification) {
-		this.higherClassification = higherClassification;
 	}
 
 	public List<VernacularNameAPIResult> getVernacularNames() {
@@ -141,7 +98,7 @@ public class TaxonAPIResult {
 	public List<DistributionAPIResult> getDistribution() {
 		return distribution;
 	}
-	public void setDistributions(List<DistributionAPIResult> distribution) {
+	public void setDistribution(List<DistributionAPIResult> distribution) {
 		this.distribution = distribution;
 	}
 	public void addDistribution(DistributionAPIResult _distribution){
@@ -150,6 +107,16 @@ public class TaxonAPIResult {
 		}
 		distribution.add(_distribution);
 	}
+	
+	public List<TaxonomicAssertionAPIResult> getTaxonomicAssertions() {
+		return taxonomicAssertions;
+	}
+	public void addTaxonomicAssertion(TaxonomicAssertionAPIResult taxonomicAssertionAPIResult){
+		if(taxonomicAssertions == null){
+			taxonomicAssertions = new ArrayList<TaxonomicAssertionAPIResult>();
+		}
+		taxonomicAssertions.add(taxonomicAssertionAPIResult);
+	}
 
 	public String getHabit() {
 		return habit;
@@ -157,5 +124,6 @@ public class TaxonAPIResult {
 	public void setHabit(String habit) {
 		this.habit = habit;
 	}
+
 
 }

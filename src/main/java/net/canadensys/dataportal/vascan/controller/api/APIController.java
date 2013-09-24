@@ -46,6 +46,7 @@ public class APIController {
 	
 	@RequestMapping(value="/api/{version}/search",method={RequestMethod.GET})
 	public @ResponseBody Object handleGetSearch(@RequestParam String q, @PathVariable String version, HttpServletResponse response){
+		response.setCharacterEncoding("UTF-8");
 		if(!apiService.getAPIVersion().equals(version)){
 			return onNotFound(response);
 		}
@@ -139,7 +140,7 @@ public class APIController {
 	}
 	
 	/**
-	 * 
+	 * Return an APIErrorResult object used to send the response in the proper format (json, xml)
 	 * @param response used to set the 404 status
 	 * @return NOT_FOUND_RESULT
 	 */

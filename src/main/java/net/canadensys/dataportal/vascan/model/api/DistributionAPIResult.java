@@ -3,6 +3,11 @@ package net.canadensys.dataportal.vascan.model.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * API response for distribution related data.
+ * @author canadensys
+ *
+ */
 @JsonInclude(Include.NON_NULL)
 public class DistributionAPIResult {
 	
@@ -15,7 +20,7 @@ public class DistributionAPIResult {
 		return locationID;
 	}
 	public void setLocationID(String locationID) {
-		this.locationID = "ISO 3166-2:" + locationID;
+		this.locationID = locationID;
 	}
 	public String getLocality() {
 		return locality;

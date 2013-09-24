@@ -19,7 +19,7 @@ public interface APIService {
 	 * @param searchTermList
 	 * @return
 	 */
-	public List<VascanAPIResponse> search(List<String> idList, List<String> searchTermList);
+	public VascanAPIResponse search(List<String> idList, List<String> searchTermList);
 	
 	/**
 	 * Search for a single id(optional) and searchTerm.

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author canadensys
  *
  */
-@XmlRootElement
+@XmlRootElement(name="result")
 public class APIErrorResult {
 	
 	private String error;

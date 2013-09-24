@@ -15,7 +15,9 @@ import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 import net.canadensys.dataportal.vascan.model.api.DistributionAPIResult;
 import net.canadensys.dataportal.vascan.model.api.TaxonAPIResult;
+import net.canadensys.dataportal.vascan.model.api.TaxonomicAssertionAPIResult;
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
+import net.canadensys.dataportal.vascan.model.api.VascanAPIResponseElement;
 import net.canadensys.dataportal.vascan.model.api.VernacularNameAPIResult;
 import net.canadensys.query.LimitedResult;
 
@@ -36,6 +38,7 @@ public class APIServiceImpl implements APIService{
 	private static NameParser GBIF_NAME_PARSER = new NameParser();
 	
 	public static String API_VERSION = "0.1";
+	public static String ISO3166_2_PREFIX = "ISO 3166-2:";
 
 	@Autowired
 	private NameDAO nameDAO;
@@ -50,43 +53,53 @@ public class APIServiceImpl implements APIService{
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<VascanAPIResponse> search(List<String> idList, List<String> dataList) {
-		List<VascanAPIResponse> results = new ArrayList<VascanAPIResponse>();
+	public VascanAPIResponse search(List<String> idList, List<String> dataList) {
+		VascanAPIResponse apiResponse = new VascanAPIResponse();
+		apiResponse.setApiVersion(API_VERSION);
+		
 		int idx=0;
-		VascanAPIResponse currAPIResponse;
+		VascanAPIResponseElement apiResponseElement;
 		for(String currId : idList){
-			currAPIResponse = search(dataList.get(idx));
-			currAPIResponse.setLocalIdentifier(currId);
-			results.add(currAPIResponse);
+			apiResponseElement = search(dataList.get(idx));
+			apiResponseElement.setLocalIdentifier(currId);
+			apiResponse.addVascanAPIResponse(apiResponseElement);
 			idx++;
 		}
-		return results;
+		return apiResponse;
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
 	public VascanAPIResponse search(String id, String searchTerm) {
-		VascanAPIResponse apiResponse = search(searchTerm);
-		apiResponse.setLocalIdentifier(id);
+		VascanAPIResponse apiResponse = new VascanAPIResponse();
+		apiResponse.setApiVersion(API_VERSION);
+		
+		VascanAPIResponseElement apiResponseElement = search(searchTerm);
+		apiResponseElement.setLocalIdentifier(id);
+		apiResponse.addVascanAPIResponse(apiResponseElement);
 		return apiResponse;
 	}
 	
 	@Transactional(readOnly=true)
 	@Override
 	public VascanAPIResponse search(Integer id) {
-		TaxonModel taxonModel = taxonDAO.loadTaxon(id);
-		
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
-		apiResponse.setSearchedId(id);
+		
+		TaxonModel taxonModel = taxonDAO.loadTaxon(id);
+		
+		VascanAPIResponseElement apiResponseElement = new VascanAPIResponseElement();
+		
+		apiResponseElement.setSearchedId(id);
 		
 		if(taxonModel != null){
-			apiResponse.setNumResults(1);
-			fillVascanAPIResponse(apiResponse,Arrays.asList(id));
+			apiResponseElement.setNumMatches(1);
+			fillVascanAPIResponse(apiResponseElement,Arrays.asList(id),Arrays.asList(1.0f)); //not sure 1.0 is good
 		}
 		else{
-			apiResponse.setNumResults(0);
+			apiResponseElement.setNumMatches(0);
 		}
+		apiResponse.addVascanAPIResponse(apiResponseElement);
 		return apiResponse;
 	}
 	
@@ -96,26 +109,29 @@ public class APIServiceImpl implements APIService{
 	 * @param searchTerm
 	 * @return VascanAPIResponse object, never null
 	 */
-	private VascanAPIResponse search(String searchTerm) {
+	private VascanAPIResponseElement search(String searchTerm) {
 		String pSearchTerm = parseScientificName(searchTerm);
 		LimitedResult<List<NameConceptModelIF>> searchResult = nameDAO.search(pSearchTerm,false);
 		
-		VascanAPIResponse apiResponse = new VascanAPIResponse();
-		apiResponse.setApiVersion(API_VERSION);
-		apiResponse.setNumResults(Long.valueOf(searchResult.getTotal_rows()).intValue());
-		apiResponse.setSearchTerm(searchTerm);
+		VascanAPIResponseElement apiResponse = new VascanAPIResponseElement();
+		apiResponse.setNumMatches(Long.valueOf(searchResult.getTotal_rows()).intValue());
+		apiResponse.setSearchedTerm(searchTerm);
 		
 		//build a set of unique taxon id
 		List<Integer> taxonIdList = new ArrayList<Integer>();
+		List<Float> scores = new ArrayList<Float>();
 		for(NameConceptModelIF currName : searchResult.getRows()){
 			//avoid duplicated entry (where query matches in taxon name and vernacular name of the same taxon)
 			if(!taxonIdList.contains(currName.getTaxonId())){
 				taxonIdList.add(currName.getTaxonId());
+				System.out.println(currName.getTaxonId()+":"+currName.getScore());
+				//get the score!!
+				scores.add(currName.getScore());
 			}
 		}
 
 		if(!taxonIdList.isEmpty()){
-			fillVascanAPIResponse(apiResponse,taxonIdList);
+			fillVascanAPIResponse(apiResponse,taxonIdList,scores);
 		}
 		return apiResponse;
 	}
@@ -124,39 +140,66 @@ public class APIServiceImpl implements APIService{
 	 * Fill the VascanAPIResponse from a list of taxonID.
 	 * @param taxonIdList all taxonID related to a single VascanAPIResponse
 	 */
-	private void fillVascanAPIResponse(VascanAPIResponse apiResponse, List<Integer> taxonIdList){
+	private void fillVascanAPIResponse(VascanAPIResponseElement apiResponse, List<Integer> taxonIdList, List<Float> scores){
 		List<TaxonModel> taxonModelList = taxonDAO.loadTaxonList(taxonIdList);
 		List<TaxonModel> parentsList;
+		TaxonAPIResult orderedTar[] = new TaxonAPIResult[scores.size()];
 		TaxonAPIResult tar;
+		TaxonomicAssertionAPIResult taxonomicAssertion;
+		
 		for(TaxonModel currTaxonModel : taxonModelList){
 			parentsList = currTaxonModel.getParents();
+			
+			tar = createTaxonAPIResult(currTaxonModel);
 			if(currTaxonModel.getStatus().getId() == Status.SYNONYM){
 				//synonyms can have more than one parent so we loop over parents
 				//end add a new entry for each of the parents
 				for(TaxonModel currParent : parentsList){
-					tar = createTaxonAPIResult(currTaxonModel);
-					tar.setAcceptedNameUsageID(currParent.getId());
-					tar.setAcceptedNameUsage(currParent.getLookup().getCalnameauthor());
-					apiResponse.addResult(tar);
+					taxonomicAssertion = createTaxonomicAssertionAPIResult(currTaxonModel);
+					taxonomicAssertion.setAcceptedNameUsageID(currParent.getId());
+					taxonomicAssertion.setAcceptedNameUsage(currParent.getLookup().getCalnameauthor());
+					tar.addTaxonomicAssertion(taxonomicAssertion);
 				}
 			}
 			else{ //accepted taxon
-				tar = createTaxonAPIResult(currTaxonModel);
+				taxonomicAssertion = createTaxonomicAssertionAPIResult(currTaxonModel);
 				//this will be false for the root only
 				if(parentsList.size() == 1){
-					tar.setParentNameUsageID(parentsList.get(0).getId());
+					taxonomicAssertion.setParentNameUsageID(parentsList.get(0).getId());
 				}
-				tar.setHigherClassification(currTaxonModel.getLookup().getHigherclassification());
-				tar.setAcceptedNameUsageID(currTaxonModel.getId());
-				tar.setAcceptedNameUsage(currTaxonModel.getLookup().getCalnameauthor());
-				apiResponse.addResult(tar);
+				taxonomicAssertion.setHigherClassification(currTaxonModel.getLookup().getHigherclassification());
+				taxonomicAssertion.setAcceptedNameUsageID(currTaxonModel.getId());
+				taxonomicAssertion.setAcceptedNameUsage(currTaxonModel.getLookup().getCalnameauthor());
+				tar.addTaxonomicAssertion(taxonomicAssertion);
 			}
+			int indexOf = taxonIdList.indexOf(currTaxonModel.getId());
+			tar.setScore(scores.get(indexOf));
+			orderedTar[indexOf] = tar;
+		}
+		
+		for(TaxonAPIResult currTar : orderedTar){
+			apiResponse.addResult(currTar);
 		}
 	}
 	
 	/**
+	 * Creates a TaxonomicAssertionAPIResult and fill data that is common to accepted and synonym taxon.
+	 * @param taxonModel
+	 * @return newly created TaxonomicAssertionAPIResult
+	 */
+	private TaxonomicAssertionAPIResult createTaxonomicAssertionAPIResult(TaxonModel taxonModel){
+		TaxonomicAssertionAPIResult taxonomicAssertion = new TaxonomicAssertionAPIResult();
+		TaxonLookupModel tlm = taxonModel.getLookup();
+		
+		taxonomicAssertion.setTaxonomicStatus(tlm.getStatus());
+		taxonomicAssertion.setNameAccordingTo(taxonModel.getReference().getReference());
+		taxonomicAssertion.setNameAccordingToID(taxonModel.getReference().getUrl());
+		return taxonomicAssertion;
+	}
+	
+	/**
 	 * Creates a TaxonAPIResult and fill data that is common to accepted and synonym taxon.
-	 * @param currTaxonModel
+	 * @param taxonModel
 	 * @return newly created TaxonAPIResult
 	 */
 	private TaxonAPIResult createTaxonAPIResult(TaxonModel taxonModel){
@@ -164,8 +207,6 @@ public class APIServiceImpl implements APIService{
 		
 		TaxonAPIResult tar = new TaxonAPIResult();
 		tar.setTaxonID(taxonModel.getId());
-		tar.setTaxonomicStatus(tlm.getStatus());
-		tar.setNameAccordingTo(taxonModel.getReference().getReference());
 		
 		tar.setCanonicalName(tlm.getCalname());
 		tar.setScientificName(tlm.getCalnameauthor());
@@ -177,13 +218,14 @@ public class APIServiceImpl implements APIService{
 			vnar.setVernacularName(currVernacular.getName());
 			vnar.setLanguage(currVernacular.getLanguage());
 			vnar.setSource(currVernacular.getReference().getReference());
+			vnar.setPreferredName(currVernacular.getStatus().getId() == Status.ACCEPTED);
 			tar.addVernacularName(vnar);
 		}
 		
 		for(DistributionModel currDistribution : taxonModel.getDistribution()){
 			DistributionAPIResult dar = new DistributionAPIResult();
 			dar.setLocality(currDistribution.getRegion().getRegion());
-			dar.setLocationID(currDistribution.getRegion().getIso3166_2());
+			dar.setLocationID(ISO3166_2_PREFIX+currDistribution.getRegion().getIso3166_2());
 			dar.setOccurrenceStatus(currDistribution.getDistributionStatus().getDistributionstatus());
 			dar.setEstablishmentMeans(currDistribution.getDistributionStatus().getEstablishmentmeans());
 			tar.addDistribution(dar);

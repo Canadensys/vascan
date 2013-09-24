@@ -57,7 +57,7 @@ public class APIControllerTest {
     }
 	
     @Test
-	public void testApiGet() throws Exception{
+	public void testApiGetJSON() throws Exception{
     	//test GET with a synonym with 2 parents
         this.mockMvc.perform(get("/api/0.1/search.json").param("q","Amaranthus graecizans"))
         	.andExpect(status().isOk())
@@ -65,6 +65,17 @@ public class APIControllerTest {
         	.andExpect(content().contentType("application/json;charset=UTF-8")) //this is a bug in Spring 3.2, charset should be avoided  .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         	.andExpect(jsonPath("$.results[0].taxonID").value(9946))
         	.andExpect(jsonPath("$.results[1].taxonID").value(9946));
+    }
+    
+    @Test
+	public void testApiGetXML() throws Exception{
+    	//test GET with a synonym with 2 parents
+        this.mockMvc.perform(get("/api/0.1/search.xml").param("q","Amaranthus graecizans"))
+        	.andExpect(status().isOk())
+        	.andExpect(content().encoding("UTF-8"))
+        	.andExpect(content().contentType("application/xml"));
+        	//.andExpect(jsonPath("$.results[0].taxonID").value(9946))
+        	//.andExpect(jsonPath("$.results[1].taxonID").value(9946));
     }
     
     @Test
@@ -125,14 +136,14 @@ public class APIControllerTest {
         	.andExpect(jsonPath("$[1].localIdentifier").value("9"));
     }
     
-    @Test //we should not accept unknown extension
-	public void testWrongResourceExt() throws Exception{
-    	//test GET with a synonym with 2 parents
-        this.mockMvc.perform(get("/api/0.1/search.jason").param("q","8|Acer circinatum"))
-        	.andExpect(status().isOk())
-        	.andExpect(content().encoding("UTF-8"))
-        	.andExpect(content().contentType("application/json;charset=UTF-8"));
-    }
+//    @Test //we should not accept unknown extension
+//	public void testWrongResourceExt() throws Exception{
+//    	//test GET with a synonym with 2 parents
+//        this.mockMvc.perform(get("/api/0.1/search.jason").param("q","8|Acer circinatum"))
+//        	.andExpect(status().isOk())
+//        	.andExpect(content().encoding("UTF-8"))
+//        	.andExpect(content().contentType("application/json;charset=UTF-8"));
+//    }
     
     @Test
 	public void testJSONP() throws Exception{
