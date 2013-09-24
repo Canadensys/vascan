@@ -11,6 +11,7 @@
 				<li><a href="${rc.getContextUrl("/search"+rc.getMessage("url_language"))}">${rc.getMessage("namesearch_title1")}</a></li>
 				<li><a href="${rc.getContextUrl("/checklist"+rc.getMessage("url_language"))}">${rc.getMessage("checklist_title1")}</a></li>
 				<li><a href="${rc.getContextUrl("/about"+rc.getMessage("url_language"))}">${rc.getMessage("about_title1")}</a></li>
+				<li><a href="${rc.getContextUrl("/api"+rc.getMessage("url_language"))}">${rc.getMessage("api_title1")}</a></li>
 				<li><a href="${rc.getMessage("url_dataset")}">${rc.getMessage("dataset_title1")}</a></li>
 			</ul>
 	

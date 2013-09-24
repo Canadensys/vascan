@@ -27,4 +27,12 @@ public class PagesController {
 		model.put("currentDate", SDF.format(Calendar.getInstance().getTime()));
 		return new ModelAndView("about", model);
 	}
+
+	@RequestMapping(value={"/api"}, method={RequestMethod.GET})
+	public ModelAndView handleApiPage(){
+		
+		Map<String,String> model = new HashMap<String,String>();
+		model.put("currentDate", SDF.format(Calendar.getInstance().getTime()));
+		return new ModelAndView("api", model);
+	}
 }

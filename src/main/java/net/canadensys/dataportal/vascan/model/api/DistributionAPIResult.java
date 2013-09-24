@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class DistributionAPIResult {
 	
-	private String locationID; // : “CA-BC”,
+	private String locationID; // : “ISO 3166-2:CA-BC”,
 	private String locality; // : “British Columbia”,
 	private String establishmentMeans; // : “native”,
 	private String occurrenceStatus; // : “present”
@@ -15,7 +15,7 @@ public class DistributionAPIResult {
 		return locationID;
 	}
 	public void setLocationID(String locationID) {
-		this.locationID = locationID;
+		this.locationID = "ISO 3166-2:" + locationID;
 	}
 	public String getLocality() {
 		return locality;
