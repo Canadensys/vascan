@@ -30,7 +30,7 @@ public class VascanAPIResponse {
 	}
 	
 	@XmlElementWrapper(name="results")
-	@XmlElement(name="result")
+	@XmlElement(name="searchedName")
 	@JsonProperty(value="results")
 	public List<VascanAPIResponseElement> getResults() {
 		return results;

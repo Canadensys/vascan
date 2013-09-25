@@ -21,6 +21,7 @@ import net.canadensys.dataportal.vascan.model.api.VascanAPIResponseElement;
 import net.canadensys.dataportal.vascan.model.api.VernacularNameAPIResult;
 import net.canadensys.query.LimitedResult;
 
+import org.apache.commons.lang3.StringUtils;
 import org.gbif.api.model.checklistbank.ParsedName;
 import org.gbif.api.vocabulary.NameType;
 import org.gbif.nameparser.NameParser;
@@ -230,7 +231,9 @@ public class APIServiceImpl implements APIService{
 		for(DistributionModel currDistribution : taxonModel.getDistribution()){
 			DistributionAPIResult dar = new DistributionAPIResult();
 			dar.setLocality(currDistribution.getRegion().getRegion());
-			dar.setLocationID(ISO3166_2_PREFIX+currDistribution.getRegion().getIso3166_2());
+			if(StringUtils.isNotBlank(currDistribution.getRegion().getIso3166_2())){
+				dar.setLocationID(ISO3166_2_PREFIX+currDistribution.getRegion().getIso3166_2());
+			}
 			dar.setOccurrenceStatus(currDistribution.getDistributionStatus().getDistributionstatus());
 			dar.setEstablishmentMeans(currDistribution.getDistributionStatus().getEstablishmentmeans());
 			tar.addDistribution(dar);

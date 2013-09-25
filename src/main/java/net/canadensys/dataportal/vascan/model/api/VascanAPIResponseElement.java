@@ -54,7 +54,7 @@ public class VascanAPIResponseElement {
 	}
 
 	@XmlElementWrapper(name="matches")
-	@XmlElement(name="searchedName")
+	@XmlElement(name="result")
 	public List<TaxonAPIResult> getMatches() {
 		return matches;
 	}
