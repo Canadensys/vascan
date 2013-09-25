@@ -19,7 +19,7 @@ public class VascanAPIResponse {
 	
 	private String apiVersion;
 	
-	private List<VascanAPIResponseElement> vascanAPIResponseElements;
+	private List<VascanAPIResponseElement> results;
 	
 	public String getApiVersion() {
 		return apiVersion;
@@ -32,15 +32,15 @@ public class VascanAPIResponse {
 	@XmlElementWrapper(name="results")
 	@XmlElement(name="result")
 	@JsonProperty(value="results")
-	public List<VascanAPIResponseElement> getVascanAPIResponseElements() {
-		return vascanAPIResponseElements;
+	public List<VascanAPIResponseElement> getResults() {
+		return results;
 	}
 	
-	public void addVascanAPIResponse(VascanAPIResponseElement vascanAPIResponseElement){
-		if(vascanAPIResponseElements == null){
-			vascanAPIResponseElements = new ArrayList<VascanAPIResponseElement>();
+	public void addResult(VascanAPIResponseElement vascanAPIResponseElement){
+		if(results == null){
+			results = new ArrayList<VascanAPIResponseElement>();
 		}
-		vascanAPIResponseElements.add(vascanAPIResponseElement);
+		results.add(vascanAPIResponseElement);
 	}
 
 }

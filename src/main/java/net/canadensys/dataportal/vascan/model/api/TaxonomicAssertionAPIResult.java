@@ -3,6 +3,12 @@ package net.canadensys.dataportal.vascan.model.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * API response for taxonomic assertions of taxa.
+ * A taxon can contains one or more taxonomic assertions.
+ * @author canadensys
+ *
+ */
 @JsonInclude(Include.NON_NULL)
 public class TaxonomicAssertionAPIResult {
 	

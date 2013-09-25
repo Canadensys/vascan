@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * API Service layer implementation.
  * @author canadensys
  *
  */
@@ -62,7 +63,7 @@ public class APIServiceImpl implements APIService{
 		for(String currId : idList){
 			apiResponseElement = search(dataList.get(idx));
 			apiResponseElement.setLocalIdentifier(currId);
-			apiResponse.addVascanAPIResponse(apiResponseElement);
+			apiResponse.addResult(apiResponseElement);
 			idx++;
 		}
 		return apiResponse;
@@ -76,7 +77,7 @@ public class APIServiceImpl implements APIService{
 		
 		VascanAPIResponseElement apiResponseElement = search(searchTerm);
 		apiResponseElement.setLocalIdentifier(id);
-		apiResponse.addVascanAPIResponse(apiResponseElement);
+		apiResponse.addResult(apiResponseElement);
 		return apiResponse;
 	}
 	
@@ -99,7 +100,7 @@ public class APIServiceImpl implements APIService{
 		else{
 			apiResponseElement.setNumMatches(0);
 		}
-		apiResponse.addVascanAPIResponse(apiResponseElement);
+		apiResponse.addResult(apiResponseElement);
 		return apiResponse;
 	}
 	
@@ -118,13 +119,12 @@ public class APIServiceImpl implements APIService{
 		apiResponse.setSearchedTerm(searchTerm);
 		
 		//build a set of unique taxon id
-		List<Integer> taxonIdList = new ArrayList<Integer>();
-		List<Float> scores = new ArrayList<Float>();
+		List<Integer> taxonIdList = new ArrayList<Integer>(searchResult.getRows().size());
+		List<Float> scores = new ArrayList<Float>(searchResult.getRows().size());
 		for(NameConceptModelIF currName : searchResult.getRows()){
 			//avoid duplicated entry (where query matches in taxon name and vernacular name of the same taxon)
 			if(!taxonIdList.contains(currName.getTaxonId())){
 				taxonIdList.add(currName.getTaxonId());
-				System.out.println(currName.getTaxonId()+":"+currName.getScore());
 				//get the score!!
 				scores.add(currName.getScore());
 			}
@@ -138,18 +138,22 @@ public class APIServiceImpl implements APIService{
 	
 	/**
 	 * Fill the VascanAPIResponse from a list of taxonID.
+	 * TODO : optimize function to use arrays instead of lists
 	 * @param taxonIdList all taxonID related to a single VascanAPIResponse
+	 * @param scores scores associated to taxonId
 	 */
 	private void fillVascanAPIResponse(VascanAPIResponseElement apiResponse, List<Integer> taxonIdList, List<Float> scores){
 		List<TaxonModel> taxonModelList = taxonDAO.loadTaxonList(taxonIdList);
 		List<TaxonModel> parentsList;
+		
+		//use an array to keep TaxonAPIResult in the correct order
 		TaxonAPIResult orderedTar[] = new TaxonAPIResult[scores.size()];
+		int indexOfTaxon;
 		TaxonAPIResult tar;
 		TaxonomicAssertionAPIResult taxonomicAssertion;
 		
 		for(TaxonModel currTaxonModel : taxonModelList){
 			parentsList = currTaxonModel.getParents();
-			
 			tar = createTaxonAPIResult(currTaxonModel);
 			if(currTaxonModel.getStatus().getId() == Status.SYNONYM){
 				//synonyms can have more than one parent so we loop over parents
@@ -172,13 +176,14 @@ public class APIServiceImpl implements APIService{
 				taxonomicAssertion.setAcceptedNameUsage(currTaxonModel.getLookup().getCalnameauthor());
 				tar.addTaxonomicAssertion(taxonomicAssertion);
 			}
-			int indexOf = taxonIdList.indexOf(currTaxonModel.getId());
-			tar.setScore(scores.get(indexOf));
-			orderedTar[indexOf] = tar;
+			//keep the ordering of taxon
+			indexOfTaxon = taxonIdList.indexOf(currTaxonModel.getId());
+			tar.setScore(scores.get(indexOfTaxon));
+			orderedTar[indexOfTaxon] = tar;
 		}
-		
+		//add them all to the apiResponse in the correct order.
 		for(TaxonAPIResult currTar : orderedTar){
-			apiResponse.addResult(currTar);
+			apiResponse.addMatch(currTar);
 		}
 	}
 	

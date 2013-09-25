@@ -3,37 +3,35 @@ package net.canadensys.dataportal.vascan.model.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
- * API response object. The API can return a single VascanAPIResponse or a list of them.
- * 
+ * Response element object. If the API need to send back a list of names, multiple VascanAPIResponseElement are used.
  * @author canadensys
  *
  */
 @JsonInclude(Include.NON_NULL)
-@XmlRootElement
-public class VascanAPIResponse {
+public class VascanAPIResponseElement {
 	
 	private String searchedTerm;
 	private Integer searchedId;
 	private String localIdentifier;
 	
-	private int numResults;
-	private String apiVersion;
+	private int numMatches;
 
-	private List<TaxonAPIResult> results;
+	private List<TaxonAPIResult> matches;
 
 	public String getSearchedTerm() {
 		return searchedTerm;
 	}
-	public void setSearchTerm(String searchedTerm) {
+	public void setSearchedTerm(String searchedTerm) {
 		this.searchedTerm = searchedTerm;
 	}
-
+	
 	public Integer getSearchedId() {
 		return searchedId;
 	}
@@ -48,32 +46,26 @@ public class VascanAPIResponse {
 		this.localIdentifier = localIdentifier;
 	}
 	
-	public int getNumResults() {
-		return numResults;
+	public int getNumMatches() {
+		return numMatches;
 	}
-	public void setNumResults(int numResults) {
-		this.numResults = numResults;
+	public void setNumMatches(int numMatches) {
+		this.numMatches = numMatches;
 	}
 
-	public List<TaxonAPIResult> getResults() {
-		return results;
+	@XmlElementWrapper(name="matches")
+	@XmlElement(name="searchedName")
+	public List<TaxonAPIResult> getMatches() {
+		return matches;
 	}
-	public void setResults(List<TaxonAPIResult> results) {
-		this.results = results;
+	public void setMatches(List<TaxonAPIResult> matches) {
+		this.matches = matches;
 	}
 	
-	public void addResult(TaxonAPIResult result){
-		if(results == null){
-			results = new ArrayList<TaxonAPIResult>();
+	public void addMatch(TaxonAPIResult match){
+		if(matches == null){
+			matches = new ArrayList<TaxonAPIResult>();
 		}
-		results.add(result);
+		matches.add(match);
 	}
-
-	public String getApiVersion() {
-		return apiVersion;
-	}
-	public void setApiVersion(String apiVersion) {
-		this.apiVersion = apiVersion;
-	}
-
 }

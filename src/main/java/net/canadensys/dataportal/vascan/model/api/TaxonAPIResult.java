@@ -24,7 +24,6 @@ public class TaxonAPIResult {
 	private String scientificNameAuthorship;
 	
 	private String canonicalName;
-
 	private String taxonRank;
 
 	@XmlElementWrapper(name="taxonomicAssertions")
@@ -37,12 +36,17 @@ public class TaxonAPIResult {
 	private String habit;
     //modified : "2013-03-08 00:00:0"
 
+	/**
+	 * The the score given to this taxon in a search context.
+	 * @return
+	 */
 	public float getScore() {
 		return score;
 	}
 	public void setScore(float score) {
 		this.score = score;
 	}
+	
 	public String getScientificName() {
 		return scientificName;
 	}
@@ -124,6 +128,4 @@ public class TaxonAPIResult {
 	public void setHabit(String habit) {
 		this.habit = habit;
 	}
-
-
 }
