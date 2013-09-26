@@ -1,5 +1,6 @@
 package net.canadensys.dataportal.vascan.controller.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -91,4 +92,38 @@ public class APIControllerHelper {
 		}
 		return false;
 	}
+	
+	/**
+	 * Should be moved to canadensys core
+	 * @author canadensys
+	 *
+	 */
+	public static boolean containsOnlyNull(Object... values){
+		for(Object o : values){
+			if(o!= null){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Parse a list of String into a list of Integer.
+	 * If one element can not be parsed, this method will return null.
+	 * @param strList
+	 * @return list of all String parsed as Integer or null
+	 */
+	public static List<Integer> toIntegerList(List<String> strList){
+		List<Integer> intList = new ArrayList<Integer>();
+		try{
+			for(String str : strList){
+				intList.add(Integer.parseInt(str));
+			}
+		}
+		catch(NumberFormatException nfEx){
+			return null;
+		}
+		return intList;
+	}
+
 }

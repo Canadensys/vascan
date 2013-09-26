@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 @JsonInclude(Include.NON_NULL)
 public class TaxonAPIResult {
-	private float score;
+	//private float score;
 	private Integer taxonID;
 	
 	private String scientificName;
@@ -40,12 +40,12 @@ public class TaxonAPIResult {
 	 * The the score given to this taxon in a search context.
 	 * @return
 	 */
-	public float getScore() {
-		return score;
-	}
-	public void setScore(float score) {
-		this.score = score;
-	}
+//	public float getScore() {
+//		return score;
+//	}
+//	public void setScore(float score) {
+//		this.score = score;
+//	}
 	
 	public String getScientificName() {
 		return scientificName;

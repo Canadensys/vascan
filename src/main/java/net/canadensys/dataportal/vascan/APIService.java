@@ -34,5 +34,12 @@ public interface APIService {
 	 * @param taxonID
 	 * @return
 	 */
-	public VascanAPIResponse search(Integer taxonID);
+	public VascanAPIResponse searchTaxonId(Integer taxonID);
+	
+	/**
+	 * Search for a list of taxonID
+	 * @param taxonIdList
+	 * @return
+	 */
+	public VascanAPIResponse searchTaxonId(List<Integer> taxonIdList);
 }

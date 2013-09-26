@@ -44,6 +44,13 @@ public class APIController {
 	private static final APIErrorResult NOT_FOUND_RESULT = new APIErrorResult("not found");
 	private static final APIErrorResult BAD_REQUEST_RESULT = new APIErrorResult("bad request");
 	
+	/**
+	 * Handles GET API calls where we can only receive 1 name or a taxonID.
+	 * @param q
+	 * @param version
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/api/{version}/search",method={RequestMethod.GET})
 	public @ResponseBody Object handleGetSearch(@RequestParam String q, @PathVariable String version, HttpServletResponse response){
 		response.setCharacterEncoding("UTF-8");
@@ -52,26 +59,27 @@ public class APIController {
 		}
 		
 		String[] dataParts = q.split(APIControllerHelper.DATA_SEPARATOR,2);
-		
+		//check if a local identifier is present
 		if(dataParts.length == 1){
+			//if a number is provided, search the taxonID, if not, search the name
 			int possibleTaxonID = NumberUtils.toInt(q, -1);
 			if(possibleTaxonID == -1){
 				return apiService.search(null,dataParts[0]);
 			}
-			return apiService.search(possibleTaxonID);
+			return apiService.searchTaxonId(possibleTaxonID);
 		}
 		else{
 			return apiService.search(dataParts[0],dataParts[1]);
 		}
 	}
 	
-	 @ExceptionHandler(value=MissingServletRequestParameterException.class)
-	 @ResponseStatus(HttpStatus.BAD_REQUEST)
-	 @ResponseBody
-	 public APIErrorResult handleException(MissingServletRequestParameterException ex) {
-		 return BAD_REQUEST_RESULT;
-	 }
-	
+	/**
+	 * Handles POST API calls where we can receive a list of names.
+	 * @param q
+	 * @param version
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/api/{version}/search",method={RequestMethod.POST})
 	public @ResponseBody Object handlePostSearch(@RequestParam String q, @PathVariable String version, HttpServletResponse response){
 		if(!apiService.getAPIVersion().equals(version)){
@@ -81,7 +89,28 @@ public class APIController {
 		List<String> idList = new ArrayList<String>();
 		APIControllerHelper.splitIdAndData(q, dataList, idList);
 		
+		//check if it's a list of taxonID
+		if(APIControllerHelper.containsOnlyNull(idList.toArray())){
+			List<Integer> taxonIdList = APIControllerHelper.toIntegerList(dataList);
+			if(taxonIdList != null){
+				return apiService.searchTaxonId(taxonIdList);
+			}
+		}
+		
 		return apiService.search(idList,dataList);
+	}
+	
+	/**
+	 * Custom MissingServletRequestParameterException handling to be able to send a JSON or XML response when a request parameter
+	 * is missing.
+	 * @param ex
+	 * @return
+	 */
+	@ExceptionHandler(value=MissingServletRequestParameterException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public APIErrorResult handleException(MissingServletRequestParameterException ex) {
+		return BAD_REQUEST_RESULT;
 	}
 	
 	/**
@@ -104,14 +133,15 @@ public class APIController {
 			
 			String json = "";
 			String[] dataParts = q.split(APIControllerHelper.DATA_SEPARATOR,2);
-			
+			//check if a local identifier is present
 			if(dataParts.length == 1){
+				//if a number is provided, search the taxonID, if not, search the name
 				int possibleTaxonID = NumberUtils.toInt(q, -1);
 				if(possibleTaxonID == -1){
 					apiResponse = apiService.search(null,dataParts[0]);
 				}
 				else{
-					apiResponse = apiService.search(possibleTaxonID);
+					apiResponse = apiService.searchTaxonId(possibleTaxonID);
 				}
 			}
 			else{

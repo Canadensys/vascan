@@ -84,7 +84,34 @@ public class APIServiceImpl implements APIService{
 	
 	@Transactional(readOnly=true)
 	@Override
-	public VascanAPIResponse search(Integer id) {
+	public VascanAPIResponse searchTaxonId(List<Integer> taxonIdList) {
+		VascanAPIResponse apiResponse = new VascanAPIResponse();
+		apiResponse.setApiVersion(API_VERSION);
+
+		VascanAPIResponseElement apiResponseElement = null;
+		TaxonModel taxonModel = null;
+		//we load the TaxonModel for each taxonID (instead of calling taxonDAO.loadTaxonList(...))
+		//to easily keep the order and handle missing taxon
+		for(Integer taxonId : taxonIdList){
+			taxonModel = taxonDAO.loadTaxon(taxonId);
+			apiResponseElement = new VascanAPIResponseElement();
+			apiResponseElement.setSearchedId(taxonId);
+			
+			if(taxonModel != null){
+				apiResponseElement.setNumMatches(1);
+				fillVascanAPIResponse(apiResponseElement,Arrays.asList(taxonId),Arrays.asList(1.0f)); //not sure 1.0 is good
+			}
+			else{
+				apiResponseElement.setNumMatches(0);
+			}
+			apiResponse.addResult(apiResponseElement);
+		}
+		return apiResponse;
+	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public VascanAPIResponse searchTaxonId(Integer id) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
 		
@@ -179,7 +206,7 @@ public class APIServiceImpl implements APIService{
 			}
 			//keep the ordering of taxon
 			indexOfTaxon = taxonIdList.indexOf(currTaxonModel.getId());
-			tar.setScore(scores.get(indexOfTaxon));
+			//tar.setScore(scores.get(indexOfTaxon));
 			orderedTar[indexOfTaxon] = tar;
 		}
 		//add them all to the apiResponse in the correct order.
