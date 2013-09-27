@@ -16,7 +16,7 @@
 			</ul>
 	
 		<#if currentPage == "name" && extra.isDisambiguation != true>
-		<//Link to taxon page>
+		<#--Link to taxon page-->
 			<#if data.isRedirect != true && extra.isSynonym == true>
 				<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/taxon/"+data.synonymWarningId+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>
 			<#elseif data.isRedirect != true && extra.isVernacular == true>

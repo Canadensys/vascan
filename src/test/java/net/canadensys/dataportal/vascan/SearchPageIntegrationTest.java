@@ -59,10 +59,12 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		assertTrue(searchDropdown.getText().contains("Vernacular Names"));
 		
 		assertTrue(searchDropdown.getText().contains("Carex abbreviata"));
-
+		
+		String clickedElement = searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(3)")).getText();
 		searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(3)")).click();
 		PageFactory.initElements(browser, this);
-		assertEquals("Carex umbellata",contentDiv.findElement(By.cssSelector("h1")).getText());
+		//check the content of the contentDiv since accepted taxon are h1 and synonym h4
+		assertTrue(contentDiv.getText().contains(clickedElement));
 	}
 
 	@Test
