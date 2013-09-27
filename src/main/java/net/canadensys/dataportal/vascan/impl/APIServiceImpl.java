@@ -254,12 +254,16 @@ public class APIServiceImpl implements APIService{
 			vnar.setPreferredName(currVernacular.getStatus().getId() == Status.ACCEPTED);
 			tar.addVernacularName(vnar);
 		}
-		
+		String iso3166_2Code;
+		DistributionAPIResult dar = null;
 		for(DistributionModel currDistribution : taxonModel.getDistribution()){
-			DistributionAPIResult dar = new DistributionAPIResult();
+			dar = new DistributionAPIResult();
 			dar.setLocality(currDistribution.getRegion().getRegion());
-			if(StringUtils.isNotBlank(currDistribution.getRegion().getIso3166_2())){
-				dar.setLocationID(ISO3166_2_PREFIX+currDistribution.getRegion().getIso3166_2());
+			iso3166_2Code = currDistribution.getRegion().getIso3166_2();
+			//avoid null as location id
+			dar.setLocationID(StringUtils.defaultString(iso3166_2Code));
+			if(StringUtils.isNotBlank(iso3166_2Code)){
+				dar.setLocationID(ISO3166_2_PREFIX+iso3166_2Code);
 			}
 			dar.setOccurrenceStatus(currDistribution.getDistributionStatus().getDistributionstatus());
 			dar.setEstablishmentMeans(currDistribution.getDistributionStatus().getEstablishmentmeans());

@@ -41,6 +41,10 @@ public class APIController {
 	//Own Jackson Object Mapper to add JSONP support
 	public static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
 	
+	//could be moved to configuration
+	public static final int MAX_POST_ELEMENT = 200;
+	
+	private static final APIErrorResult MAX_POST_ELEMENT_EXCEEDED_RESULT = new APIErrorResult("Maximum POST element exceeded");
 	private static final APIErrorResult NOT_FOUND_RESULT = new APIErrorResult("not found");
 	private static final APIErrorResult BAD_REQUEST_RESULT = new APIErrorResult("bad request");
 	
@@ -89,6 +93,11 @@ public class APIController {
 		List<String> idList = new ArrayList<String>();
 		APIControllerHelper.splitIdAndData(q, dataList, idList);
 		
+		//check the allowed number of elements
+		if(idList.size() > MAX_POST_ELEMENT){
+			return onMaxPostValueExceeded(response);
+		}
+		
 		//check if it's a list of taxonID
 		if(APIControllerHelper.containsOnlyNull(idList.toArray())){
 			List<Integer> taxonIdList = APIControllerHelper.toIntegerList(dataList);
@@ -96,7 +105,6 @@ public class APIController {
 				return apiService.searchTaxonId(taxonIdList);
 			}
 		}
-		
 		return apiService.search(idList,dataList);
 	}
 	
@@ -170,12 +178,23 @@ public class APIController {
 	}
 	
 	/**
-	 * Return an APIErrorResult object used to send the response in the proper format (json, xml)
+	 * Return an APIErrorResult object used to send the response in the proper format (json, xml).
 	 * @param response used to set the 404 status
 	 * @return NOT_FOUND_RESULT
 	 */
 	private APIErrorResult onNotFound(HttpServletResponse response){
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return NOT_FOUND_RESULT;
+	}
+	
+	/**
+	 * Return an APIErrorResult object used to send the response in the proper format (json, xml).
+	 * response used to set the 400 status
+	 * @param response
+	 * @return
+	 */
+	private APIErrorResult onMaxPostValueExceeded(HttpServletResponse response){
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		return MAX_POST_ELEMENT_EXCEEDED_RESULT;
 	}
 }
