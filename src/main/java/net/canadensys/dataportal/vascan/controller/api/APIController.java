@@ -12,6 +12,8 @@ import net.canadensys.dataportal.vascan.model.api.APIErrorResult;
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class APIController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(APIController.class);
+	
 	@Autowired
 	private APIService apiService;
 	
@@ -56,11 +60,14 @@ public class APIController {
 	 * @return
 	 */
 	@RequestMapping(value="/api/{version}/search",method={RequestMethod.GET})
-	public @ResponseBody Object handleGetSearch(@RequestParam String q, @PathVariable String version, HttpServletResponse response){
+	public @ResponseBody Object handleGetSearch(@RequestParam String q, @PathVariable String version,
+			HttpServletRequest request, HttpServletResponse response){
 		response.setCharacterEncoding("UTF-8");
 		if(!apiService.getAPIVersion().equals(version)){
 			return onNotFound(response);
 		}
+		
+		LOGGER.info("search|{}|{}|{}||{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 		
 		String[] dataParts = q.split(APIControllerHelper.DATA_SEPARATOR,2);
 		//check if a local identifier is present
@@ -85,7 +92,8 @@ public class APIController {
 	 * @return
 	 */
 	@RequestMapping(value="/api/{version}/search",method={RequestMethod.POST})
-	public @ResponseBody Object handlePostSearch(@RequestParam String q, @PathVariable String version, HttpServletResponse response){
+	public @ResponseBody Object handlePostSearch(@RequestParam String q, @PathVariable String version,
+			HttpServletRequest request, HttpServletResponse response){
 		if(!apiService.getAPIVersion().equals(version)){
 			return onNotFound(response);
 		}
@@ -97,6 +105,8 @@ public class APIController {
 		if(idList.size() > MAX_POST_ELEMENT){
 			return onMaxPostValueExceeded(response);
 		}
+		
+		LOGGER.info("search|{}|{}|{}||{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 		
 		//check if it's a list of taxonID
 		if(APIControllerHelper.containsOnlyNull(idList.toArray())){
@@ -164,7 +174,7 @@ public class APIController {
 				response.setContentLength(responseTxt.length());
 				response.getWriter().close();
 				
-				//LOGGER.info("Date(jsonp)|{}|{}|{}", request.getMethod(), request.getRequestURI(), request.getRemoteAddr());
+				LOGGER.info("search(jsonp)|{}|{}|{}||{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 				
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();

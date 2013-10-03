@@ -10,7 +10,7 @@ Dependencies
 ------------
 ### Libraries
 * [Spring Framework 3.2.4](http://www.springsource.org/spring-framework)
-* [Canadensys Data Access 2.0.1](https://github.com/Canadensys/canadensys-data-access)
+* [Canadensys Data Access 2.1.1](https://github.com/Canadensys/canadensys-data-access)
 * [Hibernate 4.1](http://www.hibernate.org/)
 * [Freemarker 2.3.18](http://freemarker.sourceforge.net/)
 * [H2 Database 1.3.172](http://www.h2database.com) (for unit testing only)
