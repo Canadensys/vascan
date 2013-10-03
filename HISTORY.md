@@ -1,7 +1,7 @@
 Version History
 ===============
 
-Version 3.1.0 2013-09-27
+Version 3.1.0 2013-10-03
 * Added VASCAN API
 
 Version 3.0.4 2013-09-12
