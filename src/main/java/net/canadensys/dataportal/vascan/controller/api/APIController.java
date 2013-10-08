@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.canadensys.dataportal.vascan.APIService;
 import net.canadensys.dataportal.vascan.model.api.APIErrorResult;
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
+import net.canadensys.utils.ArrayUtils;
+import net.canadensys.utils.ListUtils;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -109,8 +111,8 @@ public class APIController {
 		LOGGER.info("search|{}|{}|{}||{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 		
 		//check if it's a list of taxonID
-		if(APIControllerHelper.containsOnlyNull(idList.toArray())){
-			List<Integer> taxonIdList = APIControllerHelper.toIntegerList(dataList);
+		if(ArrayUtils.containsOnlyNull(idList.toArray())){
+			List<Integer> taxonIdList = ListUtils.toIntegerList(dataList,true);
 			if(taxonIdList != null){
 				return apiService.searchTaxonId(taxonIdList);
 			}
