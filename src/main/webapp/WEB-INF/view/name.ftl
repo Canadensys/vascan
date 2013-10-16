@@ -14,7 +14,7 @@
 <#if data.isVernacularName == true>
 	<#list data.disambiguationVernaculars as vernacular>
 		<p class="sprite sprite-${vernacular.status?lower_case}">
-		<a href="${rc.getContextUrl('/vernacular/'+vernacular.vernacularid)}">${vernacular.name}</a> ${rc.getMessage("vernacular_" + vernacular.status?lower_case + "_msg1",[refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,true,false,false),rc.getMessage("language_"+rc.getLocale().getLanguage())])}
+		<a href="${rc.getContextUrl('/vernacular/'+vernacular.vernacularid)}">${vernacular.name}</a> ${rc.getMessage("vernacular_" + vernacular.status?lower_case + "_msg1",[refBuilder(vernacular.link,vernacular.reference,vernacular.referenceShort,true,false,false),rc.getMessage("language_"+vernacular.language)])}
 		</p>
 		<p class="sprite sprite-redirect_${vernacular.taxon.status?lower_case}">
 		<a href="${rc.getContextUrl('/taxon/'+vernacular.taxon.taxonId)}">${vernacular.taxon.fullScientificName}</a> ${rc.getMessage("taxon_" + vernacular.taxon.status?lower_case + "_no_strong_msg1",[prefixFrenchRank(rc.getMessage("rank_"+vernacular.taxon.rank?lower_case))?lower_case,refBuilder(vernacular.taxon.link,vernacular.taxon.reference,vernacular.taxon.referenceShort,false,true,false)])}

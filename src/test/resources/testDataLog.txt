@@ -1,0 +1,13 @@
+This file contains all the data used in tests to eventually create a sql file to insert all the data in testing environment.
+
+
+-Taxon-
+73	Equisetopsida
+14992	Carex arctata var. faxoni
+15428	Carex abdita
+
+-Vernacular names-
+buis
+Taxus canadensis
+cosmos
+chrysanthème arctique

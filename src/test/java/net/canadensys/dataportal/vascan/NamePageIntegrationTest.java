@@ -1,6 +1,6 @@
 package net.canadensys.dataportal.vascan;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -59,6 +59,15 @@ public class NamePageIntegrationTest extends AbstractIntegrationTest{
 		//bind the WebElement to the current page
 		PageFactory.initElements(browser, this);
 		
+		assertEquals("div",footerDiv.getTagName());
+	}
+	
+	@Test
+	public void testVernacularDisambiguationPage(){
+		browser.get(TESTING_SERVER_URL + "name/chrysanthème arctique");
+		//bind the WebElement to the current page
+		PageFactory.initElements(browser, this);
+		assertTrue(contentDiv.findElement(By.cssSelector("p.sprite-accepted")).getText().contains("is an accepted French vernacular name for:"));
 		assertEquals("div",footerDiv.getTagName());
 	}
 	
