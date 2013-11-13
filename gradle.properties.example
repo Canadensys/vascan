@@ -1,1 +1,3 @@
 org.gradle.jvmargs=-XX:MaxPermSize=128M
+parentScript = ../canadensys_web_build.gradle
+canadensysViewIncludes = ../canadensys-view-includes/

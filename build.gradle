@@ -1,0 +1,116 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+apply from: "${parentScript}"
+
+import static groovy.io.FileType.FILES
+
+//Make sure tomcat plugin will run with the right encoding
+System.setProperty('file.encoding', 'UTF-8')
+
+def group = 'canadensys.net'
+
+ext {
+	versionFile = project.file("config/production/version.properties")
+	appVersion = versionFile.getText().replace("version.current=","")
+
+	sourceEncoding = 'UTF-8'
+	sourceCompatibility = JavaVersion.VERSION_1_6
+
+	springVersion = '3.2.4.RELEASE'
+	hibernateVersion = '4.1.12.Final'
+	jacksonVersion = '2.2.3'
+
+	tomcatVersion = '6.0.29'
+	seleniumVersion = '2.35.0'
+}
+
+compileJava.options.encoding = sourceEncoding
+compileTestJava.options.encoding = sourceEncoding
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    
+    maven {
+        url "http://repository.gbif.org/content/groups/gbif"
+    }
+}
+
+sourceSets {
+	test {
+		resources {
+			srcDir "config/test"
+		}
+	}
+}
+
+dependencies {
+	providedCompile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+	
+	compile group: 'net.canadensys', name: 'canadensys-data-access', version: '2.2.0'
+	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.18'
+	compile group: 'org.elasticsearch', name: 'elasticsearch', version: '0.90.2'
+	compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
+	compile group: 'org.springframework', name: 'spring-web', version: springVersion
+	compile group: 'org.springframework', name: 'spring-context-support', version: springVersion
+	compile group: 'org.springframework', name: 'spring-oxm', version: springVersion
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.25'
+	compile group: 'org.hibernate', name: 'hibernate-c3p0', version: hibernateVersion
+	compile group: 'org.apache.xmlgraphics',name:'batik-transcoder',version: '1.7'
+	compile group: 'org.apache.xmlgraphics',name:'batik-codec',version: '1.7'
+	compile group: 'commons-collections',name:'commons-collections',version:'3.2.1'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
+	
+	compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.2'
+
+	compile group: 'org.hibernate', name: 'hibernate-validator', version: '4.3.1.Final'
+	
+	compile("org.gbif:name-parser:2.1"){
+		exclude module: 'slf4j-api'
+	}
+	
+	testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.3.172'
+    testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'	
+    testCompile group: 'com.jayway.jsonpath', name: 'json-path', version: '0.8.1'
+    testCompile group: 'org.seleniumhq.selenium', name :'selenium-java',version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name :'selenium-firefox-driver',version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name :'selenium-htmlunit-driver',version:seleniumVersion
+    
+    tomcat("org.apache.tomcat:catalina:${tomcatVersion}")
+    tomcat("org.apache.tomcat:coyote:${tomcatVersion}")
+    tomcat("org.apache.tomcat:jasper:${tomcatVersion}")
+}
+
+//WAR plugin settings
+war {
+	from("${additionalWebFilesDir}/js"){
+        into("js")
+        include ("**/*.js")
+	}
+	from("${additionalWebFilesDir}/css"){
+        into("styles")
+        include ("*.css")
+	}
+	webInf { from "${buildDir}/config" }
+	webInf { from "${canadensysViewIncludes}/WEB-INF" }
+	excludes ['*.properties']
+}
+
+//Tomcat plugin settings
+tomcatRunWar {
+    httpPort = 9966
+    contextPath = 'vascan'
+    stopKey = 'stopKey' 
+    outputFile = file('tomcat.log')
+}
+
+tomcatStop {
+	stopKey = 'stopKey'
+}
+

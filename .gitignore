@@ -7,14 +7,13 @@
 
 # Misc files
 *.DS_Store
-*.gradle
 
 build/*
-build.gradle
 canadensys_web_build.gradle
 config/local/*.properties
 config/production/*
 gradle.properties
+.gradle/*
 
 tomcat.log
 tomcat.log.lck
