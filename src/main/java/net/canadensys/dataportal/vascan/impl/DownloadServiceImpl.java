@@ -361,7 +361,7 @@ public class DownloadServiceImpl implements DownloadService {
         // for each taxon, find the children synonyms
         // these synonyms must be added at the end of the taxon.txt file
         for(Integer synonym : taxonomyDAO.getSynonymChildrenIdList(inClause)){
-        	//not sure when this could be false?
+        	//avoid to add the same taxa twice
             if(!inClause.contains(synonym)){
                 synonyms.add(synonym);
             }
@@ -380,8 +380,7 @@ public class DownloadServiceImpl implements DownloadService {
         // HABITUS
         buffer = dwcArchiveGenerator.generateHabitusDwc(habitMap,_bundle,displayHeader);
         habitusDwc.append(buffer);
-        
-        
+                
         // once the header is added, we don't need it anymore
         displayHeader = false;
         

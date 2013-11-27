@@ -1,6 +1,11 @@
 Version History
 ===============
 
+Version 3.1.1 2013-11-27
+* Fixed Issue [#13](https://github.com/Canadensys/vascan/issues/13) : 
+Taxa appear twice in DwcA download from checklist builder
+* Fixed Issue [#11](https://github.com/Canadensys/vascan/issues/11) : Wrong vernacular language used on name page
+
 Version 3.1.0 2013-10-03
 * Added VASCAN API
 
