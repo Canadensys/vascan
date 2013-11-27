@@ -339,9 +339,7 @@ public class DownloadServiceImpl implements DownloadService {
 	    
 	    Set<Integer> synonyms = new HashSet<Integer>();
 	    boolean success = true;
-
 	    boolean displayHeader = true;
-	    
 	    
 	    // take the list of all taxon id and create a sql clause in the form of "... AND taxonid IN (-->1,2,3,52<--) ..."
 	    //we also get the calculated habit since we have it
@@ -388,7 +386,7 @@ public class DownloadServiceImpl implements DownloadService {
         displayHeader = false;
         
         if(synonyms.size() > 0){
-        	taxonData = taxonDAO.loadCompleteTaxonData(new ArrayList<Integer>(inClause));
+        	taxonData = taxonDAO.loadCompleteTaxonData(new ArrayList<Integer>(synonyms));
             buffer = dwcArchiveGenerator.generateTaxonDwc(taxonData,_bundle,displayHeader);
             synonymDwc.append(buffer);
         }
@@ -397,7 +395,6 @@ public class DownloadServiceImpl implements DownloadService {
 	    taxonDwc.append(synonymDwc.toString());
 
         File tmp = new File(destinationFilePath);
-        
         //make sure the folder is created
         if(!tmp.getParentFile().exists()){
         	LOGGER.info("Creating folder structure : " + tmp.getParentFile().getAbsolutePath());

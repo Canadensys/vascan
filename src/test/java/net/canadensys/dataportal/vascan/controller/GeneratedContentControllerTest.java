@@ -177,5 +177,9 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		assertEquals("Carex holostoma Drejer", taxonData[DWCA_IDX_ACCEPTED_NAME_USAGE]);
 		assertEquals("2096",taxonData[DWCA_IDX_PARENT_NAME_USAGE_ID]);
 		assertEquals("accepted", taxonData[DWCA_IDX_TAXONOMIC_STATUS]);
+		
+		//test that the synonym is included
+		String[] synonymData = fileLines.get(2).split(DarwinCoreGenerator.DELIMITER);
+		assertEquals("15164", synonymData[DWCA_IDX_TAXONID]);
     }
 }
