@@ -102,7 +102,7 @@
   	margin:0px;
   }
 
-  .tt-suggestion.tt-is-under-cursor {
+  .tt-suggestion.tt-cursor {
   	background: #a82400;
   	color: white;
   	cursor: pointer;

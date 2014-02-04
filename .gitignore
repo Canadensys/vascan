@@ -12,6 +12,7 @@ build/*
 canadensys_web_build.gradle
 config/local/*.properties
 config/production/*
+config/test/*
 gradle.properties
 .gradle/*
 

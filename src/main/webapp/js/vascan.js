@@ -13,7 +13,7 @@ DESIGN TEMPLATE FOR MODULES IN VASCAN
     }
     //return some private methods, init will be automatically executed
     return {
-      init: _private.init;
+      init: _private.init();
     };
   }());
 ****************************/

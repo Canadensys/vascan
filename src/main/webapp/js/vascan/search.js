@@ -2,36 +2,63 @@
 Copyright (c) 2013 Canadensys
 Script to handle autocomplete
 ****************************/
-/*global VASCAN, $, window*/
+/*global VASCAN, $, window, Bloodhound*/
 VASCAN.search = (function(){
 
   'use strict';
 
   var _private = {
+    data_sources: { scientific : {}, vernacular : {} },
     tt_input: $('.typeahead'),
     init: function() {
+      this.bloodhound();
       this.typeahead();
-      this.trackSearch();
+      this.track_search();
+    },
+    bloodhound: function() {
+      this.data_sources.scientific = this.create_bloodhound('taxon');
+      this.data_sources.vernacular = this.create_bloodhound('vernacular');
+      this.data_sources.scientific.initialize();
+      this.data_sources.vernacular.initialize();
+    },
+    create_bloodhound: function(type) {
+      return new Bloodhound({
+        datumTokenizer : function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+        queryTokenizer : Bloodhound.tokenizers.whitespace,
+        limit : 10,
+        remote : {
+          url : VASCAN.common.baseURL+'/search.json?q=%QUERY&t='+type,
+          filter : function(r) { return $.map(r, function(v) { return { 'name' : v }; }); }
+        }
+      });
     },
     typeahead: function(){
-      this.tt_input.typeahead([
+      this.tt_input.typeahead({
+          minLength: 3,
+          highlight: true
+        },
         {
           name: 'scientific',
-          remote: VASCAN.common.baseURL+'/search.json?q=%QUERY&t=taxon',
-          header: '<h3 class="taxontype-name">'+VASCAN.common.getLanguageResource("autocomplete_title1")+'</h3>'
+          source : this.data_sources.scientific.ttAdapter(),
+          displayKey : 'name',
+          templates : {
+            header: '<h3 class="taxontype-name">'+VASCAN.common.getLanguageResource("autocomplete_title1")+'</h3>'
+          }
         },
         {
           name: 'vernacular',
-          remote: VASCAN.common.baseURL+'/search.json?q=%QUERY&t=vernacular',
-          header: '<h3 class="taxontype-name">'+VASCAN.common.getLanguageResource("autocomplete_title2")+'</h3>'
-        }
-        ]).on('typeahead:selected', this.dropdown_selected).focus().select();
+          source: this.data_sources.vernacular.ttAdapter(),
+          displayKey : 'name',
+          templates : {
+            header: '<h3 class="taxontype-name">'+VASCAN.common.getLanguageResource("autocomplete_title2")+'</h3>'
+          }
+        }).on('typeahead:selected', this.dropdown_selected).focus().select();
     },
     dropdown_selected: function(){
-      var lang = VASCAN.common.getParameterByName("lang"), param = (lang) ? "?lang=" + lang : "";
+      var lang = VASCAN.common.getParameterByName("lang"), param = (lang !== "") ? "?lang=" + lang : "";
       window.location.href = VASCAN.common.baseURL+'/name/'+encodeURIComponent($(this).val())+param;
     },
-    trackSearch: function() {
+    track_search: function() {
       var self = this;
       if(typeof _gaq !== 'undefined') {
         $('#search_button').on('click', function() {
