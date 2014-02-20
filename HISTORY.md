@@ -1,6 +1,10 @@
 Version History
 ===============
 
+Version 3.1.2 2014-02-20
+* Fixed Issue [#14](https://github.com/Canadensys/vascan/issues/14) : Hybrids checkbox ignored in Checklist builder.
+* Now using typeahead.js 0.10.0
+
 Version 3.1.1 2013-11-27
 * Fixed Issue [#13](https://github.com/Canadensys/vascan/issues/13) : 
 Taxa appear twice in DwcA download from checklist builder

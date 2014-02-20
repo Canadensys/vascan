@@ -11,6 +11,7 @@ import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("checklistService")
 public class ChecklistServiceImpl implements ChecklistService{
+	
+	private static final String CHECKED = "checked=\"checked\"";
+	private static final String SELECTED = "selected=\"selected\"";
 	
 	@Autowired
 	private TaxonDAO taxonDAO;
@@ -60,10 +64,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    if(parameters.get("rank") != null)
 	    	rank = parameters.get("rank");
 	    
-	    /* display hybrids */
-	    String nohybrids = null;
-	    if(parameters.get("nohybrids") != null)
-	        nohybrids = parameters.get("nohybrids")[0];
+	    /* include hybrids */
 	    boolean hybrids;
 	    String shybrids = null;
 	    if(parameters.get("hybrids") != null)
@@ -84,8 +85,6 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    
 	    /* postback values checks & selects */
 	    // for taxon dropdown list, property selected is added to taxon hashmap
-	    String checked = "checked=\"checked\"";
-	    String selected = "selected=\"selected\"";
 	    Map<String,String> habitusSelected = new HashMap<String,String>();
 	    Map<String,String> combinationSelected = new HashMap<String,String>();
 	    Map<String,String> sortSelected = new HashMap<String,String>();
@@ -96,18 +95,18 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    Map<String,String> territoryChecked = new HashMap<String,String>();
 	    
 	    if(habit != "" && habit != null){
-	    	habitusSelected.put(habit.toLowerCase(),selected);
+	    	habitusSelected.put(habit.toLowerCase(),SELECTED);
 	    }
 	    else{
-	    	habitusSelected.put("all",selected);
+	    	habitusSelected.put("all",SELECTED);
 	    	habit = "all";
 	    }
 	    
 	    if(combination != "" && combination != null){
-	    	combinationSelected.put(combination.toLowerCase(),selected);
+	    	combinationSelected.put(combination.toLowerCase(),SELECTED);
 	    }
 	    else{
-	    	combinationSelected.put("anyof",selected);
+	    	combinationSelected.put("anyof",SELECTED);
 	        combination = "anyof";
 	    }
 	    
@@ -115,55 +114,48 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    // native, introduced and ephemeral...
 	    if(status != null){
 	    	for(String s : status){
-	    	    statusChecked.put(s.toLowerCase(),checked);
+	    	    statusChecked.put(s.toLowerCase(),CHECKED);
 	    	}
 	    }
 	    else{
-	    	statusChecked.put("introduced",checked);
-	    	statusChecked.put("native",checked);
-	    	statusChecked.put("ephemeral",checked);
-	        statusChecked.put("excluded",checked);
-	        statusChecked.put("extirpated",checked);
-	        statusChecked.put("doubtful",checked);
+	    	statusChecked.put("introduced",CHECKED);
+	    	statusChecked.put("native",CHECKED);
+	    	statusChecked.put("ephemeral",CHECKED);
+	        statusChecked.put("excluded",CHECKED);
+	        statusChecked.put("extirpated",CHECKED);
+	        statusChecked.put("doubtful",CHECKED);
 	    	String statuses[] = {"introduced","native","ephemeral","excluded","extirpated","doubtful"};
 	    	status = statuses;
 	    }
 	    
-	    // checed provinces and territories
+	    // checked provinces and territories
 	    if(province != null){
 	    	for(String s : province){
-	    	    territoryChecked.put(s.toUpperCase(),checked);	
+	    	    territoryChecked.put(s.toUpperCase(),CHECKED);	
 	    	}
 	    }    
 	    
 	    // hybrids checkbox
-	    if((nohybrids == null || nohybrids == "") && (shybrids == null || shybrids == "")){
+	    if(BooleanUtils.toBoolean(shybrids)){
 	    	hybrids = true;
-	    	hybridsChecked.put("display",checked);
+	    	hybridsChecked.put("display",CHECKED);
 	    }
 	    else{
-	    	if((nohybrids != "" && nohybrids != null) && (shybrids == null || shybrids == "")){
-	    		//not sure, was =null before
-	    		   hybrids = true;	
-	    		   hybridsChecked.put("display","");	   
-	    	}
-	    	else{
-	    		hybrids = true;   
-	            hybridsChecked.put("display",checked);
-	    	}
+	    	hybrids = false;
+	    	hybridsChecked.put("display","");
 	    }
 
 	    // sort options
 	    if(sort != "" && sort != null){
-	        sortSelected.put(sort.toLowerCase(),selected);
+	        sortSelected.put(sort.toLowerCase(),SELECTED);
 	    }
 	    else{
 	    	sort = "taxonomically";
-	    	sortSelected.put(sort,selected);
+	    	sortSelected.put(sort,SELECTED);
 	    }
 
 	    String[] ranks = {
-	    	    Rank.CLASS_LABEL,checked,
+	    	    Rank.CLASS_LABEL,
 	    	    Rank.SUBCLASS_LABEL,
 	    	    Rank.SUPERORDER_LABEL,
 	    	    Rank.ORDER_LABEL,
@@ -183,11 +175,11 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    
 	    // init all ranks as checked
 	    for(String r : ranks){
-	    	rankChecked.put(r,checked);	
+	    	rankChecked.put(r,CHECKED);	
 	    }
 	    // check main_rank & sub_rank "All" checkbox since all ranks are checked
-	    rankChecked.put("main_rank",checked);
-	    rankChecked.put("sub_rank",checked);
+	    rankChecked.put("main_rank",CHECKED);
+	    rankChecked.put("sub_rank",CHECKED);
 	    
 	    // if rank is received from querystring, reinit all ranks to unchecked and only check ranks present in querystring
 	    int main_rank = 0;
@@ -199,7 +191,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	        rankChecked.put("main_rank","");
 	        rankChecked.put("sub_rank","");
 	    	for(String r : rank){
-	    		rankChecked.put(r.toLowerCase(),checked);
+	    		rankChecked.put(r.toLowerCase(),CHECKED);
 	    		if(r.toLowerCase().equals(Rank.CLASS_LABEL) ||
 	    		r.toLowerCase().equals(Rank.ORDER_LABEL) ||
 	    		r.toLowerCase().equals(Rank.FAMILY_LABEL) ||
@@ -212,18 +204,18 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    }
 	    // there must be a better way to do this... maybe only with jquery stuff... 
 	    if(main_rank ==  5)
-	        rankChecked.put("main_rank",checked);
+	        rankChecked.put("main_rank",CHECKED);
 	    if(sub_rank ==  11)
-	        rankChecked.put("sub_rank",checked);  
+	        rankChecked.put("sub_rank",CHECKED);  
 	    
 	    // limit checkbox
 	    if(nolimit == null && limitResults == null){
 	        limitResults = "true";
-	        limitResultsChecked.put("display",checked);
+	        limitResultsChecked.put("display",CHECKED);
 	    }
 	    else if(nolimit != null && limitResults != null){
 	        limitResults = "true";  
-	        limitResultsChecked.put("display",checked);       
+	        limitResultsChecked.put("display",CHECKED);       
 	    }
 	    else{
 	    	limitResults = "";

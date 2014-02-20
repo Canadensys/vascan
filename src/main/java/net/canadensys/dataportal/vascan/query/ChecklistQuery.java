@@ -14,7 +14,6 @@ public class ChecklistQuery {
     private String[] distributionStatus;
     private String[] rank;
     
-    private String nohybrids = null;
     private boolean hybrids;
     
     private String sort;
@@ -63,14 +62,6 @@ public class ChecklistQuery {
 	}
 	public void setRank(String[] rank) {
 		this.rank = rank;
-	}
-
-	public String getNohybrids() {
-		return nohybrids;
-	}
-
-	public void setNohybrids(String nohybrids) {
-		this.nohybrids = nohybrids;
 	}
 
 	public boolean isHybrids() {

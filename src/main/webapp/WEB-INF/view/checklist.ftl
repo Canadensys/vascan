@@ -128,7 +128,6 @@
 			<div class="clear"></div>
 		</div>
 		<p>${rc.getMessage("checklist_msg11")} <input <#attempt>${data.hybrids.display}<#recover></#attempt> type="checkbox" name="hybrids" id="hybrids" value="true"/>
-		<input type="hidden" name="nohybrids" value="false" />
 		</p>
 		<p>${rc.getMessage("checklist_msg17")} <input <#attempt>${data.limitResults.display}<#recover></#attempt> type="checkbox" name="limitResults" id="limitResults" value="true"/>
 		<input type="hidden" name="nolimit" value="false" />
