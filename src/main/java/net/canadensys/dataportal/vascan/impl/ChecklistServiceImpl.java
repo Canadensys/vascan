@@ -23,12 +23,27 @@ public class ChecklistServiceImpl implements ChecklistService{
 	private static final String CHECKED = "checked=\"checked\"";
 	private static final String SELECTED = "selected=\"selected\"";
 	
+	private static final List<String> CHECKLIST_RELATED_QUERY_TERMS = new ArrayList<String>(8);
+	static{
+		CHECKLIST_RELATED_QUERY_TERMS.add("province");
+		CHECKLIST_RELATED_QUERY_TERMS.add("combination");
+		CHECKLIST_RELATED_QUERY_TERMS.add("habit");
+		CHECKLIST_RELATED_QUERY_TERMS.add("taxon");
+		CHECKLIST_RELATED_QUERY_TERMS.add("status");
+		CHECKLIST_RELATED_QUERY_TERMS.add("rank");
+		CHECKLIST_RELATED_QUERY_TERMS.add("sort");
+		CHECKLIST_RELATED_QUERY_TERMS.add("hybrids");
+		CHECKLIST_RELATED_QUERY_TERMS.add("limitResults");
+	}
+	
 	@Autowired
 	private TaxonDAO taxonDAO;
 	
 	@Transactional(readOnly=true)
 	@Override
 	public Map<String,Object> retrieveChecklistData(Map<String,String[]> parameters){
+		//this will be used to know if you should provide default values
+		boolean noChecklistQuery = !containsChecklistQueryParameter(parameters);
 		
 		Map<String,Object> data = new HashMap<String,Object>();
 		
@@ -136,7 +151,8 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    }    
 	    
 	    // hybrids checkbox
-	    if(BooleanUtils.toBoolean(shybrids)){
+	    // the default value is true but if not check, the form will not send it.
+	    if(BooleanUtils.toBoolean(shybrids) || noChecklistQuery){
 	    	hybrids = true;
 	    	hybridsChecked.put("display",CHECKED);
 	    }
@@ -311,5 +327,19 @@ public class ChecklistServiceImpl implements ChecklistService{
 			taxons.clear();
 		}
 		return results;
+	}
+	
+	/**
+	 * Check if the received parameters contains at least one parameter related to the checklist builder.
+	 * @param parameters
+	 * @return
+	 */
+	private boolean containsChecklistQueryParameter(Map<String,String[]> parameters){
+		for(String currKey : parameters.keySet()){
+			if(CHECKLIST_RELATED_QUERY_TERMS.contains(currKey)){
+				return true;
+			}
+		}
+		return false;
 	}
 }
