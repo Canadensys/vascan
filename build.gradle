@@ -23,7 +23,7 @@ ext {
 	jacksonVersion = '2.2.3'
 
 	tomcatVersion = '6.0.29'
-	seleniumVersion = '2.35.0'
+	seleniumVersion = '2.40.0'
 }
 
 compileJava.options.encoding = sourceEncoding
