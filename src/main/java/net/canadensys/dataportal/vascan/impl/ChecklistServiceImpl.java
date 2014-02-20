@@ -23,7 +23,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	private static final String CHECKED = "checked=\"checked\"";
 	private static final String SELECTED = "selected=\"selected\"";
 	
-	private static final List<String> CHECKLIST_RELATED_QUERY_TERMS = new ArrayList<String>(8);
+	private static final List<String> CHECKLIST_RELATED_QUERY_TERMS = new ArrayList<String>(9);
 	static{
 		CHECKLIST_RELATED_QUERY_TERMS.add("province");
 		CHECKLIST_RELATED_QUERY_TERMS.add("combination");
@@ -151,7 +151,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    }    
 	    
 	    // hybrids checkbox
-	    // the default value is true but if not check, the form will not send it.
+	    // the default value is true but if not checked, the form will not send the query parameter.
 	    if(BooleanUtils.toBoolean(shybrids) || noChecklistQuery){
 	    	hybrids = true;
 	    	hybridsChecked.put("display",CHECKED);
