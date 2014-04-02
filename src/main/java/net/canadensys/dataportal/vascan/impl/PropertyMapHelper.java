@@ -13,6 +13,7 @@ import net.canadensys.dataportal.vascan.model.DistributionModel;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
+import net.canadensys.dataportal.vascan.model.view.ClassificationOrderingViewModel;
 
 import org.apache.commons.collections.iterators.FilterIterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,23 +62,32 @@ public class PropertyMapHelper {
 	
 	public void fillTaxonClassification(List<TaxonLookupModel> classification, Map<String,Object> data){  
 		// classification for taxon ; get all the hierarchy of taxon above, and possibly
-		// below of taxon, and save to hashmap and add to vector. Vector is available
-		// as a sequence in .ftl
+		// below of taxon, and save to hashmap and add to list.
 		List<Map<String,Object>> taxonClassification = new ArrayList<Map<String,Object>>();
+		
 	    if(classification != null){
+	    	//reorder classification
+	    	ClassificationOrderingViewModel covm = null;
+	    	for(TaxonLookupModel node : classification){
+	    		if(covm == null){
+	    			covm = new ClassificationOrderingViewModel(node);
+	    		}
+	    		else{
+	    			covm.attach(node);
+	    		}
+	    	}
+
+	    	classification = covm.toOrderedList();
+	    	
 	        for(TaxonLookupModel node : classification){
 	            Map<String,Object> nodeInfo = new HashMap<String,Object>();
-	            try{
-	            	nodeInfo.put("taxonId",node.getTaxonId());
-	                nodeInfo.put("fullScientificName",node.getCalnamehtml());
-	                nodeInfo.put("fullScientificNameUrl",node.getCalname());
-	                nodeInfo.put("rank",node.getRank());
-	                nodeInfo.put("rankId",Rank.getIdFromLabel(node.getRank()));
-	                taxonClassification.add(nodeInfo);
-	            }
-	            catch(NullPointerException e){
-	                //drop on error
-	            }
+
+            	nodeInfo.put("taxonId",node.getTaxonId());
+                nodeInfo.put("fullScientificName",node.getCalnamehtml());
+                nodeInfo.put("fullScientificNameUrl",node.getCalname());
+                nodeInfo.put("rank",node.getRank());
+                nodeInfo.put("rankId",Rank.getIdFromLabel(node.getRank()));
+                taxonClassification.add(nodeInfo);
 	        }
 	    }
 		data.put("tree",taxonClassification);

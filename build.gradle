@@ -18,12 +18,15 @@ ext {
 	sourceEncoding = 'UTF-8'
 	sourceCompatibility = JavaVersion.VERSION_1_6
 
-	springVersion = '3.2.4.RELEASE'
-	hibernateVersion = '4.1.12.Final'
+	dataAccessVersion = '2.5.0-SNAPSHOT'
+
+	springVersion = '4.0.2.RELEASE'
+	hibernateVersion = '4.3.2.Final'
 	jacksonVersion = '2.2.3'
+	freemarkerVersion = '2.3.20'
 
 	tomcatVersion = '6.0.29'
-	seleniumVersion = '2.40.0'
+	seleniumVersion = '2.41.0'
 }
 
 compileJava.options.encoding = sourceEncoding
@@ -47,10 +50,10 @@ sourceSets {
 }
 
 dependencies {
-	providedCompile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 	
-	compile group: 'net.canadensys', name: 'canadensys-data-access', version: '2.2.0'
-	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.18'
+	compile group: 'net.canadensys', name: 'canadensys-data-access', version: dataAccessVersion
+	compile group: 'org.freemarker', name: 'freemarker', version: freemarkerVersion
 	compile group: 'org.elasticsearch', name: 'elasticsearch', version: '0.90.2'
 	compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
 	compile group: 'org.springframework', name: 'spring-web', version: springVersion

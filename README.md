@@ -9,12 +9,12 @@ See [wiki](https://github.com/Canadensys/vascan/wiki)
 Dependencies
 ------------
 ### Libraries
-* [Spring Framework 3.2.4](http://www.springsource.org/spring-framework)
-* [Canadensys Data Access 2.2.0](https://github.com/Canadensys/canadensys-data-access)
-* [Hibernate 4.1](http://www.hibernate.org/)
-* [Freemarker 2.3.18](http://freemarker.sourceforge.net/)
+* [Spring Framework 4.0.2](http://www.springsource.org/spring-framework)
+* [Canadensys Data Access 2.5.0](https://github.com/Canadensys/canadensys-data-access)
+* [Hibernate 4.3.2](http://www.hibernate.org/)
+* [Freemarker 2.3.20](http://freemarker.sourceforge.net/)
 * [H2 Database 1.3.172](http://www.h2database.com) (for unit testing only)
-* [Selenium Client 2.40](http://docs.seleniumhq.org/download/) (for integration testing)
+* [Selenium Client 2.41](http://docs.seleniumhq.org/download/) (for integration testing)
 
 ### Project
 * [canadensys-view-includes](https://github.com/Canadensys/canadensys-view-includes)

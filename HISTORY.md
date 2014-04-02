@@ -1,6 +1,10 @@
 Version History
 ===============
 
+Version 3.1.3 2014-04-?
+* Fixed Issue [#2](https://github.com/Canadensys/vascan/issues/2) and Issue [#15](https://github.com/Canadensys/vascan/issues/15)
+* Now using canadensys-data-access 2.5.0 (bumping Spring to 4.0.2.RELEASE and Hibernate to 4.3.2.Final)
+
 Version 3.1.2 2014-02-20
 * Fixed Issue [#14](https://github.com/Canadensys/vascan/issues/14) : Hybrids checkbox ignored in Checklist builder.
 * Now using typeahead.js 0.10.0

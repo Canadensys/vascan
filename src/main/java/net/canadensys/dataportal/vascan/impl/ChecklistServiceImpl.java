@@ -36,6 +36,25 @@ public class ChecklistServiceImpl implements ChecklistService{
 		CHECKLIST_RELATED_QUERY_TERMS.add("limitResults");
 	}
 	
+	private static final String[] RANKS = {
+    	    Rank.CLASS_LABEL,
+    	    Rank.SUBCLASS_LABEL,
+    	    Rank.SUPERORDER_LABEL,
+    	    Rank.ORDER_LABEL,
+    	    Rank.FAMILY_LABEL,
+    	    Rank.SUBFAMILY_LABEL,
+    	    Rank.TRIBE_LABEL,
+    	    Rank.SUBTRIBE_LABEL,
+    	    Rank.GENUS_LABEL,
+    	    Rank.SUBGENUS_LABEL,
+    	    Rank.SECTION_LABEL,
+    	    Rank.SUBSECTION_LABEL,
+    	    Rank.SERIES_LABEL,
+    	    Rank.SPECIES_LABEL,
+    	    Rank.SUBSPECIES_LABEL,
+    	    Rank.VARIETY_LABEL
+    };
+	
 	@Autowired
 	private TaxonDAO taxonDAO;
 	
@@ -169,28 +188,9 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    	sort = "taxonomically";
 	    	sortSelected.put(sort,SELECTED);
 	    }
-
-	    String[] ranks = {
-	    	    Rank.CLASS_LABEL,
-	    	    Rank.SUBCLASS_LABEL,
-	    	    Rank.SUPERORDER_LABEL,
-	    	    Rank.ORDER_LABEL,
-	    	    Rank.FAMILY_LABEL,
-	    	    Rank.SUBFAMILY_LABEL,
-	    	    Rank.TRIBE_LABEL,
-	    	    Rank.SUBTRIBE_LABEL,
-	    	    Rank.GENUS_LABEL,
-	    	    Rank.SUBGENUS_LABEL,
-	    	    Rank.SECTION_LABEL,
-	    	    Rank.SUBSECTION_LABEL,
-	    	    Rank.SERIES_LABEL,
-	    	    Rank.SPECIES_LABEL,
-	    	    Rank.SUBSPECIES_LABEL,
-	    	    Rank.VARIETY_LABEL
-	    };
 	    
 	    // init all ranks as checked
-	    for(String r : ranks){
+	    for(String r : RANKS){
 	    	rankChecked.put(r,CHECKED);	
 	    }
 	    // check main_rank & sub_rank "All" checkbox since all ranks are checked
@@ -201,7 +201,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    int main_rank = 0;
 	    int sub_rank = 0;
 	    if(rank != null){
-	    	for(String r : ranks){
+	    	for(String r : RANKS){
 	            rankChecked.put(r,""); 
 	        }
 	        rankChecked.put("main_rank","");
@@ -245,6 +245,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    if(taxon != -1){
 	    	searchOccured = true;
 	        int limitResultsTo = 0;
+	        
 	        totalResults = taxonDAO.countTaxonLookup(habit, taxon,combination, province, status, rank, hybrids);
 			
 	        if(limitResults.equals("true")){
