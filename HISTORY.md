@@ -1,7 +1,7 @@
 Version History
 ===============
 
-Version 3.1.3 2014-04-?
+Version 3.1.3 2014-04-03
 * Fixed Issue [#2](https://github.com/Canadensys/vascan/issues/2) and Issue [#15](https://github.com/Canadensys/vascan/issues/15)
 * Now using canadensys-data-access 2.5.0 (bumping Spring to 4.0.2.RELEASE and Hibernate to 4.3.2.Final)
 
