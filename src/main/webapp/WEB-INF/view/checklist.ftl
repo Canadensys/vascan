@@ -42,7 +42,7 @@
 			<option ${(data.combination.anyof)!} value="anyof">${rc.getMessage("checklist_option2")}</option>
 			<option ${(data.combination.allof)!} value="allof">${rc.getMessage("checklist_option1")}</option>
 			<option ${(data.combination.only)!} value="only">${rc.getMessage("checklist_option3")}</option>
-			<option ${(data.combination.only_ca)!} value="only_ca">${rc.getMessage("checklist_option4")}</option>
+			<option ${(data.combination.allofonly)!} value="allofonly">${rc.getMessage("checklist_option4")}</option>
 		</select>
 		${rc.getMessage("checklist_msg6")}</p>
 		<!-- regions -->
@@ -81,14 +81,15 @@
 			<div id="map_selector">
 			</div>
 		</div>
+		<p><input type="checkbox" name="only_ca" id="only_ca"/> ${rc.getMessage("checklist_ignore")}</p>
 		<p>${rc.getMessage("checklist_msg8")}</p>
 		<ul class="distribution_legend custom_list">
 			<li class="sprite sprite-native">${rc.getMessage("distribution_native")} <input ${data.status.native!} type="checkbox" name="status" id="native" value="native"/></li>
 			<li class="sprite sprite-introduced">${rc.getMessage("distribution_introduced")} <input ${data.status.introduced!} type="checkbox" name="status" id="introduced" value="introduced"/></li> 
 			<li class="sprite sprite-ephemeral">${rc.getMessage("distribution_ephemeral")} <input ${data.status.ephemeral!} type="checkbox" name="status" id="ephemeral" value="ephemeral"/></li>
-			<li class="sprite sprite-excluded">${rc.getMessage("distribution_excluded")} <input ${data.status.excluded!} type="checkbox" name="status" id="excluded" value="excluded"/></li>
-			<li class="sprite sprite-extirpated">${rc.getMessage("distribution_extirpated")} <input ${data.status.extirpated!} type="checkbox" name="status" id="extirpated" value="extirpated"/></li> 
 			<li class="sprite sprite-doubtful">${rc.getMessage("distribution_doubtful")} <input ${data.status.doubtful!} type="checkbox" name="status" id="doubtful" value="doubtful"/></li>
+			<li class="sprite sprite-extirpated">${rc.getMessage("distribution_extirpated")} <input ${data.status.extirpated!} type="checkbox" name="status" id="extirpated" value="extirpated"/></li>
+			<li class="sprite sprite-excluded">${rc.getMessage("distribution_excluded")} <input ${data.status.excluded!} type="checkbox" name="status" id="excluded" value="excluded"/></li>
 		</ul>
 	</div>
 	

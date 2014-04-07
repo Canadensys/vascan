@@ -155,9 +155,6 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    	statusChecked.put("introduced",CHECKED);
 	    	statusChecked.put("native",CHECKED);
 	    	statusChecked.put("ephemeral",CHECKED);
-	        statusChecked.put("excluded",CHECKED);
-	        statusChecked.put("extirpated",CHECKED);
-	        statusChecked.put("doubtful",CHECKED);
 	    	String statuses[] = {"introduced","native","ephemeral","excluded","extirpated","doubtful"};
 	    	status = statuses;
 	    }
