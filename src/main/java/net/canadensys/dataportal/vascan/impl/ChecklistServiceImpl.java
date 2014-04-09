@@ -9,6 +9,7 @@ import java.util.Map;
 import net.canadensys.dataportal.vascan.ChecklistService;
 import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
+import net.canadensys.dataportal.vascan.dao.query.RegionQueryPart;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -65,17 +66,23 @@ public class ChecklistServiceImpl implements ChecklistService{
 		boolean noChecklistQuery = !containsChecklistQueryParameter(parameters);
 		
 		Map<String,Object> data = new HashMap<String,Object>();
+		RegionQueryPart reqionQueryPart = new RegionQueryPart();
 		
 		/* request params */
 	    /* provinces */
-	    String[] province = null;
-	    if(parameters.get("province") != null)
-	    	province = parameters.get("province");
+	    if(parameters.get("province") != null){
+	    	reqionQueryPart.setRegion(parameters.get("province"));
+	    }
 	    
 	    /* combination */
-	    String combination = null;
 	    if(parameters.get("combination") != null){
-	        combination = parameters.get("combination")[0];
+	    	RegionQueryPart.RegionSelector regionSelector = RegionQueryPart.RegionSelector.fromLabel(parameters.get("combination")[0]);
+	    	reqionQueryPart.setRegionSelector(regionSelector);
+	    }
+	    
+	    /* only_ca */
+	    if(parameters.get("only_ca") != null){
+	    	reqionQueryPart.setSearchOnlyInCanada(BooleanUtils.toBoolean(parameters.get("only_ca")[0]));
 	    }
 	    
 	    /* habitus */
@@ -136,12 +143,12 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    	habit = "all";
 	    }
 	    
-	    if(combination != "" && combination != null){
-	    	combinationSelected.put(combination.toLowerCase(),SELECTED);
+	    if(reqionQueryPart.getRegionSelector() != null){
+	    	combinationSelected.put(reqionQueryPart.getRegionSelector().getLabel().toLowerCase(),SELECTED);
 	    }
 	    else{
+	    	reqionQueryPart.setRegionSelector(RegionQueryPart.RegionSelector.ANY_OF);
 	    	combinationSelected.put("anyof",SELECTED);
-	        combination = "anyof";
 	    }
 	    
 	    // get statuses from the querystring. if statuses are empty, force 
@@ -160,9 +167,9 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    }
 	    
 	    // checked provinces and territories
-	    if(province != null){
-	    	for(String s : province){
-	    	    territoryChecked.put(s.toUpperCase(),CHECKED);	
+	    if(reqionQueryPart.getRegion() != null){
+	    	for(String currRegion : reqionQueryPart.getRegion()){
+	    	    territoryChecked.put(currRegion.toUpperCase(),CHECKED);	
 	    	}
 	    }    
 	    
@@ -243,13 +250,13 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    	searchOccured = true;
 	        int limitResultsTo = 0;
 	        
-	        totalResults = taxonDAO.countTaxonLookup(habit, taxon,combination, province, status, rank, hybrids);
+	        totalResults = taxonDAO.countTaxonLookup(habit, taxon, reqionQueryPart, status, rank, hybrids);
 			
 	        if(limitResults.equals("true")){
 	        	limitResultsTo = 200;
 	        }
 	        
-	        Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(limitResultsTo, habit, taxon, combination, province, status, rank, hybrids, sort);
+	        Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(limitResultsTo, habit, taxon, reqionQueryPart, status, rank, hybrids, sort);
 	        if(it !=null){
 	            while(it.hasNext()){
 	                   HashMap<String,Object> distributionData = new HashMap<String,Object>();

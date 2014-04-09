@@ -1,13 +1,17 @@
 package net.canadensys.dataportal.vascan.query;
 
+import net.canadensys.dataportal.vascan.dao.query.RegionQueryPart;
+
+/**
+ * Checklist query container object.
+ * @author cgendreau
+ *
+ */
 public class ChecklistQuery {
 	
-	
-    private String[] province = null;
+    private RegionQueryPart regionQueryPart;
 
-    private String combination = null;
-    
-    private String habit;
+	private String habit;
 
     private int taxonId = -1;
     
@@ -18,22 +22,13 @@ public class ChecklistQuery {
     
     private String sort;
 
-	public String[] getProvince() {
-		return province;
+	public void setRegionQueryPart(RegionQueryPart regionQueryPart) {
+		this.regionQueryPart = regionQueryPart;
 	}
-
-	public void setProvince(String[] province) {
-		this.province = province;
+    public RegionQueryPart getRegionQueryPart() {
+		return regionQueryPart;
 	}
-
-	public String getCombination() {
-		return combination;
-	}
-
-	public void setCombination(String combination) {
-		this.combination = combination;
-	}
-
+    
 	public String getHabit() {
 		return habit;
 	}

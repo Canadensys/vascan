@@ -28,11 +28,13 @@ import net.canadensys.dataportal.vascan.dao.DistributionDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
 import net.canadensys.dataportal.vascan.dao.VernacularNameDAO;
+import net.canadensys.dataportal.vascan.dao.query.RegionQueryPart;
 import net.canadensys.dataportal.vascan.generatedcontent.DarwinCoreGenerator;
 import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.query.ChecklistQuery;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +102,7 @@ public class DownloadServiceImpl implements DownloadService {
 	    String destinationFilePath = generatedContentConfig.getGeneratedFilesFolder() + filename;
 	    
 	    ChecklistQuery cQuery = extractParameters(params);
-	    Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getCombination(), cQuery.getProvince(),
+	    Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
 	    		cQuery.getDistributionStatus(), cQuery.getRank(), cQuery.isHybrids(), cQuery.getSort());
         
 	    return generateTSVFile(destinationFilePath, bundle, it);	    
@@ -111,28 +113,35 @@ public class DownloadServiceImpl implements DownloadService {
 	public boolean generateDwcAFile(Map<String,String[]> params, String filename, ResourceBundle bundle){
 		String destinationFilePath = generatedContentConfig.getGeneratedFilesFolder() + filename;
 		ChecklistQuery cQuery = extractParameters(params);
-		Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getCombination(), cQuery.getProvince(),
+		Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
 	    		cQuery.getDistributionStatus(), cQuery.getRank(), cQuery.isHybrids(), cQuery.getSort());
 
 		return generateDwcArchive(destinationFilePath, bundle, it);
 	}
 	
 	/**
-	 * 
+	 * TODO move to Search Service to reuse it
 	 * @param params parameters map
 	 */
 	public ChecklistQuery extractParameters(Map<String,String[]> params){
 		ChecklistQuery cQuery = new ChecklistQuery();
+		RegionQueryPart reqionQueryPart = new RegionQueryPart();
 
 	    if(params.containsKey("province")){
-	    	cQuery.setProvince(params.get("province"));
+	    	reqionQueryPart.setRegion(params.get("province"));
 	    }
 	    
 	    if(params.containsKey("combination")){
-	    	cQuery.setCombination(params.get("combination")[0]); 
+	    	RegionQueryPart.RegionSelector regionSelector = RegionQueryPart.RegionSelector.fromLabel(params.get("combination")[0]);
+	    	reqionQueryPart.setRegionSelector(regionSelector);
 	    }
 	    else{
-	    	cQuery.setCombination("anyof");
+	    	reqionQueryPart.setRegionSelector(RegionQueryPart.RegionSelector.ANY_OF);
+	    }
+	    
+	    /* only_ca */
+	    if(params.containsKey("only_ca")){
+	    	reqionQueryPart.setSearchOnlyInCanada(BooleanUtils.toBoolean(params.get("only_ca")[0]));
 	    }
 	    
 	    if(params.containsKey("habit")){
@@ -177,6 +186,8 @@ public class DownloadServiceImpl implements DownloadService {
 	    else{
 	    	cQuery.setSort("taxonomically");
 	    }
+	    
+	    cQuery.setRegionQueryPart(reqionQueryPart);
 
 	    return cQuery;
 
