@@ -100,27 +100,42 @@ VASCAN.checklist = (function(){
         $('input[type="checkbox"][value="'+this+'"]').prop("checked", false).closest("ul").find(".region").prop("checked", false);
       });
     },
-    process_map: function(map) {
+    process_map: function(seq) {
       var self = this,
           svg = $('#map_selector').svg('get'),
-          checkboxes = $('input[type="checkbox"]', '#checklist_distribution'),
-          paths = {};
+          checkboxes = $('input[type="checkbox"]', '#checklist_distribution');
+
+      if(seq === "init") {
+        $.each(checkboxes, function() {
+          var checkbox = $(this);
+          $('#'+checkbox.val(), svg.root()).css("cursor", "pointer").on("click", function() {
+            if(checkbox.prop("checked")) { checkbox.prop("checked", false); } else { checkbox.prop("checked", true); }
+            self.toggle_province_highlight(checkbox, $(this));
+          });
+        });
+      }
 
       $.each(checkboxes, function() {
-        var checkbox_value = $(this).val();
-        paths = $('#'+checkbox_value, svg.root());
-        if($(paths).length > 0) {
-          if($(this).prop("checked")) {
-            $.each(paths, function() {
-              $(this).css("fill", "rgb(168,36,0)");
-            });
-          } else {
-            $.each(paths, function() {
-              $(this).css("fill", self.get_region_color(checkbox_value));
-            });
-          }
+        var checkbox = $(this),
+            paths = $('#'+checkbox.val(), svg.root());
+
+        if(paths.length > 0) {
+          self.toggle_province_highlight(checkbox, paths);
         }
       });
+    },
+    toggle_province_highlight: function(checkbox, paths) {
+      var self = this;
+
+      if(checkbox.prop("checked")) {
+        $.each(paths, function() {
+          $(this).css("fill", "rgb(168,36,0)");
+        });
+      } else {
+        $.each(paths, function() {
+          $(this).css("fill", self.get_region_color(checkbox.val()));
+        });
+      }
     },
     bind_rank_checkboxes: function() {
       $.each(["main_rank", "sub_rank"], function() {
@@ -154,7 +169,7 @@ VASCAN.checklist = (function(){
       var self = this;
       $('#map_selector').svg({
         loadURL: VASCAN.common.baseURL + "/images/distribution_checklist.svg",
-        onLoad: function() { self.process_map(); }
+        onLoad: function() { self.process_map("init"); }
       });
     },
     init: function() {
