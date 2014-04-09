@@ -81,8 +81,11 @@
 			<div id="map_selector">
 			</div>
 		</div>
-		<p><input type="checkbox" name="only_ca" id="only_ca"/> ${rc.getMessage("checklist_ignore")}</p>
+
+		<p><input <#attempt>${data.only_ca.display}<#recover></#attempt> type="checkbox" name="only_ca" id="only_ca" value="true"/> ${rc.getMessage("checklist_ignore")}</p>
+
 		<p>${rc.getMessage("checklist_msg8")}</p>
+
 		<ul class="distribution_legend custom_list">
 			<li class="sprite sprite-native">${rc.getMessage("distribution_native")} <input ${data.status.native!} type="checkbox" name="status" id="native" value="native"/></li>
 			<li class="sprite sprite-introduced">${rc.getMessage("distribution_introduced")} <input ${data.status.introduced!} type="checkbox" name="status" id="introduced" value="introduced"/></li> 

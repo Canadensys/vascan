@@ -33,6 +33,10 @@
   	margin-left: 3px;
   }
 
+  div.body_checklist {
+    min-width:1265px !important;
+  }
+
   /* Vascan distribution */
 
   .distribution_legend {
@@ -188,7 +192,7 @@
 
   /* Checklist builder */
 
-  #checklist_box {min-width:300px;}
+  #checklist_box {min-width:800px;}
 
   #checklist_box input[type=text] { width: 340px; }
 

@@ -50,6 +50,7 @@ VASCAN.checklist = (function(){
     },
     bind_region_checkboxes: function() {
       var self = this;
+
       $('#canada').on('change', function() {
         var checkboxes = $('input[type="checkbox"]:not([value="GL"],[value="PM"])', '#checklist_distribution');
         if($(this).prop("checked")) {
@@ -67,10 +68,12 @@ VASCAN.checklist = (function(){
         } else {
           checkboxes.prop("checked", false);
         }
+        self.set_checked_canada();
         self.process_map();
       });
       $('.province').on('change', function() {
         self.set_checked_regions(this);
+        self.set_checked_canada();
         self.process_map();
       });
     },
@@ -80,6 +83,17 @@ VASCAN.checklist = (function(){
       if($('.province:checked', region).length === $('.province', region).length) {
         $(".region", region).prop("checked", true);
       }
+    },
+    set_checked_canada: function() {
+      var canada = $('#canada');
+
+      if($(".province:checked", "#checklist_distribution").length === 14 && 
+        $('input[type="checkbox"][value="PM"]').prop("checked") === false && 
+        $('input[type="checkbox"][value="GL"]').prop("checked") === false) {
+          canada.prop("checked", true);
+        } else {
+          canada.prop("checked", false);
+        }
     },
     uncheck_outside_canada: function() {
       $.each(["GL", "PM"], function() {
@@ -132,6 +146,7 @@ VASCAN.checklist = (function(){
       $.each($('.province'), function() {
         self.set_checked_regions(this);
       });
+      this.set_checked_canada();
       if($('#custom_results_table').length > 0) { scroll = true; }
       this.show_criteria_panel(panel, scroll);
     },
