@@ -82,7 +82,7 @@
 			</div>
 		</div>
 
-		<p><input <#attempt>${data.only_ca.display}<#recover></#attempt> type="checkbox" name="only_ca" id="only_ca" value="true"/> ${rc.getMessage("checklist_ignore")}</p>
+		<p><input ${data.only_ca!} type="checkbox" name="only_ca" id="only_ca" value="true"/> ${rc.getMessage("checklist_ignore")}</p>
 
 		<p>${rc.getMessage("checklist_msg8")}</p>
 
