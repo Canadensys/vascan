@@ -1,9 +1,11 @@
 package net.canadensys.dataportal.vascan.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import net.canadensys.dataportal.vascan.DistributionService;
@@ -120,31 +122,23 @@ public class PropertyMapHelper {
 	}
 	
 	public void fillSynonyms(List<TaxonModel> allChildren, Map<String,Object> data){
-	    // synonyms for taxon ; each synonym is saved in an hashmap and all hashmap
-	    // are added to a vector wich is added to the main data hashmap. That vector
-	    // is available in the ftl as a sequence. The synonyms are filtered from the
-	    // children of the taxon by the isSynonymPredicate predicate
-	    List<Map<String,Object>> taxonSynonyms = new ArrayList<Map<String,Object>>();
+	    // Use a TreeMap so synonyms will be alphabetically sorted
+	    Map<String,Map<String,Object>> taxonSynonymsMap = new TreeMap<String, Map<String,Object>>();
 	    FilterIterator filterIterator = new FilterIterator(allChildren.iterator(),new IsSynonymPredicate());
 	    if(filterIterator != null){
 	    	while(filterIterator.hasNext()){
-	    		try{
-		            Map<String,Object> synonymData = new HashMap<String,Object>();
-		            TaxonModel synonym = (TaxonModel) filterIterator.next();
-		            synonymData.put("taxonId",synonym.getId());
-		            synonymData.put("fullScientificName",synonym.getLookup().getCalnamehtmlauthor());
-		            synonymData.put("fullScientificNameUrl",synonym.getLookup().getCalname());
-	                synonymData.put("reference",synonym.getReference().getReference());
-	                synonymData.put("referenceShort",synonym.getReference().getReferenceshort());
-	                synonymData.put("link",synonym.getReference().getUrl());
-		            taxonSynonyms.add(synonymData);
-		        }
-		        catch(NullPointerException e){
-		            //drop on error
-		        }
+	            Map<String,Object> synonymData = new HashMap<String,Object>();
+	            TaxonModel synonym = (TaxonModel) filterIterator.next();
+	            synonymData.put("taxonId",synonym.getId());
+	            synonymData.put("fullScientificName",synonym.getLookup().getCalnamehtmlauthor());
+	            synonymData.put("fullScientificNameUrl",synonym.getLookup().getCalname());
+                synonymData.put("reference",synonym.getReference().getReference());
+                synonymData.put("referenceShort",synonym.getReference().getReferenceshort());
+                synonymData.put("link",synonym.getReference().getUrl());
+	            taxonSynonymsMap.put(synonym.getLookup().getCalnamehtmlauthor(), synonymData);
 	    	}
 	    }
-	    data.put("synonyms",taxonSynonyms);
+	    data.put("synonyms",taxonSynonymsMap.values());
 	}
 	
 	public void fillTaxonDistribution(List<DistributionModel> distributions, TaxonModel taxon, Map<String,Object> data){
