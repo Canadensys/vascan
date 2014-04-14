@@ -302,7 +302,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	    data.put("limitResults",limitResultsChecked);
 	    data.put("rank",rankChecked);
 	    data.put("combination",combinationSelected);
-	    data.put("only_ca",reqionQueryPart.isSearchOnlyInCanada());
+	    data.put("only_ca",reqionQueryPart.isSearchOnlyInCanada()?CHECKED:"");
 	    data.put("territory",territoryChecked);
 	    data.put("taxons",getChecklistTaxons(taxon));
 	    data.put("isSearch",searchOccured);

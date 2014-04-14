@@ -11,8 +11,16 @@ import net.canadensys.dataportal.vascan.taxonomy.TaxonRankEnum;
 
 import org.junit.Test;
 
+/**
+ * Test some PropertyMapHelper functionalities.
+ * @author canadensys
+ *
+ */
 public class PropertyMapHelperTest {
 	
+	/**
+	 * Validate getRankRangeForDisplay returns valid ranges.
+	 */
 	@Test
 	public void testGetRankRangeForDisplay(){
 		TaxonRankEnum[] rankToDisplay = null;
@@ -25,9 +33,11 @@ public class PropertyMapHelperTest {
 				assertEquals(TaxonRankEnum.VARIETY, currEnum);
 			}
 		}
-		
 	}
 	
+	/**
+	 * Validate getRankLabelRange Strings can be used with Rank class.
+	 */
 	@Test
 	public void testGetRankLabelRange(){
 		String[] rankToDisplay = null;
