@@ -1,7 +1,6 @@
 package net.canadensys.dataportal.vascan.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,10 @@ import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
 import net.canadensys.dataportal.vascan.model.view.ClassificationOrderingViewModel;
+import net.canadensys.dataportal.vascan.taxonomy.TaxonRankEnum;
 
 import org.apache.commons.collections.iterators.FilterIterator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PropertyMapHelper {
+	
+	private static final Logger LOGGER = Logger.getLogger(PropertyMapHelper.class);
 	
 	@Autowired
 	private DistributionService distributionService;
@@ -75,7 +78,9 @@ public class PropertyMapHelper {
 	    			covm = new ClassificationOrderingViewModel(node);
 	    		}
 	    		else{
-	    			covm.attach(node);
+	    			if(!covm.attach(node)){
+	    				LOGGER.fatal("Can NOT attached node with taxonId:" + node.getTaxonId());
+	    			}
 	    		}
 	    	}
 
@@ -179,38 +184,57 @@ public class PropertyMapHelper {
 	    data.put("computedDistribution",computedDistribution);
 	    data.put("distributions",taxonDistributions);
 	}
-	
-	
 
 	/**
 	 * Returns the range of rank label we want to return for a specific rank.
 	 * This is used to avoid returning the whole hierarchy for a taxon.
-	 * @param rankValue
-	 * @return range of values or empty if nothing was found(e.g. variety)
+	 * @param taxonRank
+	 * @return range of rank label or null if nothing was found(e.g. variety)
 	 */
-	public static String[] getRankLabelRange(int rankValue){
-		switch(rankValue){
-			case Rank.CLASS :
-			case Rank.SUBCLASS :
-			case Rank.SUPERORDER : return new String[]{Rank.SUBCLASS_LABEL, Rank.SUPERORDER_LABEL, Rank.ORDER_LABEL};
-			
-			case Rank.ORDER : return new String[]{Rank.FAMILY_LABEL};
-			
-			case Rank.FAMILY :
-			case Rank.SUBFAMILY:
-			case Rank.TRIBE:
-				
-			case Rank.SUBTRIBE: return new String[]{Rank.SUBFAMILY_LABEL,Rank.TRIBE_LABEL,Rank.SUBTRIBE_LABEL,Rank.GENUS_LABEL};
-			case Rank.GENUS : 
-			case Rank.SUBGENUS:
-			case Rank.SECTION:
-			case Rank.SUBSECTION:
-			case Rank.SERIES : return new String[]{Rank.SUBGENUS_LABEL,Rank.SECTION_LABEL,Rank.SUBSECTION_LABEL,Rank.SPECIES_LABEL};
-				
-			case Rank.SPECIES:
-			case Rank.SUBSPECIES:return new String[]{Rank.SUBSPECIES_LABEL,Rank.VARIETY_LABEL};
+	public static String[] getRankLabelRange(TaxonRankEnum taxonRank){
+		
+		TaxonRankEnum[] rankRange = getRankRangeForDisplay(taxonRank);
+		if(rankRange == null){
+			return null;
 		}
-		return null;
+		
+		String[] rankRangeLabels = new String[rankRange.length];
+		for(int i=0; i<rankRange.length;i++){
+			rankRangeLabels[i]=rankRange[i].getLabel();
+		}
+		return rankRangeLabels;
+	}
+	
+	/**
+	 * Returns the range of TaxonRankEnum we want to display under a specific rank.
+	 * This is used to avoid returning the whole hierarchy for a taxon.
+	 * @param taxonRank
+	 * @return range of values or null if nothing was found(e.g. variety)
+	 */
+	public static TaxonRankEnum[] getRankRangeForDisplay(TaxonRankEnum taxonRank){
+		switch(taxonRank){
+			case CLASS :
+			case SUBCLASS :
+			case SUPERORDER : return new TaxonRankEnum[]{TaxonRankEnum.SUBCLASS, TaxonRankEnum.SUPERORDER, TaxonRankEnum.ORDER};
+			
+			case ORDER : return new TaxonRankEnum[]{TaxonRankEnum.FAMILY};
+			
+			case FAMILY :
+			case SUBFAMILY:
+			case TRIBE:
+				
+			case SUBTRIBE: return new TaxonRankEnum[]{TaxonRankEnum.SUBFAMILY,TaxonRankEnum.TRIBE,TaxonRankEnum.SUBTRIBE,TaxonRankEnum.GENUS};
+			case GENUS : 
+			case SUBGENUS:
+			case SECTION:
+			case SUBSECTION:
+			case SERIES : return new TaxonRankEnum[]{TaxonRankEnum.SUBGENUS,TaxonRankEnum.SECTION,TaxonRankEnum.SUBSECTION,TaxonRankEnum.SERIES,TaxonRankEnum.SPECIES};
+				
+			case SPECIES:
+			case SUBSPECIES:return new TaxonRankEnum[]{TaxonRankEnum.SUBSPECIES,TaxonRankEnum.VARIETY};
+			
+			default: return null;
+		}
 	}
 
 }

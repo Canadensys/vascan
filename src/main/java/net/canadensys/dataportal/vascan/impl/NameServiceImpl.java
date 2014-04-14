@@ -15,6 +15,7 @@ import net.canadensys.dataportal.vascan.model.HabitModel;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.model.VernacularNameModel;
+import net.canadensys.dataportal.vascan.taxonomy.TaxonRankEnum;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -347,7 +348,7 @@ public class NameServiceImpl implements NameService{
 	        List<TaxonLookupModel> classificationList = new ArrayList<TaxonLookupModel>();
 	        taxonManager.getParentClassification(taxon,classificationList);
 	        classificationList.add(taxon.getLookup());
-	        String[] rankLabelRange = PropertyMapHelper.getRankLabelRange(taxon.getRank().getId());
+	        String[] rankLabelRange = PropertyMapHelper.getRankLabelRange(TaxonRankEnum.fromLabel(taxon.getRank().getRank()));
 	        //make sure we find a range, something like variety will not return any ranks
 	        if(rankLabelRange != null){
 	        	classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId(),rankLabelRange));
