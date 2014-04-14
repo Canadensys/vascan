@@ -1,5 +1,9 @@
 Version History
 ===============
+
+Version 3.2.1 2014-04-14
+* Fixed Issue [#17](https://github.com/Canadensys/vascan/issues/17).
+
 Version 3.2.0 2014-04-14
 * Some changes in checklist builder see Issue [#16](https://github.com/Canadensys/vascan/issues/16).
 * Fixed synonym ordering on taxon page
