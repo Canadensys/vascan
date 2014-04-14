@@ -18,7 +18,7 @@ ext {
 	sourceEncoding = 'UTF-8'
 	sourceCompatibility = JavaVersion.VERSION_1_6
 
-	dataAccessVersion = '2.6.0-SNAPSHOT'
+	dataAccessVersion = '2.6.0'
 
 	springVersion = '4.0.2.RELEASE'
 	hibernateVersion = '4.3.2.Final'
