@@ -36,6 +36,8 @@
 			</#list>
 			</select>
 		<p>
+
+		<p><input ${data.only_ca!} type="checkbox" name="only_ca" id="only_ca" value="true"/> ${rc.getMessage("checklist_ignore")}</p>
 		
 		<p>${rc.getMessage("checklist_msg5")}
 		<select name="combination">
@@ -81,8 +83,6 @@
 			<div id="map_selector">
 			</div>
 		</div>
-
-		<p><input ${data.only_ca!} type="checkbox" name="only_ca" id="only_ca" value="true"/> ${rc.getMessage("checklist_ignore")}</p>
 
 		<p>${rc.getMessage("checklist_msg8")}</p>
 
