@@ -69,7 +69,7 @@ public class TaxonManager {
 	/**
 	 * Get all accepted parent taxa. 
 	 * @param currTaxon
-	 * @param parentList
+	 * @param parentList parent list to be filled.
 	 * @return
 	 */
 	public List<TaxonLookupModel> getParentClassification(TaxonModel currTaxon, List<TaxonLookupModel> parentList){

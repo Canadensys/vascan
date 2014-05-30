@@ -65,11 +65,15 @@ public class PropertyMapHelper {
 	    data.put("hybridParents",taxonHybridParents);
 	}
 	
+	/**
+	 * Fill classification in the data object and apply alphabetical sorting at rank level as well 
+	 * as rank correction when a rank is skipped @see {@link ClassificationOrderingViewModel}.
+	 * @param classification
+	 * @param data
+	 */
 	public void fillTaxonClassification(List<TaxonLookupModel> classification, Map<String,Object> data){  
-		// classification for taxon ; get all the hierarchy of taxon above, and possibly
-		// below of taxon, and save to hashmap and add to list.
-		List<Map<String,Object>> taxonClassification = new ArrayList<Map<String,Object>>();
-		
+
+		List<Map<String,Object>> taxonClassification = new ArrayList<Map<String,Object>>();		
 	    if(classification != null){
 	    	//reorder classification
 	    	ClassificationOrderingViewModel covm = null;

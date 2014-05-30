@@ -97,19 +97,30 @@ public class TaxonServiceImpl implements TaxonService {
 	    }
 	    data.put("parents",taxonParents);
 	    
-        //Generate classification
-        List<TaxonLookupModel> classificationList = new ArrayList<TaxonLookupModel>();
-        taxonManager.getParentClassification(taxon,classificationList);
-        classificationList.add(taxon.getLookup());
-        String[] rankLabelRange = PropertyMapHelper.getRankLabelRange(TaxonRankEnum.fromLabel(taxon.getRank().getRank()));
-        //make sure we find a range, something like variety will not return any ranks
-        if(rankLabelRange != null){
-        	classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId(),rankLabelRange));
-        }
-        else{
-        	classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId()));
-        }
-        propertyMapHelper.fillTaxonClassification(classificationList, data);
+	    // status 
+	    String status = "";
+	    if(taxon.getStatus() != null && taxon.getStatus().getStatus() != null){
+	    	status = taxon.getStatus().getStatus();
+	    	if(taxon.getStatus().getId() == Status.SYNONYM)
+	    		isSynonymConcept = true;
+	    }
+	    data.put("status",status);
+	    
+	    //Generate classification (only for accepted taxon)
+	    if(!isSynonymConcept){
+	        List<TaxonLookupModel> classificationList = new ArrayList<TaxonLookupModel>();
+	        taxonManager.getParentClassification(taxon,classificationList);
+	        classificationList.add(taxon.getLookup());
+	        String[] rankLabelRange = PropertyMapHelper.getRankLabelRange(TaxonRankEnum.fromLabel(taxon.getRank().getRank()));
+	        //make sure we find a range, something like variety will not return any ranks
+	        if(rankLabelRange != null){
+	        	classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId(),rankLabelRange));
+	        }
+	        else{
+	        	classificationList.addAll(taxonomyDAO.getAcceptedChildrenListFromNestedSets(taxon.getId()));
+	        }
+	    	propertyMapHelper.fillTaxonClassification(classificationList, data);
+	    }
 		
 		propertyMapHelper.fillVernacularNames(taxon.getVernacularnames(), data);
 
@@ -117,7 +128,6 @@ public class TaxonServiceImpl implements TaxonService {
 		
 		propertyMapHelper.fillTaxonDistribution(taxon.getDistribution(),taxon,data);
 
-	    
 	    // habitus (using the calculated habit from lookup)
 	    Vector<HashMap<String,String>> taxonHabituses = new Vector<HashMap<String,String>>();
 	    if(taxon.getLookup().getCalhabit() != null){
@@ -140,15 +150,6 @@ public class TaxonServiceImpl implements TaxonService {
 	    // the full scientific name, stripped of html
 	    String pageTitle = taxon.getLookup().getCalnameauthor();
 	    data.put("pageTitle",pageTitle);
-	    
-	    // status 
-	    String status = "";
-	    if(taxon.getStatus() != null && taxon.getStatus().getStatus() != null){
-	    	status = taxon.getStatus().getStatus();
-	    	if(taxon.getStatus().getId() == Status.SYNONYM)
-	    		isSynonymConcept = true;
-	    }
-	    data.put("status",status);
 	    
 	    // rank
 	    String rank = taxon.getRank().getRank();
