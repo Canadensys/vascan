@@ -18,12 +18,13 @@ ext {
 	sourceEncoding = 'UTF-8'
 	sourceCompatibility = JavaVersion.VERSION_1_6
 
-	dataAccessVersion = '2.6.0'
+	dataAccessVersion = '2.10.0'
 
 	springVersion = '4.0.2.RELEASE'
 	hibernateVersion = '4.3.2.Final'
 	jacksonVersion = '2.2.3'
 	freemarkerVersion = '2.3.20'
+	elasticSearchVersion = '0.90.12'
 
 	tomcatVersion = '6.0.29'
 	seleniumVersion = '2.41.0'
@@ -31,6 +32,9 @@ ext {
 
 compileJava.options.encoding = sourceEncoding
 compileTestJava.options.encoding = sourceEncoding
+
+compileJava.sourceCompatibility = sourceCompatibility
+compileJava.targetCompatibility = sourceCompatibility
 
 repositories {
     mavenCentral()
@@ -54,7 +58,7 @@ dependencies {
 	
 	compile group: 'net.canadensys', name: 'canadensys-data-access', version: dataAccessVersion
 	compile group: 'org.freemarker', name: 'freemarker', version: freemarkerVersion
-	compile group: 'org.elasticsearch', name: 'elasticsearch', version: '0.90.2'
+	compile group: 'org.elasticsearch', name: 'elasticsearch', version: elasticSearchVersion
 	compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
 	compile group: 'org.springframework', name: 'spring-web', version: springVersion
 	compile group: 'org.springframework', name: 'spring-context-support', version: springVersion

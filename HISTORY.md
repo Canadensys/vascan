@@ -1,5 +1,11 @@
 Version History
 ===============
+Version 3.2.3 2014-08-05
+* Update to canadensys-data-access 2.10.0 and ElasticSearch 0.90.12.
+* Simply keeping the stack more up-to-date. No changes expected.
+
+Version 3.2.2 2014-06-02
+* Small optimization to avoid unnecessary classification queries.
 
 Version 3.2.1 2014-04-14
 * Fixed Issue [#17](https://github.com/Canadensys/vascan/issues/17).
