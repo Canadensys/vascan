@@ -28,7 +28,7 @@
 		</property>
 	</bean>
 	
-	<import resource="vascan-data-source.xml" />
+	<import resource="data-source.xml" />
 	
 	<context:component-scan base-package="net.canadensys.dataportal.vascan"/>
 	

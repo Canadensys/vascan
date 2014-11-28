@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/jdbc
+    http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+	
+	<!-- H2 config -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+	</bean>
+	
+	<!-- create tables from the canadensys-data-access jar -->
+	<jdbc:initialize-database data-source="dataSource">
+    	<jdbc:script location="classpath:script/vascan/vascan_database_create_tables.sql" />
+    	<jdbc:script location="/WEB-INF/insert_test_data.sql" />
+  	</jdbc:initialize-database>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>net.canadensys.dataportal.vascan.model</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="esTestInstance" class="net.canadensys.databaseutils.ElasticSearchTestInstance" init-method="startElasticSearch" destroy-method="stopElasticSearch"/>
+	<bean id="esClient" class="org.elasticsearch.client.Client" factory-bean ="esTestInstance" factory-method="buildLocalClient"/>
+</beans>

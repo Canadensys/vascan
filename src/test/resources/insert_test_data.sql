@@ -83,63 +83,113 @@ INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
 (160,'MF','Favreau','Favreau, M. Proposition de nom français.','');
 
 INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
-(65,'Nunavik','Blondeau & Roy, 2004','Blondeau, M. & C. Roy. 2004. Atlas des plantes des villages du Nunavik. Multimondes. 610 pp.','');
+(65,'Nunavik','Blondeau & Roy, 2004','Blondeau, M. & C. Roy. 2004. Atlas des plantes des villages du Nunavik. Multimondes. 610 pp.',''),
+('141','NPS','Darbyshire et al., 2000','Darbyshire S.J., M. Favreau & M. Murray (revu et augmenté par). 2000. Noms populaires et scientifiques des plantes nuisibles du Canada. Agriculture et Agroalimentaire Canada. Publication 1397. 132 pp.','');
 
 INSERT INTO taxon (id,
   uninomial,author,statusid,rankid,referenceid)
 VALUES(73,'Equisetopsida','C. Aghard',1,1,105);
 
-INSERT INTO taxon (id,
-  uninomial,binomial,trinomial,author,statusid,rankid,referenceid)
-VALUES(14992,'Carex','arctata','faxoni','L.H. Bailey',2,16,180);
+INSERT INTO taxon (id,uninomial,binomial,trinomial,author,statusid,rankid,referenceid)
+VALUES
+(4751,'Carex','arctata','','Boott',1,14,180),
+(14992,'Carex','arctata','faxoni','L.H. Bailey',2,16,180),
+(15164,'Carex','alpina','holostoma','(Drejer) L.H. Bailey',2,16,180),
+(15428,'Carex','abdita','','Bicknell',2,14,180),
+(9401,'Taxus','canadensis','','Marshall',1,14,176),
+(3018,'Cosmos','bipinnatus','','Cavanilles',1,14,178),
+(2844,'Arctanthemum','arcticum','arcticum','(Linnaeus) Tzvelev',1,15,175),
+(2846,'Arctanthemum','arcticum','polare','(Hultén) Tzvelev',1,15,175),
+(2845,'Arctanthemum','arcticum','','(Linnaeus) Tzvelev',1,14,175),
+('5129','Carex','umbellata','','Schkuhr ex Willdenow',1,14,180);
 
-INSERT INTO taxon (id,
-  uninomial,binomial,trinomial,author,statusid,rankid,referenceid)
-VALUES(15164,'Carex','alpina','holostoma','(Drejer) L.H. Bailey',2,16,180);
+INSERT INTO taxonomy (id,childid,parentid)
+VALUES
+('14992','14992','4751'),
+('15164','15164','4904'),
+('46528','15428','5129'
+);
 
-INSERT INTO taxon (id,
-  uninomial,binomial,author,statusid,rankid,referenceid)
-VALUES(15428,'Carex','abdita','Bicknell',2,14,180);
-
-INSERT INTO taxon (id,
-  uninomial,binomial,author,statusid,rankid,referenceid)
-VALUES(9401,'Taxus','canadensis','Marshall',1,14,176);
-
-INSERT INTO taxon (id,
-  uninomial,binomial,author,statusid,rankid,referenceid)
-VALUES(3018,'Cosmos','bipinnatus','Cavanilles',1,14,178);
-
-INSERT INTO taxon (id,
-  uninomial,binomial,trinomial,author,statusid,rankid,referenceid)
-VALUES(2844,'Arctanthemum','arcticum','arcticum','(Linnaeus) Tzvelev',1,15,175);
-
-INSERT INTO taxon (id,
-  uninomial,binomial,trinomial,author,statusid,rankid,referenceid)
-VALUES(2846,'Arctanthemum','arcticum','polare','(Hultén) Tzvelev',1,15,175);
-
-INSERT INTO taxon (id,
-  uninomial,binomial,author,statusid,rankid,referenceid)
-VALUES(2845,'Arctanthemum','arcticum','(Linnaeus) Tzvelev',1,14,175);
+INSERT INTO lookup (
+calname,calnameauthor,calnamehtml,calnamehtmlauthor,taxonid,status,rank,calhabit,
+`AB`,`BC`,`GL`,`NL_L`,`MB`,`NB`,`NL_N`,`NT`,`NS`,`NU`,`ON`,`PE`,`QC`,`PM`,`SK`,`YT`,
+higherclassification,class,_order,family,genus,subgenus,specificepithet,
+infraspecificepithet,author,vernacularfr,vernacularen,cdate,mdate,_left,_right)
+VALUES
+('Equisetopsida','Equisetopsida C. Aghard','<em>Equisetopsida</em>','<em>Equisetopsida</em> C. Aghard',
+'73','accepted','class','herb,shrub,tree,vine','native','native','native','native','native','native','native',
+'native','native','native','native','native','native','native','native','native','','Equisetopsida','','','','',
+'','','C. Aghard',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:21:07','0','20067'
+),
+('Taxus canadensis','Taxus canadensis Marshall','<em>Taxus canadensis</em>','<em>Taxus canadensis</em> Marshall',
+'9401','accepted','species','shrub','absent','absent','absent','native','native','native','native','absent','native',
+'absent','native','native','native','native','absent','absent','Equisetopsida;Pinidae;Cupressales;Taxaceae;Taxus',
+'Equisetopsida','Cupressales','Taxaceae','Taxus','','canadensis','','Marshall','if du Canada','Canada yew',
+'2013-08-22 00:00:00','2013-08-22 11:21:07','19633','19634'
+),
+('Cosmos bipinnatus','Cosmos bipinnatus Cavanilles','<em>Cosmos bipinnatus</em>','<em>Cosmos bipinnatus</em> Cavanilles',
+'3018','accepted','species','herb','absent','absent','absent','absent','absent','absent','absent','absent','absent',
+'absent','introduced','absent','introduced','absent','absent','absent','Equisetopsida;Magnoliidae;Asteranae;Asterales;Asteraceae;Asteroideae;Coreopsideae;Cosmos',
+'Equisetopsida','Asterales','Asteraceae','Cosmos','','bipinnatus','','Cavanilles','cosmos bipenné','garden cosmos',
+'2013-08-22 00:00:00','2013-08-22 11:21:03','1676','1677'
+),
+('Carex arctata var. faxoni','Carex arctata var. faxoni L.H. Bailey','<em>Carex arctata</em> var. <em>faxoni</em>','<em>Carex arctata</em> var. <em>faxoni</em> L.H. Bailey',
+'14992','synonym','variety','','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent',
+'','','','','Carex','','arctata','faxoni','L.H. Bailey',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:18:37',NULL,NULL
+),
+('Carex alpina var. holostoma','Carex alpina var. holostoma (Drejer) L.H. Bailey','<em>Carex alpina</em> var. <em>holostoma</em>','<em>Carex alpina</em> var. <em>holostoma</em> (Drejer) L.H. Bailey',
+'15164','synonym','variety','','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent',
+'','','','','Carex','','alpina','holostoma','(Drejer) L.H. Bailey',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:18:31',NULL,NULL
+),
+('Silene latifolia subsp. alba','Silene latifolia subsp. alba (Miller) Greuter & Burdet','<em>Silene latifolia</em> subsp. <em>alba</em>','<em>Silene latifolia</em> subsp. <em>alba</em> (Miller) Greuter & Burdet',
+'14428','synonym','subspecies','','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','','','','','Silene','','latifolia',
+'alba','(Miller) Greuter & Burdet',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:17:52',NULL,NULL
+),
+('Cosmos bipinnatus','Cosmos bipinnatus Cavanilles','<em>Cosmos bipinnatus</em>','<em>Cosmos bipinnatus</em> Cavanilles',
+'3018','accepted','species','herb','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','introduced','absent','introduced','absent','absent','absent',
+'Equisetopsida;Magnoliidae;Asteranae;Asterales;Asteraceae;Asteroideae;Coreopsideae;Cosmos','Equisetopsida','Asterales','Asteraceae','Cosmos','','bipinnatus','',
+'Cavanilles','cosmos bipenné','garden cosmos','2013-08-22 00:00:00','2013-08-22 11:21:03','1676','1677'
+),
+('Arctanthemum arcticum subsp. arcticum','Arctanthemum arcticum (Linnaeus) Tzvelev subsp. arcticum','<em>Arctanthemum arcticum</em> subsp. <em>arcticum</em>','<em>Arctanthemum arcticum</em> (Linnaeus) Tzvelev subsp. <em>arcticum</em>',
+'2844','accepted','subspecies','herb','absent','native','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent',
+'Equisetopsida;Magnoliidae;Asteranae;Asterales;Asteraceae;Asteroideae;Anthemideae;Arctanthemum;Arctanthemum arcticum','Equisetopsida','Asterales','Asteraceae','Arctanthemum','',
+'arcticum','arcticum','(Linnaeus) Tzvelev','chrysanthème arctique','arctic daisy','2013-08-22 00:00:00','2013-08-22 11:21:02','705','706'
+),
+('Arctanthemum arcticum subsp. polare','Arctanthemum arcticum subsp. polare (Hultén) Tzvelev','<em>Arctanthemum arcticum</em> subsp. <em>polare</em>','<em>Arctanthemum arcticum</em> subsp. <em>polare</em> (Hultén) Tzvelev',
+'2846','accepted','subspecies','herb','absent','absent','absent','absent','native','absent','absent','native','absent','native','native','absent','native','absent','absent','native',
+'Equisetopsida;Magnoliidae;Asteranae;Asterales;Asteraceae;Asteroideae;Anthemideae;Arctanthemum;Arctanthemum arcticum','Equisetopsida','Asterales','Asteraceae','Arctanthemum','','arcticum',
+'polare','(Hultén) Tzvelev','chrysanthème polaire','polar daisy','2013-08-22 00:00:00','2013-08-22 11:21:02','707','708'
+),
+('Arctanthemum arcticum','Arctanthemum arcticum (Linnaeus) Tzvelev','<em>Arctanthemum arcticum</em>','<em>Arctanthemum arcticum</em> (Linnaeus) Tzvelev',
+'2845','accepted','species','herb','absent','native','absent','absent','native','absent','absent','native','absent','native','native','absent','native','absent','absent','native',
+'Equisetopsida;Magnoliidae;Asteranae;Asterales;Asteraceae;Asteroideae;Anthemideae;Arctanthemum','Equisetopsida','Asterales','Asteraceae','Arctanthemum','','arcticum','','(Linnaeus) Tzvelev',
+'chrysanthème arctique','arctic daisy','2013-08-22 00:00:00','2013-08-22 11:21:02','704','709'
+),
+('Carex arctata','Carex arctata Boott','<em>Carex arctata</em>','<em>Carex arctata</em> Boott',
+'4751','accepted','species','herb','absent','absent','absent','native','native','native','native','absent','native','absent','native','native','native','native','absent','absent',
+'Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex;Carex sect. Hymenochlaenae','Equisetopsida','Poales','Cyperaceae','Carex','','arctata','','Boott','carex comprimé',
+'drooping woodland sedge','2013-08-22 00:00:00','2013-08-22 11:21:04','9500','9501'
+),
+('Carex umbellata','Carex umbellata Schkuhr ex Willdenow','<em>Carex umbellata</em>','<em>Carex umbellata</em> Schkuhr ex Willdenow',
+'5129','accepted','species','herb','native','excluded','native','native','native','native','native','absent','native','absent','native','excluded','native','absent','native','absent',
+'Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex;Carex sect. Acrocystis','Equisetopsida','Poales','Cyperaceae','Carex','','umbellata','','Schkuhr ex Willdenow',
+'carex en ombelle','umbellate sedge','2013-08-22 00:00:00','2013-08-22 11:21:04','9192','9193'
+),
+('Carex abdita','Carex abdita Bicknell','<em>Carex abdita</em>','<em>Carex abdita</em> Bicknell',
+'15428','synonym','species','','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent',
+'','','','','Carex','','abdita','','Bicknell',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:18:30',NULL,NULL
+);
 
 
 INSERT INTO vernacularname (
   id,name,statusid,taxonid,language,referenceid)
-VALUES(26258,'buis',2,9401,'fr',270);
-
-INSERT INTO vernacularname (
-  id,name,statusid,taxonid,language,referenceid)
-VALUES(2627,'cosmos',2,3018,'fr',314);
-
-INSERT INTO vernacularname (
-  id,name,statusid,taxonid,language,referenceid)
-1919,'chrysanthème arctique',1,2844,'fr',160);
-
-INSERT INTO vernacularname (
-  id,name,statusid,taxonid,language,referenceid)
-1922,'chrysanthème arctique',2,2846,'fr',65);
-
-INSERT INTO vernacularname (
-  id,name,statusid,taxonid,language,referenceid)
-30813,'chrysanthème arctique',1,2845,'fr',160);
+VALUES
+(26258,'buis',2,9401,'fr',270),
+(2627,'cosmos',2,3018,'fr',314),
+(1919,'chrysanthème arctique',1,2844,'fr',160),
+(1922,'chrysanthème arctique',2,2846,'fr',65),
+(30813,'chrysanthème arctique',1,2845,'fr',160),
+(26256,'if du Canada','1','9401','fr',141
+);
 
 

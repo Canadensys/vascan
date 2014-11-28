@@ -18,7 +18,7 @@ ext {
 	sourceEncoding = 'UTF-8'
 	sourceCompatibility = JavaVersion.VERSION_1_6
 
-	dataAccessVersion = '2.10.0'
+	dataAccessVersion = '2.12.0-SNAPSHOT'
 
 	springVersion = '4.0.2.RELEASE'
 	hibernateVersion = '4.3.2.Final'
@@ -26,8 +26,9 @@ ext {
 	freemarkerVersion = '2.3.20'
 	elasticSearchVersion = '0.90.12'
 
+	h2Version = '1.3.175'
 	tomcatVersion = '6.0.29'
-	seleniumVersion = '2.41.0'
+	seleniumVersion = '2.44.0'
 }
 
 compileJava.options.encoding = sourceEncoding
@@ -80,8 +81,10 @@ dependencies {
 		exclude module: 'slf4j-api'
 	}
 	
+	//h2 is included to allow integration testing using a mock database
+    compile group: 'com.h2database', name: 'h2', version: h2Version
+    
 	testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'com.h2database', name: 'h2', version: '1.3.172'
     testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'	
     testCompile group: 'com.jayway.jsonpath', name: 'json-path', version: '0.8.1'
@@ -119,5 +122,28 @@ tomcatRunWar {
 
 tomcatStop {
 	stopKey = 'stopKey'
+}
+
+//Used for conditional configuration. The configuration is applied only when we know that the task will be executed.
+def onlyFor(task, config) {
+    gradle.taskGraph.whenReady { graph ->
+        if (graph.hasTask(task)) { 
+            project.configure(project, config)
+        }
+    }
+}
+
+/**
+ * This task allows us to replace the data-source.xml with the one from 'config/local'.
+ */
+task useLocalDataSource{
+	//only include this configuration if 'copyLocalConfig' is in the task list
+	onlyFor(copyLocalConfig) {
+		if( file("config/local/data-source.xml").exists()){
+			war.excludes = ['WEB-INF/data-source.xml']
+			war.webInf { from 'config/local/data-source.xml' }
+			war.webInf { from 'src/test/resources/insert_test_data.sql' }
+		}
+	}
 }
 

@@ -3,7 +3,7 @@ googleanalytics.account=B
 
 url.useMinified=true
 
-lastPublicationDateFilePath=/tmp/vascanlastpublicationdatefile.txt
+lastPublicationDateFilePath=/tmp/toto.txt
 
 #this publicDownloadUrl will not work locally unless your setup something with Apache
 generatedContent.publicDownloadUrl=http://localhost:9966/vascan/download/
@@ -11,14 +11,8 @@ generatedContent.imageFolder=/tmp/vascan/
 generatedContent.generatedFilesFolder=/tmp/vascan/
 generatedContent.taxonUrl=http://data.canadensys.net/taxon/
 
-database.driver=com.mysql.jdbc.Driver
-database.url=jdbc:mysql://127.0.0.1:3306/vascan?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8
-database.user=root
-database.password=
-database.idleConnectionTestPeriod=60
-hibernate.dialect=org.hibernate.dialect.MySQLDialect
-hibernate.show_sql=true
-hibernate.jdbc.fetch_size=1000
+database.driver=org.h2.Driver
+database.url=jdbc:h2:mem:mysql;DB_CLOSE_DELAY=-1;MODE=MYSQL;TRACE_LEVEL_SYSTEM_OUT=2;MVCC=TRUE
 
-elasticsearch.host=127.0.0.1
-elasticsearch.port=9300
+hibernate.dialect=org.hibernate.dialect.H2Dialect
+hibernate.show_sql=true
