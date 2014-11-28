@@ -101,13 +101,17 @@ VALUES
 (2844,'Arctanthemum','arcticum','arcticum','(Linnaeus) Tzvelev',1,15,175),
 (2846,'Arctanthemum','arcticum','polare','(Hultén) Tzvelev',1,15,175),
 (2845,'Arctanthemum','arcticum','','(Linnaeus) Tzvelev',1,14,175),
-('5129','Carex','umbellata','','Schkuhr ex Willdenow',1,14,180);
+(5129,'Carex','umbellata','','Schkuhr ex Willdenow',1,14,180),
+(4904,'Carex','holostoma','','Drejer','1','14','180'),
+(2096,'Carex','Racemosae','','G. Don','1','11','180'
+);
 
 INSERT INTO taxonomy (id,childid,parentid)
 VALUES
-('14992','14992','4751'),
-('15164','15164','4904'),
-('46528','15428','5129'
+('1','14992','4751'),
+('2','15164','4904'),
+('3','15428','5129'),
+('4','4904','2096'
 );
 
 INSERT INTO lookup (
@@ -178,8 +182,17 @@ VALUES
 ('Carex abdita','Carex abdita Bicknell','<em>Carex abdita</em>','<em>Carex abdita</em> Bicknell',
 '15428','synonym','species','','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','absent',
 '','','','','Carex','','abdita','','Bicknell',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:18:30',NULL,NULL
+),
+('Carex holostoma','Carex holostoma Drejer','<em>Carex holostoma</em>','<em>Carex holostoma</em> Drejer',
+'4904','accepted','species','herb','absent','absent','native','doubtful','absent','absent','doubtful','native','absent','native','absent','absent','native','absent','absent','native',
+'Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex;Carex sect. Racemosae','Equisetopsida','Poales','Cyperaceae','Carex','','holostoma','','Drejer',
+'carex à bec entier','arctic marsh sedge','2013-08-22 00:00:00','2013-08-22 11:21:05','10066','10067'
+),
+('Carex sect. Racemosae','Carex sect. Racemosae G. Don','<em>Carex</em> sect. <em>Racemosae</em>','<em>Carex</em> sect. <em>Racemosae</em> G. Don',
+'2096','accepted','section','herb','native','native','native','native','native','native','native','native','native','native','native','absent','native','native','native','native',
+'Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex','Equisetopsida','Poales','Cyperaceae','Carex','','','','G. Don',NULL,NULL,
+'2013-08-22 00:00:00','2013-08-22 11:21:05','10045','10088'
 );
-
 
 INSERT INTO vernacularname (
   id,name,statusid,taxonid,language,referenceid)
@@ -192,4 +205,15 @@ VALUES
 (26256,'if du Canada','1','9401','fr',141
 );
 
+INSERT INTO distribution(
+id,taxonid,regionid,
+distributionstatusid,excludedcodeid,referenceid,cdate,mdate)
+VALUES
+('9450','4904','3','1','1','359','2011-02-21 12:20:13','2011-02-21 12:26:18'),
+('9451','4904','4','6','1','1','2011-02-21 12:20:13','2011-08-16 10:37:01'),
+('9452','4904','7','6','1','1','2011-02-21 12:20:13','2011-08-16 10:37:01'),
+('9453','4904','8','1','1','361','2011-02-21 12:20:13','2011-02-21 12:26:18'),
+('9454','4904','10','1','1','161','2011-02-21 12:20:13','2011-02-21 12:26:18'),
+('9455','4904','13','1','1','270','2011-02-21 12:20:13','2011-02-21 12:26:18'),
+('9456','4904','16','1','1','119','2011-02-21 12:20:13','2011-02-21 12:26:18');
 

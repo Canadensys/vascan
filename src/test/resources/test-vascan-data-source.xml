@@ -4,13 +4,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 	
+	<!-- H2 config -->
 	<bean id="dataSource"
-		class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="${database.driver}" />
-        <property name="jdbcUrl" value="${database.url}" />
-		<property name="user" value="${database.user}" />
-        <property name="password" value="${database.password}" />
-        <property name="idleConnectionTestPeriod" value="${database.idleConnectionTestPeriod}"/>
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
 	</bean>
 	
 	<bean id="sessionFactory"
@@ -34,8 +32,6 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<bean id="esClient" class="net.canadensys.databaseutils.ElasticSearchUtils" factory-method="buildClient">
-		<constructor-arg><value>${elasticsearch.host}</value></constructor-arg>
-		<constructor-arg><value>${elasticsearch.port}</value></constructor-arg>
-	</bean>
+	<bean id="esTestInstance" class="net.canadensys.databaseutils.ElasticSearchTestInstance" init-method="startElasticSearch" destroy-method="stopElasticSearch"/>
+	<bean id="esClient" class="org.elasticsearch.client.Client" factory-bean ="esTestInstance" factory-method="buildLocalClient"/>
 </beans>
