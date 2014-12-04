@@ -1,27 +1,16 @@
 package net.canadensys.dataportal.vascan.impl;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import net.canadensys.dataportal.vascan.DownloadService;
 import net.canadensys.dataportal.vascan.dao.DistributionDAO;
@@ -32,8 +21,10 @@ import net.canadensys.dataportal.vascan.dao.query.RegionQueryPart;
 import net.canadensys.dataportal.vascan.generatedcontent.DarwinCoreGenerator;
 import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
+import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.query.ChecklistQuery;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -112,11 +103,20 @@ public class DownloadServiceImpl implements DownloadService {
 	@Override
 	public boolean generateDwcAFile(Map<String,String[]> params, String filename, ResourceBundle bundle){
 		String destinationFilePath = generatedContentConfig.getGeneratedFilesFolder() + filename;
+		File workingFolder = new File(generatedContentConfig.getGeneratedFilesFolder() + UUID.randomUUID().toString());
+		workingFolder.mkdir();
+		
 		ChecklistQuery cQuery = extractParameters(params);
-		Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
-	    		cQuery.getDistributionStatus(), cQuery.getRank(), cQuery.isHybrids(), cQuery.getSort());
-
-		return generateDwcArchive(destinationFilePath, bundle, it);
+		Iterator<TaxonModel> it = taxonDAO.searchIterator(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
+				cQuery.getDistributionStatus(), cQuery.getRank(), cQuery.isHybrids(), cQuery.getSort());
+		boolean success = dwcArchiveGenerator.generateDwcArchive(it, workingFolder, destinationFilePath, bundle);
+		try {
+			FileUtils.deleteDirectory(workingFolder);
+		}
+		catch (IOException e) {
+			LOGGER.warn("Can't delete working directory " + workingFolder, e);
+		}
+		return success;
 	}
 	
 	/**
@@ -326,131 +326,132 @@ public class DownloadServiceImpl implements DownloadService {
 	 * @param it data to include
 	 * @return
 	 */
-	private boolean generateDwcArchive(String destinationFilePath, ResourceBundle _bundle, Iterator<TaxonLookupModel> it){
-		if(StringUtils.isBlank(destinationFilePath)){
-			return false;
-		}
-		   
-	    // string buffers that will contain dwc mapped data
-	    StringBuffer buffer = new StringBuffer("");
-	    StringBuffer taxonDwc = new StringBuffer("");
-	    StringBuffer synonymDwc = new StringBuffer("");
-	    StringBuffer distributionDwc = new StringBuffer("");
-	    StringBuffer vernacularDwc = new StringBuffer("");
-	    StringBuffer habitusDwc = new StringBuffer("");
-	    
-	    // meta.xml file
-	    File meta = null;
-		try {
-			meta = new File(this.getClass().getResource("/"+VASCAN_META).toURI());
-		} catch (URISyntaxException e) {
-			LOGGER.fatal("Can't read Vascan meta.xml", e);
-			return false;
-		}
-	    
-	    Set<Integer> synonyms = new HashSet<Integer>();
-	    boolean success = true;
-	    boolean displayHeader = true;
-	    
-	    // take the list of all taxon id and create a sql clause in the form of "... AND taxonid IN (-->1,2,3,52<--) ..."
-	    //we also get the calculated habit since we have it
-	    ArrayList<Integer> inClause = new ArrayList<Integer>();
-	    Map<Integer,String> habitMap = new HashMap<Integer,String>();
-	    TaxonLookupModel tlm;
-	    
-        while(it.hasNext()){
-        	tlm = it.next();
-            inClause.add(tlm.getTaxonId());
-            habitMap.put(tlm.getTaxonId(), tlm.getCalhabit());
-        }
-        
-        // TAXON
-        List<Object[]> taxonData = taxonDAO.loadCompleteTaxonData(new ArrayList<Integer>(inClause));
-        buffer = dwcArchiveGenerator.generateTaxonDwc(taxonData,_bundle,displayHeader);
-        taxonDwc.append(buffer);
-        
-        // for each taxon, find the children synonyms
-        // these synonyms must be added at the end of the taxon.txt file
-        for(Integer synonym : taxonomyDAO.getSynonymChildrenIdList(inClause)){
-        	//avoid to add the same taxa twice
-            if(!inClause.contains(synonym)){
-                synonyms.add(synonym);
-            }
-        }
-        
-        // DISTRIBUTION
-		List<Object[]> distributionData = distributionDAO.loadCompleteDistributionData(inClause);
-        buffer = dwcArchiveGenerator.generateDistributionDwc(distributionData,_bundle,displayHeader);
-        distributionDwc.append(buffer);
-            
-        // VERNACULAR
-        List<Object[]> vernaculars = vernacularNameDAO.loadCompleteVernacularNameData(inClause);
-        buffer = dwcArchiveGenerator.generateVernacularDwc(vernaculars,_bundle,displayHeader);
-        vernacularDwc.append(buffer);
-        
-        // HABITUS
-        buffer = dwcArchiveGenerator.generateHabitusDwc(habitMap,_bundle,displayHeader);
-        habitusDwc.append(buffer);
-                
-        // once the header is added, we don't need it anymore
-        displayHeader = false;
-        
-        if(synonyms.size() > 0){
-        	taxonData = taxonDAO.loadCompleteTaxonData(new ArrayList<Integer>(synonyms));
-            buffer = dwcArchiveGenerator.generateTaxonDwc(taxonData,_bundle,displayHeader);
-            synonymDwc.append(buffer);
-        }
-
-	    // append synonym at the end of taxon.txt file
-	    taxonDwc.append(synonymDwc.toString());
-
-        File tmp = new File(destinationFilePath);
-        //make sure the folder is created
-        if(!tmp.getParentFile().exists()){
-        	LOGGER.info("Creating folder structure : " + tmp.getParentFile().getAbsolutePath());
-        	tmp.getParentFile().mkdirs();
-        }
-        
-        FileReader metaReader;
-        BufferedWriter bw = null;
-		try {
-			metaReader = new FileReader(meta);
-		
-	        BufferedReader metaBuffered = new BufferedReader(metaReader);
-	        StringBuffer metaData = new StringBuffer("");
-	        String line = "";
-	        while((line = metaBuffered.readLine()) != null){
-	            metaData.append(line).append(NEWLINE);
-	        }
-	        metaBuffered.close();
-	        String[] data = {taxonDwc.toString(),distributionDwc.toString(),vernacularDwc.toString(),habitusDwc.toString(),metaData.toString()};
-	        String[] files = {DARWIN_CORE_FILE_TAXON,DARWIN_CORE_FILE_DISTRIBUTION,DARWIN_CORE_FILE_VERNACULAR,DARWIN_CORE_FILE_HABITUS,DARWIN_CORE_FILE_META};
-	        ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(tmp));
-	        bw = new BufferedWriter(new OutputStreamWriter(zos, "UTF8"));
-	
-	        for (int i = 0; i < data.length; ++i) {
-	            ZipEntry entry = new ZipEntry(files[i]);
-	            zos.putNextEntry(entry);
-	            bw.write(data[i]);
-	            bw.flush();
-	            zos.closeEntry();
-	        }
-	        bw.close();
-	        bw = null;
-		} catch (FileNotFoundException e) {
-			success = false;
-			LOGGER.fatal("Can't write Vascan DwcA", e);
-		} catch (IOException e) {
-			success = false;
-			LOGGER.fatal("Can't write Vascan DwcA", e);
-		}
-		finally{
-			if(bw != null){
-				try {
-					bw.close();
-				} catch (IOException e) {}
-			}
-		}
-        return success;
-	}
+//	private boolean generateDwcArchive(String destinationFilePath, ResourceBundle _bundle, Iterator<TaxonLookupModel> it){
+//		if(StringUtils.isBlank(destinationFilePath)){
+//			return false;
+//		}
+//		   
+//	    // string buffers that will contain dwc mapped data
+//	    StringBuffer buffer = new StringBuffer("");
+//	    StringBuffer taxonDwc = new StringBuffer("");
+//	    StringBuffer synonymDwc = new StringBuffer("");
+//	    StringBuffer distributionDwc = new StringBuffer("");
+//	    StringBuffer vernacularDwc = new StringBuffer("");
+//	    StringBuffer habitusDwc = new StringBuffer("");
+//	    
+//	    // meta.xml file
+//	    File meta = null;
+//		try {
+//			meta = new File(this.getClass().getResource("/"+VASCAN_META).toURI());
+//		} catch (URISyntaxException e) {
+//			LOGGER.fatal("Can't read Vascan meta.xml", e);
+//			return false;
+//		}
+//	    
+//	    Set<Integer> synonyms = new HashSet<Integer>();
+//	    boolean success = true;
+//	    boolean displayHeader = true;
+//	    
+//	    // take the list of all taxon id and create a sql clause in the form of "... AND taxonid IN (-->1,2,3,52<--) ..."
+//	    //we also get the calculated habit since we have it
+//	    ArrayList<Integer> inClause = new ArrayList<Integer>();
+//	    Map<Integer,String> habitMap = new HashMap<Integer,String>();
+//	    TaxonLookupModel tlm;
+//	    
+//        while(it.hasNext()){
+//        	tlm = it.next();
+//            inClause.add(tlm.getTaxonId());
+//            habitMap.put(tlm.getTaxonId(), tlm.getCalhabit());
+//        }
+//        
+//        // TAXON
+//        List<Object[]> taxonData = taxonDAO.loadCompleteTaxonData(new ArrayList<Integer>(inClause));
+//        buffer = dwcArchiveGenerator.generateTaxonDwc(taxonData,_bundle,displayHeader);
+//        taxonDwc.append(buffer);
+//        
+//        // for each taxon, find the children synonyms
+//        // these synonyms must be added at the end of the taxon.txt file
+//        // this is used to include synonyms of the taxon even if they do not match the query
+//        for(Integer synonym : taxonomyDAO.getSynonymChildrenIdList(inClause)){
+//        	//avoid to add the same taxa twice
+//            if(!inClause.contains(synonym)){
+//                synonyms.add(synonym);
+//            }
+//        }
+//        
+//        // DISTRIBUTION
+//		List<Object[]> distributionData = distributionDAO.loadCompleteDistributionData(inClause);
+//        buffer = dwcArchiveGenerator.generateDistributionDwc(distributionData,_bundle,displayHeader);
+//        distributionDwc.append(buffer);
+//            
+//        // VERNACULAR
+//        List<Object[]> vernaculars = vernacularNameDAO.loadCompleteVernacularNameData(inClause);
+//        buffer = dwcArchiveGenerator.generateVernacularDwc(vernaculars,_bundle,displayHeader);
+//        vernacularDwc.append(buffer);
+//        
+//        // HABITUS
+//        buffer = dwcArchiveGenerator.generateHabitusDwc(habitMap,_bundle,displayHeader);
+//        habitusDwc.append(buffer);
+//                
+//        // once the header is added, we don't need it anymore
+//        displayHeader = false;
+//        
+//        if(synonyms.size() > 0){
+//        	taxonData = taxonDAO.loadCompleteTaxonData(new ArrayList<Integer>(synonyms));
+//            buffer = dwcArchiveGenerator.generateTaxonDwc(taxonData,_bundle,displayHeader);
+//            synonymDwc.append(buffer);
+//        }
+//
+//	    // append synonym at the end of taxon.txt file
+//	    taxonDwc.append(synonymDwc.toString());
+//
+//        File tmp = new File(destinationFilePath);
+//        //make sure the folder is created
+//        if(!tmp.getParentFile().exists()){
+//        	LOGGER.info("Creating folder structure : " + tmp.getParentFile().getAbsolutePath());
+//        	tmp.getParentFile().mkdirs();
+//        }
+//        
+//        FileReader metaReader;
+//        BufferedWriter bw = null;
+//		try {
+//			metaReader = new FileReader(meta);
+//		
+//	        BufferedReader metaBuffered = new BufferedReader(metaReader);
+//	        StringBuffer metaData = new StringBuffer("");
+//	        String line = "";
+//	        while((line = metaBuffered.readLine()) != null){
+//	            metaData.append(line).append(NEWLINE);
+//	        }
+//	        metaBuffered.close();
+//	        String[] data = {taxonDwc.toString(),distributionDwc.toString(),vernacularDwc.toString(),habitusDwc.toString(),metaData.toString()};
+//	        String[] files = {DARWIN_CORE_FILE_TAXON,DARWIN_CORE_FILE_DISTRIBUTION,DARWIN_CORE_FILE_VERNACULAR,DARWIN_CORE_FILE_HABITUS,DARWIN_CORE_FILE_META};
+//	        ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(tmp));
+//	        bw = new BufferedWriter(new OutputStreamWriter(zos, "UTF8"));
+//	
+//	        for (int i = 0; i < data.length; ++i) {
+//	            ZipEntry entry = new ZipEntry(files[i]);
+//	            zos.putNextEntry(entry);
+//	            bw.write(data[i]);
+//	            bw.flush();
+//	            zos.closeEntry();
+//	        }
+//	        bw.close();
+//	        bw = null;
+//		} catch (FileNotFoundException e) {
+//			success = false;
+//			LOGGER.fatal("Can't write Vascan DwcA", e);
+//		} catch (IOException e) {
+//			success = false;
+//			LOGGER.fatal("Can't write Vascan DwcA", e);
+//		}
+//		finally{
+//			if(bw != null){
+//				try {
+//					bw.close();
+//				} catch (IOException e) {}
+//			}
+//		}
+//        return success;
+//	}
 }

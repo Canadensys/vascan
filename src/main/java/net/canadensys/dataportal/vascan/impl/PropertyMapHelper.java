@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -104,7 +105,7 @@ public class PropertyMapHelper {
 		data.put("tree",taxonClassification);
 	}
 	
-	public void fillVernacularNames(List<VernacularNameModel> vernacularNames, Map<String,Object> data){
+	public void fillVernacularNames(Set<VernacularNameModel> vernacularNames, Map<String,Object> data){
 		// vernacular names for taxon ; each vernacular name is saved in an hashmap
 	    // and all hashmap are added to a vector wich is added to the main data 
 	    // hashmap. That vector is available in the ftl as a sequence   	
@@ -130,7 +131,7 @@ public class PropertyMapHelper {
 	    data.put("vernacularNames",taxonVernacularNames);
 	}
 	
-	public void fillSynonyms(List<TaxonModel> allChildren, Map<String,Object> data){
+	public void fillSynonyms(Set<TaxonModel> allChildren, Map<String,Object> data){
 	    // Use a TreeMap so synonyms will be alphabetically sorted
 	    Map<String,Map<String,Object>> taxonSynonymsMap = new TreeMap<String, Map<String,Object>>();
 	    FilterIterator filterIterator = new FilterIterator(allChildren.iterator(),new IsSynonymPredicate());
@@ -150,7 +151,7 @@ public class PropertyMapHelper {
 	    data.put("synonyms",taxonSynonymsMap.values());
 	}
 	
-	public void fillTaxonDistribution(List<DistributionModel> distributions, TaxonModel taxon, Map<String,Object> data){
+	public void fillTaxonDistribution(Set<DistributionModel> distributions, TaxonModel taxon, Map<String,Object> data){
 	    // distribution
 	    List<Map<String,String>> taxonDistributions = new ArrayList<Map<String,String>>();
 	    if(distributions != null){

@@ -3,6 +3,7 @@ package net.canadensys.dataportal.vascan.manager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.canadensys.dataportal.vascan.constant.Rank;
 import net.canadensys.dataportal.vascan.constant.Status;
@@ -91,7 +92,7 @@ public class TaxonManager {
 	 * @return
 	 */
 	public List<TaxonModel> recursiveClassificationChild(TaxonModel currTaxon, List<TaxonModel> childrenList, int maximumRank){
-		List<TaxonModel> children = currTaxon.getChildren();
+		Set<TaxonModel> children = currTaxon.getChildren();
 		for(TaxonModel child : children){
 			if(child.getStatus().getId() == Status.ACCEPTED && child.getRank().getId() <= maximumRank){
 				childrenList.add(child);

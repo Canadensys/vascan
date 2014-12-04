@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import net.canadensys.dataportal.vascan.generatedcontent.DarwinCoreGenerator;
 import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.utils.ZipUtils;
 
@@ -37,13 +36,16 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @TransactionConfiguration(transactionManager="hibernateTransactionManager")
 public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4SpringContextTests{
 	
-	private int DWCA_IDX_TAXONID = 4;
-	private int DWCA_IDX_ACCEPTED_NAME_USAGE_ID = 5;
+	public static String	DELIMITER = "\t";
+	public static String	NEWLINE = "\n";
+	
+	private int DWCA_IDX_TAXONID = 0;
+	private int DWCA_IDX_ACCEPTED_NAME_USAGE_ID = 4;
+	private int DWCA_IDX_ACCEPTED_NAME_USAGE = 5;
 	private int DWCA_IDX_PARENT_NAME_USAGE_ID = 6;
-	private int DWCA_IDX_SCIENTIFIC_NAME = 8;
-	private int DWCA_IDX_ACCEPTED_NAME_USAGE = 9;
-	private int DWCA_IDX_PARENT_NAME_USAGE = 10;
-	private int DWCA_IDX_TAXONOMIC_STATUS = 22;
+	private int DWCA_IDX_PARENT_NAME_USAGE = 7;
+	private int DWCA_IDX_SCIENTIFIC_NAME = 10;
+	private int DWCA_IDX_TAXONOMIC_STATUS = 21;
 	
 	@Autowired
     private RequestMappingHandlerAdapter handlerAdapter;
@@ -88,7 +90,8 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     }
     
     /**
-     * Test the content of a generated DwcA that includes a synonym
+     * Test the content of a generated DwcA that includes a synonym.
+     * 
      * @throws Exception
      */
     @Test
@@ -123,14 +126,17 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	ZipUtils.unzipFileOrFolder(generatedDwcA, unzippedFolder);
     	List<String> fileLines = FileUtils.readLines(new File(unzippedFolder+"/taxon.txt"));
     	
-    	String[] synonymData = fileLines.get(1).split(DarwinCoreGenerator.DELIMITER);
+    	String[] synonymData = fileLines.get(1).split(DELIMITER);
     	
 		assertEquals("15164", synonymData[DWCA_IDX_TAXONID]);
 		assertEquals("Carex alpina var. holostoma (Drejer) L.H. Bailey",synonymData[DWCA_IDX_SCIENTIFIC_NAME]);
 		assertEquals("4904", synonymData[DWCA_IDX_ACCEPTED_NAME_USAGE_ID]);
 		assertEquals("Carex holostoma Drejer", synonymData[DWCA_IDX_ACCEPTED_NAME_USAGE]);
 		assertEquals("",synonymData[DWCA_IDX_PARENT_NAME_USAGE_ID]);
+		assertEquals("",synonymData[DWCA_IDX_PARENT_NAME_USAGE]);
 		assertEquals("synonym", synonymData[DWCA_IDX_TAXONOMIC_STATUS]);
+		
+		FileUtils.deleteDirectory(new File(unzippedFolder));
     }
     
     /**
@@ -139,7 +145,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
      * @throws Exception
      */
     @Test
-    public void testDwcAFileGenerationAccepetd() throws Exception {
+    public void testDwcAFileGenerationAccepted() throws Exception {
     	MockHttpServletResponse response = new MockHttpServletResponse();
     	MockHttpServletRequest request = new MockHttpServletRequest();
     	request.setMethod("GET");
@@ -169,7 +175,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	ZipUtils.unzipFileOrFolder(generatedDwcA, unzippedFolder);
     	List<String> fileLines = FileUtils.readLines(new File(unzippedFolder+"/taxon.txt"));
     	
-    	String[] taxonData = fileLines.get(1).split(DarwinCoreGenerator.DELIMITER);
+    	String[] taxonData = fileLines.get(1).split(DELIMITER);
     	
 		assertEquals("4904", taxonData[DWCA_IDX_TAXONID]);
 		assertEquals("Carex holostoma Drejer",taxonData[DWCA_IDX_SCIENTIFIC_NAME]);
@@ -179,7 +185,9 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		assertEquals("accepted", taxonData[DWCA_IDX_TAXONOMIC_STATUS]);
 		
 		//test that the synonym is included
-		String[] synonymData = fileLines.get(2).split(DarwinCoreGenerator.DELIMITER);
+		String[] synonymData = fileLines.get(2).split(DELIMITER);
 		assertEquals("15164", synonymData[DWCA_IDX_TAXONID]);
+		
+		FileUtils.deleteDirectory(new File(unzippedFolder));
     }
 }

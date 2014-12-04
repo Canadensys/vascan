@@ -84,7 +84,11 @@ INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
 
 INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
 (65,'Nunavik','Blondeau & Roy, 2004','Blondeau, M. & C. Roy. 2004. Atlas des plantes des villages du Nunavik. Multimondes. 610 pp.',''),
-('141','NPS','Darbyshire et al., 2000','Darbyshire S.J., M. Favreau & M. Murray (revu et augmenté par). 2000. Noms populaires et scientifiques des plantes nuisibles du Canada. Agriculture et Agroalimentaire Canada. Publication 1397. 132 pp.','');
+('141','NPS','Darbyshire et al., 2000','Darbyshire S.J., M. Favreau & M. Murray (revu et augmenté par). 2000. Noms populaires et scientifiques des plantes nuisibles du Canada. Agriculture et Agroalimentaire Canada. Publication 1397. 132 pp.',''),
+('359','GRFl','Böcher et al., 1978','Böcher, T.W., B. Fredskild, K. Holmen & K. Jakobsen. 1978. Grønlands Flora. P. Haase & Søns Forlag, København. 326 pp.',''),
+('361','PC80','Porsild & Cody, 1980','Porsild, A.E. & W.J. Cody. 1980. Vascular Plants of the Continental Northwest Territories, Canada. National Museum of Natural Sciences, Ottawa, Ont. 667 pp.',''),
+('161','FCAA','Aiken et al., 2007','Aiken, S.G., M.J. Dallwitz, L.L. Consaul, C.L., McJannet, R.L., Boles, G.W. Argus, J.M. Gillett, P.J. Scott, R. Elven, M.C. LeBlanc, L.J. Gillespie, A.K. Brysting, H. Solstad & J.G. Harris. 2007. Flora of the Canadian Arctic Archipelago: Descriptions, Illustrations, Identification, and Information Retrieval. [CD-ROM] NRC Research Press, National Research Council of Canada, Ottawa.',''),
+('119','Cody2000','Cody, 2000','Cody, W.J. 2000. Flora of the Yukon Territory. 2nd ed. National Research Press, Ottawa. 669 pp.','');
 
 INSERT INTO taxon (id,
   uninomial,author,statusid,rankid,referenceid)
@@ -103,16 +107,14 @@ VALUES
 (2845,'Arctanthemum','arcticum','','(Linnaeus) Tzvelev',1,14,175),
 (5129,'Carex','umbellata','','Schkuhr ex Willdenow',1,14,180),
 (4904,'Carex','holostoma','','Drejer','1','14','180'),
-(2096,'Carex','Racemosae','','G. Don','1','11','180'
-);
+(2096,'Carex','Racemosae','','G. Don','1','11','180');
 
 INSERT INTO taxonomy (id,childid,parentid)
 VALUES
 ('1','14992','4751'),
 ('2','15164','4904'),
 ('3','15428','5129'),
-('4','4904','2096'
-);
+('4','4904','2096');
 
 INSERT INTO lookup (
 calname,calnameauthor,calnamehtml,calnamehtmlauthor,taxonid,status,rank,calhabit,
