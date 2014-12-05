@@ -13,6 +13,7 @@ import net.canadensys.utils.ZipUtils;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.gbif.dwc.terms.DwcTerm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,7 +142,6 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     
     /**
      * Test the content of a generated DwcA that includes an accepted taxon.
-     * TODO : used controlled data and merge with previous method
      * @throws Exception
      */
     @Test
@@ -189,5 +189,52 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		assertEquals("15164", synonymData[DWCA_IDX_TAXONID]);
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
+    }
+    
+    /**
+     * Test the content of a generated DwcA that includes an accepted taxon.
+     * @throws Exception
+     */
+    @Test
+    public void testDwcAFileGenerationHybrid() throws Exception {
+    	MockHttpServletResponse response = new MockHttpServletResponse();
+    	MockHttpServletRequest request = new MockHttpServletRequest();
+    	request.setMethod("GET");
+    	request.setRequestURI("/download");
+    	request.addParameter("format", "dwc");
+    	request.addParameter("taxon", "4793");
+    	request.addParameter("habit", "all");
+    	request.addParameter("status", "native");
+    	request.addParameter("hybrids", "true");
+    	
+    	Object handler = handlerMapping.getHandler(request).getHandler();
+    	
+    	//ask for a download and get a download
+        ModelAndView mav = handlerAdapter.handle(request, response, handler);
+        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        String filename= (String)mav.getModelMap().get("filename");
+        
+        //since the page will not get rendered, we call the URI to generate the file
+        request.setRequestURI("/generate");
+    	handler = handlerMapping.getHandler(request).getHandler();
+    	handlerAdapter.handle(request, response, handler);
+    	assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+    	File generatedDwcA = new File(generatedContentConfig.getGeneratedFilesFolder()+filename);
+    	assertTrue(generatedDwcA.exists());
+    	
+    	//Test DarwinCore archive content
+    	String unzippedFolder = generatedDwcA.getParentFile().getAbsolutePath()+"/"+ FilenameUtils.getBaseName(generatedDwcA.getName());
+    	ZipUtils.unzipFileOrFolder(generatedDwcA, unzippedFolder);
+    	List<String> fileLines = FileUtils.readLines(new File(unzippedFolder+"/resourcerelationship.txt"));
+    	
+    	String line1 = fileLines.get(1);
+    	
+		assertTrue(line1.contains("4793"));
+		assertTrue(line1.contains("4790"));
+		assertTrue(line1.contains("hybrid parent of"));
+		assertTrue(line1.contains("Carex canescens var. brunnescens (Persoon) W.D.J. Koch"));
+		
+		FileUtils.deleteDirectory(new File(unzippedFolder));
+		generatedDwcA.delete();
     }
 }

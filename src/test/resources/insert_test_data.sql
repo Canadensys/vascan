@@ -80,15 +80,14 @@ INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
 (175,'FNA19','FNA Ed. Comm., 2006a','FNA Editorial Committee. 2006. Flora of North America north of Mexico. Volume 19: Magnoliophyta: Asteridae, part 6: Asteraceae, part 1. Oxford University Press, New York.','http://www.efloras.org/volume_page.aspx?volume_id=1019&flora_id=1');
 
 INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
-(160,'MF','Favreau','Favreau, M. Proposition de nom français.','');
-
-INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
 (65,'Nunavik','Blondeau & Roy, 2004','Blondeau, M. & C. Roy. 2004. Atlas des plantes des villages du Nunavik. Multimondes. 610 pp.',''),
-('141','NPS','Darbyshire et al., 2000','Darbyshire S.J., M. Favreau & M. Murray (revu et augmenté par). 2000. Noms populaires et scientifiques des plantes nuisibles du Canada. Agriculture et Agroalimentaire Canada. Publication 1397. 132 pp.',''),
-('359','GRFl','Böcher et al., 1978','Böcher, T.W., B. Fredskild, K. Holmen & K. Jakobsen. 1978. Grønlands Flora. P. Haase & Søns Forlag, København. 326 pp.',''),
-('361','PC80','Porsild & Cody, 1980','Porsild, A.E. & W.J. Cody. 1980. Vascular Plants of the Continental Northwest Territories, Canada. National Museum of Natural Sciences, Ottawa, Ont. 667 pp.',''),
-('161','FCAA','Aiken et al., 2007','Aiken, S.G., M.J. Dallwitz, L.L. Consaul, C.L., McJannet, R.L., Boles, G.W. Argus, J.M. Gillett, P.J. Scott, R. Elven, M.C. LeBlanc, L.J. Gillespie, A.K. Brysting, H. Solstad & J.G. Harris. 2007. Flora of the Canadian Arctic Archipelago: Descriptions, Illustrations, Identification, and Information Retrieval. [CD-ROM] NRC Research Press, National Research Council of Canada, Ottawa.',''),
-('119','Cody2000','Cody, 2000','Cody, W.J. 2000. Flora of the Yukon Territory. 2nd ed. National Research Press, Ottawa. 669 pp.','');
+(141,'NPS','Darbyshire et al., 2000','Darbyshire S.J., M. Favreau & M. Murray (revu et augmenté par). 2000. Noms populaires et scientifiques des plantes nuisibles du Canada. Agriculture et Agroalimentaire Canada. Publication 1397. 132 pp.',''),
+(359,'GRFl','Böcher et al., 1978','Böcher, T.W., B. Fredskild, K. Holmen & K. Jakobsen. 1978. Grønlands Flora. P. Haase & Søns Forlag, København. 326 pp.',''),
+(361,'PC80','Porsild & Cody, 1980','Porsild, A.E. & W.J. Cody. 1980. Vascular Plants of the Continental Northwest Territories, Canada. National Museum of Natural Sciences, Ottawa, Ont. 667 pp.',''),
+(161,'FCAA','Aiken et al., 2007','Aiken, S.G., M.J. Dallwitz, L.L. Consaul, C.L., McJannet, R.L., Boles, G.W. Argus, J.M. Gillett, P.J. Scott, R. Elven, M.C. LeBlanc, L.J. Gillespie, A.K. Brysting, H. Solstad & J.G. Harris. 2007. Flora of the Canadian Arctic Archipelago: Descriptions, Illustrations, Identification, and Information Retrieval. [CD-ROM] NRC Research Press, National Research Council of Canada, Ottawa.',''),
+(119,'Cody2000','Cody, 2000','Cody, W.J. 2000. Flora of the Yukon Territory. 2nd ed. National Research Press, Ottawa. 669 pp.',''),
+(160,'MF','Favreau','Favreau, M. Proposition de nom français.',''),
+(96,'Cayouette&Catling92','Cayouette & Catling, 1992','Cayouette, J. & P.M. Catling. 1992. Hybridization in the genus Carex with special reference to North America. Botanical Review 58 (4): 351-440.','http://www.jstor.org/stable/4354195');
 
 INSERT INTO taxon (id,
   uninomial,author,statusid,rankid,referenceid)
@@ -107,7 +106,10 @@ VALUES
 (2845,'Arctanthemum','arcticum','','(Linnaeus) Tzvelev',1,14,175),
 (5129,'Carex','umbellata','','Schkuhr ex Willdenow',1,14,180),
 (4904,'Carex','holostoma','','Drejer','1','14','180'),
-(2096,'Carex','Racemosae','','G. Don','1','11','180');
+(2096,'Carex','Racemosae','','G. Don','1','11','180'),
+(4793,'Carex','brunnescens subsp. brunnescens × Carex canescens subsp. canescens','','','1','14',96),
+(4790,'Carex','canescens','brunnescens','(Persoon) W.D.J. Koch','2','16',180),
+(4797,'Carex','canescens','canescens','Linnaeus','1','15',180);
 
 INSERT INTO taxonomy (id,childid,parentid)
 VALUES
@@ -194,6 +196,21 @@ VALUES
 '2096','accepted','section','herb','native','native','native','native','native','native','native','native','native','native','native','absent','native','native','native','native',
 'Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex','Equisetopsida','Poales','Cyperaceae','Carex','','','','G. Don',NULL,NULL,
 '2013-08-22 00:00:00','2013-08-22 11:21:05','10045','10088'
+),
+('Carex brunnescens subsp. brunnescens × Carex canescens subsp. canescens','Carex brunnescens subsp. brunnescens × Carex canescens subsp. canescens',
+'<em>Carex brunnescens subsp. brunnescens × Carex canescens subsp. canescens</em>','<em>Carex brunnescens subsp. brunnescens × Carex canescens subsp. canescens</em>',
+'4793','accepted','species','herb','absent','absent','native','absent','absent','native','absent','absent','absent','absent','absent','absent','absent','absent','absent',
+'absent','Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex;Carex sect. Glareosae','Equisetopsida','Poales','Cyperaceae','Carex','',
+'brunnescens subsp. brunnescens × Carex canescens subsp. canescens','','',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:21:04','9410','9411'
+),
+('Carex canescens var. brunnescens','Carex canescens var. brunnescens (Persoon) W.D.J. Koch','<em>Carex canescens</em> var. <em>brunnescens</em>',
+'<em>Carex canescens</em> var. <em>brunnescens</em> (Persoon) W.D.J. Koch','4790','synonym','variety','','absent','absent','absent','absent','absent','absent','absent','absent','absent',
+'absent','absent','absent','absent','absent','absent','absent','','','','','Carex','','canescens','brunnescens','(Persoon) W.D.J. Koch',NULL,NULL,'2013-08-22 00:00:00','2013-08-22 11:18:33',NULL,NULL
+),
+('Carex canescens subsp. canescens','Carex canescens Linnaeus subsp. canescens','<em>Carex canescens</em> subsp. <em>canescens</em>','<em>Carex canescens</em> Linnaeus subsp. <em>canescens</em>',
+'4797','accepted','subspecies','herb','native','native','native','native','native','native','native','native','native','native','native','native','native','doubtful','native','native',
+'Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex;Carex sect. Glareosae;Carex canescens','Equisetopsida','Poales','Cyperaceae','Carex','','canescens','canescens','Linnaeus',
+'carex blanchâtre','hoary sedge','2013-08-22 00:00:00','2013-08-22 11:21:04','9413','9414'
 );
 
 INSERT INTO vernacularname (
@@ -218,4 +235,9 @@ VALUES
 ('9454','4904','10','1','1','161','2011-02-21 12:20:13','2011-02-21 12:26:18'),
 ('9455','4904','13','1','1','270','2011-02-21 12:20:13','2011-02-21 12:26:18'),
 ('9456','4904','16','1','1','119','2011-02-21 12:20:13','2011-02-21 12:26:18');
+
+INSERT INTO taxonhybridparent (id,childid,parentid)
+VALUES
+(143,4793,4790),
+(144,4793,4797);
 

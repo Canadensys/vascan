@@ -45,8 +45,9 @@ import com.google.common.base.Preconditions;
 @Component
 public class DarwinCoreGenerator {
 		
-	private static SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
-	SimpleDateFormat SDF_TIME = new SimpleDateFormat("H:mmZ");
+	private static final SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
+	private static final SimpleDateFormat SDF_TIME = new SimpleDateFormat("H:mmZ");
+	private static final String HYBRID_PARENT_RELATIONSHIP = "hybrid parent of";
 	private Set<Integer> synonymIdRecorded = new HashSet<Integer>();
 	
 	@Autowired
@@ -88,6 +89,9 @@ public class DarwinCoreGenerator {
 							synonymIdRecorded.add(currChildTaxonModel.getId());
 						}
 					}
+					
+					//deal with hybrid parents
+					addExtHybridResourceRelationship(currTaxonModel, dwcaWriter);
 				}
 				else{
 					addCoreSynonymTaxonRecord(currTaxonModel, dwcaWriter, resourceBundle);
@@ -295,9 +299,26 @@ public class DarwinCoreGenerator {
 	 * @throws IOException
 	 */
 	public void addExtDescriptionRecord(TaxonLookupModel taxonLookupModel, DwcaWriter dwcaWriter) throws IOException{
-		
 		Map<Term,String> recordValues = new HashMap<Term,String>();
 		recordValues.put(DcTerm.description, taxonLookupModel.getCalhabit());
 		dwcaWriter.addExtensionRecord(GbifTerm.Description, recordValues);
+	}
+	
+	/**
+	 * Add a ResourceRelationship extension record to express hybrid relationship.
+	 * @param taxonModel
+	 * @param dwcaWriter
+	 * @throws IOException
+	 */
+	public void addExtHybridResourceRelationship(TaxonModel taxonModel, DwcaWriter dwcaWriter) throws IOException{
+		Map<Term,String> recordValues = new HashMap<Term,String>();		
+		for(TaxonModel currHybridParent : taxonModel.getHybridparents()){
+			recordValues.put(DwcTerm.resourceID, taxonModel.getId().toString());
+			recordValues.put(DwcTerm.relatedResourceID, currHybridParent.getId().toString());
+			recordValues.put(DwcTerm.relationshipOfResource, HYBRID_PARENT_RELATIONSHIP);
+			recordValues.put(DwcTerm.scientificName, currHybridParent.getLookup().getCalnameauthor());
+			dwcaWriter.addExtensionRecord(DwcTerm.ResourceRelationship, recordValues);
+			recordValues.clear();
+		}
 	}
 }
