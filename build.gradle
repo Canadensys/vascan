@@ -46,14 +46,6 @@ repositories {
     }
 }
 
-sourceSets {
-	test {
-		resources {
-			srcDir "config/test"
-		}
-	}
-}
-
 dependencies {
 	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 	

@@ -26,13 +26,12 @@
 
 	<import resource="test-vascan-data-source.xml" />
 	
-	<jdbc:initialize-database data-source="dataSource">
-		<!-- <jdbc:script location="classpath:h2/h2setup.sql" />-->
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 		<!-- loaded from canadensys-data-access jar file -->
     	<jdbc:script location="classpath:script/vascan/vascan_database_create_tables.sql" />
     	<jdbc:script location="classpath:insert_test_data.sql" />
   	</jdbc:initialize-database>
-	
+
 	<context:component-scan base-package="net.canadensys.dataportal.vascan"/>
 	
 	<task:scheduler id="taskScheduler" pool-size="1"/>

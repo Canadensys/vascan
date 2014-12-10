@@ -32,6 +32,19 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<bean id="esTestInstance" class="net.canadensys.databaseutils.ElasticSearchTestInstance" init-method="startElasticSearch" destroy-method="stopElasticSearch"/>
+	<bean id="esTestInstance" class="net.canadensys.databaseutils.ElasticSearchTestInstance" init-method="startElasticSearch" destroy-method="stopElasticSearch">
+		<property name="indices">
+		<map>
+			<entry key="vascan" value="classpath:script/vascan/vascan_index_creation.txt"/>
+		</map>
+		</property>
+		
+		<property name="documents">
+		<map>
+			<entry key="taxon" value="classpath:vascan_index_data.txt"/>
+		</map>
+		</property>
+	</bean>
+	
 	<bean id="esClient" class="org.elasticsearch.client.Client" factory-bean ="esTestInstance" factory-method="buildLocalClient"/>
 </beans>
