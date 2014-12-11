@@ -4,7 +4,6 @@ import static org.elasticsearch.client.Requests.refreshRequest;
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +11,6 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.ElasticSearchException;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.indices.IndexMissingException;
 import org.elasticsearch.node.Node;
@@ -54,6 +51,11 @@ public class ElasticSearchTestInstance {
 		return node.client();
 	}
 	
+	/**
+	 * Setup ElasticSearch indices from defined indices and documents.
+	 * Warning: if an index already exists, it will be deleted and recreated.
+	 * 
+	 */
 	private void setupIndices(){
 		Client client = node.client();
 		
@@ -76,6 +78,7 @@ public class ElasticSearchTestInstance {
 		//refresh the index
 		client.admin().indices().refresh(refreshRequest()).actionGet();
 		
+		// Add data, the supported format is 'index/type/id:{json}'
 		for(Resource resource : documents){
 			try {
 				List<String> docs = IOUtils.readLines(resource.getInputStream());
