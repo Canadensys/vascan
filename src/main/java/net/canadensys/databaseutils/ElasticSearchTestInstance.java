@@ -5,6 +5,7 @@ import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +30,14 @@ public class ElasticSearchTestInstance {
     private Node node;
     
     private Map<String,Resource> indices = new HashMap<String,Resource>();
-    private Map<String,Resource> documents = new HashMap<String,Resource>();
+    private List<Resource> documents = new ArrayList<Resource>();
     
 	public void startElasticSearch(){
         node = nodeBuilder().clusterName("es-test-vascan").local(true).node();
         node.start();
         node.client().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+        
+        setupIndices();
     }
 
     public void stopElasticSearch(){
@@ -47,7 +50,11 @@ public class ElasticSearchTestInstance {
      * Build a client to connect to a running local(embedded) ElacticSearch node.
      * @return
      */
-	public Client buildLocalClient(){
+	public Client getLocalClient(){
+		return node.client();
+	}
+	
+	private void setupIndices(){
 		Client client = node.client();
 		
 		// (re)create all indices
@@ -59,7 +66,8 @@ public class ElasticSearchTestInstance {
 			catch(IndexMissingException imEx){}//ignore
 			
 			try {
-				createIndex(client, indexName, indices.get(indexName).getInputStream());
+				String json = IOUtils.toString(indices.get(indexName).getInputStream());
+				createIndex(client, indexName, json);
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -68,14 +76,15 @@ public class ElasticSearchTestInstance {
 		//refresh the index
 		client.admin().indices().refresh(refreshRequest()).actionGet();
 		
-		for(String typeName : documents.keySet()){
+		for(Resource resource : documents){
 			try {
-				List<String> docs = IOUtils.readLines(documents.get(typeName).getInputStream());
-				String id, json;
+				List<String> docs = IOUtils.readLines(resource.getInputStream());
+				String[] id;
+				String json;
 				for(String doc : docs){
-					id = StringUtils.substringBefore(doc, ":");
+					id = StringUtils.substringBefore(doc, ":").split("/");
 					json = StringUtils.substringAfter(doc, ":");
-					addDocument(client, "vascan", typeName, id, json);
+					addDocument(client, id[0], id[1], id[2], json);
 				}
 			}
 			catch (IOException e) {
@@ -85,39 +94,36 @@ public class ElasticSearchTestInstance {
 		
 		//refresh the index
 		client.admin().indices().refresh(refreshRequest()).actionGet();
-		
-		return client;
 	}
 	
 	/**
-	 * Create index
+	 * Create an ESindex.
+	 * 
 	 * @param client
 	 * @param indexName
 	 * @param indexCreationStream
 	 */
-	private void createIndex(Client client, String indexName, InputStream indexCreationStream){
-		
-		try {
-			client.admin().indices().prepareCreate(indexName)
-				.setSource(IOUtils.toString(indexCreationStream))
-				.execute()
-				.actionGet();
-		}
-		catch (ElasticSearchException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+	private void createIndex(Client client, String indexName, String json){
+		client.admin().indices().prepareCreate(indexName)
+			.setSource(json)
+			.execute()
+			.actionGet();
 	}
 	
+	/**
+	 * Add a document to an ES index.
+	 * 
+	 * @param client
+	 * @param indexName
+	 * @param type
+	 * @param id
+	 * @param json
+	 */
 	private void addDocument(Client client, String indexName, String type, String id, String json){
-		IndexResponse rep = client.prepareIndex(indexName, type, id)
+		client.prepareIndex(indexName, type, id)
 	        .setSource(json)
 	        .execute()
 	        .actionGet();
-		
-		System.out.println(rep);
 	}
 
 	public Map<String, Resource> getIndices() {
@@ -128,11 +134,12 @@ public class ElasticSearchTestInstance {
 		this.indices = indices;
 	}
 
-	public Map<String, Resource> getDocuments() {
+	public List<Resource> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(Map<String, Resource> documents) {
+	public void setDocuments(List<Resource> documents) {
 		this.documents = documents;
 	}
+
 }

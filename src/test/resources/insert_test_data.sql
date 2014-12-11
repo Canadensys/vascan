@@ -87,7 +87,8 @@ INSERT INTO `reference` (id,referencecode,referenceshort,reference,url) VALUES
 (161,'FCAA','Aiken et al., 2007','Aiken, S.G., M.J. Dallwitz, L.L. Consaul, C.L., McJannet, R.L., Boles, G.W. Argus, J.M. Gillett, P.J. Scott, R. Elven, M.C. LeBlanc, L.J. Gillespie, A.K. Brysting, H. Solstad & J.G. Harris. 2007. Flora of the Canadian Arctic Archipelago: Descriptions, Illustrations, Identification, and Information Retrieval. [CD-ROM] NRC Research Press, National Research Council of Canada, Ottawa.',''),
 (119,'Cody2000','Cody, 2000','Cody, W.J. 2000. Flora of the Yukon Territory. 2nd ed. National Research Press, Ottawa. 669 pp.',''),
 (160,'MF','Favreau','Favreau, M. Proposition de nom français.',''),
-(96,'Cayouette&Catling92','Cayouette & Catling, 1992','Cayouette, J. & P.M. Catling. 1992. Hybridization in the genus Carex with special reference to North America. Botanical Review 58 (4): 351-440.','http://www.jstor.org/stable/4354195');
+(96,'Cayouette&Catling92','Cayouette & Catling, 1992','Cayouette, J. & P.M. Catling. 1992. Hybridization in the genus Carex with special reference to North America. Botanical Review 58 (4): 351-440.','http://www.jstor.org/stable/4354195'),
+(185,'FNA4','FNA Ed. Comm., 2003a','FNA Editorial Committee. 2003. Flora of North America north of Mexico. Volume 4: Magnoliophyta: Caryophyllidae, part 1. Oxford University Press, New York.','http://www.efloras.org/volume_page.aspx?volume_id=1004&flora_id=1');
 
 INSERT INTO taxon (id,
   uninomial,author,statusid,rankid,referenceid)
@@ -109,14 +110,19 @@ VALUES
 (2096,'Carex','Racemosae','','G. Don','1','11','180'),
 (4793,'Carex','brunnescens subsp. brunnescens × Carex canescens subsp. canescens','','','1','14',96),
 (4790,'Carex','canescens','brunnescens','(Persoon) W.D.J. Koch','2','16',180),
-(4797,'Carex','canescens','canescens','Linnaeus','1','15',180);
+(4797,'Carex','canescens','canescens','Linnaeus','1','15',180),
+(9946,'Amaranthus','graecizans','','auct. non Linnaeus p.p.','2','14',185),
+(2498,'Amaranthus','albus','','Linnaeus','1','14',185),
+(2499,'Amaranthus','blitoides','','S. Watson','1','14',185);
 
 INSERT INTO taxonomy (id,childid,parentid)
 VALUES
-('1','14992','4751'),
-('2','15164','4904'),
-('3','15428','5129'),
-('4','4904','2096');
+(1,4992,4751),
+(2,15164,4904),
+(3,15428,5129),
+(4,4904,2096),
+(5,9946,2498),
+(6,9946,2499);
 
 INSERT INTO lookup (
 calname,calnameauthor,calnamehtml,calnamehtmlauthor,taxonid,status,rank,calhabit,
@@ -211,6 +217,17 @@ VALUES
 '4797','accepted','subspecies','herb','native','native','native','native','native','native','native','native','native','native','native','native','native','doubtful','native','native',
 'Equisetopsida;Magnoliidae;Lilianae;Poales;Cyperaceae;Caricoideae;Carex;Carex sect. Glareosae;Carex canescens','Equisetopsida','Poales','Cyperaceae','Carex','','canescens','canescens','Linnaeus',
 'carex blanchâtre','hoary sedge','2013-08-22 00:00:00','2013-08-22 11:21:04','9413','9414'
+),
+('Amaranthus albus','Amaranthus albus Linnaeus','<em>Amaranthus albus</em>','<em>Amaranthus albus</em> Linnaeus','2498','accepted','species','herb','introduced','introduced','absent','absent',
+'introduced','introduced','excluded','absent','introduced','absent','introduced','introduced','introduced','absent','introduced','absent','Equisetopsida;Magnoliidae;Caryophyllanae;Caryophyllales;Amaranthaceae;Amaranthoideae;Amarantheae;Amaranthus;Amaranthus subg. Albersia',
+'Equisetopsida','Caryophyllales','Amaranthaceae','Amaranthus','Amaranthus subg. Albersia','albus','','Linnaeus','amarante blanche','white amaranth','2014-08-18 00:00:00','2014-08-18 17:06:04','6367','6368'
+),
+('Amaranthus blitoides','Amaranthus blitoides S. Watson','<em>Amaranthus blitoides</em>','<em>Amaranthus blitoides</em> S. Watson','2499','accepted','species','herb','introduced','introduced','absent','absent',
+'introduced','absent','absent','absent','absent','absent','introduced','absent','introduced','absent','introduced','absent','Equisetopsida;Magnoliidae;Caryophyllanae;Caryophyllales;Amaranthaceae;Amaranthoideae;Amarantheae;Amaranthus;Amaranthus subg. Albersia',
+'Equisetopsida','Caryophyllales','Amaranthaceae','Amaranthus','Amaranthus subg. Albersia','blitoides','','S. Watson','amarante fausse-blite','prostrate amaranth','2014-08-18 00:00:00','2014-08-18 17:06:04','6369','6370'
+),
+('Amaranthus graecizans','Amaranthus graecizans auct. non Linnaeus p.p.','<em>Amaranthus graecizans</em>','<em>Amaranthus graecizans</em> auct. non Linnaeus p.p.','9946','synonym','species','','absent','absent','absent','absent','absent','absent',
+'absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','','','','','Amaranthus','','graecizans','','auct. non Linnaeus p.p.',NULL,NULL,'2014-08-18 00:00:00','2014-08-18 16:53:41',NULL,NULL
 );
 
 INSERT INTO vernacularname (
