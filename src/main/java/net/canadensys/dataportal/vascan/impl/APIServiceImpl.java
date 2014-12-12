@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * API Service layer implementation.
+ * 
  * @author canadensys
  *
  */
@@ -55,19 +56,8 @@ public class APIServiceImpl implements APIService{
 	
 	@Override
 	@Transactional(readOnly=true)
-	public VascanAPIResponse search(List<String> idList, List<String> dataList) {
-		VascanAPIResponse apiResponse = new VascanAPIResponse();
-		apiResponse.setApiVersion(API_VERSION);
-		
-		int idx=0;
-		VascanAPIResponseElement apiResponseElement;
-		for(String currId : idList){
-			apiResponseElement = search(dataList.get(idx));
-			apiResponseElement.setLocalIdentifier(currId);
-			apiResponse.addResult(apiResponseElement);
-			idx++;
-		}
-		return apiResponse;
+	public VascanAPIResponseElement search(String stringValue) {
+		return innerSearch(stringValue);
 	}
 	
 	@Override
@@ -76,9 +66,26 @@ public class APIServiceImpl implements APIService{
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
 		
-		VascanAPIResponseElement apiResponseElement = search(searchTerm);
+		VascanAPIResponseElement apiResponseElement = innerSearch(searchTerm);
 		apiResponseElement.setLocalIdentifier(id);
 		apiResponse.addResult(apiResponseElement);
+		return apiResponse;
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public VascanAPIResponse search(List<String> idList, List<String> dataList) {
+		VascanAPIResponse apiResponse = new VascanAPIResponse();
+		apiResponse.setApiVersion(API_VERSION);
+		
+		int idx=0;
+		VascanAPIResponseElement apiResponseElement;
+		for(String currId : idList){
+			apiResponseElement = innerSearch(dataList.get(idx));
+			apiResponseElement.setLocalIdentifier(currId);
+			apiResponse.addResult(apiResponseElement);
+			idx++;
+		}
 		return apiResponse;
 	}
 	
@@ -138,7 +145,7 @@ public class APIServiceImpl implements APIService{
 	 * @param searchTerm
 	 * @return VascanAPIResponse object, never null
 	 */
-	private VascanAPIResponseElement search(String searchTerm) {
+	private VascanAPIResponseElement innerSearch(String searchTerm) {
 		String pSearchTerm = parseScientificName(searchTerm);
 		LimitedResult<List<NameConceptModelIF>> searchResult = nameDAO.search(pSearchTerm,false);
 		

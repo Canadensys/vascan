@@ -3,6 +3,7 @@ package net.canadensys.dataportal.vascan;
 import java.util.List;
 
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
+import net.canadensys.dataportal.vascan.model.api.VascanAPIResponseElement;
 
 /**
  * Vascan API service layer interface.
@@ -14,8 +15,17 @@ public interface APIService {
 	public String getAPIVersion();
 	
 	/**
+	 * Search for a single string value.
+	 * 
+	 * @param searchString
+	 * @return
+	 */
+	public VascanAPIResponseElement search(String searchString);
+	
+	/**
 	 * Search for a list of id(optional) and searchTerm
-	 * @param idList
+	 * @param idList list of local identifiers associated with searchTermList.
+	 * 		  May contains null(s) but size must match searchTermList 
 	 * @param searchTermList
 	 * @return
 	 */

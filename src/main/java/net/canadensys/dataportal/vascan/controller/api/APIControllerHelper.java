@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
+ * Copied from narwhal-api
  * Candidate for future canadensys-web-core library
  * Helper class used to for different API controllers.
  * @author canadensys
@@ -19,19 +20,10 @@ public class APIControllerHelper {
 	public static final String DATA_SEPARATOR = "[\t|]+";
 	
 	/**
-	 * splitIdAndData without fallback list if the provided data can NOT use a DATA_SEPARATOR inside the data part or a id column id used. 
-	 * @param data
-	 * @param dataList
-	 * @param idList
-	 */
-	public static void splitIdAndData(String data, List<String> dataList, List<String> idList){
-		splitIdAndData(data,dataList,idList,null);
-	}
-	
-	/**
-	 * splitData when NO id column is used
-	 * @param data
-	 * @param dataList
+	 * splitData when NO id column is used.
+	 * 
+	 * @param data as received in the request
+	 * @param dataList dataList will be filled with user provided data
 	 */
 	public static void splitData(String data, List<String> dataList){
 		String[] lines = data.split(APIControllerHelper.LINE_SEPARATOR);
@@ -41,8 +33,20 @@ public class APIControllerHelper {
 	}
 	
 	/**
+	 * splitIdAndData without fallback list if the provided data can NOT use a DATA_SEPARATOR inside the data part or a id column id used.
+	 * 
+	 * @param data as received in the request
+	 * @param dataList will be filled with user provided data
+	 * @param idList will be filled with user provided id(if any)
+	 */
+	public static void splitIdAndData(String data, List<String> dataList, List<String> idList){
+		splitIdAndData(data,dataList,idList,null);
+	}
+	
+	/**
 	 * This function splits the parts of the query data parameter.
 	 * Id is an optional part and the DATA_SEPARATOR might be used in the data part itself.
+	 * 
 	 * @param lines
 	 * @param dataList
 	 * @param idList can contain null item id no id is provided

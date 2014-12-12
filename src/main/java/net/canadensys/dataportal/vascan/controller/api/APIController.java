@@ -50,9 +50,9 @@ public class APIController {
 	//could be moved to configuration
 	public static final int MAX_POST_ELEMENT = 200;
 	
-	private static final APIErrorResult MAX_POST_ELEMENT_EXCEEDED_RESULT = new APIErrorResult("Maximum POST element exceeded");
-	private static final APIErrorResult NOT_FOUND_RESULT = new APIErrorResult("not found");
-	private static final APIErrorResult BAD_REQUEST_RESULT = new APIErrorResult("bad request");
+	static final APIErrorResult MAX_POST_ELEMENT_EXCEEDED_RESULT = new APIErrorResult("Maximum POST element exceeded");
+	static final APIErrorResult NOT_FOUND_RESULT = new APIErrorResult("not found");
+	static final APIErrorResult BAD_REQUEST_RESULT = new APIErrorResult("bad request");
 	
 	/**
 	 * Handles GET API calls where we can only receive 1 name or a taxonID.
@@ -66,7 +66,7 @@ public class APIController {
 			HttpServletRequest request, HttpServletResponse response){
 		response.setCharacterEncoding("UTF-8");
 		if(!apiService.getAPIVersion().equals(version)){
-			return onNotFound(response);
+			return notFound(response);
 		}
 		
 		LOGGER.info("search|{}|{}|{}||{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
@@ -97,7 +97,7 @@ public class APIController {
 	public @ResponseBody Object handlePostSearch(@RequestParam String q, @PathVariable String version,
 			HttpServletRequest request, HttpServletResponse response){
 		if(!apiService.getAPIVersion().equals(version)){
-			return onNotFound(response);
+			return notFound(response);
 		}
 		List<String> dataList = new ArrayList<String>();
 		List<String> idList = new ArrayList<String>();
@@ -189,12 +189,14 @@ public class APIController {
 		}
 	}
 	
+	
+	
 	/**
 	 * Return an APIErrorResult object used to send the response in the proper format (json, xml).
 	 * @param response used to set the 404 status
 	 * @return NOT_FOUND_RESULT
 	 */
-	private APIErrorResult onNotFound(HttpServletResponse response){
+	static APIErrorResult notFound(HttpServletResponse response){
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return NOT_FOUND_RESULT;
 	}
@@ -205,8 +207,13 @@ public class APIController {
 	 * @param response
 	 * @return
 	 */
-	private APIErrorResult onMaxPostValueExceeded(HttpServletResponse response){
+	static APIErrorResult onMaxPostValueExceeded(HttpServletResponse response){
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		return MAX_POST_ELEMENT_EXCEEDED_RESULT;
+	}
+	
+	static APIErrorResult badRequest(HttpServletResponse response){
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		return BAD_REQUEST_RESULT;
 	}
 }
