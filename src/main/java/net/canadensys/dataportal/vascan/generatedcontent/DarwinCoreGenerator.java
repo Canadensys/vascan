@@ -26,6 +26,7 @@ import net.canadensys.utils.ZipUtils;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.dwc.terms.GbifTerm;
@@ -44,11 +45,12 @@ import com.google.common.base.Preconditions;
  */
 @Component
 public class DarwinCoreGenerator {
+	
+	private static final Logger LOGGER = Logger.getLogger(DarwinCoreGenerator.class);
 		
 	private static final SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
 	private static final SimpleDateFormat SDF_TIME = new SimpleDateFormat("H:mmZ");
 	private static final String HYBRID_PARENT_RELATIONSHIP = "hybrid parent of";
-	private Set<Integer> synonymIdRecorded = new HashSet<Integer>();
 	
 	@Autowired
 	private GeneratedContentConfig generatedContentConfig;
@@ -63,8 +65,10 @@ public class DarwinCoreGenerator {
 	 */
 	public boolean generateDwcArchive(Iterator<TaxonModel> taxonModelIt, File tempDirectory, String archiveAbsolutePath, ResourceBundle resourceBundle){
 		DwcaWriter dwcaWriter;
+		Set<Integer> synonymIdRecorded = new HashSet<Integer>();
+		
 		try {
-			dwcaWriter = new DwcaWriter(DwcTerm.Taxon, tempDirectory, true);
+			dwcaWriter = new DwcaWriter(DwcTerm.Taxon, DwcTerm.taxonID, tempDirectory, true);
 			
 			TaxonModel currTaxonModel = null;
 			Set<TaxonModel> childrenList;
@@ -80,6 +84,9 @@ public class DarwinCoreGenerator {
 					addExtVernacularRecords(currTaxonModel.getVernacularnames(), dwcaWriter);
 					
 					addExtDescriptionRecord(currTaxonModel.getLookup(), dwcaWriter);
+
+					//deal with hybrid parents
+					addExtHybridResourceRelationship(currTaxonModel, dwcaWriter);
 					
 					// deal with synonyms
 					childrenList = currTaxonModel.getChildren();
@@ -89,14 +96,28 @@ public class DarwinCoreGenerator {
 							synonymIdRecorded.add(currChildTaxonModel.getId());
 						}
 					}
-					
-					//deal with hybrid parents
-					addExtHybridResourceRelationship(currTaxonModel, dwcaWriter);
 				}
 				else{
 					addCoreSynonymTaxonRecord(currTaxonModel, dwcaWriter, resourceBundle);
+					synonymIdRecorded.add(currTaxonModel.getId());
 				}
 			}
+			// core default values
+			dwcaWriter.addCoreDefaultValue(DcTerm.language, "en");
+			dwcaWriter.addCoreDefaultValue(DcTerm.rights, "http://creativecommons.org/publicdomain/zero/1.0/ & http://www.canadensys.net/norms");
+			dwcaWriter.addCoreDefaultValue(DcTerm.rightsHolder, "Université de Montréal Biodiversity Centre");
+			dwcaWriter.addCoreDefaultValue(DwcTerm.datasetName, "Database of Vascular Plants of Canada (VASCAN)");
+			dwcaWriter.addCoreDefaultValue(DwcTerm.kingdom, "Plantae");
+			dwcaWriter.addCoreDefaultValue(DwcTerm.nomenclaturalCode, "ICBN");
+			
+			// VernacularName default values
+			dwcaWriter.addDefaultValue(GbifTerm.VernacularName, DwcTerm.countryCode, "CA");
+			dwcaWriter.addDefaultValue(GbifTerm.VernacularName, GbifTerm.isPlural, "false");
+			
+			// Description default values
+			dwcaWriter.addDefaultValue(GbifTerm.Description, DcTerm.type, "habit");
+			dwcaWriter.addDefaultValue(GbifTerm.Description, DcTerm.language, "EN");
+			
 			dwcaWriter.close();
 			
 			ZipUtils.zipFolder(tempDirectory, new File(archiveAbsolutePath).getAbsolutePath());
@@ -122,7 +143,6 @@ public class DarwinCoreGenerator {
 		
 		String vascanReference = generatedContentConfig.getTaxonUrl().concat(taxonId);
 		dwcaWriter.newRecord(taxonId);
-		//dwcaWriter.addCoreColumn(DwcTerm.taxonID, taxonId);
 		
 		dwcaWriter.addCoreColumn(DcTerm.modified, SDF_DATE.format((taxonModel.getMdate()).getTime()).concat("T").concat(SDF_TIME.format((taxonModel.getMdate()).getTime())));
 
@@ -173,7 +193,6 @@ public class DarwinCoreGenerator {
 		String vascanReference = generatedContentConfig.getTaxonUrl().concat(taxonId);
 		
 		dwcaWriter.newRecord(taxonId);
-		//dwcaWriter.addCoreColumn(DwcTerm.taxonID, taxonId);
 		
 		dwcaWriter.addCoreColumn(DcTerm.modified, SDF_DATE.format((synonymTaxonModel.getMdate()).getTime()).concat("T").concat(SDF_TIME.format((synonymTaxonModel.getMdate()).getTime())));
 
