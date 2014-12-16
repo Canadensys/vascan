@@ -2,9 +2,12 @@ package net.canadensys.dataportal.vascan.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.canadensys.dataportal.vascan.APIService;
+import net.canadensys.dataportal.vascan.config.VascanConfig;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.NameDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
@@ -40,8 +43,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class APIServiceImpl implements APIService{
 	private static NameParser GBIF_NAME_PARSER = new NameParser();
 	
-	public static String API_VERSION = "0.1";
-	public static String ISO3166_2_PREFIX = "ISO 3166-2:";
+	public static final String API_VERSION = "0.1";
+	public static final String ISO3166_2_PREFIX = "ISO 3166-2:";
+	
+	private static final Integer PREVIEW_WIDTH = 430;
+	private static final Integer PREVIEW_HEIGHT = 300;
+	
+	@Autowired
+	private VascanConfig vascanConfig;
 
 	@Autowired
 	private NameDAO nameDAO;
@@ -52,6 +61,36 @@ public class APIServiceImpl implements APIService{
 	@Override
 	public String getAPIVersion() {
 		return API_VERSION;
+	}
+	
+	/**
+	 * Get the reconciliation service metadata.
+	 * 
+	 * @return
+	 */
+	public Map<String,Object> getReconciliationServiceMetadata(){
+		Map<String,Object> serviceMetadata = new HashMap<String, Object>();
+		serviceMetadata.put("name", "Database of Vascular Plants of Canada");
+		serviceMetadata.put("identifierSpace", "http://data.canadensys.net/vascan/");
+		serviceMetadata.put("schemaSpace", "http://rdf.freebase.com/ns/type.object.id"); // FreeBase object id
+		
+		Map<String,String> viewMetadata = new HashMap<String, String>();
+		viewMetadata.put("url", vascanConfig.getTaxonUrl().concat("{{id}}"));
+		serviceMetadata.put("view", viewMetadata);
+		
+		Map<String,String> previewMetadata = new HashMap<String, String>();
+		previewMetadata.put("url", vascanConfig.getTaxonUrl().concat("{{id}}"));
+		previewMetadata.put("width", PREVIEW_WIDTH.toString());
+		previewMetadata.put("height", PREVIEW_HEIGHT.toString()); 
+		serviceMetadata.put("preview", previewMetadata);
+		
+		Map<String,String> serviceType = new HashMap<String, String>();
+		serviceType.put("id", "/biology/organism_classification/scientific_name");
+		serviceType.put("name", "Scientific name");
+		
+		serviceMetadata.put("defaultTypes", new Map<?,?>[]{serviceType});
+		
+		return serviceMetadata;
 	}
 	
 	@Override
@@ -150,7 +189,6 @@ public class APIServiceImpl implements APIService{
 		LimitedResult<List<NameConceptModelIF>> searchResult = nameDAO.search(pSearchTerm,false);
 		
 		VascanAPIResponseElement apiResponse = new VascanAPIResponseElement();
-		apiResponse.setNumMatches(Long.valueOf(searchResult.getTotal_rows()).intValue());
 		apiResponse.setSearchedTerm(searchTerm);
 		
 		//build a set of unique taxon id
@@ -164,6 +202,8 @@ public class APIServiceImpl implements APIService{
 				scores.add(currName.getScore());
 			}
 		}
+		// number of matches excluding duplicates
+		apiResponse.setNumMatches(taxonIdList.size());
 
 		if(!taxonIdList.isEmpty()){
 			fillVascanAPIResponse(apiResponse,taxonIdList,scores);

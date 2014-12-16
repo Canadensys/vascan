@@ -9,6 +9,8 @@ public class VascanConfig {
 	
 	private String currentVersion;
 	private String lastPublicationDateFilePath;
+	
+	private String taxonUrl;
 
 	public String getLastPublicationDateFilePath() {
 		return lastPublicationDateFilePath;
@@ -22,5 +24,12 @@ public class VascanConfig {
 	}
 	public void setCurrentVersion(String currentVersion) {
 		this.currentVersion = currentVersion;
+	}
+	
+	public String getTaxonUrl() {
+		return taxonUrl;
+	}
+	public void setTaxonUrl(String taxonUrl) {
+		this.taxonUrl = taxonUrl;
 	}
 }
