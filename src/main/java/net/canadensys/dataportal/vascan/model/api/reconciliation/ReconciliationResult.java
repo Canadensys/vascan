@@ -1,17 +1,25 @@
 package net.canadensys.dataportal.vascan.model.api.reconciliation;
 
+import java.util.Collection;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * OpenRefine Reconciliation result object.
  * 
  * @author cgendreau
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class ReconciliationResult {
 
 	private String id; //database ID ...
 	private String name;
-	private String[] type; 
+	private Collection<Map<String,String>> type; 
 	private boolean match;
+	private double score;
 	
 	public String getId() {
 		return id;
@@ -25,10 +33,10 @@ public class ReconciliationResult {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String[] getType() {
+	public Collection<Map<String,String>> getType() {
 		return type;
 	}
-	public void setType(String[] type) {
+	public void setType(Collection<Map<String,String>> type) {
 		this.type = type;
 	}
 	public boolean isMatch() {
@@ -37,7 +45,10 @@ public class ReconciliationResult {
 	public void setMatch(boolean match) {
 		this.match = match;
 	}
-
-	//"score" : ... double ...
-	//"match" : ... boolean, true if the service is quite confident about the match ...
+	public double getScore() {
+		return score;
+	}
+	public void setScore(double score) {
+		this.score = score;
+	}
 }

@@ -65,6 +65,18 @@ public class ReconciliationAPIControllerTest {
     }
     
     @Test
+    public void testReconcileServiceSingleQueryJsonp() throws Exception{
+    	MvcResult result = this.mockMvc.perform(get(RECONCILE_URL)
+    			.param("query","Carex arctata")
+    			.param("callback", "mycallback"))
+            	.andExpect(status().isOk())
+            	.andExpect(content().encoding("UTF-8"))
+            	.andExpect(content().contentType("application/x-javascript"))
+            	.andReturn();
+    	assertTrue(result.getResponse().getContentAsString().startsWith("mycallback("));
+    }
+    
+    @Test
     public void testReconcileServiceSingleQueryJson() throws Exception{
     	this.mockMvc.perform(get(RECONCILE_URL)
     			.param("query","{\"query\" : \"Carex arctata\" }"))
@@ -72,6 +84,18 @@ public class ReconciliationAPIControllerTest {
             	.andExpect(content().encoding("UTF-8"))
             	.andExpect(content().contentType("application/json;charset=UTF-8"))
             	.andExpect(jsonPath("$.result[0].id").value("4751"));
+    }
+    
+    @Test
+    public void testOpenRefineCall() throws Exception{
+    	
+    	MvcResult result = this.mockMvc.perform(get(RECONCILE_URL)
+			.param("queries","{\"q0\":{\"query\":\"Carex umbellata\",\"limit\":3}}"))
+        	.andExpect(status().isOk())
+        	.andExpect(content().encoding("UTF-8"))
+        	.andExpect(content().contentType("application/json;charset=UTF-8"))
+        	.andReturn();
+    	System.out.println(result.getResponse().getContentAsString());
     }
     
     @Test

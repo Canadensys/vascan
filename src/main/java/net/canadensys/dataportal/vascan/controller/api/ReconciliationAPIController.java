@@ -42,11 +42,20 @@ public class ReconciliationAPIController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReconciliationAPIController.class);
 	private static final String JSON_QUERY_PARAMETER = "query";
 	
+	private static final List<Map<String,String>> SERVICE_TYPES = new ArrayList<Map<String, String>>();
+	static{
+		Map<String,String> service  = new HashMap<String, String>();
+		service.put("id", "/biology/organism_classification/scientific_name");
+		service.put("name", "Scientific name");
+		SERVICE_TYPES.add(service);
+	}
+	
 	@Autowired
 	private APIService apiService;
 	
-	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET},params="callback")
-	public void handleReconciliation(@PathVariable String version,@RequestParam String callback,
+	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET, RequestMethod.POST},params="callback")
+	public void handleReconciliation(@PathVariable String version, String callback,
+			@RequestParam(required=false) String query, @RequestParam(required=false) String queries,
 			HttpServletRequest request, HttpServletResponse response){
 		
 		if(!APIControllerHelper.JSONP_ACCEPTED_CHAR_PATTERN.matcher(callback).matches()){
@@ -57,10 +66,18 @@ public class ReconciliationAPIController {
 		//make sure the answer is set as UTF-8
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType(APIControllerHelper.JSONP_CONTENT_TYPE);
+		Object responseObject = null;
+		
+		if(StringUtils.isBlank(query) && StringUtils.isBlank(queries)){
+			responseObject = apiService.getReconciliationServiceMetadata();
+		}
+		else{
+			responseObject = handleReconciliation(query, queries, version, request, response);
+		}
 		
 		String json;
 		try {
-			json = APIController.JACKSON_MAPPER.writeValueAsString(getServiceMetadata());
+			json = APIController.JACKSON_MAPPER.writeValueAsString(responseObject);
 			String responseTxt = callback + "("+json+");";
 			response.getWriter().print(responseTxt);
 			response.setContentLength(responseTxt.length());
@@ -76,9 +93,41 @@ public class ReconciliationAPIController {
 		}
 	}
 
+//	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET},params="callback")
+//	public void handleReconciliationJsonp(@RequestParam(required=false) String query, @RequestParam(required=false) String queries, @PathVariable String version,
+//			@RequestParam String callback, HttpServletRequest request, HttpServletResponse response){
+//		if(!APIControllerHelper.JSONP_ACCEPTED_CHAR_PATTERN.matcher(callback).matches()){
+//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//			return;
+//		}
+//		
+//		//make sure the answer is set as UTF-8
+//		response.setCharacterEncoding("UTF-8");
+//		response.setContentType(APIControllerHelper.JSONP_CONTENT_TYPE);
+//		
+//		Object responseObject = handleReconciliation(query, queries, version, request, response);
+//		
+//		String json;
+//		try {
+//			json = APIController.JACKSON_MAPPER.writeValueAsString(responseObject);
+//			String responseTxt = callback + "("+json+");";
+//			response.getWriter().print(responseTxt);
+//			response.setContentLength(responseTxt.length());
+//			response.getWriter().close();
+//		}
+//		catch (JsonProcessingException e) {
+//			LOGGER.warn("Can't parse received json", e);
+//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//		}
+//		catch (IOException e) {
+//			LOGGER.warn("Can't parse received json", e);
+//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//		}
+//		
+//	}
 	/**
 	 * OpenRefine Reconciliation service.
-	 * TODO jsonp support
+	 * TODO add limit to "queries" ?
 	 * 
 	 * @param query
 	 * @param queries
@@ -87,7 +136,7 @@ public class ReconciliationAPIController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET})
+	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET,RequestMethod.POST}, params="!callback")
 	public @ResponseBody Object handleReconciliation(@RequestParam(required=false) String query, @RequestParam(required=false) String queries, @PathVariable String version,
 			HttpServletRequest request, HttpServletResponse response){
 		
@@ -119,26 +168,6 @@ public class ReconciliationAPIController {
 		}
 
 		return responseObject;
-	}
-	
-	/**
-	 * Get the reconciliation service metadata.
-	 * 
-	 * @return
-	 */
-	private Map<String,Object> getServiceMetadata(){
-		Map<String,Object> serviceMetadata = new HashMap<String, Object>();
-		serviceMetadata.put("name", "Database of Vascular Plants of Canada");
-		serviceMetadata.put("identifierSpace", "http://data.canadensys.net/vascan/");
-		serviceMetadata.put("schemaSpace", "http://rdf.freebase.com/ns/type.object.id"); // FreeBase object id
-		
-		Map<String,String> serviceType = new HashMap<String, String>();
-		serviceType.put("id", "/biology/organism_classification/scientific_name");
-		serviceType.put("name", "Scientific name");
-		
-		serviceMetadata.put("defaultTypes", new Map<?,?>[]{serviceType});
-		
-		return serviceMetadata;
 	}
 	
 	/**
@@ -224,6 +253,8 @@ public class ReconciliationAPIController {
 				ReconciliationResult rr = new ReconciliationResult();
 				rr.setId(tar.getTaxonID().toString());
 				rr.setName(tar.getScientificName());
+				rr.setScore(1.0);
+				rr.setType(SERVICE_TYPES);
 				rResult.add(rr);
 			}
 		}
