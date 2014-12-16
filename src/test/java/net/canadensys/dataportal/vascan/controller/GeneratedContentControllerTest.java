@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
+import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
 import net.canadensys.utils.ZipUtils;
 
 import org.apache.commons.io.FileUtils;

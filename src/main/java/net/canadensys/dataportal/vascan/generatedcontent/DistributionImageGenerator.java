@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
+import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.constant.Distribution;
 import net.canadensys.dataportal.vascan.constant.Region;
 import net.canadensys.dataportal.vascan.model.DistributionModel;

@@ -1,4 +1,4 @@
-package net.canadensys.dataportal.vascan.generatedcontent;
+package net.canadensys.dataportal.vascan.config;
 
 /**
  * Class containing the configuration for the Vascan generated content.
@@ -14,7 +14,6 @@ public class GeneratedContentConfig {
 	
 	//text file and DwcA
 	private String generatedFilesFolder;
-	private String taxonUrl;
 	private String publicDownloadUrl;
 
 	public String getImageFolder() {
@@ -45,13 +44,6 @@ public class GeneratedContentConfig {
 	}
 	public void setGeneratedFilesFolder(String generatedFilesFolder) {
 		this.generatedFilesFolder = generatedFilesFolder;
-	}
-
-	public String getTaxonUrl() {
-		return taxonUrl;
-	}
-	public void setTaxonUrl(String taxonUrl) {
-		this.taxonUrl = taxonUrl;
 	}
 
 	public String getPublicDownloadUrl() {

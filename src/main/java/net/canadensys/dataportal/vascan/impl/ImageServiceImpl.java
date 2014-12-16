@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.List;
 
 import net.canadensys.dataportal.vascan.ImageService;
+import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.dao.DistributionDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.generatedcontent.DistributionImageGenerator;
-import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.model.DistributionModel;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 

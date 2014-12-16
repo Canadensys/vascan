@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Vector;
 
 import net.canadensys.dataportal.vascan.TaxonService;
+import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
 import net.canadensys.dataportal.vascan.dao.impl.HibernateTaxonomyDAO;
-import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.manager.TaxonManager;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;

@@ -13,13 +13,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.canadensys.dataportal.vascan.DownloadService;
+import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
+import net.canadensys.dataportal.vascan.config.VascanConfig;
 import net.canadensys.dataportal.vascan.dao.DistributionDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
 import net.canadensys.dataportal.vascan.dao.VernacularNameDAO;
 import net.canadensys.dataportal.vascan.dao.query.RegionQueryPart;
 import net.canadensys.dataportal.vascan.generatedcontent.DarwinCoreGenerator;
-import net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
 import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.query.ChecklistQuery;
@@ -53,6 +54,9 @@ public class DownloadServiceImpl implements DownloadService {
 	public static final String DARWIN_CORE_FILE_HABITUS = "habit.txt";
 	public static final String DARWIN_CORE_FILE_COMPLETE_ARCHIVE = "vascan.zip";
 
+	@Autowired
+	private VascanConfig vascanConfig;
+	
 	@Autowired
 	private GeneratedContentConfig generatedContentConfig;
 	
@@ -235,7 +239,7 @@ public class DownloadServiceImpl implements DownloadService {
 	    	while(it.hasNext()){
 	    		TaxonLookupModel currTlm = it.next();
             	csv.append(NEWLINE);
-            	csv.append(generatedContentConfig.getTaxonUrl()).append(currTlm.getTaxonId()).append(delimiter);
+            	csv.append(vascanConfig.getTaxonUrl()).append(currTlm.getTaxonId()).append(delimiter);
                 csv.append(_bundle.getObject("rank_"+currTlm.getRank())).append(delimiter);
                 String fsn = currTlm.getCalname();
                 StringBuffer sb = new StringBuffer("");
@@ -294,7 +298,9 @@ public class DownloadServiceImpl implements DownloadService {
         //make sure the destination folder exists
         if(!file.getParentFile().exists()){
         	LOGGER.info("Creating folder structure : " + file.getParentFile().getAbsolutePath());
-        	file.getParentFile().mkdirs();
+        	if(!file.getParentFile().mkdirs()){
+        		LOGGER.error("Can't create folder structure: " + file.getParentFile());
+        	}
         }
 	    BufferedWriter bw = null;
 	    try{

@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
+import net.canadensys.dataportal.vascan.config.VascanConfig;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.impl.HibernateTaxonDAO;
 import net.canadensys.dataportal.vascan.model.DistributionModel;
@@ -51,6 +53,9 @@ public class DarwinCoreGenerator {
 	private static final SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
 	private static final SimpleDateFormat SDF_TIME = new SimpleDateFormat("H:mmZ");
 	private static final String HYBRID_PARENT_RELATIONSHIP = "hybrid parent of";
+	
+	@Autowired
+	private VascanConfig vascanConfig;
 	
 	@Autowired
 	private GeneratedContentConfig generatedContentConfig;
@@ -141,7 +146,7 @@ public class DarwinCoreGenerator {
 		TaxonLookupModel currTaxonLookup = taxonModel.getLookup();
 		ReferenceModel currReference = taxonModel.getReference();
 		
-		String vascanReference = generatedContentConfig.getTaxonUrl().concat(taxonId);
+		String vascanReference = vascanConfig.getTaxonUrl().concat(taxonId);
 		dwcaWriter.newRecord(taxonId);
 		
 		dwcaWriter.addCoreColumn(DcTerm.modified, SDF_DATE.format((taxonModel.getMdate()).getTime()).concat("T").concat(SDF_TIME.format((taxonModel.getMdate()).getTime())));
@@ -190,7 +195,7 @@ public class DarwinCoreGenerator {
 		TaxonLookupModel currTaxonLookup = synonymTaxonModel.getLookup();
 		ReferenceModel currReference = synonymTaxonModel.getReference();
 		
-		String vascanReference = generatedContentConfig.getTaxonUrl().concat(taxonId);
+		String vascanReference = vascanConfig.getTaxonUrl().concat(taxonId);
 		
 		dwcaWriter.newRecord(taxonId);
 		

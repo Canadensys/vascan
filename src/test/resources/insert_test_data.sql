@@ -238,7 +238,8 @@ VALUES
 (1919,'chrysanthème arctique',1,2844,'fr',160),
 (1922,'chrysanthème arctique',2,2846,'fr',65),
 (30813,'chrysanthème arctique',1,2845,'fr',160),
-(26256,'if du Canada','1','9401','fr',141
+(26256,'if du Canada','1','9401','fr',141),
+(10272,'carex en ombelle','1','5129','fr','270'
 );
 
 INSERT INTO distribution(

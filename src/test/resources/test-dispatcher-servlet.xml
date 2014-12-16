@@ -68,12 +68,12 @@
 	<bean id="vascanConfig" class="net.canadensys.dataportal.vascan.config.VascanConfig">
 		<property name="currentVersion" value="${version.current:}"/>
 		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}"/>
+		<property name="taxonUrl" value="${taxonUrl}" />
 	</bean>
 	
-	<bean id="imageGeneratorConfig" class="net.canadensys.dataportal.vascan.generatedcontent.GeneratedContentConfig">
+	<bean id="imageGeneratorConfig" class="net.canadensys.dataportal.vascan.config.GeneratedContentConfig">
 		<property name="imageFolder" value="${generatedContent.imageFolder}" />
 		<property name="generatedFilesFolder" value="${generatedContent.generatedFilesFolder}" />
-		<property name="taxonUrl" value="${generatedContent.taxonUrl}" />
 		<property name="publicDownloadUrl" value="${generatedContent.publicDownloadUrl}" />
 	</bean>
 	

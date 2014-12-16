@@ -4,12 +4,12 @@ googleanalytics.account=B
 url.useMinified=true
 
 lastPublicationDateFilePath=/tmp/toto.txt
+taxonUrl=http://data.canadensys.net/taxon/
 
 #this publicDownloadUrl will not work locally unless your setup something with Apache
 generatedContent.publicDownloadUrl=http://localhost:9966/vascan/download/
 generatedContent.imageFolder=/tmp/vascan/
 generatedContent.generatedFilesFolder=/tmp/vascan/
-generatedContent.taxonUrl=http://data.canadensys.net/taxon/
 
 database.driver=org.h2.Driver
 database.url=jdbc:h2:mem:mysql;DB_CLOSE_DELAY=-1;MODE=MYSQL;TRACE_LEVEL_SYSTEM_OUT=2;MVCC=TRUE
