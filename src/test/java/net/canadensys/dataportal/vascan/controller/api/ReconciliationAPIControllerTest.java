@@ -29,7 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class ReconciliationAPIControllerTest {
 	
 	private static final String TESTED_API_VERSION = "0.1";
-	private static final String RECONCILE_URL = "/api/"+TESTED_API_VERSION+"/reconcile";
+	private static final String RECONCILE_URL = "/refine/"+TESTED_API_VERSION+"/reconcile";
 		
 	@Autowired
     private WebApplicationContext wac;

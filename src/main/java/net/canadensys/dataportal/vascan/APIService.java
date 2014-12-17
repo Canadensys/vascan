@@ -1,7 +1,6 @@
 package net.canadensys.dataportal.vascan;
 
 import java.util.List;
-import java.util.Map;
 
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponse;
 import net.canadensys.dataportal.vascan.model.api.VascanAPIResponseElement;
@@ -13,14 +12,12 @@ import net.canadensys.dataportal.vascan.model.api.VascanAPIResponseElement;
  */
 public interface APIService {
 	
-	public String getAPIVersion();
-	
 	/**
-	 * Get the OpenRefine Reconciliation Service Metadata.
+	 * Get the current API version.
 	 * 
 	 * @return
 	 */
-	public Map<String,Object> getReconciliationServiceMetadata();
+	public String getAPIVersion();
 	
 	/**
 	 * Search for a single string value.

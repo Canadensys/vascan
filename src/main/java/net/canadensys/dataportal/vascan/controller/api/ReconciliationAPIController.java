@@ -1,20 +1,14 @@
 package net.canadensys.dataportal.vascan.controller.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.canadensys.dataportal.vascan.APIService;
-import net.canadensys.dataportal.vascan.model.api.TaxonAPIResult;
-import net.canadensys.dataportal.vascan.model.api.VascanAPIResponseElement;
+import net.canadensys.dataportal.vascan.APIRefineService;
 import net.canadensys.dataportal.vascan.model.api.reconciliation.ReconciliationResponse;
-import net.canadensys.dataportal.vascan.model.api.reconciliation.ReconciliationResult;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -41,19 +35,12 @@ public class ReconciliationAPIController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReconciliationAPIController.class);
 	private static final String JSON_QUERY_PARAMETER = "query";
-	
-	private static final List<Map<String,String>> SERVICE_TYPES = new ArrayList<Map<String, String>>();
-	static{
-		Map<String,String> service  = new HashMap<String, String>();
-		service.put("id", "/biology/organism_classification/scientific_name");
-		service.put("name", "Scientific name");
-		SERVICE_TYPES.add(service);
-	}
+	private static final String RECONCILIATION_API_VERSION = "0.1";
 	
 	@Autowired
-	private APIService apiService;
+	private APIRefineService apiRefineService;
 	
-	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET, RequestMethod.POST},params="callback")
+	@RequestMapping(value="/refine/{version}/reconcile",method={RequestMethod.GET, RequestMethod.POST},params="callback")
 	public void handleReconciliation(@PathVariable String version, String callback,
 			@RequestParam(required=false) String query, @RequestParam(required=false) String queries,
 			HttpServletRequest request, HttpServletResponse response){
@@ -69,7 +56,7 @@ public class ReconciliationAPIController {
 		Object responseObject = null;
 		
 		if(StringUtils.isBlank(query) && StringUtils.isBlank(queries)){
-			responseObject = apiService.getReconciliationServiceMetadata();
+			responseObject = apiRefineService.getReconciliationServiceMetadata();
 		}
 		else{
 			responseObject = handleReconciliation(query, queries, version, request, response);
@@ -92,39 +79,7 @@ public class ReconciliationAPIController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
-
-//	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET},params="callback")
-//	public void handleReconciliationJsonp(@RequestParam(required=false) String query, @RequestParam(required=false) String queries, @PathVariable String version,
-//			@RequestParam String callback, HttpServletRequest request, HttpServletResponse response){
-//		if(!APIControllerHelper.JSONP_ACCEPTED_CHAR_PATTERN.matcher(callback).matches()){
-//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//			return;
-//		}
-//		
-//		//make sure the answer is set as UTF-8
-//		response.setCharacterEncoding("UTF-8");
-//		response.setContentType(APIControllerHelper.JSONP_CONTENT_TYPE);
-//		
-//		Object responseObject = handleReconciliation(query, queries, version, request, response);
-//		
-//		String json;
-//		try {
-//			json = APIController.JACKSON_MAPPER.writeValueAsString(responseObject);
-//			String responseTxt = callback + "("+json+");";
-//			response.getWriter().print(responseTxt);
-//			response.setContentLength(responseTxt.length());
-//			response.getWriter().close();
-//		}
-//		catch (JsonProcessingException e) {
-//			LOGGER.warn("Can't parse received json", e);
-//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//		}
-//		catch (IOException e) {
-//			LOGGER.warn("Can't parse received json", e);
-//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//		}
-//		
-//	}
+	
 	/**
 	 * OpenRefine Reconciliation service.
 	 * TODO add limit to "queries" ?
@@ -133,16 +88,16 @@ public class ReconciliationAPIController {
 	 * @param queries
 	 * @param version
 	 * @param request
-	 * @param response
+	 * @param response status variable could be modified by this function in case of error
 	 * @return
 	 */
-	@RequestMapping(value="/api/{version}/reconcile",method={RequestMethod.GET,RequestMethod.POST}, params="!callback")
+	@RequestMapping(value="/refine/{version}/reconcile",method={RequestMethod.GET,RequestMethod.POST}, params="!callback")
 	public @ResponseBody Object handleReconciliation(@RequestParam(required=false) String query, @RequestParam(required=false) String queries, @PathVariable String version,
 			HttpServletRequest request, HttpServletResponse response){
 		
 		Object responseObject;
 		
-		if(!apiService.getAPIVersion().equals(version)){
+		if(!RECONCILIATION_API_VERSION.equals(version)){
 			return APIController.notFound(response);
 		}
 		
@@ -200,7 +155,7 @@ public class ReconciliationAPIController {
 		}
 		
 		ReconciliationResponse reconciliationResponse = new ReconciliationResponse();
-		reconciliationResponse.addAll(getReconciliationResponse(searchString));
+		reconciliationResponse.addAll(apiRefineService.reconcile(searchString));
 		
 		return reconciliationResponse;
 	}
@@ -221,7 +176,7 @@ public class ReconciliationAPIController {
 			
 			for(String q : queryData.keySet()){
 				ReconciliationResponse reconciliationResponse = new ReconciliationResponse();
-				reconciliationResponse.addAll(getReconciliationResponse(queryData.get(q).get(JSON_QUERY_PARAMETER)));
+				reconciliationResponse.addAll(apiRefineService.reconcile(queryData.get(q).get(JSON_QUERY_PARAMETER)));
 				resultMap.put(q, reconciliationResponse);
 			}
 		}
@@ -234,31 +189,6 @@ public class ReconciliationAPIController {
 		}
 		
 		return resultMap;
-	}
-	
-	/**
-	 * Get a list of ReconciliationResult from a searchString.
-	 * Internally this method will create ReconciliationResult from a VascanAPIResponseElement object.
-	 * 
-	 * @param searchString
-	 * @return
-	 */
-	private List<ReconciliationResult> getReconciliationResponse(String searchString){
-		VascanAPIResponseElement responseElement = apiService.search(searchString);
-		List<TaxonAPIResult> matches = responseElement.getMatches();
-		List<ReconciliationResult> rResult = new ArrayList<ReconciliationResult>();
-		
-		if(responseElement.getNumMatches() > 0){
-			for(TaxonAPIResult tar : matches){
-				ReconciliationResult rr = new ReconciliationResult();
-				rr.setId(tar.getTaxonID().toString());
-				rr.setName(tar.getScientificName());
-				rr.setScore(1.0);
-				rr.setType(SERVICE_TYPES);
-				rResult.add(rr);
-			}
-		}
-		return rResult;
 	}
 	
 }
