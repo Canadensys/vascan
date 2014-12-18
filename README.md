@@ -10,7 +10,7 @@ Dependencies
 ------------
 ### Libraries
 * [Spring Framework 4.0.2](http://www.springsource.org/spring-framework)
-* [Canadensys Data Access 2.10.0](https://github.com/Canadensys/canadensys-data-access)
+* [Canadensys Data Access 2.12.0](https://github.com/Canadensys/canadensys-data-access)
 * [Hibernate 4.3.2](http://www.hibernate.org/)
 * [ElasticSearch 0.90.12](http://www.elasticsearch.org/)
 * [Freemarker 2.3.20](http://freemarker.sourceforge.net/)
