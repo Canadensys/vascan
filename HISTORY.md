@@ -1,5 +1,9 @@
 Version History
 ===============
+
+Version 3.3.0 2014-12-17
+* [Change log](https://github.com/Canadensys/vascan/milestones/3.3)
+
 Version 3.2.3 2014-08-05
 * Update to canadensys-data-access 2.10.0 and ElasticSearch 0.90.12.
 * Simply keeping the stack more up-to-date. No changes expected.
