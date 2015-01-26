@@ -43,8 +43,15 @@ public class ReconciliationAPIControllerTest {
     
     @Test
 	public void testServiceMetadata() throws Exception{
-    	//test GET with a synonym with 2 parents
-        MvcResult result = this.mockMvc.perform(get(RECONCILE_URL)
+    	//test JSON
+    	MvcResult result = this.mockMvc.perform(get(RECONCILE_URL))
+            	.andExpect(status().isOk())
+            	.andExpect(content().encoding("UTF-8"))
+            	.andExpect(content().contentType("application/json;charset=UTF-8"))
+            	.andReturn();
+        
+    	//tes JSONP
+        result = this.mockMvc.perform(get(RECONCILE_URL)
         	.param("callback", "mycallback"))
         	.andExpect(status().isOk())
         	.andExpect(content().encoding("UTF-8"))

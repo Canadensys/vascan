@@ -55,6 +55,16 @@ public class APIController {
 	static final APIErrorResult BAD_REQUEST_RESULT = new APIErrorResult("bad request");
 	
 	/**
+	 * Response to HEAD requests.
+	 * @param response
+	 */
+    @RequestMapping(value={"/api/{version}/search"}, method=RequestMethod.HEAD)
+    public void handleHeadRequests(HttpServletResponse response) {
+        response.setContentLength(0);
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+	
+	/**
 	 * Handles GET API calls where we can only receive 1 name or a taxonID.
 	 * @param q
 	 * @param version
@@ -69,7 +79,7 @@ public class APIController {
 			return notFound(response);
 		}
 		
-		LOGGER.info("search|{}|{}|{}||{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
+		LOGGER.info("search|{}|{}|{}|{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 		
 		String[] dataParts = q.split(APIControllerHelper.DATA_SEPARATOR,2);
 		//check if a local identifier is present

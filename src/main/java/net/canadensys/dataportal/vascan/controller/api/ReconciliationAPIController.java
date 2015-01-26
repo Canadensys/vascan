@@ -40,6 +40,15 @@ public class ReconciliationAPIController {
 	@Autowired
 	private APIRefineService apiRefineService;
 	
+	/**
+	 * JSONP handling
+	 * @param version
+	 * @param callback
+	 * @param query
+	 * @param queries
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping(value="/refine/{version}/reconcile",method={RequestMethod.GET, RequestMethod.POST},params="callback")
 	public void handleReconciliation(@PathVariable String version, String callback,
 			@RequestParam(required=false) String query, @RequestParam(required=false) String queries,
@@ -122,7 +131,8 @@ public class ReconciliationAPIController {
 			}
 		}
 		else{
-			return APIController.badRequest(response);
+			responseObject = apiRefineService.getReconciliationServiceMetadata();
+			LOGGER.info("ReconciliationServiceMetadata|{}|{}|{}|{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 		}
 
 		return responseObject;
