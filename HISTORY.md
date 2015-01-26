@@ -1,6 +1,9 @@
 Version History
 ===============
 
+Version 3.3.1 2015-01-26
+* HEAD request support
+
 Version 3.3.0 2014-12-17
 * [Change log](https://github.com/Canadensys/vascan/milestones/3.3)
 
