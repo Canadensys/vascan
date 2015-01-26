@@ -57,6 +57,7 @@ public class ReconciliationAPIController {
 		
 		if(StringUtils.isBlank(query) && StringUtils.isBlank(queries)){
 			responseObject = apiRefineService.getReconciliationServiceMetadata();
+			LOGGER.info("ReconciliationServiceMetadata|{}|{}|{}|{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 		}
 		else{
 			responseObject = handleReconciliation(query, queries, version, request, response);
@@ -105,14 +106,16 @@ public class ReconciliationAPIController {
 		if(StringUtils.isNotBlank(query)){
 			try{
 				responseObject = runSingleQueryReconciliation(query);
+				LOGGER.info("SingleQueryReconciliation|{}|{}|{}|{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 			}
 			catch(IllegalArgumentException iaEx){
 				responseObject = APIController.badRequest(response);
-			}
+			}		
 		} //Multiple query mode
 		else if(StringUtils.isNotBlank(queries)){
 			try{
 				responseObject = runMultipleQueryReconciliation(queries);
+				LOGGER.info("MultipleQueryReconciliation|{}|{}|{}|{}", request.getMethod(), request.getRequestURI(), request.getQueryString(), request.getRemoteAddr());
 			}
 			catch(IllegalArgumentException iaEx){
 				responseObject = APIController.badRequest(response);
