@@ -9,6 +9,7 @@
 *.DS_Store
 
 build/*
+data/*
 canadensys_web_build.gradle
 config/local/*.properties
 config/production/*
