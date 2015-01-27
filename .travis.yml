@@ -8,7 +8,7 @@ before_install:
  - mvn clean install
  - cd ..
  - git clone https://github.com/Canadensys/canadensys-view-includes 
- - cd ../vascan
+ - cd vascan
 jdk:
   - oraclejdk7
   - openjdk7
