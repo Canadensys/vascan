@@ -1,0 +1,15 @@
+language: java
+before_install:
+ - cd ..
+ - git clone https://github.com/Canadensys/canadensys-data-access
+ - cd canadensys-data-access
+ - git fetch --tags
+ - git checkout tags/2.12.1
+ - mvn clean install
+ - cd ..
+ - git clone https://github.com/Canadensys/canadensys-view-includes 
+ - cd ../vascan
+jdk:
+  - oraclejdk7
+  - openjdk7
+  - openjdk6

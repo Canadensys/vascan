@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse'
 
-apply from: "${parentScript}"
+apply from: "https://raw.githubusercontent.com/Canadensys/canadensys-common/master/gradle/canadensys_web_build_21.gradle"
 
 import static groovy.io.FileType.FILES
 
@@ -33,6 +33,9 @@ ext {
 	h2Version = '1.3.175'
 	tomcatVersion = '6.0.29'
 	seleniumVersion = '2.44.0'
+	
+	//TODO : update this to new web package
+	canadensysViewIncludes = "../canadensys-view-includes/"
 }
 
 compileJava.options.encoding = sourceEncoding
