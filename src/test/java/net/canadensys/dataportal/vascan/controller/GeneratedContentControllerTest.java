@@ -6,14 +6,11 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
 import net.canadensys.utils.ZipUtils;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.gbif.dwc.terms.DwcTerm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,14 +76,14 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	
     	//ask for a download and get a download
         ModelAndView mav = handlerAdapter.handle(request, response, handler);
-        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
         String filename= (String)mav.getModelMap().get("filename");
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
     	handler = handlerMapping.getHandler(request).getHandler();
     	handlerAdapter.handle(request, response, handler);
-    	assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+    	assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
     	assertTrue(new File(generatedContentConfig.getGeneratedFilesFolder()+filename).exists());
     }
     
@@ -111,14 +108,14 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	
     	//ask for a download and get a download
         ModelAndView mav = handlerAdapter.handle(request, response, handler);
-        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
         String filename= (String)mav.getModelMap().get("filename");
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
     	handler = handlerMapping.getHandler(request).getHandler();
     	handlerAdapter.handle(request, response, handler);
-    	assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+    	assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
     	File generatedDwcA = new File(generatedContentConfig.getGeneratedFilesFolder()+filename);
     	assertTrue(generatedDwcA.exists());
     	
@@ -159,14 +156,14 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	
     	//ask for a download and get a download
         ModelAndView mav = handlerAdapter.handle(request, response, handler);
-        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
         String filename= (String)mav.getModelMap().get("filename");
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
     	handler = handlerMapping.getHandler(request).getHandler();
     	handlerAdapter.handle(request, response, handler);
-    	assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+    	assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
     	File generatedDwcA = new File(generatedContentConfig.getGeneratedFilesFolder()+filename);
     	assertTrue(generatedDwcA.exists());
     	
@@ -211,14 +208,14 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	
     	//ask for a download and get a download
         ModelAndView mav = handlerAdapter.handle(request, response, handler);
-        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
         String filename= (String)mav.getModelMap().get("filename");
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
     	handler = handlerMapping.getHandler(request).getHandler();
     	handlerAdapter.handle(request, response, handler);
-    	assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+    	assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
     	File generatedDwcA = new File(generatedContentConfig.getGeneratedFilesFolder()+filename);
     	assertTrue(generatedDwcA.exists());
     	
