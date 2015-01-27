@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class VascanAPIResponse {
 	
 	private String apiVersion;
+	private String lastUpdatedDate;
 	
 	private List<VascanAPIResponseElement> results;
 	
@@ -29,6 +30,13 @@ public class VascanAPIResponse {
 		this.apiVersion = apiVersion;
 	}
 	
+	public String getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+	public void setLastUpdatedDate(String lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+
 	@XmlElementWrapper(name="results")
 	@XmlElement(name="searchedName")
 	@JsonProperty(value="results")

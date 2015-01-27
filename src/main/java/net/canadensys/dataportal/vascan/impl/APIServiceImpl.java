@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.canadensys.dataportal.vascan.APIService;
+import net.canadensys.dataportal.vascan.config.VascanConfig;
 import net.canadensys.dataportal.vascan.constant.Status;
 import net.canadensys.dataportal.vascan.dao.NameDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonDAO;
@@ -42,6 +43,9 @@ public class APIServiceImpl implements APIService{
 	
 	public static final String API_VERSION = "0.1";
 	public static final String ISO3166_2_PREFIX = "ISO 3166-2:";
+	
+	@Autowired
+	private VascanConfig vascanConfig;
 
 	@Autowired
 	private NameDAO nameDAO;
@@ -65,6 +69,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse search(String id, String searchTerm) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
+		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
 		
 		VascanAPIResponseElement apiResponseElement = innerSearch(searchTerm);
 		apiResponseElement.setLocalIdentifier(id);
@@ -77,6 +82,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse search(List<String> idList, List<String> dataList) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
+		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
 		
 		int idx=0;
 		VascanAPIResponseElement apiResponseElement;
@@ -94,6 +100,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse searchTaxonId(List<Integer> taxonIdList) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
+		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
 
 		VascanAPIResponseElement apiResponseElement = null;
 		TaxonModel taxonModel = null;
@@ -121,6 +128,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse searchTaxonId(Integer id) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
+		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
 		
 		TaxonModel taxonModel = taxonDAO.loadTaxon(id);
 		
