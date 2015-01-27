@@ -11,6 +11,10 @@ System.setProperty('file.encoding', 'UTF-8')
 
 def group = 'canadensys.net'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
 ext {
 	versionFile = project.file("config/production/version.properties")
 	appVersion = versionFile.getText().replace("version.current=","")
