@@ -24,6 +24,7 @@ ext {
 
 	sourceEncoding = 'UTF-8'
 	sourceCompatibility = JavaVersion.VERSION_1_6
+	targetCompatibility = JavaVersion.VERSION_1_6
 
 	dataAccessVersion = '2.12.2'
 	dwcaReaderVersion = '1.20'
