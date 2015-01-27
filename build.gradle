@@ -3,7 +3,7 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 
 ext {
-    tomcatContextPath = 'explorer'
+    tomcatContextPath = 'vascan'
 }
 apply from: "https://raw.githubusercontent.com/Canadensys/canadensys-common/master/gradle/canadensys_web_build_21.gradle"
 
@@ -25,7 +25,7 @@ ext {
 	sourceEncoding = 'UTF-8'
 	sourceCompatibility = JavaVersion.VERSION_1_6
 
-	dataAccessVersion = '2.12.0'
+	dataAccessVersion = '2.12.1'
 
 	springVersion = '4.0.9.RELEASE'
 	hibernateVersion = '4.3.2.Final'
@@ -116,14 +116,10 @@ war {
 
 //Tomcat plugin settings
 tomcatRunWar {
-    httpPort = 9966
-    contextPath = 'vascan'
-    stopKey = 'stopKey' 
-    outputFile = file('tomcat.log')
-}
-
-tomcatStop {
-	stopKey = 'stopKey'
+    httpPort = tomcatHttpPort
+    contextPath = tomcatContextPath
+    stopKey = 'stopKey'
+    outputFile = file('tomcat.log') 
 }
 
 //Used for conditional configuration. The configuration is applied only when we know that the task will be executed.
