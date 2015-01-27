@@ -80,12 +80,14 @@ public class APIControllerTest {
     @Test
 	public void testApiGetJSON() throws Exception{
     	//test GET with a synonym with 2 parents
-        this.mockMvc.perform(get("/api/"+TESTED_API_VERSION+"/search.json").param("q","Amaranthus graecizans"))
+    	this.mockMvc.perform(get("/api/"+TESTED_API_VERSION+"/search.json").param("q","Amaranthus graecizans"))
         	.andExpect(status().isOk())
         	.andExpect(content().encoding("UTF-8"))
         	.andExpect(content().contentType("application/json;charset=UTF-8")) //this is a bug in Spring 3.2, charset should be avoided  .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         	.andExpect(jsonPath("$.results[0].matches[0].taxonomicAssertions[0]").exists())
-        	.andExpect(jsonPath("$.results[0].matches[0].taxonomicAssertions[1]").exists());
+        	.andExpect(jsonPath("$.results[0].matches[0].taxonomicAssertions[1]").exists())
+        	.andExpect(jsonPath("$.lastUpdatedDate").exists())
+        	.andReturn();
     }
     
     @Test

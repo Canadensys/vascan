@@ -2,6 +2,9 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse'
 
+ext {
+    tomcatContextPath = 'vascan'
+}
 apply from: "https://raw.githubusercontent.com/Canadensys/canadensys-common/master/gradle/canadensys_web_build_21.gradle"
 
 import static groovy.io.FileType.FILES
@@ -11,14 +14,20 @@ System.setProperty('file.encoding', 'UTF-8')
 
 def group = 'canadensys.net'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
 ext {
 	versionFile = project.file("config/production/version.properties")
 	appVersion = versionFile.getText().replace("version.current=","")
 
 	sourceEncoding = 'UTF-8'
-	sourceCompatibility = JavaVersion.VERSION_1_6
+	sourceCompatibility = JavaVersion.VERSION_1_7
+	targetCompatibility = JavaVersion.VERSION_1_7
 
-	dataAccessVersion = '2.12.1'
+	dataAccessVersion = '2.12.2'
+	dwcaReaderVersion = '1.20'
 
 	springVersion = '4.0.9.RELEASE'
 	hibernateVersion = '4.3.2.Final'
@@ -29,6 +38,9 @@ ext {
 	h2Version = '1.3.175'
 	tomcatVersion = '6.0.29'
 	seleniumVersion = '2.44.0'
+	
+	//TODO : update this to new web package
+	canadensysViewIncludes = "../canadensys-view-includes/"
 }
 
 compileJava.options.encoding = sourceEncoding
@@ -50,6 +62,7 @@ dependencies {
 	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 	
 	compile group: 'net.canadensys', name: 'canadensys-data-access', version: dataAccessVersion
+	compile group: 'org.gbif', name: 'dwca-reader', version: dwcaReaderVersion
 	compile group: 'org.freemarker', name: 'freemarker', version: freemarkerVersion
 	compile group: 'org.elasticsearch', name: 'elasticsearch', version: elasticSearchVersion
 	compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
@@ -67,7 +80,6 @@ dependencies {
 	
 	compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.2'
 
-	//compile group: 'org.hibernate', name: 'hibernate-validator', version: '4.3.1.Final'
 	
 	compile("org.gbif:name-parser:2.1"){
 		exclude module: 'slf4j-api'
@@ -106,14 +118,10 @@ war {
 
 //Tomcat plugin settings
 tomcatRunWar {
-    httpPort = 9966
-    contextPath = 'vascan'
-    stopKey = 'stopKey' 
-    outputFile = file('tomcat.log')
-}
-
-tomcatStop {
-	stopKey = 'stopKey'
+    httpPort = tomcatHttpPort
+    contextPath = tomcatContextPath
+    stopKey = 'stopKey'
+    outputFile = file('tomcat.log') 
 }
 
 //Used for conditional configuration. The configuration is applied only when we know that the task will be executed.

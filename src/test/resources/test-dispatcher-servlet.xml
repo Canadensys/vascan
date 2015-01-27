@@ -68,6 +68,8 @@
 	<bean id="vascanConfig" class="net.canadensys.dataportal.vascan.config.VascanConfig">
 		<property name="currentVersion" value="${version.current:}"/>
 		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}"/>
+		<!-- mock data -->
+		<property name="lastPublicationDate" value="mockDate"/>
 		<property name="taxonUrl" value="${taxonUrl}" />
 	</bean>
 	
