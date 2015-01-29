@@ -73,7 +73,6 @@
 	<bean id="vascanConfig" class="net.canadensys.dataportal.vascan.config.VascanConfig">
 		<property name="currentVersion" value="${version.current:}"/>
 		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}"/>
-		<property name="useMinified" value="${url.useMinified}" />
 		<property name="taxonUrl" value="${taxonUrl}" />
 	</bean>
 	
@@ -98,6 +97,7 @@
   		<property name="templateLoaderPath" value="/WEB-INF/view/"/>
   		<property name="freemarkerVariables">
         <map>
+        	<entry key="currentVersion" value="${version.current:}" />
         	<entry>
         		<key><value>useMinified</value></key>
         		<value type="java.lang.Boolean">${url.useMinified}</value>
@@ -106,7 +106,7 @@
 <!--           <entry key="userMessageKey" value="beta_version_message"/> -->
 			<entry key="footerAdditionalInfoKey" value="footer_last_publication_date"/>
 			<entry key="footerAdditionalInfoParamKey" value="lastPublicationDate"/>
-			<entry key="currentVersion" value="${version.current:}" />
+
         </map>
 		</property>
 		<!--http://freemarker.sourceforge.net/docs/ref_directive_setting.html-->

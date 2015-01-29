@@ -21,7 +21,6 @@ public class VascanConfig {
 	}
 	
 	private String currentVersion;
-	private Boolean useMinified;
 	
 	private String lastPublicationDateFilePath;
 	
@@ -42,13 +41,6 @@ public class VascanConfig {
 	}
 	public void setCurrentVersion(String currentVersion) {
 		this.currentVersion = currentVersion;
-	}
-	
-	public Boolean getUseMinified() {
-		return useMinified;
-	}
-	public void setUseMinified(Boolean useMinified) {
-		this.useMinified = useMinified;
 	}
 	
 	public String getLastPublicationDate() {
