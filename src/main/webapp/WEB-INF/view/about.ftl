@@ -1,11 +1,12 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
-<#assign page={"title": rc.getMessage("about_title1"),
-"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))]}>
+
+<head>
+<title>${rc.getMessage("about_title1")+ " - " + rc.getMessage("site_title")}</title>
+<@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
+</head>
 
 <#assign currentPage="about"/>
-
-<#include "inc/header.ftl">
 <#include "inc/menu.ftl">
 
 <h1>${rc.getMessage("about_title1")}</h1>
@@ -211,4 +212,3 @@ Brouillet et al. 2010+. érable à sucre in VASCAN, la Base de données des plan
 </#if>
 	</div><#-- content -->
 </div>
-<#include "inc/footer.ftl">
