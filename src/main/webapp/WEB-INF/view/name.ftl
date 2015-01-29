@@ -1,12 +1,13 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
 
-<#assign page={"title": data.pageTitle+ " - " + rc.getMessage("site_title"),
-"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js","http://data.canadensys.net/common/js/jquery.tooltip.min.js", rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")), rc.getContextUrl("/js/vascan/"+formatFileInclude("name",currentVersion!,useMinified,".js"))]}>
+<head>
+<title>${page.data.pageTitle+ " - " + rc.getMessage("site_title")}</title>
+<@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
+</head>
 
 <#assign currentPage="name"/>
-
-<#include "inc/header.ftl">
+<#assign data=page.data/>
 <#include "inc/menu.ftl">
 
 <#if data.requiresDisambiguation == true >
@@ -27,16 +28,16 @@
 			<p class="sprite sprite-synonym">
 			<a href="${rc.getContextUrl('/taxon/'+taxon.taxonId)}">${taxon.fullScientificName}</a> ${rc.getMessage("taxon_synonym_msg1",[refBuilder(taxon.link,taxon.reference,taxon.referenceShort,true,false,false)])}
 			</p>
-                              <#list taxon.parents as parent>
-                                  <p class="sprite sprite-redirect_${parent.status?lower_case}">
-                                  <a href="${rc.getContextUrl('/taxon/'+parent.taxonId)}">${parent.fullScientificName}</a>${rc.getMessage("taxon_accepted_no_strong_msg1",[prefixFrenchRank(rc.getMessage("rank_"+parent.rank?lower_case))?lower_case,refBuilder(parent.link,parent.reference,parent.referenceShort,false,true,false)])}
-                                  </p>
-                              </#list>    
-                          <#else>
-                              <p class="sprite sprite-accepted">
-                              <a href="${rc.getContextUrl('/taxon/'+taxon.taxonId)}">${taxon.fullScientificName}</a> ${rc.getMessage("taxon_accepted_msg1",[prefixFrenchRank(rc.getMessage("rank_"+taxon.rank?lower_case))?lower_case,refBuilder(taxon.link,taxon.reference,taxon.referenceShort,false,true,false)])}
-                              </p>
-                          </#if>
+          <#list taxon.parents as parent>
+              <p class="sprite sprite-redirect_${parent.status?lower_case}">
+              <a href="${rc.getContextUrl('/taxon/'+parent.taxonId)}">${parent.fullScientificName}</a>${rc.getMessage("taxon_accepted_no_strong_msg1",[prefixFrenchRank(rc.getMessage("rank_"+parent.rank?lower_case))?lower_case,refBuilder(parent.link,parent.reference,parent.referenceShort,false,true,false)])}
+              </p>
+          </#list>    
+      	<#else>
+          <p class="sprite sprite-accepted">
+          <a href="${rc.getContextUrl('/taxon/'+taxon.taxonId)}">${taxon.fullScientificName}</a> ${rc.getMessage("taxon_accepted_msg1",[prefixFrenchRank(rc.getMessage("rank_"+taxon.rank?lower_case))?lower_case,refBuilder(taxon.link,taxon.reference,taxon.referenceShort,false,true,false)])}
+          </p>
+      	</#if>
 	</#list>
 </#if>
 <#else>
@@ -78,4 +79,14 @@
 </#if>
 	</div><#-- content -->
 </div>
-<#include "inc/footer.ftl">
+
+<#-- JavaScript handling -->
+<content tag="local_script">
+<#-- 1.7.2 required by jquery.tooltip.min.js-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://data.canadensys.net/common/js/jquery.tooltip.min.js"></script>
+
+<@jsAsset fileName="vascan" version=currentVersion! useMinified=useMinified/>
+<@jsAsset fileName="name" version=currentVersion! useMinified=useMinified/>
+<@jsLibAsset libName="jquery.svg.min.js"/>
+</content>

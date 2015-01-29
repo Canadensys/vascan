@@ -234,5 +234,4 @@
 <@jsAsset fileName="vascan" version=currentVersion! useMinified=useMinified/>
 <@jsAsset fileName="checklist" version=currentVersion! useMinified=useMinified/>
 <@jsLibAsset libName="jquery.svg.min.js"/>
-
 </content>

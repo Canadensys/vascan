@@ -49,7 +49,9 @@ public class VascanControllerTest extends AbstractTransactionalJUnit4SpringConte
         assertEquals(HttpServletResponse.SC_OK, response.getStatus());
 
         @SuppressWarnings("unchecked")
-		HashMap<String,Object> searchModel = (HashMap<String,Object>)mav.getModelMap().get("search");
+		HashMap<String,Object> pageModel = (HashMap<String,Object>)mav.getModelMap().get("page");
+        @SuppressWarnings("unchecked")
+		HashMap<String,Object> searchModel = (HashMap<String,Object>)pageModel.get("search");
         String term= (String)searchModel.get("term");
         assertEquals("Carex abbreviata",term);
     }

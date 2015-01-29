@@ -142,7 +142,7 @@ public class VascanController {
 	 * @return
 	 */
 	@RequestMapping(value={"/name/{name:.+}"}, method={RequestMethod.GET})
-	public ModelAndView handleName(@PathVariable String name, @RequestParam(required=false) String redirect){
+	public ModelAndView handleName(HttpServletRequest request,@PathVariable String name, @RequestParam(required=false) String redirect){
 		
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
@@ -151,10 +151,13 @@ public class VascanController {
 	    if( data == null){
 	    	throw new ResourceNotFoundException();
 	    }
-	    model.put("data",data); 
+	    model.put("data",data);
+	    
+	    //Not used?
 	    model.put("extra",extra);
 	    
-		return new ModelAndView("name", model);
+	    ControllerHelper.addOtherLanguageUri(request, model);
+		return new ModelAndView("name", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	/**
