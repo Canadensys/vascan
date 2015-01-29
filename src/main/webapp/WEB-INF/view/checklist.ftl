@@ -1,11 +1,13 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
-<#assign page={"title": rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title"),
-"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", rc.getContextUrl("/js/jquery.svg.min.js"), rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")), rc.getContextUrl("/js/vascan/"+formatFileInclude("checklist",currentVersion!,useMinified,".js"))]}>
+
+<head>
+<title>${rc.getMessage("checklist_title1")+ " - " + rc.getMessage("site_title")}</title>
+<@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
+</head>
 
 <#assign currentPage="checklist"/>
-
-<#include "inc/header.ftl">
+<#assign data=page.data/>
 <#include "inc/menu.ftl">
 
 <h1>${rc.getMessage("checklist_title1")}</h1>
@@ -223,4 +225,14 @@
 </#if>
 	</div><#-- content -->
 </div>
-<#include "inc/footer.ftl">
+
+<#-- JavaScript handling -->
+<content tag="local_script">
+<#-- 1.7.2 required by  jquery.svg.min.js-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<@jsAsset fileName="vascan" version=currentVersion! useMinified=useMinified/>
+<@jsAsset fileName="checklist" version=currentVersion! useMinified=useMinified/>
+<@jsLibAsset libName="jquery.svg.min.js"/>
+
+</content>

@@ -168,7 +168,7 @@ VASCAN.checklist = (function(){
     load_map: function() {
       var self = this;
       $('#map_selector').svg({
-        loadURL: VASCAN.common.baseURL + "/images/distribution_checklist.svg",
+        loadURL: VASCAN.common.baseURL + "/assets/images/distribution_checklist.svg",
         onLoad: function() { self.process_map("init"); }
       });
     },

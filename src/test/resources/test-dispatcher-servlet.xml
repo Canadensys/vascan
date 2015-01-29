@@ -86,7 +86,7 @@
 		factory-method="getStaticModels"/>
 
 	<bean id="URLHelper" factory-bean="freemarkerStaticModels" factory-method="get">
-          <constructor-arg value="net.canadensys.web.FreemarkerURLHelper"/>
+          <constructor-arg value="net.canadensys.web.freemarker.FreemarkerURLHelper"/>
  	</bean>
 	
 	<!-- Freemarker config -->

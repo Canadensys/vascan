@@ -168,9 +168,10 @@ public class VascanController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		model.put("data", checklistService.retrieveChecklistData(request.getParameterMap()));
-		model.put("pageQuery",StringUtils.defaultString(request.getQueryString()));
+		//model.put("pageQuery",StringUtils.defaultString(request.getQueryString()));
 		
-		return new ModelAndView("checklist", model);
+		ControllerHelper.addOtherLanguageUri(request, model);
+	    return new ModelAndView("checklist", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	/**
@@ -253,7 +254,6 @@ public class VascanController {
 	    model.put("search",search);
 	    
 	    ControllerHelper.addOtherLanguageUri(request, model);
-
 	    return new ModelAndView("search", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
@@ -285,6 +285,7 @@ public class VascanController {
 	}
 	
 	/**
+	 * FIXME freemarkerConfig.getConfiguration().setSharedVariable is NOT thread safe we should use VascanConfig directly.
 	 * Scheduled task to check the last publication date of Vascan.
 	 */
 	@Scheduled(fixedDelay=DateUtils.MILLIS_PER_HOUR)
