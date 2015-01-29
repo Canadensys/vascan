@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import net.canadensys.dataportal.vascan.model.NameConceptTaxonModel;
 import net.canadensys.dataportal.vascan.model.NameConceptVernacularNameModel;
 import net.canadensys.exception.web.ResourceNotFoundException;
 import net.canadensys.query.LimitedResult;
-import net.canadensys.web.i18n.I18nUrlBuilder;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -38,11 +36,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import freemarker.template.TemplateModelException;
 
@@ -118,7 +113,7 @@ public class VascanController {
 	 * @return
 	 */
 	@RequestMapping(value={"/vernacular/{vernacularNameId}"}, method={RequestMethod.GET})
-	public ModelAndView handleVernacular(@PathVariable Integer vernacularNameId){
+	public ModelAndView handleVernacular(HttpServletRequest request, @PathVariable Integer vernacularNameId){
 		
 		Map<String,Object> model = new HashMap<String,Object>();
 		Object vernacularNameData = vernacularNameService.loadVernacularNameModel(vernacularNameId);
@@ -126,11 +121,15 @@ public class VascanController {
 	    if(vernacularNameData == null){
 	    	throw new ResourceNotFoundException();
 	    }
+	    
+	    //extra is used in menu.ftl
 	    model.put("vernacularName",vernacularNameData);
 	    Map<String,Object> extra = new HashMap<String,Object>();
 	    extra.put("isVernacular",true);
 	    model.put("extra",extra);
-	    return new ModelAndView("vernacular",model);
+	    
+	    ControllerHelper.addOtherLanguageUri(request, model);
+	    return new ModelAndView("vernacular", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	/**
@@ -142,7 +141,7 @@ public class VascanController {
 	 * @return
 	 */
 	@RequestMapping(value={"/name/{name:.+}"}, method={RequestMethod.GET})
-	public ModelAndView handleName(HttpServletRequest request,@PathVariable String name, @RequestParam(required=false) String redirect){
+	public ModelAndView handleName(HttpServletRequest request, @PathVariable String name, @RequestParam(required=false) String redirect){
 		
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
@@ -153,7 +152,7 @@ public class VascanController {
 	    }
 	    model.put("data",data);
 	    
-	    //Not used?
+	    //extra is used in menu.ftl
 	    model.put("extra",extra);
 	    
 	    ControllerHelper.addOtherLanguageUri(request, model);
@@ -171,7 +170,7 @@ public class VascanController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		model.put("data", checklistService.retrieveChecklistData(request.getParameterMap()));
-		//model.put("pageQuery",StringUtils.defaultString(request.getQueryString()));
+		model.put("pageQuery",StringUtils.defaultString(request.getQueryString()));
 		
 		ControllerHelper.addOtherLanguageUri(request, model);
 	    return new ModelAndView("checklist", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
