@@ -1,0 +1,7 @@
+<sitemesh>
+    <mapping path="/*" decorator="/decorators/layout.ftl"/>
+    
+    <content-processor>
+    	<tag-rule-bundle class="net.canadensys.web.ContentBlockTagRuleBundle" />
+    </content-processor>
+</sitemesh>

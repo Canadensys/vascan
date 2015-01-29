@@ -1,6 +1,10 @@
 #vascan
 
-The Database of Vascular Plants of Canada
+The Database of Vascular Plants of Canada web application and API.
+
+Code Status
+-----------
+[![Build Status](https://travis-ci.org/Canadensys/vascan.png)](https://travis-ci.org/Canadensys/vascan)
 
 Documentation
 -------------
@@ -9,8 +13,8 @@ See [wiki](https://github.com/Canadensys/vascan/wiki)
 Dependencies
 ------------
 ### Libraries
-* [Spring Framework 4.0.2](http://www.springsource.org/spring-framework)
-* [Canadensys Data Access 2.12.0](https://github.com/Canadensys/canadensys-data-access)
+* [Spring Framework 4.0.9](http://www.springsource.org/spring-framework)
+* [Canadensys Data Access 2.12.2](https://github.com/Canadensys/canadensys-data-access)
 * [Hibernate 4.3.2](http://www.hibernate.org/)
 * [ElasticSearch 0.90.12](http://www.elasticsearch.org/)
 * [Freemarker 2.3.20](http://freemarker.sourceforge.net/)

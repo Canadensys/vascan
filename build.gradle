@@ -6,6 +6,7 @@ ext {
     tomcatContextPath = 'vascan'
 }
 apply from: "https://raw.githubusercontent.com/Canadensys/canadensys-common/master/gradle/canadensys_web_build_21.gradle"
+apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
 
 import static groovy.io.FileType.FILES
 
@@ -14,6 +15,7 @@ System.setProperty('file.encoding', 'UTF-8')
 
 def group = 'canadensys.net'
 
+// task use to generate the gradle wrapper files
 task wrapper(type: Wrapper) {
     gradleVersion = '2.1'
 }
@@ -26,6 +28,8 @@ ext {
 	sourceCompatibility = JavaVersion.VERSION_1_7
 	targetCompatibility = JavaVersion.VERSION_1_7
 
+	webCoreVersion = '0.4'
+	webThemeVersion = '0.2'
 	dataAccessVersion = '2.12.2'
 	dwcaReaderVersion = '1.20'
 
@@ -34,6 +38,7 @@ ext {
 	jacksonVersion = '2.2.3'
 	freemarkerVersion = '2.3.20'
 	elasticSearchVersion = '0.90.12'
+	sitemeshVersion = '3.0.0'
 
 	h2Version = '1.3.175'
 	tomcatVersion = '6.0.29'
@@ -62,6 +67,10 @@ dependencies {
 	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 	
 	compile group: 'net.canadensys', name: 'canadensys-data-access', version: dataAccessVersion
+	compile group: 'net.canadensys', name: 'canadensys-web-core', version: webCoreVersion
+	compile("net.canadensys:canadensys-webapp-core:${webCoreVersion}@war")
+	compile("net.canadensys:canadensys-web-theme:${webThemeVersion}@war")
+	
 	compile group: 'org.gbif', name: 'dwca-reader', version: dwcaReaderVersion
 	compile group: 'org.freemarker', name: 'freemarker', version: freemarkerVersion
 	compile group: 'org.elasticsearch', name: 'elasticsearch', version: elasticSearchVersion
@@ -74,6 +83,7 @@ dependencies {
 	compile group: 'org.apache.xmlgraphics',name:'batik-transcoder',version: '1.7'
 	compile group: 'org.apache.xmlgraphics',name:'batik-codec',version: '1.7'
 	compile group: 'commons-collections',name:'commons-collections',version:'3.2.1'
+	compile group: 'org.sitemesh', name: 'sitemesh', version: sitemeshVersion
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
@@ -112,7 +122,6 @@ war {
         include ("*.css")
 	}
 	webInf { from "${buildDir}/config" }
-	webInf { from "${canadensysViewIncludes}/WEB-INF" }
 	excludes ['*.properties']
 }
 
