@@ -1,23 +1,22 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
 
-<#assign page={"title": rc.getMessage("namesearch_title1")+ " - " + rc.getMessage("site_title"), 
-"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",rc.getContextUrl("/js/typeahead.bundle.min.js"),rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")),rc.getContextUrl("/js/vascan/"+formatFileInclude("search",currentVersion!,useMinified,".js"))],
-"javaScriptSetupCallList" : ['VASCAN.common.setLanguageResources({autocomplete_title1: "${rc.getMessage("autocomplete_title1")}", autocomplete_title2: "${rc.getMessage("autocomplete_title2")}"})']}>
-
-<#if search.term?has_content>
-	<#assign page = page + {"title": rc.getMessage("namesearch_title2",[search.term])+ " - " + rc.getMessage("site_title")}>
+<head>
+<#if page.search.term?has_content>
+	<title>${rc.getMessage("namesearch_title2",[page.search.term])+ " - " + rc.getMessage("site_title")}</title>
+<#else>
+	<title>${rc.getMessage("namesearch_title1")+ " - " + rc.getMessage("site_title")}</title>
 </#if>
+<@cssAsset fileName="vascan" version=currentVersion useMinified=false/>
+</head>
 
 <#assign currentPage="search"/>
-
-<#include "inc/header.ftl">
 <#include "inc/menu.ftl">
 
 <h1>${rc.getMessage("namesearch_title1")}</h1>
 <form id="search_box" class="round custom_form" method="get">
 	<p class="inputs">
-	  <input class="typeahead" type="text" name="q" id="search_term" value="${search.term?html}" placeholder="${rc.getMessage("namesearch_placeholder")}" autofocus="autofocus" />
+	  <input class="typeahead" type="text" name="q" id="search_term" value="${page.search.term?html}" placeholder="${rc.getMessage("namesearch_placeholder")}" autofocus="autofocus" />
 	  <input type="submit" id="search_button" value="${rc.getMessage("namesearch_button1")}" />
 	</p>
 
@@ -27,20 +26,20 @@
 	<p>${rc.getMessage("namesearch_msg1")}</p>
 </form>
 
-<#if search.term?has_content>
-	<#assign totalPages=(search.total/search.pageSize)?ceiling/>
+<#if page.search.term?has_content>
+	<#assign totalPages=(page.search.total/page.search.pageSize)?ceiling/>
 	<h2>
-	<#if (search.pageNumber > 1)>
-		${rc.getMessage("namesearch_h2_results_paging",[search.total, search.pageNumber, totalPages])}
+	<#if (page.search.pageNumber > 1)>
+		${rc.getMessage("namesearch_h2_results_paging",[page.search.total, page.search.pageNumber, page.totalPages])}
 	<#else>
-		${rc.getMessage("namesearch_h2_results",[search.total])}
+		${rc.getMessage("namesearch_h2_results",[page.search.total])}
 	</#if>
 	</h2>
 	<ul id="search_list">
 	<#if !results?has_content>
 		<p><em>${rc.getMessage("namesearch_notfound")}</em></p>
 	</#if>
-	<#list results as result>
+	<#list page.results as result>
 		<#if result.type = "taxon">
 			<#if result.status = "accepted">
 				<li class="sprite sprite-${result.status}"><a href="${getI18nContextUrl('/taxon/'+result.id)}">${result.namehtmlauthor}</a>
@@ -69,13 +68,26 @@
 	</#list>
 	</ul>
 
-	<#if (search.total >= search.pageSize)>
-		<@pages 1..totalPages search.pageNumber/>
+	<#if (page.search.total >= page.search.pageSize)>
+		<@pages 1..totalPages page.search.pageNumber/>
 	</#if>
-<#else>
- <p><img src="${rc.getContextUrl("/images/accepted_species_per_genus.png")}" width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
-</#if>
-
+	<#else>
+	 <p><@imageAsset imageName="accepted_species_per_genus" ext="png"/> width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
+	</#if>
 	</div><#-- content -->
 </div>
-<#include "inc/footer.ftl">
+
+<#-- JavaScript handling -->
+<content tag="local_script">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<@jsAsset fileName="vascan" version=currentVersion useMinified=useMinified/>
+<@jsAsset fileName="search" version=currentVersion useMinified=useMinified/>
+<@jsLibAsset libName="typeahead.bundle.min.js"/>
+
+<script>
+$(function() {
+	VASCAN.common.setLanguageResources({autocomplete_title1: "${rc.getMessage("autocomplete_title1")}", autocomplete_title2: "${rc.getMessage("autocomplete_title2")}"});
+});
+</script>
+</content>

@@ -1,11 +1,13 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
-<#assign page={"title": rc.getMessage("api_title1"),
-"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))]}>
+
+<head>
+<title>${rc.getMessage("api_title1")}</title>
+<@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
+</head>
 
 <#assign currentPage="api"/>
 
-<#include "inc/header.ftl">
 <#include "inc/menu.ftl">
 
 <h1>${rc.getMessage("api_title2")}</h1>
@@ -106,7 +108,5 @@
     ]
 }
 </pre>
-
 	</div><#-- content -->
 </div>
-<#include "inc/footer.ftl">

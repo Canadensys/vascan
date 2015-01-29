@@ -1,5 +1,8 @@
 package net.canadensys.dataportal.vascan.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * General configurations for VASCAN. Those configurations are not tied to a specific service.
  * @author canadensys
@@ -7,7 +10,18 @@ package net.canadensys.dataportal.vascan.config;
  */
 public class VascanConfig {
 	
+	//Key used for models in view
+	public static final String PAGE_ROOT_MODEL_KEY = "page";
+	public static final String LANG_PARAM = "lang";
+	
+	public static final List<String> SUPPORTED_LANGUAGES = new ArrayList<String>();
+	static{
+		SUPPORTED_LANGUAGES.add("en");
+		SUPPORTED_LANGUAGES.add("fr");
+	}
+	
 	private String currentVersion;
+	private Boolean useMinified;
 	
 	private String lastPublicationDateFilePath;
 	
@@ -28,6 +42,13 @@ public class VascanConfig {
 	}
 	public void setCurrentVersion(String currentVersion) {
 		this.currentVersion = currentVersion;
+	}
+	
+	public Boolean getUseMinified() {
+		return useMinified;
+	}
+	public void setUseMinified(Boolean useMinified) {
+		this.useMinified = useMinified;
 	}
 	
 	public String getLastPublicationDate() {

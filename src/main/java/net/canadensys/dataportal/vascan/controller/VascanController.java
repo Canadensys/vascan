@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import net.canadensys.dataportal.vascan.model.NameConceptTaxonModel;
 import net.canadensys.dataportal.vascan.model.NameConceptVernacularNameModel;
 import net.canadensys.exception.web.ResourceNotFoundException;
 import net.canadensys.query.LimitedResult;
+import net.canadensys.web.i18n.I18nUrlBuilder;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,8 +38,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import freemarker.template.TemplateModelException;
 
@@ -175,7 +180,8 @@ public class VascanController {
 	 * @return
 	 */
 	@RequestMapping(value={"/search"}, method={RequestMethod.GET})
-	public ModelAndView handleSearch(@RequestParam(required=false) String q, @RequestParam(required=false,defaultValue="1") Integer page){
+	public ModelAndView handleSearch(HttpServletRequest request,@RequestParam(required=false) String q,
+			@RequestParam(required=false,defaultValue="1") Integer page){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 	    HashMap<String,Object> search = new HashMap<String,Object>();
@@ -244,9 +250,11 @@ public class VascanController {
 		    }
 		    model.put("results",searchResults);
 	    }
-	    
 	    model.put("search",search);
-	    return new ModelAndView("search", model);
+	    
+	    ControllerHelper.addOtherLanguageUri(request, model);
+
+	    return new ModelAndView("search", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	@RequestMapping(value={"/search.json"}, method={RequestMethod.GET})
@@ -283,10 +291,13 @@ public class VascanController {
 	protected void checkLastPublicationDate(){
 		try {
 			String lpd = FileUtils.readFileToString(new File(vascanConfig.getLastPublicationDateFilePath()));
-			try {
-				freemarkerConfig.getConfiguration().setSharedVariable("lastPublicationDate", lpd);
-			} catch (TemplateModelException e) {
-				LOGGER.fatal("Could not set Vascan lastPublicationDate:"+ e.getMessage());
+			if(!StringUtils.equals(lpd, vascanConfig.getLastPublicationDate())){
+				vascanConfig.setLastPublicationDate(lpd);
+				try {
+					freemarkerConfig.getConfiguration().setSharedVariable("lastPublicationDate", lpd);
+				} catch (TemplateModelException e) {
+					LOGGER.fatal("Could not set Vascan lastPublicationDate:"+ e.getMessage());
+				}
 			}
 		} catch (IOException e) {
 			LOGGER.fatal("Could not read Vascan lastPublicationDate"+ e.getMessage());
