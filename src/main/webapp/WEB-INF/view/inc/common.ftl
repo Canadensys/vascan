@@ -8,6 +8,25 @@
 
 <#macro lang strEn strFr><#if language == "en">${strEn}<#else>${strFr}</#if></#macro>
 
+<#-- Print the side bar and accept additional code to be included in the side bar -->
+<#-- usage: -->
+<#-- <@sideBar> -->
+<#-- this code will be inserted inside the side bar after the regular elements -->
+<#-- <p><a class="round big_button" ... </a></p> -->
+<#-- </@sideBar> -->
+<#macro sideBar>
+<div id="side_bar">
+<ul class="side_menu custom_list round">
+  <li><a href="${rc.getContextUrl("/search"+rc.getMessage("url_language"))}">${rc.getMessage("namesearch_title1")}</a></li>
+  <li><a href="${rc.getContextUrl("/checklist"+rc.getMessage("url_language"))}">${rc.getMessage("checklist_title1")}</a></li>
+  <li><a href="${rc.getContextUrl("/about"+rc.getMessage("url_language"))}">${rc.getMessage("about_title1")}</a></li>
+  <li><a href="${rc.getContextUrl("/api"+rc.getMessage("url_language"))}">${rc.getMessage("api_title1")}</a></li>
+  <li><a href="${rc.getMessage("url_dataset")}">${rc.getMessage("dataset_title1")}</a></li>
+</ul>
+<#nested>
+</div>
+</#macro>
+
 <#function prefixFrenchRank rank>
     <#assign str=rank >
     <#-- in french, use d' instead of de if rank name starts with a vowel (Ordre, Espece) -->
