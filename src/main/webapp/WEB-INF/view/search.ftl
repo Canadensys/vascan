@@ -71,9 +71,9 @@
 	<#if (page.search.total >= page.search.pageSize)>
 		<@pages 1..totalPages page.search.pageNumber/>
 	</#if>
-	<#else>
+  <#else>
 	 <p><@imageAsset imageName="accepted_species_per_genus" ext="png"/> width="100%" alt="Word cloud image" title="${rc.getMessage("img1_title")}"/></p>
-	</#if>
+  </#if>
 	</div><#-- content -->
 </div>
 

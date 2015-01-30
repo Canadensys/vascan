@@ -28,8 +28,8 @@
 		<p><a class="round big_button multi_line" id="create_checklist" href="${getI18nContextUrl("/checklist?taxon="+data.taxonId)}">${rc.getMessage("page_button1")}</a></p>
 <#elseif currentPage == "checklist">
 	<#if (data.isSearch)?? && data.isSearch>
-		<p><a class="round big_button multi_line" id="dwc_archive" href="${rc.getContextUrl("/download?format=dwc&"+pageQuery)}">${rc.getMessage("page_button2")}</a></p>
-		<p><a class="round big_button multi_line" id="csv_file" href="${rc.getContextUrl("/download?format=txt&"+pageQuery)}">${rc.getMessage("page_button3")}</a></p>
+		<p><a class="round big_button multi_line" id="dwc_archive" href="${rc.getContextUrl("/download?format=dwc&"+page.pageQuery)}">${rc.getMessage("page_button2")}</a></p>
+		<p><a class="round big_button multi_line" id="csv_file" href="${rc.getContextUrl("/download?format=txt&"+page.pageQuery)}">${rc.getMessage("page_button3")}</a></p>
 	</#if>
 </#if>
 <#if currentPage == "name" || currentPage == "taxon" || currentPage == "vernacular" || currentPage="checklist">

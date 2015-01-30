@@ -11,7 +11,7 @@
 <#include "inc/menu.ftl">
 
 <div class="busy">
-	<h1>${rc.getMessage("download_title2")} <img src="${rc.getContextUrl('/images/ajax-loader.gif')}"/></h1>
+	<h1>${rc.getMessage("download_title2")} <@imageAsset imageName="ajax-loader" ext="gif"/></h1>
 	<p>${rc.getMessage("download_msg1")}</p>
 	<#if page.filename?has_content == true>
 	<blockquote><a href="${page.downloadURL}" onclick="_gaq.push(['_trackEvent', '<#if page.format == "txt">Text<#else>Archive</#if>', 'Pre-Download', 'Checklist builder']);">${page.filename}</a></blockquote>

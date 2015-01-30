@@ -92,13 +92,17 @@ public class GeneratedContentController implements MessageSourceAware {
 	    String downloadURL = downloadService.getFileDownloadURL(filename);
 	    
 	    Map<String,Object> model = new HashMap<String,Object>();
-	    //this will store the filename in the session (@SessionAttributes("filename")) 
 	    model.put("filename", filename);
 	    model.put("format", format);
 	    model.put("downloadURL", downloadURL);
-        
+
         ControllerHelper.addOtherLanguageUri(request, model);
-	    return new ModelAndView("download", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
+        
+        ModelAndView mv = new ModelAndView("download");
+	    mv.addObject(VascanConfig.PAGE_ROOT_MODEL_KEY, model);
+	    //this will store the filename in the session (@SessionAttributes("filename")) 
+	    mv.addObject("filename", filename);
+	    return mv;
 	}
 	
 	@RequestMapping(value="/generate",method={RequestMethod.GET})
