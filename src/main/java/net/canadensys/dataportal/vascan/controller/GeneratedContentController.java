@@ -3,12 +3,15 @@ package net.canadensys.dataportal.vascan.controller;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.canadensys.dataportal.vascan.DownloadService;
 import net.canadensys.dataportal.vascan.ImageService;
+import net.canadensys.dataportal.vascan.config.VascanConfig;
 import net.canadensys.dataportal.vascan.generatedcontent.DistributionImageGenerator;
 import net.canadensys.exception.web.ResourceNotFoundException;
 
@@ -83,19 +86,19 @@ public class GeneratedContentController implements MessageSourceAware {
 	}
 	
 	@RequestMapping(value="/download",method={RequestMethod.GET})
-	public ModelAndView handleAskForDownload(@RequestParam String format){
+	public ModelAndView handleAskForDownload(HttpServletRequest request, @RequestParam String format){
 
 	    String filename = downloadService.generateFileName(format);
 	    String downloadURL = downloadService.getFileDownloadURL(filename);
 	    
-	    ModelAndView modelAndView = new ModelAndView();
+	    Map<String,Object> model = new HashMap<String,Object>();
 	    //this will store the filename in the session (@SessionAttributes("filename")) 
-        modelAndView.addObject("filename", filename);
-        modelAndView.addObject("format", format);
-        modelAndView.addObject("downloadURL", downloadURL);
-	    
-        modelAndView.setViewName("download");
-	    return modelAndView;
+	    model.put("filename", filename);
+	    model.put("format", format);
+	    model.put("downloadURL", downloadURL);
+        
+        ControllerHelper.addOtherLanguageUri(request, model);
+	    return new ModelAndView("download", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	@RequestMapping(value="/generate",method={RequestMethod.GET})

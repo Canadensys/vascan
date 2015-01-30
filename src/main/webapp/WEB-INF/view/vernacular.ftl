@@ -1,13 +1,14 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
 
-<#assign page={"title": vernacularName.name+ " - " + rc.getMessage("site_title"),
-"cssScreenPrintList": [rc.getContextUrl("/styles/"+formatFileInclude("vascan",currentVersion!,false,".css"))], "javaScriptIncludeList": ["http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", "http://data.canadensys.net/common/js/jquery.tooltip.min.js", rc.getContextUrl("/js/"+formatFileInclude("vascan",currentVersion!,useMinified,".js")),	rc.getContextUrl("/js/vascan/"+formatFileInclude("vernacular",currentVersion!,useMinified,".js"))]}>
+<head>
+<title>${vernacularName.name+ " - " + rc.getMessage("site_title")}</title>
+<@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
+</head>
 
 <#assign currentPage="vernacular"/>
-
-<#include "inc/header.ftl">
 <#include "inc/menu.ftl">
+<#assign vernacularName = page.vernacularName/>
 
 <h1>${vernacularName.name}</h1>
 
@@ -20,4 +21,12 @@
 	</div><#-- content -->
 </div>
 
-<#include "inc/footer.ftl">
+<#-- JavaScript handling -->
+<content tag="local_script">
+<#-- 1.7.2 required by jquery.tooltip.min.js-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://data.canadensys.net/common/js/jquery.tooltip.min.js"></script>
+
+<@jsAsset fileName="vascan" version=currentVersion! useMinified=useMinified/>
+<@jsAsset fileName="vernacular" version=currentVersion! useMinified=useMinified/>
+</content>

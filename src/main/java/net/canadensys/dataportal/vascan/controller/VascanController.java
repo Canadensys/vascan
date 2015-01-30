@@ -95,7 +95,7 @@ public class VascanController {
 	 * @return
 	 */
 	@RequestMapping(value={"/taxon/{taxonId}"}, method={RequestMethod.GET})
-	public ModelAndView handleTaxon(@PathVariable Integer taxonId){
+	public ModelAndView handleTaxon(HttpServletRequest request, @PathVariable Integer taxonId){
 
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Object data = taxonService.retrieveTaxonData(taxonId);
@@ -104,7 +104,8 @@ public class VascanController {
 	    }
 	    model.put("data",data);
 	    
-		return new ModelAndView("taxon", model);
+	    ControllerHelper.addOtherLanguageUri(request, model);
+	    return new ModelAndView("taxon", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	/**

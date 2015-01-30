@@ -108,13 +108,6 @@
     </#if>
     <#return return_reference>    
 </#function>
-<#macro languageSwitcher>
-	<#if language == "fr">
-		<a href="javascript:document.location.href=new Uri(document.location.href).deleteQueryParam('lang');">English</a>
-	<#else>
-		<a href="javascript:document.location.href=new Uri(document.location.href).replaceQueryParam('lang','fr');">Fran&ccedil;ais</a>
-	</#if>
-</#macro>
 
 <#macro taxonContent>
 	<#nested>
