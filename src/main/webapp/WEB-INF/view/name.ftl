@@ -88,5 +88,4 @@
 
 <@jsAsset fileName="vascan" version=currentVersion! useMinified=useMinified/>
 <@jsAsset fileName="name" version=currentVersion! useMinified=useMinified/>
-<@jsLibAsset libName="jquery.svg.min.js"/>
 </content>
