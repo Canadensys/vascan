@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
@@ -77,7 +78,9 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	//ask for a download and get a download
         ModelAndView mav = handlerAdapter.handle(request, response, handler);
         assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
-        String filename= (String)mav.getModelMap().get("filename");
+        
+        HashMap<String,Object> pageModel = (HashMap<String,Object>)mav.getModelMap().get("page");
+        String filename= (String)pageModel.get("filename");
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
@@ -209,7 +212,8 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	//ask for a download and get a download
         ModelAndView mav = handlerAdapter.handle(request, response, handler);
         assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
-        String filename= (String)mav.getModelMap().get("filename");
+        HashMap<String,Object> pageModel = (HashMap<String,Object>)mav.getModelMap().get("page");
+        String filename= (String)pageModel.get("filename");
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
