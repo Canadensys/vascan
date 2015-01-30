@@ -7,15 +7,17 @@
 </head>
 
 <#assign currentPage="api"/>
-
 <#include "inc/menu.ftl">
 
 <h1>${rc.getMessage("api_title2")}</h1>
 
-<h2>${rc.getMessage("api_title3")}</h2>
-<p>${rc.getMessage("api_description")}</p>
+<ul class="index">
+	<li><a href="api/#resource">${rc.getMessage("api_title4")}</a></li>
+	<li><a href="api/#openrefine">${rc.getMessage("api_title7")}</a></li>
+</ul>
 
-<h3>${rc.getMessage("api_title4")}</h3>
+<a name="resource"></a><h2>${rc.getMessage("api_title4")}</h2>
+<p>${rc.getMessage("api_rest_description")}</p>
 <p class="api-path round">
   http://data.canadensys.net/vascan/api/0.1/search.json
   <span class="separator">${rc.getMessage("api_uri_separator")}</span>
@@ -108,5 +110,12 @@
     ]
 }
 </pre>
-	</div><#-- content -->
+
+<a name="openrefine"></a><h2>${rc.getMessage("api_title7")}</h2>
+<p>${rc.getMessage("api_openrefine_description")}</p>
+<p class="api-path round">
+  http://data.canadensys.net/vascan/refine/0.1/reconcile
+</p>
+
+  </div><#-- content -->
 </div>
