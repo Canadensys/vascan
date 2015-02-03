@@ -69,7 +69,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse search(String id, String searchTerm) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
-		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
+		apiResponse.setLastUpdatedDate(vascanConfig.getCurrentLastPublicationDate());
 		
 		VascanAPIResponseElement apiResponseElement = innerSearch(searchTerm);
 		apiResponseElement.setLocalIdentifier(id);
@@ -82,7 +82,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse search(List<String> idList, List<String> dataList) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
-		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
+		apiResponse.setLastUpdatedDate(vascanConfig.getCurrentLastPublicationDate());
 		
 		int idx=0;
 		VascanAPIResponseElement apiResponseElement;
@@ -100,7 +100,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse searchTaxonId(List<Integer> taxonIdList) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
-		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
+		apiResponse.setLastUpdatedDate(vascanConfig.getCurrentLastPublicationDate());
 
 		VascanAPIResponseElement apiResponseElement = null;
 		TaxonModel taxonModel = null;
@@ -128,7 +128,7 @@ public class APIServiceImpl implements APIService{
 	public VascanAPIResponse searchTaxonId(Integer id) {
 		VascanAPIResponse apiResponse = new VascanAPIResponse();
 		apiResponse.setApiVersion(API_VERSION);
-		apiResponse.setLastUpdatedDate(vascanConfig.getLastPublicationDate());
+		apiResponse.setLastUpdatedDate(vascanConfig.getCurrentLastPublicationDate());
 		
 		TaxonModel taxonModel = taxonDAO.loadTaxon(id);
 		

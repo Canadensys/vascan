@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,6 +57,9 @@ public class VascanController {
 	
 	@Autowired
 	private VascanConfig vascanConfig;
+	
+	//Use StringBuffer to ensure thread safety
+	private final StringBuffer lastPublicationDate = new StringBuffer("?");
 	
 	@Autowired
 	private FreeMarkerConfigurer freemarkerConfig;
@@ -286,22 +290,16 @@ public class VascanController {
 			e.printStackTrace();
 		}
 	}
-	
+		
 	/**
-	 * FIXME freemarkerConfig.getConfiguration().setSharedVariable is NOT thread safe we should use VascanConfig directly.
-	 * Scheduled task to check the last publication date of Vascan.
+	 * Each hour check the file at lastPublicationDateFilePath and update Vascan config if changed.
 	 */
 	@Scheduled(fixedDelay=DateUtils.MILLIS_PER_HOUR)
 	protected void checkLastPublicationDate(){
 		try {
 			String lpd = FileUtils.readFileToString(new File(vascanConfig.getLastPublicationDateFilePath()));
-			if(!StringUtils.equals(lpd, vascanConfig.getLastPublicationDate())){
-				vascanConfig.setLastPublicationDate(lpd);
-				try {
-					freemarkerConfig.getConfiguration().setSharedVariable("lastPublicationDate", lpd);
-				} catch (TemplateModelException e) {
-					LOGGER.fatal("Could not set Vascan lastPublicationDate:"+ e.getMessage());
-				}
+			if(!StringUtils.equals(lpd, vascanConfig.getCurrentLastPublicationDate())){
+				vascanConfig.updateLastPublicationDate(Long.toString(System.currentTimeMillis()));
 			}
 		} catch (IOException e) {
 			LOGGER.fatal("Could not read Vascan lastPublicationDate"+ e.getMessage());

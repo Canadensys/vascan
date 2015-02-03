@@ -24,8 +24,10 @@ public class VascanConfig {
 	
 	private String lastPublicationDateFilePath;
 	
-	// volatile variable to ensure consistency if updated by an external thread
 	private volatile String lastPublicationDate;
+	
+	//This variable can be updated after the app deployment
+	private final StringBuffer mutableLastPublicationDate = new StringBuffer("");
 	
 	private String taxonUrl;
 
@@ -43,11 +45,23 @@ public class VascanConfig {
 		this.currentVersion = currentVersion;
 	}
 	
-	public String getLastPublicationDate() {
-		return lastPublicationDate;
+	
+	public void updateLastPublicationDate(String newPublicationDate){
+		mutableLastPublicationDate.replace(0, mutableLastPublicationDate.length(), newPublicationDate);
 	}
-	public void setLastPublicationDate(String lastPublicationDate) {
-		this.lastPublicationDate = lastPublicationDate;
+	
+	public StringBuffer getLastPublicationDate() {
+		return mutableLastPublicationDate;
+	}
+	
+	/**
+	 * Get the current lastPublicationDate.
+	 * This value can change after application deploy.
+	 * 
+	 * @return String of the lastPublicationDate at the moment of the call
+	 */
+	public String getCurrentLastPublicationDate() {
+		return mutableLastPublicationDate.toString();
 	}
 	
 	public String getTaxonUrl() {

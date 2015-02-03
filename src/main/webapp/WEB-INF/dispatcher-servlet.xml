@@ -28,7 +28,7 @@
 
 	<import resource="data-source.xml" />
 
-	<context:component-scan base-package="net.canadensys.dataportal.vascan" />
+	<context:component-scan base-package="net.canadensys.dataportal.vascan, net.canadensys.web" />
 
 	<task:scheduler id="taskScheduler" pool-size="1" />
 	<task:annotation-driven scheduler="taskScheduler" />
@@ -92,6 +92,31 @@
 		factory-method="get">
 		<constructor-arg value="net.canadensys.web.freemarker.FreemarkerURLHelper" />
 	</bean>
+	
+	<bean id="springFreemarkerDecoratorServlet"
+		class="net.canadensys.web.SpringFreemarkerDecoratorServlet">
+	</bean>
+	
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+            <map>
+                <entry key="/decorators/*" value-ref="freemarkerDecoratorWrappingController"/>
+            </map>
+        </property>
+	</bean>
+
+	<bean id="freemarkerDecoratorWrappingController" class="net.canadensys.web.ServletInjectWrappingController">
+		<property name="servletInstance" ref="springFreemarkerDecoratorServlet" />
+		<property name="servletName">
+			<value>sitemesh-freemarker</value>
+		</property>
+		<property name="initParameters">
+			<props>
+				<prop key="TemplatePath">/decorators,/WEB-INF/view/inc</prop>
+			</props>
+		</property>
+	</bean>
 
 	<!-- Freemarker config -->
 	<bean id="freemarkerConfig"
@@ -99,14 +124,11 @@
 		<property name="templateLoaderPaths">
 			<list>
 				<value>/WEB-INF/view/</value>
-				<value>/decorators/</value>
 			</list>
 		</property>
 		<property name="freemarkerVariables">
 			<map>
 				<entry key="currentVersion" value="${version.current:}" />
-				<entry key="footerAdditionalInfoKey" value="footer_last_publication_date" />
-				<entry key="footerAdditionalInfoParamKey" value="lastPublicationDate" />
 				<entry>
 					<key>
 						<value>useMinified</value>
