@@ -47,19 +47,6 @@
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
 
-	<servlet>
-		<servlet-name>sitemesh-freemarker</servlet-name>
-		<servlet-class>net.canadensys.web.SpringFreemarkerDecoratorServlet</servlet-class>
-		<init-param>
-			<param-name>TemplatePath</param-name>
-			<param-value>/decorators,/WEB-INF/view/inc</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>sitemesh-freemarker</servlet-name>
-		<url-pattern>/decorators/*</url-pattern>
-	</servlet-mapping>
-
 	<!-- Security constraints work only on the original request URI and not 
 		on calls made through a RequestDispatcher -->
 	<security-constraint>

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	http://www.springframework.org/schema/context
@@ -19,7 +16,8 @@
 	http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<!-- Application configuration -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>/WEB-INF/vascan-config.properties</value>
@@ -27,89 +25,99 @@
 			</list>
 		</property>
 	</bean>
-	
-	<import resource="data-source.xml" />
-	
-	<context:component-scan base-package="net.canadensys.dataportal.vascan"/>
-	
-	<task:scheduler id="taskScheduler" pool-size="1"/>
-    <task:annotation-driven scheduler="taskScheduler" />
-	
-	<!-- use to return JSON -->
-	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
-	
-	<tx:annotation-driven transaction-manager="hibernateTransactionManager"/>
 
-	<!-- Handles GET requests for static content  --> 
-		<!-- Handles GET requests for static content  --> 
+	<import resource="data-source.xml" />
+
+	<context:component-scan base-package="net.canadensys.dataportal.vascan" />
+
+	<task:scheduler id="taskScheduler" pool-size="1" />
+	<task:annotation-driven scheduler="taskScheduler" />
+
+	<!-- use to return JSON -->
+	<mvc:annotation-driven
+		content-negotiation-manager="contentNegotiationManager" />
+
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
+
+	<!-- Handles GET requests for static content -->
 	<mvc:resources mapping="/assets/js/**" location="/js/" />
 	<mvc:resources mapping="/assets/styles/**" location="/styles/" />
 	<mvc:resources mapping="/assets/images/**" location="/images/" />
 	<mvc:resources mapping="/error.html" location="/error.html" />
-	
+
 	<!-- Locale/language configuration -->
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
 	</bean>
 	<mvc:interceptors>
-    	<!-- Changes the locale when a 'lang' request parameter is sent; e.g. /?lang=fr -->
-    	<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-    		<property name="paramName" value="lang"></property>
-    	</bean>
+		<!-- Changes the locale when a 'lang' request parameter is sent; e.g. /?lang=fr -->
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang"></property>
+		</bean>
 	</mvc:interceptors>
-	
+
 	<bean id="messageSource"
-	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-	    <property name="basenames">
-            <list>
-	            <value>classpath:theme_messages</value>
-	            <value>classpath:ApplicationResources</value>
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:theme_messages</value>
+				<value>classpath:ApplicationResources</value>
 			</list>
-        </property>
-	    <property name="defaultEncoding" value="UTF-8"/>
-	    <property name="fallbackToSystemLocale" value="false"/>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="fallbackToSystemLocale" value="false" />
 	</bean>
-	
+
 	<bean id="vascanConfig" class="net.canadensys.dataportal.vascan.config.VascanConfig">
-		<property name="currentVersion" value="${version.current:}"/>
-		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}"/>
+		<property name="currentVersion" value="${version.current:}" />
+		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}" />
 		<property name="taxonUrl" value="${taxonUrl}" />
 	</bean>
-	
-	<bean id="imageGeneratorConfig" class="net.canadensys.dataportal.vascan.config.GeneratedContentConfig">
+
+	<bean id="imageGeneratorConfig"
+		class="net.canadensys.dataportal.vascan.config.GeneratedContentConfig">
 		<property name="imageFolder" value="${generatedContent.imageFolder}" />
 		<property name="generatedFilesFolder" value="${generatedContent.generatedFilesFolder}" />
 		<property name="publicDownloadUrl" value="${generatedContent.publicDownloadUrl}" />
 	</bean>
-	
+
 	<!-- Wrap the URLHelper -->
 	<bean id="freemarkerDefaultBeansWrapper" class="freemarker.ext.beans.BeansWrapper"
-		factory-method="getDefaultInstance"/>
+		factory-method="getDefaultInstance" />
 	<bean id="freemarkerStaticModels" factory-bean="freemarkerDefaultBeansWrapper"
-		factory-method="getStaticModels"/>
+		factory-method="getStaticModels" />
 
-	<bean id="URLHelper" factory-bean="freemarkerStaticModels" factory-method="get">
-          <constructor-arg value="net.canadensys.web.freemarker.FreemarkerURLHelper"/>
- 	</bean>
-	
+	<bean id="URLHelper" factory-bean="freemarkerStaticModels"
+		factory-method="get">
+		<constructor-arg value="net.canadensys.web.freemarker.FreemarkerURLHelper" />
+	</bean>
+
 	<!-- Freemarker config -->
-	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-  		<property name="templateLoaderPath" value="/WEB-INF/view/"/>
-  		<property name="freemarkerVariables">
-        <map>
-        	<entry key="currentVersion" value="${version.current:}" />
-        	<entry>
-        		<key><value>useMinified</value></key>
-        		<value type="java.lang.Boolean">${url.useMinified}</value>
-        	</entry>
-			<entry key="URLHelper" value-ref="URLHelper"/>
-<!--           <entry key="userMessageKey" value="beta_version_message"/> -->
-			<entry key="footerAdditionalInfoKey" value="footer_last_publication_date"/>
-			<entry key="footerAdditionalInfoParamKey" value="lastPublicationDate"/>
-
-        </map>
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPaths">
+			<list>
+				<value>/WEB-INF/view/</value>
+				<value>/decorators/</value>
+			</list>
 		</property>
-		<!--http://freemarker.sourceforge.net/docs/ref_directive_setting.html-->
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="currentVersion" value="${version.current:}" />
+				<entry key="footerAdditionalInfoKey" value="footer_last_publication_date" />
+				<entry key="footerAdditionalInfoParamKey" value="lastPublicationDate" />
+				<entry>
+					<key>
+						<value>useMinified</value>
+					</key>
+					<value type="java.lang.Boolean">${url.useMinified}</value>
+				</entry>
+				<entry key="URLHelper" value-ref="URLHelper" />
+			</map>
+		</property>
+
+		<!--http://freemarker.sourceforge.net/docs/ref_directive_setting.html -->
 		<property name="freemarkerSettings">
 			<props>
 				<prop key="number_format">computer</prop>
@@ -118,19 +126,20 @@
 			</props>
 		</property>
 	</bean>
-		
-	<!-- Warning, those 2 ViewResolver are based on UrlBasedViewResolver. That means that the
-	 JSP must be in a separate folder than the ftl otherwise, 2 files with jsp and ftl extensions will
-	 always be resolved as the first ViewResolver : FreeMarker-->
-	<bean id="freeMarkerViewResolver" 
+
+	<!-- Warning, those 2 ViewResolver are based on UrlBasedViewResolver. That 
+		means that the JSP must be in a separate folder than the ftl otherwise, 2 
+		files with jsp and ftl extensions will always be resolved as the first ViewResolver 
+		: FreeMarker -->
+	<bean id="freeMarkerViewResolver"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-	  <property name="cache" value="true"/>
-	  <property name="prefix" value=""/>
-	  <property name="suffix" value=".ftl"/>
-	  <property name="contentType" value="text/html;charset=UTF-8"/>
-	  <property name="requestContextAttribute" value="rc"/>
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="requestContextAttribute" value="rc" />
 	</bean>
-	
+
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
@@ -140,16 +149,17 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
-	
-	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-	    <property name="favorPathExtension" value="true" />
-	    <property name="ignoreAcceptHeader" value="true" />
-	    <property name="useJaf" value="false"/>
-	    <property name="mediaTypes" >
-	        <map>
+
+	<bean id="contentNegotiationManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true" />
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="useJaf" value="false" />
+		<property name="mediaTypes">
+			<map>
 				<entry key="json" value="application/json" />
 				<entry key="xml" value="application/xml" />
-	        </map>
-	    </property>
+			</map>
+		</property>
 	</bean>
 </beans>
