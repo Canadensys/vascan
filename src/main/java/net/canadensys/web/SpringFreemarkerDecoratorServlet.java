@@ -3,15 +3,17 @@ package net.canadensys.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
-import javax.servlet.ServletException;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 
 import net.canadensys.dataportal.vascan.config.VascanConfig;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import freemarker.cache.MultiTemplateLoader;
@@ -24,46 +26,52 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateModelException;
 
 /**
- * Light FreemarkerDecoratorServlet override to add our custom URLHelper.
- * At some point we should try to wrap it using Spring ServletWrappingController.
+ * FreemarkerServlet implementation with Spring DI support.
  * 
- * <bean id="freemarkerWrapperServletController" class="org.springframework.web.servlet.mvc.ServletWrappingController">
- * 	<property name="servletClass" value="net.canadensys.web.SpringFreemarkerDecoratorServlet" />
- * 	<property name="servletName" value="sitemesh-freemarker" />
- * 	<property name="initParameters">
- * 		<props>
- * 			<prop key="TemplatePath">/</prop><!--this is ignored by our custom implementation but keep it here-->
- * 			<prop key="default_encoding">ISO-8859-1</prop>
- * 		</props>
- * 	</property>
- * </bean>
- * So we could use:
- *  Autowired
- *  Configuration freemarkerConfiguration;
- *  
- *  TemplateLoader templateLoader = freemarkerConfiguration.getTemplateLoader();
- *  getConfiguration().setTemplateLoader(templateLoader);
- * @author canadensys
  *
  */
-public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet {
+public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet implements InitializingBean {
 
 	private static final long serialVersionUID = 1942463095708194219L;
+	
+	//Servlet config
+	private String servletName;
+	private Properties initParameters = new Properties();
 	
 	@Autowired
 	private VascanConfig vascanConfig;
 	
+	//Servlet context from Spring
+	@Autowired
+	private ServletContext servletContext;
+	
 	//URL prefix starts from after the servlet context
 	private String decoratorUrlPrefix = "decorators";
 	
-
 	@Override
-	public void init() throws ServletException {
-		super.init();
+	public void afterPropertiesSet() throws Exception {
+		// initialize the servlet
+		init(new FreemarkerServletConfig());
 		
 		// ensure decoratorUrlPrefix starts and ends with a slash
 		this.decoratorUrlPrefix = StringUtils.prependIfMissing(decoratorUrlPrefix, "/");
 		this.decoratorUrlPrefix = StringUtils.appendIfMissing(decoratorUrlPrefix, "/");
+	}
+	
+	/**
+	 * Set the name of the servlet to wrap.
+	 * Default is the bean name of this controller.
+	 */
+	public void setServletName(String servletName) {
+		this.servletName = servletName;
+	}
+
+	/**
+	 * Specify init parameters for the servlet to wrap,
+	 * as name-value pairs.
+	 */
+	public void setInitParameters(Properties initParameters) {
+		this.initParameters = initParameters;
 	}
 	
 	/**
@@ -122,8 +130,7 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet {
     }
 
 	@Override
-    protected TemplateLoader createTemplateLoader(String templatePath) throws IOException
-    {
+    protected TemplateLoader createTemplateLoader(String templatePath) throws IOException {
 		if(!StringUtils.contains(templatePath, ",")){
 			return new WebappTemplateLoader(this.getServletContext(), templatePath);
 		}
@@ -136,5 +143,28 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet {
 
     }
 
+	/**
+	 * ServletConfig implementation required for Servlet initialization.
+	 * @author cgendreau
+	 *
+	 */
+	private class FreemarkerServletConfig implements ServletConfig {
+
+		public String getServletName() {
+			return servletName;
+		}
+
+		public ServletContext getServletContext() {
+			return servletContext;
+		}
+
+		public String getInitParameter(String paramName) {
+			return initParameters.getProperty(paramName);
+		}
+
+		public Enumeration getInitParameterNames() {
+			return initParameters.keys();
+		}
+	}
 
 }

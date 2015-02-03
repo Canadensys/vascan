@@ -28,7 +28,7 @@
 
 	<import resource="data-source.xml" />
 
-	<context:component-scan base-package="net.canadensys.dataportal.vascan, net.canadensys.web" />
+	<context:component-scan base-package="net.canadensys.dataportal.vascan" />
 
 	<task:scheduler id="taskScheduler" pool-size="1" />
 	<task:annotation-driven scheduler="taskScheduler" />
@@ -93,23 +93,11 @@
 		<constructor-arg value="net.canadensys.web.freemarker.FreemarkerURLHelper" />
 	</bean>
 	
+	<!-- Freemarker servlet for decorators -->
 	<bean id="springFreemarkerDecoratorServlet"
 		class="net.canadensys.web.SpringFreemarkerDecoratorServlet">
-	</bean>
-	
-	<bean id="urlMapping"
-		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="urlMap">
-            <map>
-                <entry key="/decorators/*" value-ref="freemarkerDecoratorWrappingController"/>
-            </map>
-        </property>
-	</bean>
-
-	<bean id="freemarkerDecoratorWrappingController" class="net.canadensys.web.ServletInjectWrappingController">
-		<property name="servletInstance" ref="springFreemarkerDecoratorServlet" />
 		<property name="servletName">
-			<value>sitemesh-freemarker</value>
+			<value>freemarker-decorator</value>
 		</property>
 		<property name="initParameters">
 			<props>
@@ -117,6 +105,19 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- Map decorators URL to our decorators Servlet -->
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+            <map>
+                <entry key="/decorators/*" value-ref="springFreemarkerDecoratorServlet"/>
+            </map>
+        </property>
+	</bean>
+	
+	<!-- This HandlerAdapter allows to run a servlet as handler -->
+	<bean id="simpleServletHandlerAdapter" class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter"/>
 
 	<!-- Freemarker config -->
 	<bean id="freemarkerConfig"
