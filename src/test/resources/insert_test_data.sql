@@ -122,7 +122,8 @@ VALUES
 (3,15428,5129),
 (4,4904,2096),
 (5,9946,2498),
-(6,9946,2499);
+(6,9946,2499),
+(7,14992,4751);
 
 INSERT INTO lookup (
 calname,calnameauthor,calnamehtml,calnamehtmlauthor,taxonid,status,rank,calhabit,

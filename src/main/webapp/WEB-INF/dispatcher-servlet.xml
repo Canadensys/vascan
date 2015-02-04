@@ -73,6 +73,9 @@
 		<property name="currentVersion" value="${version.current:}" />
 		<property name="lastPublicationDateFilePath" value="${lastPublicationDateFilePath:}" />
 		<property name="taxonUrl" value="${taxonUrl}" />
+		<property name="gaSiteVerification" value="${googleanalytics.siteVerification:}" />
+		<property name="gaAccount" value="${googleanalytics.account:}" />
+		<property name="feedbackURL" value="${feedback.url:}" />
 	</bean>
 
 	<bean id="imageGeneratorConfig"
@@ -118,7 +121,7 @@
 	
 	<!-- This HandlerAdapter allows to run a servlet as handler -->
 	<bean id="simpleServletHandlerAdapter" class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter"/>
-
+	
 	<!-- Freemarker config -->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -145,7 +148,7 @@
 			<props>
 				<prop key="number_format">computer</prop>
 				<prop key="url_escaping_charset">UTF-8</prop>
-				<prop key="template_exception_handler">ignore</prop>
+				<prop key="template_exception_handler">rethrow</prop>
 			</props>
 		</property>
 	</bean>

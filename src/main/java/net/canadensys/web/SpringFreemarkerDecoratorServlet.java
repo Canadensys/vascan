@@ -1,7 +1,6 @@
 package net.canadensys.web;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -13,6 +12,7 @@ import javax.servlet.ServletContext;
 import net.canadensys.dataportal.vascan.config.VascanConfig;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +30,7 @@ import freemarker.template.TemplateModelException;
  * 
  *
  */
-public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet implements InitializingBean {
+public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet implements InitializingBean, DisposableBean {
 
 	private static final long serialVersionUID = 1942463095708194219L;
 	
@@ -75,6 +75,7 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet implemen
 	}
 	
 	/**
+	 * Remove decoratorUrlPrefix from templatePath.
 	 * 
 	 */
 	@Override
@@ -98,32 +99,21 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet implemen
     		BeansWrapper beansWrapper = new BeansWrapperBuilder(Configuration.VERSION_2_3_21).build();
     		cfg.setSharedVariable("URLHelper",
 					beansWrapper.getStaticModels().get("net.canadensys.web.freemarker.FreemarkerURLHelper"));
-			
-			//Since we are running in a different Servlet context we need to load the config ourself.
-			Properties prop = new Properties();
-			InputStream in = getServletContext().getResourceAsStream("/WEB-INF/vascan-config.properties");
-			if(in != null){
-				prop.load(in);
-				in.close();
-			}
-			
+						
 			//register the key in message bundle to include Vascan last publiction date in the footer
 			cfg.setSharedVariable("footerAdditionalInfoKey", "footer_last_publication_date");
 			// variable to be added that will include the value of the last publication date.
 			cfg.setSharedVariable("footerAdditionalInfoParamKey", "lastPublicationDate");
-
 			cfg.setSharedVariable("lastPublicationDate", vascanConfig.getLastPublicationDate());
 
-			cfg.setSharedVariable("gaSiteVerification", StringUtils.defaultString(prop.getProperty("googleanalytics.siteVerification")));
-			cfg.setSharedVariable("gaAccount", StringUtils.defaultString(prop.getProperty("googleanalytics.account")));
-			if(prop.getProperty("feedback.url") != null){
-				cfg.setSharedVariable("feedbackURL", StringUtils.defaultString(prop.getProperty("feedback.url")));
+			cfg.setSharedVariable("gaSiteVerification", vascanConfig.getGaSiteVerification());
+			cfg.setSharedVariable("gaAccount", vascanConfig.getGaAccount());
+			
+			if(StringUtils.isNotBlank(vascanConfig.getFeedbackURL())){
+				cfg.setSharedVariable("feedbackURL", vascanConfig.getFeedbackURL());
 			}
 		}
 		catch (TemplateModelException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
 			e.printStackTrace();
 		}
     	return cfg;
@@ -143,8 +133,16 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerServlet implemen
 
     }
 
+	public String getDecoratorUrlPrefix() {
+		return decoratorUrlPrefix;
+	}
+	public void setDecoratorUrlPrefix(String decoratorUrlPrefix) {
+		this.decoratorUrlPrefix = decoratorUrlPrefix;
+	}
+
 	/**
 	 * ServletConfig implementation required for Servlet initialization.
+	 * 
 	 * @author cgendreau
 	 *
 	 */

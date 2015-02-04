@@ -15,11 +15,11 @@
 		<li><a href="${rc.getMessage("url_dataset")}">${rc.getMessage("dataset_title1")}</a></li>
 	</ul>
 
-<#if currentPage == "name" && extra.isDisambiguation != true>
+<#if currentPage == "name" && page.extra.isDisambiguation != true>
 <#--Link to taxon page-->
-	<#if data.isRedirect != true && extra.isSynonym == true>
+	<#if data.isRedirect != true && page.extra.isSynonym == true>
 		<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/taxon/"+data.synonymWarningId+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>
-	<#elseif data.isRedirect != true && extra.isVernacular == true>
+	<#elseif data.isRedirect != true && page.extra.isVernacular == true>
 		<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/vernacular/"+data.vernacularNameWarningId+rc.getMessage("url_language"))}">${rc.getMessage("page_button5")}</a></p>
 	<#else>
 		<p><a class="round big_button multi_line" id="see_taxon" href="${rc.getContextUrl("/taxon/"+data.id+rc.getMessage("url_language"))}">${rc.getMessage("page_button4")}</a></p>

@@ -1,9 +1,8 @@
 <#ftl strip_whitespace=true>
-<#include "../inc/functions.ftl">
 <#include "../inc/global-functions.ftl">
 <head>
 <title>${rc.getMessage("cwt.error.title")}</title>
-<@cssAsset fileName="vascan" version=(page.currentVersion)! useMinified=false/>
+<@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
 </head>
 <div id="body">
 	<div id="content" class="no_side_bar">

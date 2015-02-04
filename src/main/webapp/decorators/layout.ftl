@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title><sitemesh:write property='title'>Title goes here</sitemesh:write></title>
-<link rel="stylesheet" href="http://data.canadensys.net/common/styles/common-1.0.min.css" media="screen,print"/>
+<link rel="stylesheet" href="http://data.canadensys.net/common/styles/common-1.1.min.css" media="screen,print"/>
 <link rel="shortcut icon" href="http://data.canadensys.net/common/images/favicon.png"/>
 <sitemesh:write property='head'/>
 <#include "ga.ftl">

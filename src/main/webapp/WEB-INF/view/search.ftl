@@ -80,14 +80,12 @@
 <#-- JavaScript handling -->
 <content tag="local_script">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
+<@jsLibAsset libName="typeahead.bundle.min.js"/>
 <@jsAsset fileName="vascan" version=currentVersion useMinified=useMinified/>
 <@jsAsset fileName="search" version=currentVersion useMinified=useMinified/>
-<@jsLibAsset libName="typeahead.bundle.min.js"/>
 
 <script>
-$(function() {
 	VASCAN.common.setLanguageResources({autocomplete_title1: "${rc.getMessage("autocomplete_title1")}", autocomplete_title2: "${rc.getMessage("autocomplete_title2")}"});
-});
 </script>
+
 </content>

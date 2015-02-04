@@ -55,9 +55,6 @@ public class VascanController {
 	@Autowired
 	private VascanConfig vascanConfig;
 	
-	//Use StringBuffer to ensure thread safety
-	private final StringBuffer lastPublicationDate = new StringBuffer("?");
-	
 	@Autowired
 	private FreeMarkerConfigurer freemarkerConfig;
 	
@@ -147,8 +144,8 @@ public class VascanController {
 		
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    Map<String,Object> extra = new HashMap<String,Object>();
-
-	    Object data = nameService.retrieveNameData(name, redirect,extra);
+	    
+	    Object data = nameService.retrieveNameData(name, redirect, extra);
 	    if( data == null){
 	    	throw new ResourceNotFoundException();
 	    }

@@ -21,10 +21,11 @@ public class VascanConfig {
 	}
 	
 	private String currentVersion;
+	private String gaSiteVerification;
+	private String gaAccount;
+	private String feedbackURL;
 	
 	private String lastPublicationDateFilePath;
-	
-	private volatile String lastPublicationDate;
 	
 	//This variable can be updated after the app deployment
 	private final StringBuffer mutableLastPublicationDate = new StringBuffer("");
@@ -45,7 +46,11 @@ public class VascanConfig {
 		this.currentVersion = currentVersion;
 	}
 	
-	
+	/**
+	 * Update the lastPublicationDate.
+	 * 
+	 * @param newPublicationDate
+	 */
 	public void updateLastPublicationDate(String newPublicationDate){
 		mutableLastPublicationDate.replace(0, mutableLastPublicationDate.length(), newPublicationDate);
 	}
@@ -55,7 +60,7 @@ public class VascanConfig {
 	}
 	
 	/**
-	 * Get the current lastPublicationDate.
+	 * Get the current lastPublicationDate as String.
 	 * This value can change after application deploy.
 	 * 
 	 * @return String of the lastPublicationDate at the moment of the call
@@ -69,5 +74,26 @@ public class VascanConfig {
 	}
 	public void setTaxonUrl(String taxonUrl) {
 		this.taxonUrl = taxonUrl;
+	}
+	
+	public String getGaSiteVerification() {
+		return gaSiteVerification;
+	}
+	public void setGaSiteVerification(String gaSiteVerification) {
+		this.gaSiteVerification = gaSiteVerification;
+	}
+	
+	public String getGaAccount() {
+		return gaAccount;
+	}
+	public void setGaAccount(String gaAccount) {
+		this.gaAccount = gaAccount;
+	}
+	
+	public String getFeedbackURL() {
+		return feedbackURL;
+	}
+	public void setFeedbackURL(String feedbackURL) {
+		this.feedbackURL = feedbackURL;
 	}
 }
