@@ -30,7 +30,7 @@
 	<#assign totalPages=(page.search.total/page.search.pageSize)?ceiling/>
 	<h2>
 	<#if (page.search.pageNumber > 1)>
-		${rc.getMessage("namesearch_h2_results_paging",[page.search.total, page.search.pageNumber, page.totalPages])}
+		${rc.getMessage("namesearch_h2_results_paging",[page.search.total, page.search.pageNumber, totalPages])}
 	<#else>
 		${rc.getMessage("namesearch_h2_results",[page.search.total])}
 	</#if>
