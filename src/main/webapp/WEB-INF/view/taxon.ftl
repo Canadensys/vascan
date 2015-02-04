@@ -2,7 +2,7 @@
 <#include "inc/global-functions.ftl">
 
 <head>
-<title>${page.data.pageTitle++ " - " + rc.getMessage("site_title")}</title>
+<title>${page.data.pageTitle+ " - " + rc.getMessage("site_title")}</title>
 <@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
 </head>
 

@@ -2,7 +2,7 @@
 <#include "inc/global-functions.ftl">
 
 <head>
-<title>${vernacularName.name+ " - " + rc.getMessage("site_title")}</title>
+<title>${page.vernacularName.name+ " - " + rc.getMessage("site_title")}</title>
 <@cssAsset fileName="vascan" version=currentVersion! useMinified=false/>
 </head>
 

@@ -36,7 +36,7 @@
 	</#if>
 	</h2>
 	<ul id="search_list">
-	<#if !results?has_content>
+	<#if !page.results?has_content>
 		<p><em>${rc.getMessage("namesearch_notfound")}</em></p>
 	</#if>
 	<#list page.results as result>
