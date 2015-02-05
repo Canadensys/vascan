@@ -1,5 +1,7 @@
 googleanalytics.siteVerification=A
 googleanalytics.account=B
+#optional URL to a feedback management system
+#feedback.url=http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Data%20issue
 
 url.useMinified=true
 
