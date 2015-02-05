@@ -1,4 +1,6 @@
 vascan/taxon/73:{"taxonname":"Equisetopsida","sortname":"Equisetopsida","status":"accepted","namehtml":"<em>Equisetopsida</em>","namehtmlauthor":"<em>Equisetopsida</em> C. Aghard","rankname":"class"}
+vascan/taxon/9946:{"taxonname":"Amaranthus graecizans","sortname":"Amaranthus graecizans","status":"synonym","namehtml":"<em>Amaranthus graecizans</em>","namehtmlauthor":"<em>Amaranthus graecizans</em> auct. non Linnaeus p.p.","rankname":"species","parentid": [2498,2499], "parentnamehtml":["<em>Amaranthus albus</em>","<em>Amaranthus blitoides</em>"]}
+vascan/taxon/951:{"taxonname":"Carex","sortname":"Carex","status":"accepted","namehtml":"<em>Carex</em>","namehtmlauthor":"<em>Carex</em> Linnaeus","rankname":"genus"}
 vascan/taxon/4751:{"taxonname":"Carex arctata","sortname":"Carex arctata","status":"accepted","namehtml":"<em>Carex arctata</em>","namehtmlauthor":"<em>Carex arctata</em> Boott","rankname":"species"}
 vascan/taxon/5129:{"taxonname":"Carex umbellata","sortname":"Carex umbellata","status":"accepted","namehtml":"<em>Carex umbellata</em>","namehtmlauthor":"<em>Carex umbellata</em> Schkuhr ex Willdenow","rankname":"species"}
 vascan/taxon/2498:{"taxonname":"Amaranthus albus","sortname":"Amaranthus albus","status":"accepted","namehtml":"<em>Amaranthus albus</em>","namehtmlauthor":"<em>Amaranthus albus</em> Linnaeus","rankname":"species"}

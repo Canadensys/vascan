@@ -3,6 +3,8 @@ package net.canadensys.dataportal.vascan.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 /**
  * General configurations for VASCAN. Those configurations are not tied to a specific service.
  * @author canadensys
@@ -31,6 +33,9 @@ public class VascanConfig {
 	private final StringBuffer mutableLastPublicationDate = new StringBuffer("");
 	
 	private String taxonUrl;
+	
+	//TODO should move to its own configuration class eventually
+	private Integer searchPageSize;
 
 	public String getLastPublicationDateFilePath() {
 		return lastPublicationDateFilePath;
@@ -95,5 +100,26 @@ public class VascanConfig {
 	}
 	public void setFeedbackURL(String feedbackURL) {
 		this.feedbackURL = feedbackURL;
+	}
+	
+	/**
+	 * Get the number of results per page to send back after a search.
+	 * Can be null if not specified.
+	 * 
+	 * @return
+	 */
+	public Integer getSearchPageSize() {
+		return searchPageSize;
+	}
+	
+	/**
+	 * Set the number of results per page to send back after a search.
+	 * 
+	 * @param searchPageSize
+	 */
+	public void setSearchPageSize(Integer searchPageSize) {
+		Preconditions.checkNotNull(searchPageSize);
+		
+		this.searchPageSize = searchPageSize;
 	}
 }

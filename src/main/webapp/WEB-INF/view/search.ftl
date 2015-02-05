@@ -1,5 +1,6 @@
 <#include "inc/common.ftl">
 <#include "inc/global-functions.ftl">
+<#include "inc/paging.ftl">
 
 <head>
 <#if page.search.term?has_content>

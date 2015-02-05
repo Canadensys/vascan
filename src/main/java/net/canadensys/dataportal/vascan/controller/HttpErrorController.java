@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,20 @@ public class HttpErrorController {
 	
 	@Autowired
 	private VascanConfig vascanConfig;
+	
+	@RequestMapping(value="/404")
+	@ResponseStatus(value=HttpStatus.NOT_FOUND)
+	public ModelAndView handleNotFound(HttpServletRequest req){
+		HashMap<String,Object> model = new HashMap<String,Object>();
+		ControllerHelper.addOtherLanguageUri(req, model);
+        return new ModelAndView("error/404", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
+	}
 
+	/**
+	 * Exception handling for Spring NoHandlerFound and our own ResourceNotFound exceptions.
+	 * @param req
+	 * @return
+	 */
 	@ExceptionHandler({NoHandlerFoundException.class, ResourceNotFoundException.class})
 	@ResponseStatus(value=HttpStatus.NOT_FOUND)
 	public ModelAndView handleNotFoundException(HttpServletRequest req){
@@ -41,12 +55,20 @@ public class HttpErrorController {
         return new ModelAndView("error/404", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
-	@RequestMapping(value="/404")
-	@ResponseStatus(value=HttpStatus.NOT_FOUND)
-	public ModelAndView handleNotFound(HttpServletRequest req){
+	/**
+	 * Exception thrown when the Method is not supported by our definitions.
+	 * Normally, it's a HEAD request.
+	 * 
+	 * @param req
+	 * @return
+	 */
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	@ResponseStatus(value=HttpStatus.METHOD_NOT_ALLOWED)
+	public ModelAndView handleHttpRequestMethodNotSupported(HttpServletRequest req){
+		LOGGER.error("RequestMethodNotSupported handled by HttpErrorController:" + req.getMethod() + " at " + req.getRequestURI());
 		HashMap<String,Object> model = new HashMap<String,Object>();
 		ControllerHelper.addOtherLanguageUri(req, model);
-        return new ModelAndView("error/404", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
+        return new ModelAndView("error/error", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	@ExceptionHandler(Exception.class)
@@ -57,4 +79,6 @@ public class HttpErrorController {
 		ControllerHelper.addOtherLanguageUri(req, model);
         return new ModelAndView("error/error", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
+	
+	
 }

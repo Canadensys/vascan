@@ -56,7 +56,7 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		searchInput.sendKeys("carex");
 		WebElement searchDropdown = new WebDriverWait(browser, 10).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.tt-dropdown-menu")));
 		assertTrue(searchDropdown.getText().contains("Scientific Names"));
-		assertTrue(searchDropdown.getText().contains("Vernacular Names"));
+		//assertTrue(searchDropdown.getText().contains("Vernacular Names"));
 		
 		assertTrue(searchDropdown.getText().contains("Carex abbreviata"));
 		
@@ -66,26 +66,41 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		//check the content of the contentDiv since accepted taxon are h1 and synonym h4
 		assertTrue(contentDiv.getText().contains(clickedElement));
 	}
-
+	
+	/**
+	 * This test assumes 'carex' will return enough results to enable paging.
+	 * Configuration file allows to override 'searchPageSize'.
+	 */
 	@Test
-	public void testSearchResults() {
-
+	public void testSearchResultsWithPaging() {
 		browser.get(TESTING_SERVER_URL + "search/?q=carex");
 		
 		//bind the WebElement to the current page
 		PageFactory.initElements(browser, this);
 		
-		//Make sure we have at least one result
-		assertTrue(Integer.parseInt(searchHeader.getText().replaceAll("[^\\d.]", "")) > 1);
+		//Make sure we have at least 3 results
+		assertTrue(Integer.parseInt(searchHeader.getText().replaceAll("[^\\d.]", "")) >= 3);
 
+		// ensure genus is listed first
 		assertTrue(searchResults.findElement(By.cssSelector("li:first-child")).getText().startsWith("Carex Linnaeus"));
+		
+		//make sure pagination 'div' is there
+		assertEquals("div",contentDiv.findElement(By.cssSelector("div.pagination")).getTagName().toLowerCase());
+		
 		//make sure footer is there
 		assertEquals("div",footerDiv.getTagName().toLowerCase());
+	}
+
+	@Test
+	public void testSearchResults2Parents() {
 		
 		//test synonyms with 2 parents
 		browser.get(TESTING_SERVER_URL + "search/?q=Amaranthus graecizans");
 		//bind the WebElement to the current page
 		PageFactory.initElements(browser, this);
+		//Make sure we have at least one result
+		assertTrue(Integer.parseInt(searchHeader.getText().replaceAll("[^\\d.]", "")) >= 1);
+				
 		assertTrue(searchResults.findElement(By.cssSelector("li:first-child span")).getText().contains("Amaranthus albus"));
 		assertTrue(searchResults.findElement(By.cssSelector("li:first-child span")).getText().contains("Amaranthus blitoides"));
 		
@@ -100,6 +115,8 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		//make sure footer is there
 		assertEquals("div",footerDiv.getTagName().toLowerCase());
 	}
+	
+	
 	
 	@After
 	public void tearDown() {

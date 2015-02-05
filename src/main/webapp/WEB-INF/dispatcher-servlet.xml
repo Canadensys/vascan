@@ -76,6 +76,7 @@
 		<property name="gaSiteVerification" value="${googleanalytics.siteVerification:}" />
 		<property name="gaAccount" value="${googleanalytics.account:}" />
 		<property name="feedbackURL" value="${feedback.url:}" />
+		<property name="searchPageSize" value="${service.searchPageSize:-1}" />
 	</bean>
 
 	<bean id="imageGeneratorConfig"
