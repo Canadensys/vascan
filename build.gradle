@@ -149,6 +149,7 @@ task useLocalDataSource{
 			war.excludes = ['WEB-INF/data-source.xml']
 			war.webInf { from 'config/local/data-source.xml' }
 			war.webInf { from 'src/test/resources/insert_test_data.sql' }
+			war.webInf { from 'src/test/resources/vascan_index_data.txt' }
 		}
 	}
 }
