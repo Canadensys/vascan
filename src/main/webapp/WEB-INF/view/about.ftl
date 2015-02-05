@@ -79,11 +79,11 @@
 
 <a name="rights"></a><h2>Citation, rights and disclaimer</h2>
 <h3>Preferred citation</h3>
-<p>Brouillet, L., F. Coursol, S.J. Meades, M. Favreau, M. Anions, P. Bélisle & P. Desmet. 2010+. VASCAN, the Database of Vascular Plants of Canada. <a href="http://data.canadensys.net/vascan/">http://data.canadensys.net/vascan/</a> (consulted on ${currentDate})</p>
+<p>Brouillet, L., F. Coursol, S.J. Meades, M. Favreau, M. Anions, P. Bélisle & P. Desmet. 2010+. VASCAN, the Database of Vascular Plants of Canada. <a href="http://data.canadensys.net/vascan/">http://data.canadensys.net/vascan/</a> (consulted on ${page.currentDate})</p>
 <p><strong>For a single taxon:</strong><br />
-Brouillet et al. 2010+. <em>Acer saccharum</em> Marshall in VASCAN, the Database of Vascular Plants of Canada. <a href="http://data.canadensys.net/vascan/taxon/9214">http://data.canadensys.net/vascan/taxon/9214</a> (consulted on ${currentDate})</p>
+Brouillet et al. 2010+. <em>Acer saccharum</em> Marshall in VASCAN, the Database of Vascular Plants of Canada. <a href="http://data.canadensys.net/vascan/taxon/9214">http://data.canadensys.net/vascan/taxon/9214</a> (consulted on ${page.currentDate})</p>
 <p><strong>For a single vernacular name:</strong><br />
-Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants of Canada. <a href="http://data.canadensys.net/vascan/vernacular/25478">http://data.canadensys.net/vascan/vernacular/25478</a> (consulted on ${currentDate})</p>
+Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants of Canada. <a href="http://data.canadensys.net/vascan/vernacular/25478">http://data.canadensys.net/vascan/vernacular/25478</a> (consulted on ${page.currentDate})</p>
 <h3>Intellectual property rights</h3>
 <p><a href="http://creativecommons.org/publicdomain/zero/1.0/" title="CC0 1.0 Universal Public Domain Dedication"><img class="alignright" src="http://data.canadensys.net/common/images/cc0-logo.png" /></a> All data in the <a href="http://data.canadensys.net/vascan">Database of Vascular Plants of Canada (VASCAN)</a> have been released into the public domain under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal Public Domain Dedication</a>. Although you are free to use the data as you want, we advise you to <a href="http://www.canadensys.net/norms">follow these norms</a>. We have also released the <a href="http://www.canadensys.net/vascan">VASCAN source code and database model</a>.</p>
 <h3>Disclaimer</h3>
@@ -179,11 +179,11 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 
 <a name="rights"></a><h2>Citation, droits et avis de non-responsabilité</h2>
 <h3>Citation recommandée</h3>
-<p>Brouillet, L., F. Coursol, S.J. Meades, M. Favreau, M. Anions, P. Bélisle et P. Desmet. 2010+. VASCAN, la Base de données des plantes vasculaires du Canada. <a href="http://data.canadensys.net/vascan/">http://data.canadensys.net/vascan/</a> (consultée le ${currentDate})</p>
+<p>Brouillet, L., F. Coursol, S.J. Meades, M. Favreau, M. Anions, P. Bélisle et P. Desmet. 2010+. VASCAN, la Base de données des plantes vasculaires du Canada. <a href="http://data.canadensys.net/vascan/">http://data.canadensys.net/vascan/</a> (consultée le ${page.currentDate})</p>
 <p><strong>Pour un taxon:</strong><br />
-Brouillet et al. 2010+. <em>Acer saccharum</em> Marshall in VASCAN, la Base de données des plantes vasculaires du Canada. <a href="http://data.canadensys.net/vascan/taxon/9214">http://data.canadensys.net/vascan/taxon/9214</a> (consultée le ${currentDate})</p>
+Brouillet et al. 2010+. <em>Acer saccharum</em> Marshall in VASCAN, la Base de données des plantes vasculaires du Canada. <a href="http://data.canadensys.net/vascan/taxon/9214">http://data.canadensys.net/vascan/taxon/9214</a> (consultée le ${page.currentDate})</p>
 <p><strong>Pour un nom vernaculaire:</strong><br />
-Brouillet et al. 2010+. érable à sucre in VASCAN, la Base de données des plantes vasculaires du Canada. <a href="http://data.canadensys.net/vascan/vernacular/25475">http://data.canadensys.net/vascan/vernacular/25475</a> (consultée le ${currentDate})</p>
+Brouillet et al. 2010+. érable à sucre in VASCAN, la Base de données des plantes vasculaires du Canada. <a href="http://data.canadensys.net/vascan/vernacular/25475">http://data.canadensys.net/vascan/vernacular/25475</a> (consultée le ${page.currentDate})</p>
 <h3>Droits de propriété intellectuelle</h3>
 <p><a href="http://creativecommons.org/publicdomain/zero/1.0/deed.fr" title="CC0 1.0 universel transfert au domaine public"><img class="alignright" src="http://data.canadensys.net/common/images/cc0-logo.png" /></a> Toutes les données de la <a href="http://data.canadensys.net/vascan?lang=fr">base de données des plantes vasculaires du Canada (VASCAN)</a> ont été transférées au domaine public sous <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.fr">CC0 1.0 universel transfert au domaine public</a>. Bien que vous soyez libres d'utiliser les données comme bon vous semble, nous vous recommendons cependant de <a href="http://www.canadensys.net/norms">respecter ces normes</a>. Nous avons aussi publié le <a href="http://www.canadensys.net/vascan">code source et le modèle de base de données</a> de VASCAN.</p>
 <h3>Avis de non-responsabilité</h3>

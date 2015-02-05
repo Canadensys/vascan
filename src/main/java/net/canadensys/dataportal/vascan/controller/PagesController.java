@@ -1,5 +1,7 @@
 package net.canadensys.dataportal.vascan.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,15 +16,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller for simple pages with no dynamic content.
+ * 
  * @author cgendreau
  *
  */
 @Controller
 public class PagesController {
 	
+	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
+	
 	@RequestMapping(value={"/about"}, method={RequestMethod.GET})
 	public ModelAndView handleAboutPage(HttpServletRequest request){
 		Map<String,Object> model = new HashMap<String,Object>();
+		// date is used to build dynamic citation
+		model.put("currentDate", SDF.format(Calendar.getInstance().getTime()));
 		ControllerHelper.addOtherLanguageUri(request, model);
 		return new ModelAndView("about", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}

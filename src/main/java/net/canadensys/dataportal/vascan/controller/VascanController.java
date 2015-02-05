@@ -293,7 +293,7 @@ public class VascanController {
 		try {
 			String lpd = FileUtils.readFileToString(new File(vascanConfig.getLastPublicationDateFilePath()));
 			if(!StringUtils.equals(lpd, vascanConfig.getCurrentLastPublicationDate())){
-				vascanConfig.updateLastPublicationDate(Long.toString(System.currentTimeMillis()));
+				vascanConfig.updateLastPublicationDate(lpd);
 			}
 		} catch (IOException e) {
 			LOGGER.fatal("Could not read Vascan lastPublicationDate"+ e.getMessage());
