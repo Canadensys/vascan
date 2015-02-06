@@ -12,8 +12,8 @@
 <h1>${rc.getMessage("api_title2")}</h1>
 
 <ul class="index">
-	<li><a href="api/#resource">${rc.getMessage("api_title4")}</a></li>
-	<li><a href="api/#openrefine">${rc.getMessage("api_title7")}</a></li>
+	<li><a href="#resource">${rc.getMessage("api_title4")}</a></li>
+	<li><a href="#openrefine">${rc.getMessage("api_title7")}</a></li>
 </ul>
 
 <a name="resource"></a><h2>${rc.getMessage("api_title4")}</h2>
