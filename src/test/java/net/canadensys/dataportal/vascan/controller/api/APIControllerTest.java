@@ -46,6 +46,8 @@ public class APIControllerTest {
     
     @Test
     public void testHeadRequests() throws Exception {
+    	this.mockMvc.perform(request(HttpMethod.HEAD, "/api")).andExpect(status().isOk());
+    	this.mockMvc.perform(request(HttpMethod.HEAD, "/api/")).andExpect(status().isOk());
     	this.mockMvc.perform(request(HttpMethod.HEAD, "/api/"+TESTED_API_VERSION+"/search.json")).andExpect(status().isOk());
     	
     	this.mockMvc.perform(request(HttpMethod.HEAD, "/api/"+TESTED_API_VERSION+"/noendpoint")).andExpect(status().is(404));
