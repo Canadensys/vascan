@@ -1,6 +1,9 @@
 Version History
 ===============
 
+Version 3.4.1 2015-02-05
+* [Change log](https://github.com/Canadensys/vascan/milestones/3.4.1)
+
 Version 3.4.0 2015-02-05
 * [Change log](https://github.com/Canadensys/vascan/milestones/3.4)
 
