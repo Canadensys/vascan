@@ -1,6 +1,8 @@
 <sitemesh>
     <mapping path="/*" decorator="/decorators/layout.ftl"/>
     
+    <mapping path="/static/*" exclude="true" />
+    
 	<!-- API JSON responses are already excluded by mime-type -->
     
     <content-processor>
