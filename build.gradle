@@ -28,7 +28,7 @@ ext {
 	sourceCompatibility = JavaVersion.VERSION_1_7
 	targetCompatibility = JavaVersion.VERSION_1_7
 
-	webCoreVersion = '0.5'
+	webCoreVersion = '0.6'
 	webThemeVersion = '0.3'
 	dataAccessVersion = '2.12.2'
 	dwcaReaderVersion = '1.20'

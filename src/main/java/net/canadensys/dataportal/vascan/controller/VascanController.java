@@ -39,6 +39,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import com.google.common.collect.Lists;
+
 /**
  * Vascan controller.
  * 
@@ -273,6 +275,10 @@ public class VascanController {
 		else if("vernacular".equalsIgnoreCase(t)){
 			nameConceptModelList = searchService.searchVernacularName(q);
 		}
+		else{
+			// provide no results (empty list)
+			nameConceptModelList = Lists.newArrayList();
+		}
 		
 		JSONArray responseJson = new JSONArray();
 		for(NameConceptModelIF currNameConcept : nameConceptModelList){
@@ -281,7 +287,7 @@ public class VascanController {
 		try {
 			response.getWriter().print(responseJson.toString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.fatal("Can't write JSON response", e);
 		}
 	}
 		
