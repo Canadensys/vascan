@@ -12,12 +12,12 @@
 <h1>${rc.getMessage("about_title1")}</h1>
 <#if rc.getLocale().getLanguage()=="en">
 <ul class="index">
-	<li><a href="about/#introduction">Introduction</a></li>
-	<li><a href="about/#rationale">Rationale</a></li>
-	<li><a href="about/#people">People</a></li>
-	<li><a href="about/#rights">Citation, rights and disclaimer</a></li>
-	<li><a href="about/#feedback">Feedback</a></li>
-	<li><a href="about/#distribution">Distribution status codes</a></li>
+	<li><a href="#introduction">Introduction</a></li>
+	<li><a href="#rationale">Rationale</a></li>
+	<li><a href="#people">People</a></li>
+	<li><a href="#rights">Citation, rights and disclaimer</a></li>
+	<li><a href="#feedback">Feedback</a></li>
+	<li><a href="#distribution">Distribution status codes</a></li>
 </ul>
 <a name="introduction"></a><h2>Introduction</h2>
 <p><a href="http://data.canadensys.net/vascan/">VASCAN</a> is the <strong>Database of Vascular Plants of Canada</strong>. It is a comprehensive list of all vascular plants reported in Canada, Greenland (Denmark) and Saint Pierre and Miquelon (France). VASCAN is literature-based, though recent additions are sometimes specimen-based.</p>
