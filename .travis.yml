@@ -11,6 +11,7 @@ before_install:
  - cd ..
  - git clone https://github.com/Canadensys/canadensys-view-includes 
  - cd vascan
+ - mv config/local/vascan-config.properties.example config/local/vascan-config.properties
 script:
  - ./gradlew check
  - ./gradlew runIntegrationTest
