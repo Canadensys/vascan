@@ -13,9 +13,9 @@ before_install:
  - cd vascan
  - mv config/local/vascan-config.properties.example config/local/vascan-config.properties
  - mv config/local/version.properties.example config/local/version.properties
-script:
- - ./gradlew check
- - ./gradlew -daemon runIntegrationTest
+# script:
+#  - ./gradlew check
+#  - ./gradlew -daemon runIntegrationTest
 jdk:
   - oraclejdk7
   - openjdk7
