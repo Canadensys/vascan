@@ -13,7 +13,7 @@ before_install:
  - cd vascan
  - mv config/local/vascan-config.properties.example config/local/vascan-config.properties
 script:
- - ./gradlew check
+ - ./gradlew clean check
  - ./gradlew runIntegrationTest
 jdk:
   - oraclejdk7
