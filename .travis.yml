@@ -1,5 +1,7 @@
 language: java
 before_install:
+ - "export DISPLAY=:99.0"
+ - "sh -e /etc/init.d/xvfb start"
  - cd ..
  - git clone https://github.com/Canadensys/canadensys-data-access
  - cd canadensys-data-access
@@ -9,6 +11,9 @@ before_install:
  - cd ..
  - git clone https://github.com/Canadensys/canadensys-view-includes 
  - cd vascan
+script:
+ - ./gradlew check
+ - ./gradlew runIntegrationTest
 jdk:
   - oraclejdk7
   - openjdk7
