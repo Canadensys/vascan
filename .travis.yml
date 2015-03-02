@@ -15,7 +15,7 @@ before_install:
  - mv config/local/version.properties.example config/local/version.properties
 script:
  - ./gradlew check
- - ./gradlew runIntegrationTest
+ - ./gradlew -daemon runIntegrationTest
 jdk:
   - oraclejdk7
   - openjdk7
