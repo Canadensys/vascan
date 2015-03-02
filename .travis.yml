@@ -12,8 +12,9 @@ before_install:
  - git clone https://github.com/Canadensys/canadensys-view-includes 
  - cd vascan
  - mv config/local/vascan-config.properties.example config/local/vascan-config.properties
+ - mv config/local/version.properties.example config/local/version.properties
 script:
- - ./gradlew clean check
+ - ./gradlew check
  - ./gradlew runIntegrationTest
 jdk:
   - oraclejdk7
