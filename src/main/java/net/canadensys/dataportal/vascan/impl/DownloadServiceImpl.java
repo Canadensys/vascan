@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.canadensys.dataportal.vascan.DownloadService;
+import net.canadensys.dataportal.vascan.DwcaGeneratorService;
 import net.canadensys.dataportal.vascan.config.GeneratedContentConfig;
 import net.canadensys.dataportal.vascan.config.VascanConfig;
 import net.canadensys.dataportal.vascan.dao.DistributionDAO;
@@ -20,9 +21,7 @@ import net.canadensys.dataportal.vascan.dao.TaxonDAO;
 import net.canadensys.dataportal.vascan.dao.TaxonomyDAO;
 import net.canadensys.dataportal.vascan.dao.VernacularNameDAO;
 import net.canadensys.dataportal.vascan.dao.query.RegionQueryPart;
-import net.canadensys.dataportal.vascan.generatedcontent.DarwinCoreGenerator;
 import net.canadensys.dataportal.vascan.model.TaxonLookupModel;
-import net.canadensys.dataportal.vascan.model.TaxonModel;
 import net.canadensys.dataportal.vascan.query.ChecklistQuery;
 
 import org.apache.commons.io.FileUtils;
@@ -45,7 +44,6 @@ public class DownloadServiceImpl implements DownloadService {
 	public static final String CSV_FILE_PREFIX = "TXT-";
 	public static final String CSV_FILE_EXT = ".txt";
 	
-	public static final String VASCAN_META = "vascan_meta.xml";
 	public static final String DARWIN_CORE_FILE_META = "meta.xml";
 	
 	public static final String DARWIN_CORE_FILE_TAXON = "taxon.txt";
@@ -73,7 +71,7 @@ public class DownloadServiceImpl implements DownloadService {
 	private VernacularNameDAO vernacularNameDAO;
 	
 	@Autowired
-	private DarwinCoreGenerator dwcArchiveGenerator;
+	private DwcaGeneratorService dwcaGeneratorService;
 	
 	@Override
 	public String generateFileName(String format) {
@@ -111,9 +109,9 @@ public class DownloadServiceImpl implements DownloadService {
 		workingFolder.mkdir();
 		
 		ChecklistQuery cQuery = extractParameters(params);
-		Iterator<TaxonModel> it = taxonDAO.searchIterator(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
+		Iterator<Map<String,Object>> it = taxonDAO.searchIteratorDenormalized(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
 				cQuery.getDistributionStatus(), cQuery.getRank(), cQuery.isHybrids(), cQuery.getSort());
-		boolean success = dwcArchiveGenerator.generateDwcArchive(it, workingFolder, destinationFilePath, bundle);
+		boolean success = dwcaGeneratorService.generateDwcArchive(it, workingFolder, destinationFilePath, bundle);
 		try {
 			FileUtils.deleteDirectory(workingFolder);
 		}

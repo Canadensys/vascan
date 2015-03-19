@@ -6,7 +6,7 @@ before_install:
  - git clone https://github.com/Canadensys/canadensys-data-access
  - cd canadensys-data-access
  - git fetch --tags
- - git checkout tags/2.12.2
+ - git checkout tags/2.13.0
  - mvn clean install
  - cd ..
  - git clone https://github.com/Canadensys/canadensys-view-includes 

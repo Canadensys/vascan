@@ -15,11 +15,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Integration tests of the rendered search page
+ * Functional tests of the rendered search page.
+ * 
  * @author canadensys
  *
  */
-public class SearchPageIntegrationTest extends AbstractIntegrationTest{
+public class SearchPageFunctionalTest extends AbstractIntegrationTest{
 
 	@FindBy(css = "div#content")
 	private WebElement contentDiv;
@@ -58,7 +59,7 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		assertTrue(searchDropdown.getText().contains("Scientific Names"));
 		//assertTrue(searchDropdown.getText().contains("Vernacular Names"));
 		
-		assertTrue(searchDropdown.getText().contains("Carex abbreviata"));
+		assertTrue(searchDropdown.getText().contains("Carex arctata"));
 		
 		String clickedElement = searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(3)")).getText();
 		searchDropdown.findElement(By.cssSelector(".tt-suggestion:nth-of-type(3)")).click();
@@ -115,8 +116,6 @@ public class SearchPageIntegrationTest extends AbstractIntegrationTest{
 		//make sure footer is there
 		assertEquals("div",footerDiv.getTagName().toLowerCase());
 	}
-	
-	
 	
 	@After
 	public void tearDown() {
