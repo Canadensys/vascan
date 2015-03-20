@@ -2,7 +2,6 @@ package net.canadensys.dataportal.vascan.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -28,6 +27,7 @@ import net.canadensys.utils.ZipUtils;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
@@ -50,8 +50,8 @@ public class DwcaGeneratorServiceImpl implements DwcaGeneratorService {
 	private static final int SYNONYMS_WRITING_BATCH_SIZE = 100;
 	private static final int BATCH_SIZE = 100;
 		
-	private static final SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
-	private static final SimpleDateFormat SDF_TIME = new SimpleDateFormat("H:mmZ");
+	private static final FastDateFormat SDF_DATE = FastDateFormat.getInstance("yyyy-MM-dd");
+	private static final FastDateFormat SDF_TIME = FastDateFormat.getInstance("H:mmZ");
 	private static final String HYBRID_PARENT_RELATIONSHIP = "hybrid parent of";
 	
 	@Autowired
