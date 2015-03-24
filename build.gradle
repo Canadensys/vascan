@@ -30,7 +30,7 @@ ext {
 
 	webCoreVersion = '0.7'
 	webThemeVersion = '0.3'
-	dataAccessVersion = '2.13.1'
+	dataAccessVersion = '2.14.0'
 	dwcaReaderVersion = '1.20'
 
 	springVersion = '4.0.9.RELEASE'

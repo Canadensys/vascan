@@ -138,6 +138,14 @@
 							 </p>
 							</#list>
 						</#if>
+						<#if data.hybridChildren?has_content>
+							<h2>${rc.getMessage("taxon_h2_hybrid_children")}</h2> 
+							<#list data.hybridChildren as hybridChild>
+							 <p class="sprite sprite-redirect_${hybridChild.status?lower_case}" />
+								 <a href="${rc.getContextUrl('/taxon/'+hybridChild.taxonId?c+rc.getMessage('url_language'))}">${hybridChild.fullScientificName}</a>.
+							 </p>
+							</#list>
+						</#if>
 						<h2>${rc.getMessage("taxon_h2_vernaculars")}</h2>
 						<ul class="custom_list">
 						<#list data.vernacularNames as vernacular>

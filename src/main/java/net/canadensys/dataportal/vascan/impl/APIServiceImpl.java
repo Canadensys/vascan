@@ -107,7 +107,7 @@ public class APIServiceImpl implements APIService{
 		//we load the TaxonModel for each taxonID (instead of calling taxonDAO.loadTaxonList(...))
 		//to easily keep the order and handle missing taxon
 		for(Integer taxonId : taxonIdList){
-			taxonModel = taxonDAO.loadTaxon(taxonId);
+			taxonModel = taxonDAO.loadTaxon(taxonId, false);
 			apiResponseElement = new VascanAPIResponseElement();
 			apiResponseElement.setSearchedId(taxonId);
 			
@@ -130,7 +130,7 @@ public class APIServiceImpl implements APIService{
 		apiResponse.setApiVersion(API_VERSION);
 		apiResponse.setLastUpdatedDate(vascanConfig.getCurrentLastPublicationDate());
 		
-		TaxonModel taxonModel = taxonDAO.loadTaxon(id);
+		TaxonModel taxonModel = taxonDAO.loadTaxon(id, false);
 		
 		VascanAPIResponseElement apiResponseElement = new VascanAPIResponseElement();
 		

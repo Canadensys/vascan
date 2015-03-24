@@ -1,6 +1,9 @@
 package net.canadensys.dataportal.vascan;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,11 +15,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * Integration tests of the rendered taxon page
+ * Functional tests of the rendered taxon page.
+ * 
  * @author canadensys
  *
  */
-public class TaxonPageIntegrationTest extends AbstractIntegrationTest {
+public class TaxonPageFunctionalTest extends AbstractIntegrationTest {
 	
 	@FindBy(css = "div#content")
 	private WebElement contentDiv;
@@ -65,8 +69,36 @@ public class TaxonPageIntegrationTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	public void testHybridPage(){
-		//http://data.canadensys.net/vascan/taxon/5482
+	public void testHybridParentsOnPage(){
+		//get a hybrid page
+		browser.get(TESTING_SERVER_URL + "taxon/4793");
+		
+		PageFactory.initElements(browser, this);
+		
+		WebElement hybridParentH2 = contentDiv.findElement(By.cssSelector("h2"));
+		assertEquals("Hybrid parents", hybridParentH2.getText());
+		
+		List<String> knowHybridParents = new ArrayList<String>();
+		knowHybridParents.add("Carex brunnescens (Persoon) Poiret subsp. brunnescens");
+		knowHybridParents.add("Carex canescens Linnaeus subsp. canescens");
+		assertTrue(knowHybridParents.contains(contentDiv.findElement(By.cssSelector("h2 + p.sprite-redirect_accepted a")).getText()));
+		
+		assertEquals("div",footerDiv.getTagName());
+		
+	}
+	
+	@Test
+	public void testHybridChildrenOnPage(){
+		//get a hybrid page
+		browser.get(TESTING_SERVER_URL + "taxon/23712");
+		
+		PageFactory.initElements(browser, this);
+		
+		WebElement hybridChildrenH2 = contentDiv.findElement(By.cssSelector("h2"));
+		assertEquals("Hybrid parent of", hybridChildrenH2.getText());
+		assertEquals("Carex brunnescens subsp. brunnescens × Carex canescens subsp. canescens", contentDiv.findElement(By.cssSelector("h2 + p.sprite-redirect_accepted a")).getText());
+		
+		assertEquals("div",footerDiv.getTagName());
 	}
 	 
 	@After

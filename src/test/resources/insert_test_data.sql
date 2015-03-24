@@ -110,6 +110,7 @@ VALUES
 (2096,'Carex','Racemosae','','G. Don','1','11','180'),
 (4793,'Carex','brunnescens subsp. brunnescens × Carex canescens subsp. canescens','','','1','14',96),
 (4790,'Carex','canescens','brunnescens','(Persoon) W.D.J. Koch','2','16',180),
+(23712,'Carex','brunnescens','brunnescens','(Persoon) Poiret','1','15',180),
 (4797,'Carex','canescens','canescens','Linnaeus','1','15',180),
 (9946,'Amaranthus','graecizans','','auct. non Linnaeus p.p.','2','14',185),
 (2498,'Amaranthus','albus','','Linnaeus','1','14',185),
@@ -229,6 +230,9 @@ VALUES
 ),
 ('Amaranthus graecizans','Amaranthus graecizans auct. non Linnaeus p.p.','<em>Amaranthus graecizans</em>','<em>Amaranthus graecizans</em> auct. non Linnaeus p.p.','9946','synonym','species','','absent','absent','absent','absent','absent','absent',
 'absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','','','','','Amaranthus','','graecizans','','auct. non Linnaeus p.p.',NULL,NULL,'2014-08-18 00:00:00','2014-08-18 16:53:41',NULL,NULL
+),
+('Carex brunnescens subs. brunnescens','Carex brunnescens (Persoon) Poiret subsp. brunnescens','<em>Carex brunnescens</em> subsp. <em>brunnescens</em>','<em>Carex brunnescens</em> (Persoon) Poiret subsp. <em>brunnescens</em>','23712','accepted','subspecies','','absent','absent','absent','absent','absent','absent',
+'absent','absent','absent','absent','absent','absent','absent','absent','absent','absent','','','','','Amaranthus','','graecizans','','auct. non Linnaeus p.p.',NULL,NULL,'2014-08-18 00:00:00','2014-08-18 16:53:41',NULL,NULL
 );
 
 INSERT INTO vernacularname (
@@ -257,6 +261,6 @@ VALUES
 
 INSERT INTO taxonhybridparent (id,childid,parentid)
 VALUES
-(143,4793,4790),
+(143,4793,23712),
 (144,4793,4797);
 

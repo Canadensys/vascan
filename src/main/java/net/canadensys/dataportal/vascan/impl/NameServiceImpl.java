@@ -322,9 +322,8 @@ public class NameServiceImpl implements NameService{
 	        // link 
 	        link = taxon.getReference().getUrl();
 	        
-	        //same as 
-	        
-	        propertyMapHelper.fillHybridParents(taxon.getHybridparents(),data);
+	        //add hybrid data (if available)
+	        propertyMapHelper.fillHybridData(taxon.getHybridparents(), taxon.getHybridchildren(), data);
 	        
 	        // parents ; it is accepted that a taxon has only one parent, but this
 	        // is not a rule and some exceptions may occur with synonyms. To prevent
@@ -334,13 +333,8 @@ public class NameServiceImpl implements NameService{
 	        if(parents != null){
 	            for(TaxonModel parent : parents){
 	                HashMap<String,Object> parentInfo = new HashMap<String,Object>();
-	                try{
-	                    parentInfo.put("fullScientificName",parent.getLookup().getCalnamehtmlauthor());
-	                    taxonParents.add(parentInfo);
-	                }
-	                catch(NullPointerException e){
-	                    //drop on error
-	                }
+                    parentInfo.put("fullScientificName",parent.getLookup().getCalnamehtmlauthor());
+                    taxonParents.add(parentInfo);
 	            }
 	        }
 	        
@@ -418,7 +412,6 @@ public class NameServiceImpl implements NameService{
 	    
 	    data.put("disambiguationVernaculars",disambiguationVernaculars);
 	    data.put("disambiguationTaxons",disambiguationTaxons);
-	    //data.put("hybridParents",taxonHybridParents);
 	    data.put("parents",taxonParents);
 	    //data.put("tree",taxonClassification);
 	    //data.put("vernacularNames",taxonVernacularNames);

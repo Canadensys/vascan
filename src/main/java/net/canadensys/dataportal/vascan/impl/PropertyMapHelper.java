@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.Vector;
 
 import net.canadensys.dataportal.vascan.DistributionService;
 import net.canadensys.dataportal.vascan.constant.Rank;
@@ -36,34 +35,51 @@ public class PropertyMapHelper {
 	@Autowired
 	private DistributionService distributionService;
 	
-	public void fillHybridParents(List<TaxonModel> hybridParents,Map<String,Object> data){
-		// is he taxon concept an hybrid
-		// the state of isHybridConcept is determined by inspecting the taxon
-		// full scientific name for the presence of "x" (multiply sign); this
-		// is acheived by the method isHybird() in Taxon; The hybrid status
-		// cannot be determined by the presence of hybrid parents because
-		// they are sometimes unknown (no entry in database for hybdridparent1 and
-	    // hybridparent1, but we know that it's an hybrid, because someone said so.
+	/**
+	 * Fill hybrid data (if any) in the provided model.
+	 * 
+	 * @param hybridParents
+	 * @param hybridChildren
+	 * @param data
+	 */
+	public void fillHybridData(List<TaxonModel> hybridParents, List<TaxonModel> hybridChildren, Map<String,Object> data){
+
+		// To know if a taxon is a hybrid, we need to inspect the taxon
+		// full scientific name for the presence of "x" (multiply sign);
+		// The hybrid status cannot be determined by the presence of hybrid parents because
+		// they are sometimes unknown.
 		boolean isHybridConcept = false;
 	    List<Map<String,Object>> taxonHybridParents = new ArrayList<Map<String,Object>>();
 	    if(hybridParents != null){
-	    	if(hybridParents.size() > 0)
+	    	if(hybridParents.size() > 0){
 	    	    isHybridConcept = true;
-	        for(TaxonModel hybridParent : hybridParents){
-	            Map<String,Object> hybridParentInfo = new HashMap<String,Object>();
-	            try{
-	            	hybridParentInfo.put("taxonId",hybridParent.getId());
-	                hybridParentInfo.put("fullScientificName",hybridParent.getLookup().getCalnamehtmlauthor());
-	                hybridParentInfo.put("status",hybridParent.getStatus().getStatus());
-	                taxonHybridParents.add(hybridParentInfo);
-	            }
-	            catch(NullPointerException e){
-	                //drop on error
-	            }
-	        }
+	    	}
+	    	fillHybridRelatedData(hybridParents, taxonHybridParents);
+	    }
+	    
+	    if(hybridChildren !=null && !hybridChildren.isEmpty()){
+	    	List<Map<String,Object>> taxonHybridChildren = new ArrayList<Map<String,Object>>();
+	    	fillHybridRelatedData(hybridChildren, taxonHybridChildren);
+	    	data.put("hybridChildren", taxonHybridChildren);
 	    }
 	    data.put("isHybridConcept",isHybridConcept);
 	    data.put("hybridParents",taxonHybridParents);
+	}
+	
+	/**
+	 * Add hybrid parent or children related data.
+	 * @param taxonList
+	 * @param hybridData
+	 */
+	private void fillHybridRelatedData(List<TaxonModel> taxonList, List<Map<String,Object>> hybridData){
+		Map<String,Object> hybridInfo;
+		for(TaxonModel hybridParent : taxonList){
+            hybridInfo = new HashMap<String,Object>();
+            hybridInfo.put("taxonId", hybridParent.getId());
+            hybridInfo.put("fullScientificName", hybridParent.getLookup().getCalnamehtmlauthor());
+            hybridInfo.put("status", hybridParent.getLookup().getStatus());
+            hybridData.add(hybridInfo);
+        }
 	}
 	
 	/**
@@ -90,10 +106,9 @@ public class PropertyMapHelper {
 	    	}
 
 	    	classification = covm.toOrderedList();
-	    	
+	    	Map<String,Object> nodeInfo;
 	        for(TaxonLookupModel node : classification){
-	            Map<String,Object> nodeInfo = new HashMap<String,Object>();
-
+	            nodeInfo = new HashMap<String,Object>();
             	nodeInfo.put("taxonId",node.getTaxonId());
                 nodeInfo.put("fullScientificName",node.getCalnamehtml());
                 nodeInfo.put("fullScientificNameUrl",node.getCalname());
@@ -105,27 +120,19 @@ public class PropertyMapHelper {
 		data.put("tree",taxonClassification);
 	}
 	
-	public void fillVernacularNames(Set<VernacularNameModel> vernacularNames, Map<String,Object> data){
-		// vernacular names for taxon ; each vernacular name is saved in an hashmap
-	    // and all hashmap are added to a vector wich is added to the main data 
-	    // hashmap. That vector is available in the ftl as a sequence   	
-	   	Vector<HashMap<String,Object>> taxonVernacularNames = new Vector<HashMap<String,Object>>();
+	public void fillVernacularNames(Set<VernacularNameModel> vernacularNames, Map<String,Object> data){ 	
+	   	List<HashMap<String,Object>> taxonVernacularNames = new ArrayList<HashMap<String,Object>>();
 	    if(vernacularNames != null){
 	        for(VernacularNameModel vernacularName : vernacularNames){
-	            try{
-	                HashMap<String,Object> vernacularData = new HashMap<String,Object>();
-	                vernacularData.put("vernacularId",vernacularName.getId());
-	                vernacularData.put("name",vernacularName.getName());
-	                vernacularData.put("status",vernacularName.getStatus().getStatus());
-	                vernacularData.put("language",vernacularName.getLanguage());
-	                vernacularData.put("reference",vernacularName.getReference().getReference());
-	                vernacularData.put("referenceShort",vernacularName.getReference().getReferenceshort());
-	                vernacularData.put("link",vernacularName.getReference().getUrl());
-	                taxonVernacularNames.add(vernacularData);
-	            }
-	            catch(NullPointerException e){
-	                //drop on error
-	            }
+                HashMap<String,Object> vernacularData = new HashMap<String,Object>();
+                vernacularData.put("vernacularId",vernacularName.getId());
+                vernacularData.put("name",vernacularName.getName());
+                vernacularData.put("status",vernacularName.getStatus().getStatus());
+                vernacularData.put("language",vernacularName.getLanguage());
+                vernacularData.put("reference",vernacularName.getReference().getReference());
+                vernacularData.put("referenceShort",vernacularName.getReference().getReferenceshort());
+                vernacularData.put("link",vernacularName.getReference().getUrl());
+                taxonVernacularNames.add(vernacularData);
 	        }
 	    }
 	    data.put("vernacularNames",taxonVernacularNames);

@@ -69,30 +69,22 @@ public class TaxonServiceImpl implements TaxonService {
 		// is the taxon concept a synonym
 		boolean isSynonymConcept = false;
 		
-
-		propertyMapHelper.fillHybridParents(taxon.getHybridparents(),data);
+		//add hybrid data (if available)
+        propertyMapHelper.fillHybridData(taxon.getHybridparents(), taxon.getHybridchildren(), data);
 	    
-	    // parents ; it is accepted that a taxon has only one parent, but this
-	    // is not a rule and some exceptions may occur with synonyms. To prevent
-	    // errors, the getParent() method of a taxon returns a list of most of 
-	    // the time one element...
+	    //accepted taxon always have a single parents but synonyms could have more than one parent
 	    List<Map<String,Object>> taxonParents = new ArrayList<Map<String,Object>>();
 	    List<TaxonModel> parents = taxon.getParents();
 	    if(parents != null){
 	        for(TaxonModel parent : parents){
 	            Map<String,Object> parentInfo = new HashMap<String,Object>();
-	            try{
-	            	parentInfo.put("taxonId",parent.getId());
-	                parentInfo.put("fullScientificName",parent.getLookup().getCalnamehtmlauthor());
-	                parentInfo.put("rank",parent.getRank().getRank());
-	                parentInfo.put("reference",parent.getReference().getReference());
-	                parentInfo.put("referenceShort",parent.getReference().getReferenceshort());
-	                parentInfo.put("link",parent.getReference().getUrl());
-	                taxonParents.add(parentInfo);
-	            }
-	            catch(NullPointerException e){
-	                //drop on error
-	            }
+            	parentInfo.put("taxonId",parent.getId());
+                parentInfo.put("fullScientificName",parent.getLookup().getCalnamehtmlauthor());
+                parentInfo.put("rank",parent.getRank().getRank());
+                parentInfo.put("reference",parent.getReference().getReference());
+                parentInfo.put("referenceShort",parent.getReference().getReferenceshort());
+                parentInfo.put("link",parent.getReference().getUrl());
+                taxonParents.add(parentInfo);
 	        }
 	    }
 	    data.put("parents",taxonParents);
@@ -179,7 +171,7 @@ public class TaxonServiceImpl implements TaxonService {
 	@Transactional(readOnly=true)
 	@Override
 	public TaxonModel loadTaxonModel(Integer id){
-		return taxonDAO.loadTaxon(id);
+		return taxonDAO.loadTaxon(id, true);
 	}
 	
 	@Transactional
