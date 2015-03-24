@@ -178,6 +178,16 @@ public class VascanController {
 	}
 	
 	/**
+	 * Response to HEAD requests for search/ only.
+	 * @param response
+	 */
+    @RequestMapping(value={"/search"}, method=RequestMethod.HEAD)
+    public void handleHeadRequests(HttpServletResponse response) {
+        response.setContentLength(0);
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+	
+	/**
 	 * Render a search page
 	 * @param q name to search for
 	 * @param page page number starting at 1

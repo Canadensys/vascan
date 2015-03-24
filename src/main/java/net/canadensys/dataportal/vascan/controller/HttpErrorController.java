@@ -65,7 +65,7 @@ public class HttpErrorController {
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	@ResponseStatus(value=HttpStatus.METHOD_NOT_ALLOWED)
 	public ModelAndView handleHttpRequestMethodNotSupported(HttpServletRequest req){
-		LOGGER.error("RequestMethodNotSupported handled by HttpErrorController:" + req.getMethod() + " at " + req.getRequestURI());
+		LOGGER.debug("RequestMethodNotSupported handled by HttpErrorController:" + req.getMethod() + " at " + req.getRequestURI());
 		HashMap<String,Object> model = new HashMap<String,Object>();
 		ControllerHelper.addOtherLanguageUri(req, model);
         return new ModelAndView("error/error", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
