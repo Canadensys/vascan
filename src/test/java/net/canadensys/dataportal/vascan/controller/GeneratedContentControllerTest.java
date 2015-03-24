@@ -230,12 +230,18 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	ZipUtils.unzipFileOrFolder(generatedDwcA, unzippedFolder);
     	List<String> fileLines = FileUtils.readLines(new File(unzippedFolder+"/resourcerelationship.txt"));
     	
-    	String line1 = fileLines.get(1);
-    	
-		assertTrue(line1.contains("4793"));
-		assertTrue(line1.contains("4790"));
-		assertTrue(line1.contains("hybrid parent of"));
-		assertTrue(line1.contains("Carex canescens var. brunnescens (Persoon) W.D.J. Koch"));
+    	String line;
+    	boolean taxonFound = false;
+    	for(int i=1;i<fileLines.size();i++){
+    		line = fileLines.get(i);
+    		if(line.contains("23712")){
+    			assertTrue(line.contains("4793"));
+    			assertTrue(line.contains("hybrid parent of"));
+    			assertTrue(line.contains("Carex brunnescens (Persoon) Poiret subsp. brunnescens"));
+    			taxonFound = true;
+    		}
+    	}
+    	assertTrue("taxon 23712 not found in resourcerelationship extension", taxonFound);
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
 		generatedDwcA.delete();
