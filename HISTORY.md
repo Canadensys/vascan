@@ -2,10 +2,11 @@ Version History
 ===============
 
 Version 3.5.0 2015-03-27
-* Display hybrid children: Issue [#17](https://github.com/Canadensys/vascan/issues/28).
+Display hybrid children: [Change log](https://github.com/Canadensys/vascan/milestones/3.5)
 
 Version 3.4.0 2015-02-05
-* [Change log](https://github.com/Canadensys/vascan/milestones/3.4)
+[Change log](https://github.com/Canadensys/vascan/milestones/3.4)
+* Minor versions
  * [3.4.4](https://github.com/Canadensys/vascan/milestones/3.4.4) - 2015-03-20
  * 3.4.3 - 2015-03-20
  * [3.4.2](https://github.com/Canadensys/vascan/milestones/3.4.2) - 2015-02-06
