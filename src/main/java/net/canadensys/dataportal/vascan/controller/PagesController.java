@@ -34,6 +34,13 @@ public class PagesController {
 		ControllerHelper.addOtherLanguageUri(request, model);
 		return new ModelAndView("about", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
+	
+	@RequestMapping(value={"/feedback"}, method={RequestMethod.GET})
+	public ModelAndView handleFeedbackPage(HttpServletRequest request){
+		Map<String,Object> model = new HashMap<String,Object>();
+		ControllerHelper.addOtherLanguageUri(request, model);
+		return new ModelAndView("feedback", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
+	}
 
 	/**
 	 * Response to HEAD request with a HTTP_OK and no content, as defined by the standard.
