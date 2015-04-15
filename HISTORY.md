@@ -1,6 +1,9 @@
 Version History
 ===============
 
+Version 3.5.2 2015-04-15
+* Fixed feedback page link
+
 Version 3.5.1 2015-04-10
 * New page for feedback (which is now managed on GitHub)
 
