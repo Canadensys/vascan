@@ -14,7 +14,8 @@ ${rc.getMessage("feedback.content_p1", ["<a href=\"https://github.com\">GitHub</
 </p>
 <p>
 <#assign feedbackGuidelineTitle=rc.getMessage("feedback.guideline.title")/>
-${rc.getMessage("feedback.content_p2", ["<a href=\"https://github.com/join\">here</a>", "<a href=\"https://github.com/Canadensys/vascan-data/wiki\">" + feedbackGuidelineTitle + "</a>"])}
+<#assign hereWord = rc.getMessage("feedback.content.here")/>
+${rc.getMessage("feedback.content_p2", ["<a href=\"https://github.com/join\">"+hereWord+"</a>", "<a href=\"https://github.com/Canadensys/vascan-data/blob/master/CONTRIBUTING.md\">" + feedbackGuidelineTitle + "</a>"])}
 </p>
 <p>
 <ul>
