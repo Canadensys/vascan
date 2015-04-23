@@ -34,7 +34,7 @@
 	<li><a href="http://www.irbv.umontreal.ca/luc-brouillet?lang=en">Luc Brouillet</a>, <a href="http://www.biodiversite.umontreal.ca/?lang=en">Université de Montréal Biodiversity Centre</a>, <a href="http://www.biodiversite.umontreal.ca/herbier-marie-victorin?lang=en">Marie-Victorin Herbarium (MT)</a> - Coordination and design, compilation of taxonomic and distribution data</li>
 	<li>F. Coursol, <a href="http://www2.ville.montreal.qc.ca/jardin/">Montréal Botanical Garden</a> - Compilation of taxonomic and distribution data</li>
 	<li>Susan Meades, <a href="http://www.northernontarioflora.ca/">Northern Ontario Plant Database</a> - Compilation of taxonomic data</li>
-	<li>Marc Favreau, <a href="http://www.btb.gc.ca/">Translation Bureau</a> - Compilation of French vernacular names</li>
+	<li>Marc Favreau, <a href="http://www.btb.gc.ca/">Translation Bureau</a> (retired) - Compilation of French vernacular names</li>
 	<li>Marilyn Anions, Botanist - Compilation of English vernacular names</li>
 </ul>
 
@@ -90,12 +90,8 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 <p>Although we make every effort to provide accurate and complete information in the VASCAN database, we take <strong>no responsibility</strong> with regard to the use, accuracy, reliability or completeness of the provided data.</p>
 
 <a name="feedback"></a><h2>Feedback</h2>
-<p>We are dependent on colleagues and users to help us improve the database and we <a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Data%20issue">welcome suggestions</a> backed by authoritative data. This is a collective effort after all, built upon the work done by our illustrious predecessors (many of which are cited in the database), as well as a number of collaborators.</p>
-<p>Feedback on the data or interface can be submitted by using the <strong>feedback button</strong> on the right or by clicking one of the links below. You'll need a <a href="https://www.google.com/accounts/NewAccount">Google Account</a> to do so. All feedback is public on <a href="http://code.google.com/p/canadensys/issues/list">this website</a>.</p>
-<ul>
-	<li><a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Data%20issue">Report a data issue</a></li>
-	<li><a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Interface%20issue">Report an interface issue</a></li>
-</ul>
+<p>We are dependent on colleagues and users to help us improve the database and we welcome <a href="http://data.canadensys.net/vascan/feedback">feedback</a> backed by authoritative data. This is a collective effort after all, built upon the work done by our illustrious predecessors (many of which are cited in the database), as well as a number of collaborators.</p>
+
 <p>VASCAN updates and tips are announced via <a href="http://www.twitter.com/canadensys/">@Canadensys</a> on Twitter.</p>
 
 <a name="distribution"></a><h2>Distribution status codes</h2>
@@ -134,7 +130,7 @@ Brouillet et al. 2010+. sugar maple in VASCAN, the Database of Vascular Plants o
 	<li><a href="http://www.irbv.umontreal.ca/luc-brouillet">Luc Brouillet</a>, <a href="http://www.biodiversite.umontreal.ca/">Centre sur la biodiversité</a> (<a href="http://www.umontreal.ca/">Université de Montréal</a>), <a href="http://www.biodiversite.umontreal.ca/herbier-marie-victorin">Herbier Marie-Victorin (MT)</a> - Coordination et conception, compilation des données de taxonomie et de répartition</li>
 	<li>F. Coursol, <a href="http://www2.ville.montreal.qc.ca/jardin/">Jardin botanique de Montréal</a> - Compilation des données de taxonomie et de répartition</li>
 	<li>Susan Meades, <a href="http://www.northernontarioflora.ca/">Northern Ontario Plant Database</a> - Compilation des données de taxonomie</li>
-	<li>Marc Favreau, <a href="http://www.btb.gc.ca/">Bureau de la traduction</a> - Compilation des noms vernaculaires français</li>
+	<li>Marc Favreau, <a href="http://www.btb.gc.ca/">Bureau de la traduction</a> (à la retraite) - Compilation des noms vernaculaires français</li>
 	<li>Marilyn Anions, botaniste - Compilation des noms vernaculaires anglais</li>
 </ul>
 
@@ -190,12 +186,8 @@ Brouillet et al. 2010+. érable à sucre in VASCAN, la Base de données des plan
 <p>Bien que nous ayons fait tous les efforts possibles pour nous assurer que l'information dans la base de données VASCAN est précise et complète, l'utilisation de la base de données et la précision, la fiabilité ou l'exhaustivité des données fournies n'engagent <strong>en rien notre responsabilité</strong>.</p>
 
 <a name="feedback"></a><h2>Commentaires</h2>
-<p>Nous dépendons beaucoup des collègues et des usagers pour nous aider à améliorer la base de données et nous <a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Data%20issue">recevons avec gratitude toute suggestion</a> fondée sur des données fiables. Il s'agit d'un effort collectif, bâti sur le travail de nos illustres prédécesseurs (dont plusieurs sont cités dans la base de données) et d'un grand nombre de collaborateurs.</p>
-<p>Vous pouvez nous transmettre des commentaires sur les données ou le logiciel en utilisant l'onglet de rétroaction situé à la droite de l'écran ou en cliquant sur un des liens ci-dessous. Vous aurez besoin d'un compte <a href="https://www.google.com/accounts/NewAccount">Google Account</a>. Tous les commentaires sont publiés sur ce <a href="http://code.google.com/p/canadensys/issues/list">site web</a>.</p>
-<ul>
-	<li><a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Data%20issue">Signaler un problème de données</a></li>
-	<li><a href="http://code.google.com/p/canadensys/issues/entry?template=Vascan%20-%20Interface%20issue">Signaler un problème d'interface</a></li>
-</ul>
+<p>Nous dépendons beaucoup des collègues et des usagers pour nous aider à améliorer la base de données et nous recevons avec gratitude toute <a href="http://data.canadensys.net/vascan/feedback?lang=fr">rétroaction</a> fondée sur des données fiables. Il s'agit d'un effort collectif, bâti sur le travail de nos illustres prédécesseurs (dont plusieurs sont cités dans la base de données) et d'un grand nombre de collaborateurs.</p>
+
 <p>Les mises à jour et les conseils concernant VASCAN sont annoncés via Twitter par <a href="http://www.twitter.com/canadensys/">@Canadensys</a>.</p>
 
 <a name="distribution"></a><h2>Légende des états de répartition</h2>
