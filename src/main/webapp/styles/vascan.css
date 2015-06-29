@@ -297,19 +297,21 @@
 
 @media print {
 
+  #skip-link{ display:none; }
+
   /* Vascan icons */
 
   .sprite {background:none;padding-left:36px;}
-  .sprite-absent:before{content:"ABS";}
-  .sprite-accepted:before{content:"ACC";}
-  .sprite-alternative:before{content:"ALT";}
+  .sprite-absent:before{content:"ABS ";}
+  .sprite-accepted:before{content:"ACC ";}
+  .sprite-alternative:before{content:"ALT ";}
   .sprite-doubtful:before{content:"? ";}
   .sprite-ephemeral:before{content:"EPH ";}
   .sprite-excluded:before{content:"EXC ";}
   .sprite-extirpated:before{content:"EXT ";}
   .sprite-introduced:before{content:"INT ";}
   .sprite-native:before {content:"NAT ";}
-  .sprite-synonym:before{content:"SYN";}
+  .sprite-synonym:before{content:"SYN ";}
   .sprite-redirect:before{content:"&rarr;";padding-left: 72px;}
   .sprite-redirect_accepted:before{content:"&rarr;";padding-left: 72px;}
   .sprite-redirect_synonym:before{content:"&rarr;";padding-left: 72px;}
@@ -317,6 +319,8 @@
   #see_taxon { background: url("../images/button-arrow.png") top right no-repeat; }
 
   /* Vascan distribution */
+
+  #distribution_map_toggle, #map_result p { display:none; }
 
   .distribution_legend {
       font-size: 9px; 

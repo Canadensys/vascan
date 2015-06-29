@@ -179,7 +179,7 @@
 						</ul>
 						
 						<h2>${rc.getMessage("taxon_h2_distribution")}</h2>
-						<ul class="buttons">
+						<ul id="distribution_map_toggle" class="buttons">
 							<li><a href="#" class="selected">${rc.getMessage("taxon_button1")}</a></li>
 							<li><a href="#">${rc.getMessage("taxon_button2")}</a></li>
 						</ul>
