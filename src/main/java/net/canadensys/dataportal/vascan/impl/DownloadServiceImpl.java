@@ -95,7 +95,7 @@ public class DownloadServiceImpl implements DownloadService {
 	    String destinationFilePath = generatedContentConfig.getGeneratedFilesFolder() + filename;
 	    
 	    ChecklistQuery cQuery = extractParameters(params);
-	    Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
+	    Iterator<TaxonLookupModel> it = taxonDAO.searchIterator(0, cQuery.getHabit(), cQuery.getTaxonId(), cQuery.getRegionQueryPart(),
 	    		cQuery.getDistributionStatus(), cQuery.getRank(), cQuery.isHybrids(), cQuery.getSort());
         
 	    return generateTSVFile(destinationFilePath, bundle, it);	    

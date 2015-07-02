@@ -256,7 +256,7 @@ public class ChecklistServiceImpl implements ChecklistService{
 	        	limitResultsTo = 200;
 	        }
 	        
-	        Iterator<TaxonLookupModel> it = taxonDAO.loadTaxonLookup(limitResultsTo, habit, taxon, reqionQueryPart, status, rank, hybrids, sort);
+	        Iterator<TaxonLookupModel> it = taxonDAO.searchIterator(limitResultsTo, habit, taxon, reqionQueryPart, status, rank, hybrids, sort);
 	        if(it !=null){
 	            while(it.hasNext()){
 	                   HashMap<String,Object> distributionData = new HashMap<String,Object>();
