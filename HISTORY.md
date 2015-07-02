@@ -1,6 +1,9 @@
 Version History
 ===============
 
+Version 3.5.3 2015-07-02
+* Fixed Issue #30
+
 Version 3.5.2 2015-04-15
 * Fixed feedback page link
 
