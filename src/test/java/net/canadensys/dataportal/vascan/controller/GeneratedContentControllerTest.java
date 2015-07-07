@@ -139,6 +139,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		assertEquals("synonym", synonymData[getHeaderIndexFromTerm(headers,DwcTerm.taxonomicStatus)]);
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
+    	request.getSession().invalidate();
     }
     
     /**
@@ -192,6 +193,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		assertEquals("15164", synonymData[getHeaderIndexFromTerm(headers,DwcTerm.taxonID)]);
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
+    	request.getSession().invalidate();
     }
     
     /**
@@ -246,5 +248,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
 		generatedDwcA.delete();
+    	
+    	request.getSession().invalidate();
     }
 }
