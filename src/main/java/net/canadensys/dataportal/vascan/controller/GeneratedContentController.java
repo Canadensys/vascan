@@ -96,7 +96,7 @@ public class GeneratedContentController implements MessageSourceAware {
 	    model.put("format", format);
 	    model.put("downloadURL", downloadURL);
 
-        ControllerHelper.addOtherLanguageUri(request, model);
+        ControllerHelper.addLanguagesUrl(request, model);
         
         ModelAndView mv = new ModelAndView("download");
 	    mv.addObject(VascanConfig.PAGE_ROOT_MODEL_KEY, model);

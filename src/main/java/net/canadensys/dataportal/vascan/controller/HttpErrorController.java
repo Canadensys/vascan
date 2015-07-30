@@ -38,7 +38,7 @@ public class HttpErrorController {
 	@ResponseStatus(value=HttpStatus.NOT_FOUND)
 	public ModelAndView handleNotFound(HttpServletRequest req){
 		HashMap<String,Object> model = new HashMap<String,Object>();
-		ControllerHelper.addOtherLanguageUri(req, model);
+		ControllerHelper.addLanguagesUrl(req, model);
         return new ModelAndView("error/404", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 
@@ -51,7 +51,7 @@ public class HttpErrorController {
 	@ResponseStatus(value=HttpStatus.NOT_FOUND)
 	public ModelAndView handleNotFoundException(HttpServletRequest req){
 		HashMap<String,Object> model = new HashMap<String,Object>();
-		ControllerHelper.addOtherLanguageUri(req, model);
+		ControllerHelper.addLanguagesUrl(req, model);
         return new ModelAndView("error/404", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
@@ -67,7 +67,7 @@ public class HttpErrorController {
 	public ModelAndView handleHttpRequestMethodNotSupported(HttpServletRequest req){
 		LOGGER.debug("RequestMethodNotSupported handled by HttpErrorController:" + req.getMethod() + " at " + req.getRequestURI());
 		HashMap<String,Object> model = new HashMap<String,Object>();
-		ControllerHelper.addOtherLanguageUri(req, model);
+		ControllerHelper.addLanguagesUrl(req, model);
         return new ModelAndView("error/error", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
@@ -76,7 +76,7 @@ public class HttpErrorController {
 	public ModelAndView handleError(HttpServletRequest req, Exception exception){
 		LOGGER.error("Error handled by HttpErrorController",exception);
 		HashMap<String,Object> model = new HashMap<String,Object>();
-		ControllerHelper.addOtherLanguageUri(req, model);
+		ControllerHelper.addLanguagesUrl(req, model);
         return new ModelAndView("error/error", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	

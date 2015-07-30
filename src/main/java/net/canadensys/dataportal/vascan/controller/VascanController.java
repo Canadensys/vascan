@@ -104,7 +104,7 @@ public class VascanController {
 	    }
 	    model.put("data",data);
 	    
-	    ControllerHelper.addOtherLanguageUri(request, model);
+	    ControllerHelper.addLanguagesUrl(request, model);
 	    return new ModelAndView("taxon", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
@@ -129,7 +129,7 @@ public class VascanController {
 	    extra.put("isVernacular",true);
 	    model.put("extra",extra);
 	    
-	    ControllerHelper.addOtherLanguageUri(request, model);
+	    ControllerHelper.addLanguagesUrl(request, model);
 	    return new ModelAndView("vernacular", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
@@ -156,7 +156,7 @@ public class VascanController {
 	    //extra is used in menu.ftl
 	    model.put("extra",extra);
 	    
-	    ControllerHelper.addOtherLanguageUri(request, model);
+	    ControllerHelper.addLanguagesUrl(request, model);
 		return new ModelAndView("name", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
@@ -173,7 +173,7 @@ public class VascanController {
 		model.put("data", checklistService.retrieveChecklistData(request.getParameterMap()));
 		model.put("pageQuery",StringUtils.defaultString(request.getQueryString()));
 		
-		ControllerHelper.addOtherLanguageUri(request, model);
+		ControllerHelper.addLanguagesUrl(request, model);
 	    return new ModelAndView("checklist", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
@@ -266,7 +266,7 @@ public class VascanController {
 	    }
 	    model.put("search",search);
 	    
-	    ControllerHelper.addOtherLanguageUri(request, model);
+	    ControllerHelper.addLanguagesUrl(request, model);
 	    return new ModelAndView("search", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	

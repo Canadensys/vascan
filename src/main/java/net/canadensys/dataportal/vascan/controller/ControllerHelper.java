@@ -14,21 +14,27 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Collection of static methods to help controllers.
+ * 
  * @author cgendreau
  *
  */
 public class ControllerHelper {
 	
 	/**
-	 * Add to the provided model a map including the URI to the provided resource in the other
+	 * Add to the provided model a map including the URL to the provided resource in the other
 	 * available language(s).
+	 * 
 	 * @param request
 	 * @param model
 	 */
-	public static void addOtherLanguageUri(HttpServletRequest request, Map<String,Object> model){		
+	public static void addLanguagesUrl(HttpServletRequest request, Map<String,Object> model){		
 		Locale locale = RequestContextUtils.getLocale(request);
 		String currLanguage = locale.getLanguage();
+		// add current language
+		model.put("language", currLanguage);
+		model.put("languageUrl", buildLanguageUri(request, currLanguage));
 		
+		// add other language(s)
 		Map<String,String> languagePathMap = new HashMap<String,String>();
 		for(String currSupportedLang : VascanConfig.SUPPORTED_LANGUAGES){
 			if(!currSupportedLang.equalsIgnoreCase(currLanguage)){

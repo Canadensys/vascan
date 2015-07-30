@@ -7,6 +7,7 @@
 <title><sitemesh:write property='title'>Title goes here</sitemesh:write></title>
 <link rel="stylesheet" href="http://data.canadensys.net/common/styles/common-1.1.min.css" media="screen,print"/>
 <link rel="shortcut icon" href="http://data.canadensys.net/common/images/favicon.png"/>
+<link rel="alternate" hreflang="${page.language}" href="${page.languageUrl}"/>
 <#list page.otherLanguage?keys as currLang>
 <link rel="alternate" hreflang="${currLang}" href="${page.otherLanguage[currLang]}"/>
 </#list>

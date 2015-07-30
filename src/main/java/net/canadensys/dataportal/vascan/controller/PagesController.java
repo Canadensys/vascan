@@ -31,14 +31,14 @@ public class PagesController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		// date is used to build dynamic citation
 		model.put("currentDate", SDF.format(Calendar.getInstance().getTime()));
-		ControllerHelper.addOtherLanguageUri(request, model);
+		ControllerHelper.addLanguagesUrl(request, model);
 		return new ModelAndView("about", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 	
 	@RequestMapping(value={"/feedback"}, method={RequestMethod.GET})
 	public ModelAndView handleFeedbackPage(HttpServletRequest request){
 		Map<String,Object> model = new HashMap<String,Object>();
-		ControllerHelper.addOtherLanguageUri(request, model);
+		ControllerHelper.addLanguagesUrl(request, model);
 		return new ModelAndView("feedback", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 
@@ -55,7 +55,7 @@ public class PagesController {
 	@RequestMapping(value={"/api"}, method={RequestMethod.GET})
 	public ModelAndView handleApiPage(HttpServletRequest request){
 		Map<String,Object> model = new HashMap<String,Object>();
-		ControllerHelper.addOtherLanguageUri(request, model);
+		ControllerHelper.addLanguagesUrl(request, model);
 		return new ModelAndView("api", VascanConfig.PAGE_ROOT_MODEL_KEY, model);
 	}
 }
