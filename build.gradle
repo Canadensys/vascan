@@ -107,6 +107,10 @@ dependencies {
 
 //WAR plugin settings
 war {
+	doFirst{
+        version = appVersion
+    }
+	
 	from("${additionalWebFilesDir}/js"){
         into("js")
         include ("**/*.js")
