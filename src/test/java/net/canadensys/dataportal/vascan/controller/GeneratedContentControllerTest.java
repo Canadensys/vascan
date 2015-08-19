@@ -81,6 +81,8 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
         HashMap<String,Object> pageModel = (HashMap<String,Object>)mav.getModelMap().get("page");
         String filename= (String)pageModel.get("filename");
         
+        System.out.println("+++testTextFileGeneration filename:" + filename);
+        
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
     	handler = handlerMapping.getHandler(request).getHandler();
@@ -91,6 +93,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     
     /**
      * Test the content of a generated DwcA that includes a synonym.
+     * Warning: this test can fail since the 
      * 
      * @throws Exception
      */
@@ -113,6 +116,8 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
         assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
         HashMap<String,Object> pageModel = (HashMap<String,Object>)mav.getModelMap().get("page");
         String filename= (String)pageModel.get("filename");
+        
+        System.out.println("+++testDwcAFileGenerationSynonym filename:" + filename);
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
@@ -164,6 +169,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
         assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
         HashMap<String,Object> pageModel = (HashMap<String,Object>)mav.getModelMap().get("page");
         String filename= (String)pageModel.get("filename");
+        System.out.println("+++testDwcAFileGenerationAccepted filename:" + filename);
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
@@ -219,6 +225,8 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
         assertEquals(MockHttpServletResponse.SC_OK, response.getStatus());
         HashMap<String,Object> pageModel = (HashMap<String,Object>)mav.getModelMap().get("page");
         String filename= (String)pageModel.get("filename");
+        System.out.println("+++testDwcAFileGenerationHybrid filename:" + filename);
+        
         
         //since the page will not get rendered, we call the URI to generate the file
         request.setRequestURI("/generate");
