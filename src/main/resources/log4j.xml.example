@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="vascanLogFile" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/tmp/vascan.log"/>
+		<param name="Threshold" value="WARN" />
+		<param name="MaxFileSize" value="1MB" />
+		<!-- Keep one backup file -->
+		<param name="MaxBackupIndex" value="1" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{DATE} %5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="apiUsageAppender" class="org.apache.log4j.RollingFileAppender"> 
+		<param name="file" value="/tmp/VascanAPIUsage.log"/>
+		<param name="MaxFileSize" value="1MB"/>
+		<!-- Keep one backup file -->
+		<param name="MaxBackupIndex" value="1"/>
+		<layout class="org.apache.log4j.PatternLayout"> 
+			<param name="ConversionPattern" value="%d{DATE} %5p %c{1}:%L - %m%n"/> 
+    	</layout> 
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO"/>
+			<param name="LevelMax" value="INFO"/>
+		</filter>
+	</appender>
+	
+	<appender name="refineApiUsageAppender" class="org.apache.log4j.RollingFileAppender"> 
+		<param name="file" value="/tmp/VascanRefineAPIUsage.log"/>
+		<param name="MaxFileSize" value="1MB"/>
+		<!-- Keep one backup file -->
+		<param name="MaxBackupIndex" value="1"/>
+		<layout class="org.apache.log4j.PatternLayout"> 
+			<param name="ConversionPattern" value="%d{DATE} %5p %c{1}:%L - %m%n"/> 
+    	</layout> 
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO"/>
+			<param name="LevelMax" value="INFO"/>
+		</filter>
+	</appender>
+	<appender name="asyncRefineApiUsageAppender" class="org.apache.log4j.AsyncAppender">
+		<param name="Blocking" value="false"/>
+		<appender-ref ref="refineApiUsageAppender"/>
+    </appender>
+
+	<!-- package specific categories -->
+	<category name="net.canadensys.dataportal.vascan.controller.api.APIController">
+    	<priority value="INFO" />
+    	<appender-ref ref="apiUsageAppender" />
+	</category>
+	
+	<category name="net.canadensys.dataportal.vascan.controller.api.ReconciliationAPIController">
+    	<priority value="INFO" />
+    	<appender-ref ref="asyncRefineApiUsageAppender" />
+	</category>
+	
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="vascanLogFile" />
+	</root>
+
+</log4j:configuration>
