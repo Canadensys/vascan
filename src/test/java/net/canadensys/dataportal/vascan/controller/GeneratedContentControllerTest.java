@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import net.canadensys.utils.ZipUtils;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.gbif.dwc.terms.DwcTerm;
+import org.gbif.dwc.terms.Term;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,15 +40,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 	
 	public static String	DELIMITER = "\t";
 	public static String	NEWLINE = "\n";
-	
-	private int DWCA_IDX_TAXONID = 0;
-	private int DWCA_IDX_ACCEPTED_NAME_USAGE_ID = 4;
-	private int DWCA_IDX_ACCEPTED_NAME_USAGE = 5;
-	private int DWCA_IDX_PARENT_NAME_USAGE_ID = 6;
-	private int DWCA_IDX_PARENT_NAME_USAGE = 7;
-	private int DWCA_IDX_SCIENTIFIC_NAME = 10;
-	private int DWCA_IDX_TAXONOMIC_STATUS = 21;
-	
+		
 	@Autowired
     private RequestMappingHandlerAdapter handlerAdapter;
 
@@ -54,6 +49,10 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     
     @Autowired
     private GeneratedContentConfig generatedContentConfig;
+    
+    private int getHeaderIndexFromTerm(List<String> headers, Term term){
+    	return headers.indexOf(term.simpleName());
+    }
     
     @Test
     public void testTextFileGeneration() throws Exception {
@@ -128,17 +127,19 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	ZipUtils.unzipFileOrFolder(generatedDwcA, unzippedFolder);
     	List<String> fileLines = FileUtils.readLines(new File(unzippedFolder+"/taxon.txt"));
     	
+    	List<String> headers = Arrays.asList(fileLines.get(0).split(DELIMITER));
     	String[] synonymData = fileLines.get(1).split(DELIMITER);
     	
-		assertEquals("15164", synonymData[DWCA_IDX_TAXONID]);
-		assertEquals("Carex alpina var. holostoma (Drejer) L.H. Bailey",synonymData[DWCA_IDX_SCIENTIFIC_NAME]);
-		assertEquals("4904", synonymData[DWCA_IDX_ACCEPTED_NAME_USAGE_ID]);
-		assertEquals("Carex holostoma Drejer", synonymData[DWCA_IDX_ACCEPTED_NAME_USAGE]);
-		assertEquals("",synonymData[DWCA_IDX_PARENT_NAME_USAGE_ID]);
-		assertEquals("",synonymData[DWCA_IDX_PARENT_NAME_USAGE]);
-		assertEquals("synonym", synonymData[DWCA_IDX_TAXONOMIC_STATUS]);
+		assertEquals("15164", synonymData[getHeaderIndexFromTerm(headers,DwcTerm.taxonID)]);
+		assertEquals("Carex alpina var. holostoma (Drejer) L.H. Bailey",synonymData[getHeaderIndexFromTerm(headers,DwcTerm.scientificName)]);
+		assertEquals("4904", synonymData[getHeaderIndexFromTerm(headers,DwcTerm.acceptedNameUsageID)]);
+		assertEquals("Carex holostoma Drejer", synonymData[getHeaderIndexFromTerm(headers,DwcTerm.acceptedNameUsage)]);
+		assertEquals("",synonymData[getHeaderIndexFromTerm(headers,DwcTerm.parentNameUsageID)]);
+		assertEquals("",synonymData[getHeaderIndexFromTerm(headers,DwcTerm.parentNameUsage)]);
+		assertEquals("synonym", synonymData[getHeaderIndexFromTerm(headers,DwcTerm.taxonomicStatus)]);
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
+    	request.getSession().invalidate();
     }
     
     /**
@@ -177,20 +178,22 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
     	ZipUtils.unzipFileOrFolder(generatedDwcA, unzippedFolder);
     	List<String> fileLines = FileUtils.readLines(new File(unzippedFolder+"/taxon.txt"));
     	
+    	List<String> headers = Arrays.asList(fileLines.get(0).split(DELIMITER));
     	String[] taxonData = fileLines.get(1).split(DELIMITER);
     	
-		assertEquals("4904", taxonData[DWCA_IDX_TAXONID]);
-		assertEquals("Carex holostoma Drejer",taxonData[DWCA_IDX_SCIENTIFIC_NAME]);
-		assertEquals("4904", taxonData[DWCA_IDX_ACCEPTED_NAME_USAGE_ID]);
-		assertEquals("Carex holostoma Drejer", taxonData[DWCA_IDX_ACCEPTED_NAME_USAGE]);
-		assertEquals("2096",taxonData[DWCA_IDX_PARENT_NAME_USAGE_ID]);
-		assertEquals("accepted", taxonData[DWCA_IDX_TAXONOMIC_STATUS]);
+		assertEquals("4904", taxonData[getHeaderIndexFromTerm(headers,DwcTerm.taxonID)]);
+		assertEquals("Carex holostoma Drejer",taxonData[getHeaderIndexFromTerm(headers,DwcTerm.scientificName)]);
+		assertEquals("4904", taxonData[getHeaderIndexFromTerm(headers,DwcTerm.acceptedNameUsageID)]);
+		assertEquals("Carex holostoma Drejer", taxonData[getHeaderIndexFromTerm(headers,DwcTerm.acceptedNameUsage)]);
+		assertEquals("2096",taxonData[getHeaderIndexFromTerm(headers,DwcTerm.parentNameUsageID)]);
+		assertEquals("accepted", taxonData[getHeaderIndexFromTerm(headers,DwcTerm.taxonomicStatus)]);
 		
 		//test that the synonym is included
 		String[] synonymData = fileLines.get(2).split(DELIMITER);
-		assertEquals("15164", synonymData[DWCA_IDX_TAXONID]);
+		assertEquals("15164", synonymData[getHeaderIndexFromTerm(headers,DwcTerm.taxonID)]);
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
+    	request.getSession().invalidate();
     }
     
     /**
@@ -245,5 +248,7 @@ public class GeneratedContentControllerTest extends AbstractTransactionalJUnit4S
 		
 		FileUtils.deleteDirectory(new File(unzippedFolder));
 		generatedDwcA.delete();
+    	
+    	request.getSession().invalidate();
     }
 }
