@@ -1,8 +1,11 @@
 Version History
 ===============
 
+Version 3.5.6 2015-08-19
+* Fixed Issue [#33](https://github.com/Canadensys/vascan/issues/33).
+
 Version 3.5.3 2015-07-07
-* Fixed Issue #30
+* Fixed Issue [#30](https://github.com/Canadensys/vascan/issues/30).
 
 Version 3.5.2 2015-04-15
 * Fixed feedback page link
