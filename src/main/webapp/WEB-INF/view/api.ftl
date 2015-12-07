@@ -14,6 +14,7 @@
 <ul class="index">
 	<li><a href="#resource">${rc.getMessage("api_title4")}</a></li>
 	<li><a href="#openrefine">${rc.getMessage("api_title7")}</a></li>
+	<li><a href="#taxize">${rc.getMessage("api_title8")}</a></li>
 </ul>
 
 <a name="resource"></a><h2>${rc.getMessage("api_title4")}</h2>
@@ -36,6 +37,7 @@
 <pre>
 {
     apiVersion: "0.1",
+    lastUpdatedDate: "YYYY-MM-DD",
     results: [
         {
             searchedTerm: "Crataegus dodgei",
@@ -115,6 +117,12 @@
 <p>${rc.getMessage("api_openrefine_description")}</p>
 <p class="api-path round">
   http://data.canadensys.net/vascan/refine/0.1/reconcile
+</p>
+
+<a name="taxize"></a><h2>${rc.getMessage("api_title8")}</h2>
+<p>${rc.getMessage("api_taxize_description")}</p>
+<p class="api-path round">
+  https://cran.r-project.org/web/packages/taxize/index.html
 </p>
 
   </div><#-- content -->
