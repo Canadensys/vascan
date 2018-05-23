@@ -25,3 +25,7 @@ matrix:
     dist: precise
   - jdk: openjdk7
     dist: precise
+
+# openjdk7 requires hostname see https://github.com/travis-ci/travis-ci/issues/5227
+addons:
+ hostname: vascan.dev
