@@ -16,7 +16,12 @@ before_install:
 # script:
 #  - ./gradlew check
 #  - ./gradlew -daemon runIntegrationTest
-jdk:
-  - oraclejdk7
-  - openjdk7
-  - oraclejdk8
+# jdk7 requires Precise, see https://github.com/travis-ci/travis-ci/issues/8503
+matrix:
+ include:
+  - jdk: oraclejdk8
+    dist: trusty
+  - jdk: oraclejdk7
+    dist: precise
+  - jdk: openjdk7
+    dist: precise
