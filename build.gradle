@@ -40,6 +40,8 @@ ext {
 	h2Version = '1.3.176'
 	tomcatVersion = '7.0.59'
 	seleniumVersion = '2.44.0'
+  
+  servletVersion = '3.1.0'
 }
 
 compileJava.options.encoding = sourceEncoding
@@ -58,7 +60,7 @@ repositories {
 }
 
 dependencies {
-	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletVersion
 	
 	compile group: 'net.canadensys', name: 'canadensys-data-access', version: dataAccessVersion
 	compile group: 'net.canadensys', name: 'canadensys-web-core', version: webCoreVersion
@@ -92,7 +94,7 @@ dependencies {
 	//h2 is included to allow integration testing using a mock database
     compile group: 'com.h2database', name: 'h2', version: h2Version
     
-	testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'	
     testCompile group: 'com.jayway.jsonpath', name: 'json-path', version: '0.8.1'
