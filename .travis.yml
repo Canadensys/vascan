@@ -9,7 +9,7 @@ before_install:
  - cd canadensys-data-access
  - git fetch --tags
  - git checkout tags/2.16.0
- - mvn clean install
+ - mvn -Dhttps.protocols=TLSv1.2 clean install
  - cd ..
  - cd vascan
  - mv config/local/vascan-config.properties.example config/local/vascan-config.properties
