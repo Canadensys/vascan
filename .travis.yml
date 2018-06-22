@@ -6,10 +6,9 @@ before_install:
  - git clone https://github.com/Canadensys/canadensys-data-access
  - cd canadensys-data-access
  - git fetch --tags
- - git checkout tags/2.15.0
+ - git checkout tags/2.16.0
  - mvn clean install
  - cd ..
- - git clone https://github.com/Canadensys/canadensys-view-includes 
  - cd vascan
  - mv config/local/vascan-config.properties.example config/local/vascan-config.properties
  - mv config/local/version.properties.example config/local/version.properties

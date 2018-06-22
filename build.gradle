@@ -25,9 +25,9 @@ ext {
 	sourceCompatibility = JavaVersion.VERSION_1_7
 	targetCompatibility = JavaVersion.VERSION_1_7
 
-	webCoreVersion = '0.7'
-	webThemeVersion = '0.3'
-	dataAccessVersion = '2.15.0'
+	webCoreVersion = '0.8'
+	webThemeVersion = '0.4'
+	dataAccessVersion = '2.16.0'
 	dwcaReaderVersion = '1.20'
 
 	springVersion = '4.1.9.RELEASE'
@@ -41,7 +41,7 @@ ext {
 	tomcatVersion = '7.0.59'
 	seleniumVersion = '2.44.0'
   
-  servletVersion = '3.1.0'
+	servletVersion = '3.1.0'
 }
 
 compileJava.options.encoding = sourceEncoding
