@@ -1,8 +1,9 @@
 language: java
-./gradlew -Dhttps.protocols=TLSv1.2 check
+install: ./gradlew -Dhttps.protocols=TLSv1.2 check
 before_install:
 # - "export DISPLAY=:99.0"
 # - "sh -e /etc/init.d/xvfb start"
+ - chmod +x gradlew
  - cd ..
  - git clone https://github.com/Canadensys/canadensys-data-access
  - cd canadensys-data-access
