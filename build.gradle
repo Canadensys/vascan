@@ -31,7 +31,7 @@ ext {
 	dwcaReaderVersion = '1.20'
 
 	springVersion = '4.1.9.RELEASE'
-	hibernateVersion = '4.3.7.Final'
+	hibernateVersion = '4.3.11.Final'
 	jacksonVersion = '2.2.3'
 	freemarkerVersion = '2.3.20'
 	elasticSearchVersion = '0.90.12'
