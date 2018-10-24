@@ -32,7 +32,8 @@ ext {
 
 	springVersion = '4.1.9.RELEASE'
 	hibernateVersion = '4.3.11.Final'
-	jacksonVersion = '2.2.3'
+	jacksonVersion = '2.8.11'
+	jacksonDataBindVersion = '2.8.11.1'
 	freemarkerVersion = '2.3.20'
 	elasticSearchVersion = '0.90.12'
 	sitemeshVersion = '3.0.0'
@@ -81,7 +82,7 @@ dependencies {
 	compile group: 'org.apache.xmlgraphics',name:'batik-codec',version: '1.7'
 	compile group: 'commons-collections',name:'commons-collections',version:'3.2.2'
 	compile group: 'org.sitemesh', name: 'sitemesh', version: sitemeshVersion
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonDataBindVersion
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
 	
