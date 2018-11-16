@@ -28,11 +28,12 @@
     
     <sitemesh:write property='body'/>
     <#include "include/footer.ftl">
-    <sitemesh:write property='page.local_script'/>
     <script type="text/javascript" src="http://layout.canadensys.net/common/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="http://layout.canadensys.net/common/bootstrap3/js/bootstrap.js"/></script>
     <script type="text/javascript" src="http://layout.canadensys.net/common/js/js.cookie-2.1.4.min.js"/></script>
     <script type="text/javascript" src="http://layout.canadensys.net/common/js/change_lang.js"/></script>
     <script type="text/javascript" src="http://layout.canadensys.net/common/js/change_active_menu.js"></script>
+    <script type="text/javascript" src="http://layout.canadensys.net/common/js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <sitemesh:write property='page.local_script'/>
 </body>
 </html>
