@@ -34,7 +34,5 @@
     <script type="text/javascript" src="http://layout.canadensys.net/common/js/js.cookie-2.1.4.min.js"/></script>
     <script type="text/javascript" src="http://layout.canadensys.net/common/js/change_lang.js"/></script>
     <script type="text/javascript" src="http://layout.canadensys.net/common/js/change_active_menu.js"></script>
-    <script type="text/javascript" src="http://layout.canadensys.net/common/js/change_lang.js"></script>
-    <script type="text/javascript" src="http://layout.canadensys.net/common/js/change_active_menu.js"></script>
 </body>
 </html>
