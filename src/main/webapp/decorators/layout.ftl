@@ -7,8 +7,10 @@
     <title><sitemesh:write property='title'>Title goes here</sitemesh:write></title>
     <link rel="stylesheet" type="text/css" media="all" href="http://layout.canadensys.net/common/bootstrap3/css/bootstrap.css"/>
     <link rel="stylesheet" href="http://layout.canadensys.net/common/css/common-1.1.css" media="screen,print"/>
-    <link rel="stylesheet" type="text/css" media="all" href="http://layout.canadensys.net/common/css/alc-styles.css"/>
-    <link rel="shortcut icon" href="http://layout.canadensys.net/common/images/favicon.png"/>
+    <link rel="stylesheet" type="text/css" media="all" href="http://layout.canadensys.net/commonui-bs3/css/ala-styles.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="http://layout.canadensys.net/common/css/alc-styles-bs3.css"/>
+    <!--<link rel="shortcut icon" href="http://layout.canadensys.net/common/images/favicon.png"/>-->
+    <link rel="icon" href="http://layout.canadensys.net/common/images/favicon.ico" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
     <link rel="alternate" hreflang="${page.language}" href="${page.languageUrl}"/>
     <#list page.otherLanguage?keys as currLang>
     <link rel="alternate" hreflang="${currLang}" href="${page.otherLanguage[currLang]}"/>
