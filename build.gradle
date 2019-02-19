@@ -27,13 +27,13 @@ ext {
 
 	webCoreVersion = '0.8'
 	webThemeVersion = '0.4'
-	dataAccessVersion = '2.17.0' 
+	dataAccessVersion = '2.17.1' 
 	dwcaReaderVersion = '1.20'
 
 	springVersion = '4.1.9.RELEASE'
 	hibernateVersion = '4.3.11.Final'
 	jacksonVersion = '2.8.11'
-	jacksonDataBindVersion = '2.8.11.1'
+	jacksonDataBindVersion = '2.8.11.3'
 	freemarkerVersion = '2.3.20'
 	elasticSearchVersion = '0.90.12'
 	sitemeshVersion = '3.0.0'
