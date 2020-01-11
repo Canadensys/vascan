@@ -1,8 +1,5 @@
 language: java
 before_install:
-# - "export DISPLAY=:99.0"
-# - "sh -e /etc/init.d/xvfb start"
- - JAVA_OPTS="-Dhttps.protocols=TLSv1.2"
  - chmod +x gradlew
  - cd ..
  - git clone https://github.com/Canadensys/canadensys-data-access
@@ -17,15 +14,9 @@ before_install:
 # script:
 #  - ./gradlew check
 #  - ./gradlew -daemon runIntegrationTest
-# jdk7 requires Precise, see https://github.com/travis-ci/travis-ci/issues/8503
-matrix:
- include:
-  - jdk: oraclejdk8
-    dist: trusty
-  - jdk: oraclejdk7
-    dist: precise
-  - jdk: openjdk7
-    dist: precise
+jdk:
+  - oraclejdk8
+  - openjdk8
 
 # openjdk7 requires hostname see https://github.com/travis-ci/travis-ci/issues/5227
 addons:
