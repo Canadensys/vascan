@@ -38,7 +38,7 @@ ext {
 	elasticSearchVersion = '0.90.12'
 	sitemeshVersion = '3.0.0'
 
-	h2Version = '1.4.200'
+	h2Version = '1.4.190'
 	tomcatVersion = '7.0.59'
 	seleniumVersion = '2.44.0'
   
