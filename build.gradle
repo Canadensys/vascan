@@ -22,8 +22,8 @@ task wrapper(type: Wrapper) {
 
 ext {
 	sourceEncoding = 'UTF-8'
-	sourceCompatibility = JavaVersion.VERSION_1_7
-	targetCompatibility = JavaVersion.VERSION_1_7
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
 
 	webCoreVersion = '0.8'
 	webThemeVersion = '0.4'
@@ -38,7 +38,7 @@ ext {
 	elasticSearchVersion = '0.90.12'
 	sitemeshVersion = '3.0.0'
 
-	h2Version = '1.4.181'
+	h2Version = '1.4.200'
 	tomcatVersion = '7.0.59'
 	seleniumVersion = '2.44.0'
   
