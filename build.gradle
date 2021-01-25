@@ -53,11 +53,11 @@ compileJava.targetCompatibility = sourceCompatibility
 
 repositories {
 	// switch back to mavenCentral() when on Java 8
-	maven { url "http://repo.maven.apache.org/maven2" }
+	maven { url "https://repo.maven.apache.org/maven2" }
     mavenLocal()
     
     maven {
-        url "http://repository.gbif.org/content/groups/gbif"
+        url "https://repository.gbif.org/content/groups/gbif"
     }
 }
 
