@@ -24,8 +24,8 @@
 <#-- JavaScript handling -->
 <content tag="local_script">
 <#-- 1.7.2 required by jquery.tooltip.min.js-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="http://data.canadensys.net/common/js/jquery.tooltip.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://layout.canadensys.net/common/js/jquery.tooltip.min.js"></script>
 
 <@jsAsset fileName="vascan" version=currentVersion! useMinified=useMinified/>
 <@jsAsset fileName="vernacular" version=currentVersion! useMinified=useMinified/>
