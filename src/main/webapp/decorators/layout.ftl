@@ -16,6 +16,8 @@
     <link rel="alternate" hreflang="${currLang}" href="${page.otherLanguage[currLang]}"/>
     </#list>
 
+    <#-- Test war building nov 22 2023 -->
+
     <sitemesh:write property='head'/>
     <#include "ga.ftl">
 </head>

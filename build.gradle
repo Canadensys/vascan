@@ -5,8 +5,7 @@ apply plugin: 'eclipse'
 ext {
     tomcatContextPath = 'vascan'
 }
-apply from: "https://raw.githubusercontent.com/Canadensys/canadensys-common/master/gradle/canadensys_web_build_21.gradle"
-apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
+apply from: "https://raw.githubusercontent.com/Canadensys/canadensys-common/master/gradle/canadensys_web_build_22.gradle"
 
 import static groovy.io.FileType.FILES
 
@@ -25,8 +24,8 @@ ext {
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
 
-	webCoreVersion = '0.8'
-	webThemeVersion = '0.4'
+	webCoreVersion = '0.9-SNAPSHOT'
+	webThemeVersion = '0.5-SNAPSHOT'
 	dataAccessVersion = '2.17.2' 
 	dwcaReaderVersion = '1.20'
 
@@ -35,6 +34,7 @@ ext {
 	jacksonVersion = '2.8.11'
 	jacksonDataBindVersion = '2.8.11.3'
 	freemarkerVersion = '2.3.20'
+	freemarkerVersion = '2.3.21'
 	elasticSearchVersion = '0.90.12'
 	sitemeshVersion = '3.0.0'
 
